@@ -1,8 +1,8 @@
-#cimod : C++ header-only library for a binary quadratic model 
+# cimod : C++ header-only library for a binary quadratic model 
 
 * [Documents](https://openjij.github.io/cimod/html/index.html)
 
-#Usage
+# Usage
 
 * You should just include a header `src/binary_quadratic_model.hpp` in your project.
 
