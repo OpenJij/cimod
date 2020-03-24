@@ -28,7 +28,8 @@ var NAVTREE =
       [ "Binary quadratic model", "index.html#s_bqm", [
         [ "Ising model", "index.html#ss_ising", null ],
         [ "QUBO model", "index.html#ss_qubo", null ]
-      ] ]
+      ] ],
+      [ "Example", "index.html#s_example", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
