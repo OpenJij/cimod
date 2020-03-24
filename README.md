@@ -2,9 +2,11 @@
 
 * [Documents](https://openjij.github.io/cimod/html/index.html)
 
-# Usage
+# How to use
 
-* You should just include a header `src/binary_quadratic_model.hpp` in your project.
+You should just include a header `src/binary_quadratic_model.hpp` in your project.
+
+## Example
 
 ```cpp
 #include "src/binary_quadratic_model.hpp"
