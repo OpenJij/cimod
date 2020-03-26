@@ -242,17 +242,20 @@ public:
      * 
      * @param bqm 
      */
-    BinaryQuadraticModel
-    (
-        const BinaryQuadraticModel &bqm
-    )
-    {
-        m_offset = bqm.get_offset();
-        m_vartype = bqm.get_vartype();
-        m_info = bqm.get_info();
-        add_variables_from(bqm.get_linear());
-        add_interactions_from(bqm.get_quadratic());
-    };
+    //BinaryQuadraticModel
+    //(
+    //    const BinaryQuadraticModel &bqm
+    //)
+    //{
+    //    m_offset = bqm.get_offset();
+    //    m_vartype = bqm.get_vartype();
+    //    m_info = bqm.get_info();
+    //    add_variables_from(bqm.get_linear());
+    //    add_interactions_from(bqm.get_quadratic());
+    //};
+
+    BinaryQuadraticModel(const BinaryQuadraticModel&) = default;
+    BinaryQuadraticModel(BinaryQuadraticModel&&) = default;
 
     /**
      * @brief Return the number of variables.
