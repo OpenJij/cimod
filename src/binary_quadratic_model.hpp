@@ -1011,13 +1011,13 @@ public:
 
         for(auto &it : linear)
         {
-            insert_or_assign(new_linear, it.first, 2.0 * it.second);
+            insert_or_assign(new_linear, it.first, static_cast<FloatType>(2.0 * it.second));
             linear_offset += it.second;
         }
 
         for(auto &it : quadratic)
         {
-            insert_or_assign(new_quadratic, it.first, 4.0 * it.second);
+            insert_or_assign(new_quadratic, it.first, static_cast<FloatType>(4.0 * it.second));
             new_linear[it.first.first] -= 2.0 * it.second;
             new_linear[it.first.second] -= 2.0 * it.second;
             quadratic_offset += it.second; 
@@ -1052,13 +1052,13 @@ public:
 
         for(auto &it : linear)
         {
-            insert_or_assign(h, it.first, 0.5 * it.second);
+            insert_or_assign(h, it.first, static_cast<FloatType>(0.5 * it.second));
             linear_offset += it.second;
         }
 
         for(auto &it : quadratic)
         {
-            insert_or_assign(J, it.first, 0.25 * it.second);
+            insert_or_assign(J, it.first, static_cast<FloatType>(0.25 * it.second));
             h[it.first.first] += 0.25 * it.second;
             h[it.first.second] += 0.25 * it.second;
             quadratic_offset += it.second;
