@@ -1326,7 +1326,7 @@ public:
 
         //extract offset and info
         FloatType_serial offset = input["offset"];
-        std::string info = input["info"];
+        std::string info = (input["info"] == nullptr)?"":input["info"];
 
         //construct a BinaryQuadraticModel instance
         BinaryQuadraticModel<IndexType_serial, FloatType_serial> bqm(linear, quadratic, offset, vartype, info);
