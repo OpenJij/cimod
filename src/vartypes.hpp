@@ -82,6 +82,7 @@ bool check_vartype
     else
     {
         std::cerr << "Unknown variable type." << std::endl;
+        return false;
     }
 };
 }

@@ -2,7 +2,8 @@ var classcimod_1_1_binary_quadratic_model =
 [
     [ "json", "classcimod_1_1_binary_quadratic_model.html#ac062f5a8526fcb3f84482c8b3b9c2061", null ],
     [ "BinaryQuadraticModel", "classcimod_1_1_binary_quadratic_model.html#a90915dcfa71daf26b223b11fdffe5e3e", null ],
-    [ "BinaryQuadraticModel", "classcimod_1_1_binary_quadratic_model.html#ad5a046fdcf1329ae517920425a0be10b", null ],
+    [ "BinaryQuadraticModel", "classcimod_1_1_binary_quadratic_model.html#a1b43bfe156429c0378e62ba910d3976c", null ],
+    [ "BinaryQuadraticModel", "classcimod_1_1_binary_quadratic_model.html#a041ffaf84677cea03acc821c8470a717", null ],
     [ "add_interaction", "classcimod_1_1_binary_quadratic_model.html#acc0d8b30b56715462fd77f24dd165406", null ],
     [ "add_interactions_from", "classcimod_1_1_binary_quadratic_model.html#af73fa596206efe4a51ef0ddbfa2eef74", null ],
     [ "add_offset", "classcimod_1_1_binary_quadratic_model.html#a3655cb5534337a6225e5cf78277baba5", null ],
