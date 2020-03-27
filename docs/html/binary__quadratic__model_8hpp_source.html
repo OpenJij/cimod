@@ -796,13 +796,13 @@ $(document).ready(function(){initNavTree('binary__quadratic__model_8hpp_source.h
 <div class="line"><a name="l01011"></a><span class="lineno"> 1011</span>&#160; </div>
 <div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;it : linear)</div>
 <div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;        {</div>
-<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(new_linear, it.first, 2.0 * it.second);</div>
+<div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(new_linear, it.first, <span class="keyword">static_cast&lt;</span>FloatType<span class="keyword">&gt;</span>(2.0 * it.second));</div>
 <div class="line"><a name="l01015"></a><span class="lineno"> 1015</span>&#160;            linear_offset += it.second;</div>
 <div class="line"><a name="l01016"></a><span class="lineno"> 1016</span>&#160;        }</div>
 <div class="line"><a name="l01017"></a><span class="lineno"> 1017</span>&#160; </div>
 <div class="line"><a name="l01018"></a><span class="lineno"> 1018</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;it : quadratic)</div>
 <div class="line"><a name="l01019"></a><span class="lineno"> 1019</span>&#160;        {</div>
-<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(new_quadratic, it.first, 4.0 * it.second);</div>
+<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(new_quadratic, it.first, <span class="keyword">static_cast&lt;</span>FloatType<span class="keyword">&gt;</span>(4.0 * it.second));</div>
 <div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;            new_linear[it.first.first] -= 2.0 * it.second;</div>
 <div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160;            new_linear[it.first.second] -= 2.0 * it.second;</div>
 <div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;            quadratic_offset += it.second; </div>
@@ -828,13 +828,13 @@ $(document).ready(function(){initNavTree('binary__quadratic__model_8hpp_source.h
 <div class="line"><a name="l01052"></a><span class="lineno"> 1052</span>&#160; </div>
 <div class="line"><a name="l01053"></a><span class="lineno"> 1053</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;it : linear)</div>
 <div class="line"><a name="l01054"></a><span class="lineno"> 1054</span>&#160;        {</div>
-<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(h, it.first, 0.5 * it.second);</div>
+<div class="line"><a name="l01055"></a><span class="lineno"> 1055</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(h, it.first, <span class="keyword">static_cast&lt;</span>FloatType<span class="keyword">&gt;</span>(0.5 * it.second));</div>
 <div class="line"><a name="l01056"></a><span class="lineno"> 1056</span>&#160;            linear_offset += it.second;</div>
 <div class="line"><a name="l01057"></a><span class="lineno"> 1057</span>&#160;        }</div>
 <div class="line"><a name="l01058"></a><span class="lineno"> 1058</span>&#160; </div>
 <div class="line"><a name="l01059"></a><span class="lineno"> 1059</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;it : quadratic)</div>
 <div class="line"><a name="l01060"></a><span class="lineno"> 1060</span>&#160;        {</div>
-<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(J, it.first, 0.25 * it.second);</div>
+<div class="line"><a name="l01061"></a><span class="lineno"> 1061</span>&#160;            <a class="code" href="namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d">insert_or_assign</a>(J, it.first, <span class="keyword">static_cast&lt;</span>FloatType<span class="keyword">&gt;</span>(0.25 * it.second));</div>
 <div class="line"><a name="l01062"></a><span class="lineno"> 1062</span>&#160;            h[it.first.first] += 0.25 * it.second;</div>
 <div class="line"><a name="l01063"></a><span class="lineno"> 1063</span>&#160;            h[it.first.second] += 0.25 * it.second;</div>
 <div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;            quadratic_offset += it.second;</div>
