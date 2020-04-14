@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "../src/binary_quadratic_model.hpp"
-#include "../src/json.hpp"
+#include <nlohmann/json.hpp>
 
 #include <unordered_map>
 #include <utility>
