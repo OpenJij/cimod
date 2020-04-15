@@ -26,7 +26,7 @@ namespace py = pybind11;
 using namespace py::literals;
 using namespace cimod;
 
-PYBIND11_MODULE(cxxcimod, m){
+PYBIND11_MODULE(cimod, m){
     m.doc() = "C++ library for a binary quadratic model";
 
     /**********************************************************
@@ -83,8 +83,8 @@ PYBIND11_MODULE(cxxcimod, m){
         .def("to_ising", &BQM::to_ising)
         //.def("to_serialiable", &BQM::to_serializable)
         //.def_static("from_serialiable", &BQM::from_serializable, "input"_a);
-        .def("to_serialiable", [](const BQM& self){return static_cast<py::object>(self.to_serializable());})
-        .def_static("from_serialiable", [](const py::object& input){BQM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a);
+        .def("to_serializable", [](const BQM& self){return static_cast<py::object>(self.to_serializable());})
+        .def_static("from_serializable", [](const py::object& input){return BQM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a);
 }
 
 

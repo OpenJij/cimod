@@ -12,7 +12,7 @@ from distutils.version import LooseVersion
 
 
 # Package meta-data.
-NAME = 'cimod'
+NAME = 'jij_cimod'
 DESCRIPTION = 'C++ library for a binary quadratic model'
 EMAIL = 'openjij@j-ij.com'
 AUTHOR = 'Jij Inc.'
@@ -132,7 +132,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     install_requires=['numpy >= 1.16.0'],
-    ext_modules=[CMakeExtension('cxxcimod')],
+    ext_modules=[CMakeExtension('cimod')],
     cmdclass=dict(build_ext=CMakeBuild, test=GoogleTestCommand,
                   pytest=PyTestCommand),
     packages=find_packages(exclude=('tests', 'docs', 'examples')),
