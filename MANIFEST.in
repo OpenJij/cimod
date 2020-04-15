@@ -2,7 +2,7 @@ include *.cmake
 include FetchContent/*.cmake.in
 include CMakeLists.txt
 
-recursive-include cimod *
+recursive-include jij_cimod *
 recursive-include tests *
 recursive-include src *
 recursive-include external *
