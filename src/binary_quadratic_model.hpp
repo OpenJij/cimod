@@ -1164,7 +1164,7 @@ public:
      *
      * @return An object that can be serialized (nlohmann::json)
      */
-    json to_serializable()
+    json to_serializable() const
     {
         std::string schema_version = "3.0.0";
         //all variables are contained in the keys of m_linear.
@@ -1193,7 +1193,7 @@ public:
         std::vector<FloatType> l_bias;
         for(auto&& key : variables)
         {
-            l_bias.push_back(m_linear[key]);
+            l_bias.push_back(m_linear.at(key));
         }
 
         //set quadratic head, tail and biases
