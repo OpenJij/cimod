@@ -1,6 +1,6 @@
-add_library(cimod MODULE main.cpp)
+add_library(cxxcimod MODULE main.cpp)
 
-set_target_properties(cimod PROPERTIES
+set_target_properties(cxxcimod PROPERTIES
     CXX_VISIBILITY_PRESET "hidden"
     INTERPROCEDURAL_OPTIMIZATION TRUE
     PREFIX "${PYTHON_MODULE_PREFIX}"
@@ -8,7 +8,7 @@ set_target_properties(cimod PROPERTIES
 )
 
 
-target_link_libraries(cimod
+target_link_libraries(cxxcimod
     pybind11::module
     eigen_lib
     cimod_header_only
@@ -17,5 +17,5 @@ target_link_libraries(cimod
 )
 
 add_custom_target(python
-    DEPENDS cimod
+    DEPENDS cxxcimod
 )
