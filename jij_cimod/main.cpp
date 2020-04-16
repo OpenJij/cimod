@@ -81,6 +81,8 @@ PYBIND11_MODULE(cimod, m){
         .def("energies", &BQM::energy, "samples_like"_a)
         .def("to_qubo", &BQM::to_qubo)
         .def("to_ising", &BQM::to_ising)
+        .def_static("from_qubo", &BQM::from_qubo, "Q"_a, "offset"_a=0.0)
+        .def_static("from_ising", &BQM::from_ising, "h"_a, "J"_a, "offset"_a=0.0)
         //.def("to_serialiable", &BQM::to_serializable)
         //.def_static("from_serialiable", &BQM::from_serializable, "input"_a);
         .def("to_serializable", [](const BQM& self){return static_cast<py::object>(self.to_serializable());})
