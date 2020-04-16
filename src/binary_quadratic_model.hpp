@@ -1141,6 +1141,32 @@ public:
     };
 
     /**
+     * @brief Create a binary quadratic model from a QUBO model.
+     *
+     * @param Q
+     * @param offset
+     *
+     * @return Binary quadratic model with vartype set to `.Vartype.BINARY`.
+     */
+    static BinaryQuadraticModel from_qubo(const Quadratic<IndexType, FloatType>& Q, FloatType offset=0.0)
+    {
+        Linear<IndexType, FloatType> linear;
+        Quadratic<IndexType, FloatType> quadratic;
+        for(auto&& elem : Q){
+            const auto& key = elem.first;
+            const auto& value = elem.second;
+            if(key.first == key.second){
+                linear[key.first] = value;
+            }
+            else{
+                quadratic[std::make_pair(key.first, key.second)] = value;
+            }
+        }
+
+        return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::BINARY);
+    }
+
+    /**
      * @brief Convert a binary quadratic model to Ising format.
      * 
      * @return A tuple including a linear bias, a quadratic bias and an offset.
@@ -1155,6 +1181,20 @@ public:
         FloatType offset = bqm.get_offset();
         return std::make_tuple(linear, quadratic, offset);
     };
+
+    /**
+     * @brief Create a binary quadratic model from an Ising problem.
+     *
+     * @param linear
+     * @param quadratic
+     * @param offset
+     *
+     * @return Binary quadratic model with vartype set to `.Vartype.SPIN`.
+     */
+    static BinaryQuadraticModel from_ising(const Linear<IndexType, FloatType>& linear, const Quadratic<IndexType, FloatType>& quadratic, FloatType offset=0.0)
+    {
+        return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::SPIN);
+    }
 
     using json = nlohmann::json;
 
