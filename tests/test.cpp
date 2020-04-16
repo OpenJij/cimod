@@ -284,6 +284,46 @@ namespace
         EXPECT_EQ(offset_ising, 1.4);
     }
 
+    TEST(FunctionTest, from_qubo)
+    {
+        Quadratic<uint32_t, double> origQ{ {std::make_pair(0, 1), 0.5}, {std::make_pair(1, 2), 1.5}, {std::make_pair(0, 0), 1.0}, {std::make_pair(1, 1), -1.0}, {std::make_pair(2, 2), 0.5}};
+        double offset = 1.4;
+
+        auto bqm = BinaryQuadraticModel<uint32_t, double>::from_qubo(origQ, offset);
+
+        Linear<uint32_t, double> linear = bqm.get_linear();
+        Quadratic<uint32_t, double> Q = bqm.get_quadratic();
+        double offset_ising = bqm.get_offset();
+
+        // check quadratic matrix and offset
+        EXPECT_NEAR(linear[0], 1.0, 1e-5);
+        EXPECT_NEAR(Q[std::make_pair(0, 1)], 0.5, 1e-5);
+        EXPECT_NEAR(linear[1], -1.0, 1e-5);
+        EXPECT_NEAR(Q[std::make_pair(1, 2)], 1.5, 1e-5);
+        EXPECT_NEAR(linear[2], 0.5, 1e-5);
+        EXPECT_NEAR(offset_ising, 1.4, 1e-5);
+    }
+
+    TEST(FunctionTest, from_ising)
+    {
+        Linear<uint32_t, double> linear{{0, 1.0}, {1, -1.0}, {2, 0.5} };
+        Quadratic<uint32_t, double> quadratic{ {std::make_pair(0, 1), 0.5}, {std::make_pair(1, 2), 1.5} };
+        double offset = 1.4;
+
+        auto bqm = BinaryQuadraticModel<uint32_t, double>::from_ising(linear, quadratic, offset);
+        Linear<uint32_t, double> h = bqm.get_linear();
+        Quadratic<uint32_t, double> J = bqm.get_quadratic();
+        double offset_ising = bqm.get_offset();
+
+        // check biases
+        EXPECT_EQ(h[0], 1.0);
+        EXPECT_EQ(J[std::make_pair(0, 1)], 0.5);
+        EXPECT_EQ(h[1], -1.0);
+        EXPECT_EQ(J[std::make_pair(1, 2)], 1.5);
+        EXPECT_EQ(h[2], 0.5);
+        EXPECT_EQ(offset_ising, 1.4);
+    }
+
     TEST(FunctionTest, remove_interaction)
     {
         Linear<std::string, double> linear;
