@@ -221,6 +221,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a81e37f1189d011db8dbb968db7cf1ae9"><td class="memItemLeft" align="right" valign="top">static std::tuple&lt; <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt;, <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt;, FloatType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_quadratic_model.html#a81e37f1189d011db8dbb968db7cf1ae9">binary_to_spin</a> (const <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt; &amp;linear, const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;quadratic, const FloatType &amp;offset)</td></tr>
 <tr class="memdesc:a81e37f1189d011db8dbb968db7cf1ae9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert linear, quadratic and offset from binary to spin. Does no checking of vartype. Copies all of the values into new objects.  <a href="classcimod_1_1_binary_quadratic_model.html#a81e37f1189d011db8dbb968db7cf1ae9">More...</a><br /></td></tr>
 <tr class="separator:a81e37f1189d011db8dbb968db7cf1ae9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae723cd464d18bb86805d8a8662696e9f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1_binary_quadratic_model.html">BinaryQuadraticModel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_quadratic_model.html#ae723cd464d18bb86805d8a8662696e9f">from_qubo</a> (const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;Q, FloatType offset=0.0)</td></tr>
+<tr class="memdesc:ae723cd464d18bb86805d8a8662696e9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a binary quadratic model from a QUBO model.  <a href="classcimod_1_1_binary_quadratic_model.html#ae723cd464d18bb86805d8a8662696e9f">More...</a><br /></td></tr>
+<tr class="separator:ae723cd464d18bb86805d8a8662696e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeda5faed84689a652510ac010fa2bb5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1_binary_quadratic_model.html">BinaryQuadraticModel</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_quadratic_model.html#afeda5faed84689a652510ac010fa2bb5">from_ising</a> (const <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt; &amp;linear, const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;quadratic, FloatType offset=0.0)</td></tr>
+<tr class="memdesc:afeda5faed84689a652510ac010fa2bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a binary quadratic model from an Ising problem.  <a href="classcimod_1_1_binary_quadratic_model.html#afeda5faed84689a652510ac010fa2bb5">More...</a><br /></td></tr>
+<tr class="separator:afeda5faed84689a652510ac010fa2bb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae14826bdc21e1c5d9c8d77de7d0fbba8"><td class="memTemplParams" colspan="2">template&lt;typename IndexType_serial  = IndexType, typename FloatType_serial  = FloatType&gt; </td></tr>
 <tr class="memitem:ae14826bdc21e1c5d9c8d77de7d0fbba8"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1_binary_quadratic_model.html">BinaryQuadraticModel</a>&lt; IndexType_serial, FloatType_serial &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_quadratic_model.html#ae14826bdc21e1c5d9c8d77de7d0fbba8">from_serializable</a> (const <a class="el" href="classcimod_1_1_binary_quadratic_model.html#ac062f5a8526fcb3f84482c8b3b9c2061">json</a> &amp;input)</td></tr>
 <tr class="memdesc:ae14826bdc21e1c5d9c8d77de7d0fbba8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classcimod_1_1_binary_quadratic_model.html" title="Class for binary quadratic model.">BinaryQuadraticModel</a> instance from a serializable object.  <a href="classcimod_1_1_binary_quadratic_model.html#ae14826bdc21e1c5d9c8d77de7d0fbba8">More...</a><br /></td></tr>
@@ -1052,6 +1058,109 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="afeda5faed84689a652510ac010fa2bb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afeda5faed84689a652510ac010fa2bb5">&#9670;&nbsp;</a></span>from_ising()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classcimod_1_1_binary_quadratic_model.html">BinaryQuadraticModel</a> <a class="el" href="classcimod_1_1_binary_quadratic_model.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType &gt;::from_ising </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>linear</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>quadratic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FloatType&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a binary quadratic model from an Ising problem. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">linear</td><td></td></tr>
+    <tr><td class="paramname">quadratic</td><td></td></tr>
+    <tr><td class="paramname">offset</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Binary quadratic model with vartype set to <code>.<a class="el" href="namespacecimod.html#af804dc431446f6af153364fec5c5aaf8a01518642fd172918ac4e6fa78bbb3164">Vartype.SPIN</a></code>. </dd></dl>
+
+</div>
+</div>
+<a id="ae723cd464d18bb86805d8a8662696e9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae723cd464d18bb86805d8a8662696e9f">&#9670;&nbsp;</a></span>from_qubo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classcimod_1_1_binary_quadratic_model.html">BinaryQuadraticModel</a> <a class="el" href="classcimod_1_1_binary_quadratic_model.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType &gt;::from_qubo </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">FloatType&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a binary quadratic model from a QUBO model. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Q</td><td></td></tr>
+    <tr><td class="paramname">offset</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Binary quadratic model with vartype set to <code>.<a class="el" href="namespacecimod.html#af804dc431446f6af153364fec5c5aaf8a98ad0e8750ae10ad556ed7a62affb452">Vartype.BINARY</a></code>. </dd></dl>
 
 </div>
 </div>
