@@ -101,6 +101,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <functional>
 
 namespace cimod
 {
@@ -952,38 +953,46 @@ public:
      * @brief Create a binary quadratic model with the specified vartype.
      * 
      * @param vartype
+     * @param implace
      * @return A new instance of the BinaryQuadraticModel class.
      */
     BinaryQuadraticModel change_vartype
     (
-        const Vartype &vartype
+        const Vartype &vartype,
+        bool implace=true
     )
     {
-        // same vartype
-        if(vartype == m_vartype)
+        Linear<IndexType, FloatType> linear;
+        Quadratic<IndexType, FloatType> quadratic;
+        FloatType offset = 0.0;
+
+        if(m_vartype == Vartype::BINARY && vartype == Vartype::SPIN) // binary -> spin
         {
-            BinaryQuadraticModel bqm(m_linear, m_quadratic, m_offset, m_vartype, m_info);
-            return bqm;
+            std::tie(linear, quadratic, offset) = binary_to_spin(m_linear, m_quadratic, m_offset);                
         }
-        // different vartype
+        else if(m_vartype == Vartype::SPIN && vartype == Vartype::BINARY) // spin -> binary
+        {
+            std::tie(linear, quadratic, offset) = spin_to_binary(m_linear, m_quadratic, m_offset);
+        }
         else
         {
-            std::tuple<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType> t;
-            if(m_vartype == Vartype::BINARY && vartype == Vartype::SPIN) // binary -> spin
-            {
-                t = binary_to_spin(m_linear, m_quadratic, m_offset);                
-            }
-            else if(m_vartype == Vartype::SPIN && vartype == Vartype::BINARY) // spin -> binary
-            {
-                t = spin_to_binary(m_linear, m_quadratic, m_offset);
-            }
-            else
-            {
-                std::cerr << "Invalid vartype." << std::endl;
-            }
-            BinaryQuadraticModel bqm(std::get<0>(t), std::get<1>(t), std::get<2>(t), vartype, m_info);
-            return bqm;
+            std::tie(linear, quadratic, offset) = std::tie(m_linear, m_quadratic, m_offset);
         }
+
+        BinaryQuadraticModel bqm(linear, quadratic, offset, vartype, m_info);
+        
+        if(implace == true)
+        {
+            //implace
+            m_linear = bqm.get_linear();
+            m_quadratic = bqm.get_quadratic();
+            m_offset = bqm.get_offset();
+            m_adj = bqm.get_adjacency();
+            m_info = bqm.get_info();
+            m_vartype = bqm.get_vartype();
+        }
+
+        return bqm;
     };
     
     /* Static methods */
