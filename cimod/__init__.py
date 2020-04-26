@@ -1,3 +1,4 @@
 
 from .__version import __version__
-from cxxcimod import BinaryQuadraticModel, Vartype
+from .vartype import SPIN, BINARY, Vartype
+from .model.binary_quadratic_model import BinaryQuadraticModel

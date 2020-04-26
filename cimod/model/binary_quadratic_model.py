@@ -14,7 +14,9 @@
 
 import cxxcimod
 from cimod.vartype import to_cxxcimod
+from cimod.utils.decolator import disabled
 import dimod
+import numpy as np
 
 class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
     """Represents Binary quadratic model. 
@@ -103,7 +105,7 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
 
     @property
     def vartype(self):
-        vartype = self.get_vartype()
+        vartype = super().get_vartype()
         if vartype == cxxcimod.Vartype.SPIN:
             return dimod.SPIN
         else:
@@ -181,9 +183,9 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
         # convert samples to SPIN or BINARY
         if convert_sample:
             for i in range(len(sample)):
-                if sample[i] == -1 and self.vartype == openjij.BINARY:
+                if sample[i] == -1 and self.vartype == dimod.BINARY:
                     sample[i] = 0
-                if sample[i] == 0  and self.vartype == openjij.SPIN:
+                if sample[i] == 0  and self.vartype == dimod.SPIN:
                     sample[i] = -1
 
         if sparse:
@@ -204,9 +206,9 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
             int_mat = self.interaction_matrix()
 
             # calculate 
-            if self.get_vartype() == openjij.BINARY:
+            if self.vartype == dimod.BINARY:
                 return np.dot(sample, np.dot(np.triu(int_mat), sample)) + self.get_offset()
-            elif self.get_vartype() == openjij.SPIN:
+            elif self.vartype == dimod.SPIN:
                 linear_term = np.diag(int_mat)
                 energy = (np.dot(sample, np.dot(int_mat, sample)) -
                       np.sum(linear_term))/2
@@ -221,6 +223,95 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
             en_vec.append(self.energy(elem, **kwargs))
 
         return en_vec
+
+    # disabled methods (TODO: implement these)
+    @disabled
+    def empty(*args, **kwargs):
+        pass
+
+    @disabled
+    def add_variable(*args, **kwargs):
+        pass
+
+    @disabled
+    def add_variables_from(*args, **kwargs):
+        pass
+
+    @disabled
+    def add_interaction(*args, **kwargs):
+        pass
+
+    @disabled
+    def add_interactions_from(*args, **kwargs):
+        pass
+
+    @disabled
+    def remove_variable(*args, **kwargs):
+        pass
+
+    @disabled
+    def remove_variables_from(*args, **kwargs):
+        pass
+
+    @disabled
+    def remove_interaction(*args, **kwargs):
+        pass
+
+    @disabled
+    def remove_interactions_from(*args, **kwargs):
+        pass
+
+    @disabled
+    def add_offset(*args, **kwargs):
+        pass
+
+    @disabled
+    def remove_offset(*args, **kwargs):
+        pass
+
+    @disabled
+    def scale(*args, **kwargs):
+        pass
+
+    @disabled
+    def normalize(*args, **kwargs):
+        pass
+
+    @disabled
+    def fix_variable(*args, **kwargs):
+        pass
+
+    @disabled
+    def fix_variables(*args, **kwargs):
+        pass
+
+    @disabled
+    def flip_variable(*args, **kwargs):
+        pass
+
+    @disabled
+    def update(*args, **kwargs):
+        pass
+
+    @disabled
+    def contract_variables(*args, **kwargs):
+        pass
+
+
+    def change_vartype(self, vartype, implace=True):
+        """
+        Create a binary quadratic model with the specified vartype
+        Args:
+            var_type (cimod.Vartype): SPIN or BINARY
+        Returns:
+            A new instance of the BinaryQuadraticModel class.
+        """
+        cxxvartype = to_cxxcimod(vartype)
+        bqm = super().change_vartype(cxxvartype, implace)
+        self._re_calculate = True
+        linear = self._conv_linear(bqm.get_linear(), self.num_to_ind)
+        quadratic = self._conv_quadratic(bqm.get_quadratic(), self.num_to_ind)
+        return BinaryQuadraticModel(linear, quadratic, bqm.get_offset(), vartype)
 
     @staticmethod
     def _generate_indices_dict(linear=None, quadratic=None):
@@ -249,6 +340,36 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
         ind_to_num = {val:k for k,val in enumerate(indices)}
 
         return indices, num_to_ind, ind_to_num
+
+    @classmethod
+    def from_qubo(cls, Q, offset=0.0, **kwargs):
+        """
+        Create a binary quadratic model from a QUBO model.
+        Args:
+            Q (dict), offset
+        Returns:
+            A new instance of the BinaryQuadraticModel class.
+        """
+        linear = {}
+        quadratic = {}
+        for (u, v), bias in Q.items():
+            if u == v:
+                linear[u] = bias
+            else:
+                quadratic[(u, v)] = bias
+
+        return cls(linear, quadratic, offset, var_type=dimod.BINARY, **kwargs)
+
+    @classmethod
+    def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
+        """
+        Create a binary quadratic model from a Ising model.
+        Args:
+            linear (dict), quadratic (dict), offset
+        Returns:
+            A new instance of the BinaryQuadraticModel class.
+        """
+        return cls(linear, quadratic, offset, var_type=dimod.SPIN, **kwargs)
 
     def _conv_linear(self, dic, conv_dict):
         """

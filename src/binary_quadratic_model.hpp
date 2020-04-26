@@ -1146,7 +1146,7 @@ public:
     std::tuple<Quadratic<IndexType, FloatType>, FloatType> to_qubo()
     {
         // change vartype to binary
-        BinaryQuadraticModel bqm = change_vartype(Vartype::BINARY);
+        BinaryQuadraticModel bqm = change_vartype(Vartype::BINARY, false);
 
         Linear<IndexType, FloatType> linear = bqm.get_linear();
         Quadratic<IndexType, FloatType> Q = bqm.get_quadratic();
@@ -1192,7 +1192,7 @@ public:
     std::tuple<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType> to_ising()
     {
         // change vartype to spin
-        BinaryQuadraticModel bqm = change_vartype(Vartype::SPIN);
+        BinaryQuadraticModel bqm = change_vartype(Vartype::SPIN, false);
 
         Linear<IndexType, FloatType> linear = bqm.get_linear();
         Quadratic<IndexType, FloatType> quadratic = bqm.get_quadratic();
