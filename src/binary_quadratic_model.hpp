@@ -190,17 +190,6 @@ protected:
     Adjacency<IndexType, FloatType> m_adj;
 
     /**
-     * @brief if true, re-calc interaction_matrix
-     */
-    bool _re_calculate;
-
-
-    /**
-     * @brief interaction_matrix
-     */
-    Matrix _interaction_matrix;
-
-    /**
      * @brief Add the adjacency to the adjacency list
      * 
      */
@@ -1233,37 +1222,33 @@ public:
      *
      * @return corresponding interaction matrix (Eigen)
      */
-    const Matrix interaction_matrix(const std::vector<IndexType>& indices){
-        if(_re_calculate == true)
-        {
-            // generate matrix
-            size_t system_size = indices.size();
-            _interaction_matrix = Matrix::Zero(system_size, system_size);
-            const Linear<IndexType, FloatType>& linear = m_linear; 
-            const Quadratic<IndexType, FloatType>& quadratic = m_quadratic; 
+    Matrix interaction_matrix(const std::vector<IndexType>& indices){
+        // generate matrix
+        size_t system_size = indices.size();
+        Matrix _interaction_matrix = Matrix::Zero(system_size, system_size);
+        const Linear<IndexType, FloatType>& linear = m_linear; 
+        const Quadratic<IndexType, FloatType>& quadratic = m_quadratic; 
 
-            for(size_t i=0; i<indices.size(); i++){
-                const IndexType& i_index = indices[i];
-                _interaction_matrix(i, i) = (linear.find(i_index) != linear.end()) ? linear.at(i_index): 0;
-                for(size_t j=i+1; j<indices.size(); j++){
-                    const IndexType& j_index = indices[j];
-                    FloatType jval = 0.0;
+        for(size_t i=0; i<indices.size(); i++){
+            const IndexType& i_index = indices[i];
+            _interaction_matrix(i, i) = (linear.find(i_index) != linear.end()) ? linear.at(i_index): 0;
+            for(size_t j=i+1; j<indices.size(); j++){
+                const IndexType& j_index = indices[j];
+                FloatType jval = 0.0;
 
-                    if(quadratic.find(std::make_pair(i_index, j_index)) != quadratic.end()){
-                        jval += quadratic.at(std::make_pair(i_index, j_index));
-                    }
-                    if(quadratic.find(std::make_pair(j_index, i_index)) != quadratic.end()){
-                        jval += quadratic.at(std::make_pair(j_index, i_index));
-                    }
-
-                    _interaction_matrix(i, j) = jval;
-                    _interaction_matrix(j, i) = jval;
+                if(quadratic.find(std::make_pair(i_index, j_index)) != quadratic.end()){
+                    jval += quadratic.at(std::make_pair(i_index, j_index));
                 }
+                if(quadratic.find(std::make_pair(j_index, i_index)) != quadratic.end()){
+                    jval += quadratic.at(std::make_pair(j_index, i_index));
+                }
+
+                _interaction_matrix(i, j) = jval;
+                _interaction_matrix(j, i) = jval;
             }
-            _re_calculate = false;
         }
 
-        return this->_interaction_matrix;
+        return _interaction_matrix;
     }
 
 

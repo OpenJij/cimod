@@ -48,7 +48,7 @@ include(${CMAKE_SOURCE_DIR}/external/json.cmake)
 include(${CMAKE_SOURCE_DIR}/external/pybind11-json.cmake)
 
 add_subdirectory(src)
-add_subdirectory(jij_cimod)
+add_subdirectory(cimod)
 if(USE_TEST)
     add_subdirectory(tests)
 endif()

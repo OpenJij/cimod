@@ -26,7 +26,7 @@ namespace py = pybind11;
 using namespace py::literals;
 using namespace cimod;
 
-PYBIND11_MODULE(cimod, m){
+PYBIND11_MODULE(cxxcimod, m){
     m.doc() = "C++ library for a binary quadratic model";
 
     /**********************************************************
