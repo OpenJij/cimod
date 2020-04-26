@@ -514,6 +514,31 @@ namespace
         EXPECT_EQ(bqm.get_vartype(), Vartype::BINARY);
 
     }
+    TEST(FunctionTest, interaction_matrix)
+    {
+        Linear<uint32_t, double> linear{{0, 1.0}, {1, -1.0}, {2, 0.5} };
+        Quadratic<uint32_t, double> quadratic{ {std::make_pair(0, 1), 0.5}, {std::make_pair(1, 0), 0.5}, {std::make_pair(1, 2), 1.5} };
+        double offset = 1.4;
+        Vartype vartype = Vartype::SPIN;
+
+        BinaryQuadraticModel<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+
+        std::vector<uint32_t> indices = {0,1,2};
+
+        BinaryQuadraticModel<uint32_t, double>::Matrix mat = bqm.interaction_matrix(indices);
+
+        // check quadratic matrix and offset
+        EXPECT_EQ(mat(0,0),  1);
+        EXPECT_EQ(mat(0,1),  1);
+        EXPECT_EQ(mat(0,2),  0);
+        EXPECT_EQ(mat(1,0),  1);
+        EXPECT_EQ(mat(1,1), -1);
+        EXPECT_EQ(mat(1,2),  1.5);
+        EXPECT_EQ(mat(2,0),  0);
+        EXPECT_EQ(mat(2,1),  1.5);
+        EXPECT_EQ(mat(2,2),  0.5);
+
+    }
     TEST(FunctionTest, to_serializable)
     {
         Linear<std::string, double> linear{ {"c", -1.0}, {"d", 1.0} };
@@ -548,4 +573,3 @@ namespace
         EXPECT_EQ(bqm_quadratic[std::make_pair("b", "e")], quadratic[std::make_pair("b", "e")]);
     }
 }
-

@@ -139,12 +139,19 @@ using Adjacency = std::unordered_map<IndexType, std::unordered_map<IndexType, Fl
 template <typename IndexType>
 using Sample = std::unordered_map<IndexType, int32_t>;
 
+
 /**
  * @brief Class for binary quadratic model.
  */
+
 template <typename IndexType, typename FloatType>
 class BinaryQuadraticModel
 {
+public:
+/**
+ * @brief Eigen Matrix
+ */
+using Matrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 protected:
     /**
      * @brief Linear biases as a dictionary.
@@ -187,10 +194,6 @@ protected:
      */
     bool _re_calculate;
 
-    /**
-     * @brief Eigen Matrix
-     */
-    using Matrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
     /**
      * @brief interaction_matrix
@@ -1234,7 +1237,7 @@ public:
         if(_re_calculate == true)
         {
             // generate matrix
-            size_t system_size = indices.size;
+            size_t system_size = indices.size();
             _interaction_matrix = Matrix::Zero(system_size, system_size);
             const Linear<IndexType, FloatType>& linear = m_linear; 
             const Quadratic<IndexType, FloatType>& quadratic = m_quadratic; 
@@ -1244,11 +1247,23 @@ public:
                 _interaction_matrix(i, i) = (linear.find(i_index) != linear.end()) ? linear.at(i_index): 0;
                 for(size_t j=i+1; j<indices.size(); j++){
                     const IndexType& j_index = indices[j];
+                    FloatType jval = 0.0;
+
+                    if(quadratic.find(std::make_pair(i_index, j_index)) != quadratic.end()){
+                        jval += quadratic.at(std::make_pair(i_index, j_index));
+                    }
+                    if(quadratic.find(std::make_pair(j_index, i_index)) != quadratic.end()){
+                        jval += quadratic.at(std::make_pair(j_index, i_index));
+                    }
+
+                    _interaction_matrix(i, j) = jval;
+                    _interaction_matrix(j, i) = jval;
                 }
             }
-
             _re_calculate = false;
         }
+
+        return this->_interaction_matrix;
     }
 
 
