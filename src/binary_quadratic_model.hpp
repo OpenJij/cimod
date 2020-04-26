@@ -99,9 +99,11 @@
 #include <typeinfo>
 #include <set>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
 #include <functional>
+#include <Eigen/Dense>
 
 namespace cimod
 {
@@ -179,6 +181,21 @@ protected:
      * 
      */
     Adjacency<IndexType, FloatType> m_adj;
+
+    /**
+     * @brief if true, re-calc interaction_matrix
+     */
+    bool _re_calculate;
+
+    /**
+     * @brief Eigen Matrix
+     */
+    using Matrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+
+    /**
+     * @brief interaction_matrix
+     */
+    Matrix _interaction_matrix;
 
     /**
      * @brief Add the adjacency to the adjacency list
@@ -1204,6 +1221,36 @@ public:
     {
         return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::SPIN);
     }
+
+
+    /**
+     * @brief generate interaction matrix with given list of indices
+     *
+     * @param indices
+     *
+     * @return corresponding interaction matrix (Eigen)
+     */
+    const Matrix interaction_matrix(const std::vector<IndexType>& indices){
+        if(_re_calculate == true)
+        {
+            // generate matrix
+            size_t system_size = indices.size;
+            _interaction_matrix = Matrix::Zero(system_size, system_size);
+            const Linear<IndexType, FloatType>& linear = m_linear; 
+            const Quadratic<IndexType, FloatType>& quadratic = m_quadratic; 
+
+            for(size_t i=0; i<indices.size(); i++){
+                const IndexType& i_index = indices[i];
+                _interaction_matrix(i, i) = (linear.find(i_index) != linear.end()) ? linear.at(i_index): 0;
+                for(size_t j=i+1; j<indices.size(); j++){
+                    const IndexType& j_index = indices[j];
+                }
+            }
+
+            _re_calculate = false;
+        }
+    }
+
 
     using json = nlohmann::json;
 
