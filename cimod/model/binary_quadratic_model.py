@@ -308,38 +308,11 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
         """
         cxxvartype = to_cxxcimod(vartype)
         bqm = super().change_vartype(cxxvartype, implace)
-        self._re_calculate = True
+        if implace == True:
+            self._re_calculate = True
         linear = self._conv_linear(bqm.get_linear(), self.num_to_ind)
         quadratic = self._conv_quadratic(bqm.get_quadratic(), self.num_to_ind)
         return BinaryQuadraticModel(linear, quadratic, bqm.get_offset(), vartype)
-
-    @staticmethod
-    def _generate_indices_dict(linear=None, quadratic=None):
-        """
-        Generate indices dictionaries.
-        Args:
-            linear (dict), quadratic (dict)
-        Returns:
-            tuple of dictionaries (indices, num_to_ind, ind_to_num)
-        """
-        if linear is not None:
-            index_set = set(linear.keys())
-        else:
-            index_set = set()
-
-
-        if quadratic is not None:
-            for v1, v2 in quadratic.keys():
-                index_set.add(v1)
-                index_set.add(v2)
-
-        indices = list(index_set)
-
-        # generate conversion map index <-> integer
-        num_to_ind = {k:val for k,val in enumerate(indices)}
-        ind_to_num = {val:k for k,val in enumerate(indices)}
-
-        return indices, num_to_ind, ind_to_num
 
     @classmethod
     def from_qubo(cls, Q, offset=0.0, **kwargs):
@@ -350,14 +323,7 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
         Returns:
             A new instance of the BinaryQuadraticModel class.
         """
-        linear = {}
-        quadratic = {}
-        for (u, v), bias in Q.items():
-            if u == v:
-                linear[u] = bias
-            else:
-                quadratic[(u, v)] = bias
-
+        linear, quadratic = cls._Q_to_linear_quadratic(Q)
         return cls(linear, quadratic, offset, var_type=dimod.BINARY, **kwargs)
 
     @classmethod
@@ -370,36 +336,3 @@ class BinaryQuadraticModel(cxxcimod.BinaryQuadraticModel):
             A new instance of the BinaryQuadraticModel class.
         """
         return cls(linear, quadratic, offset, var_type=dimod.SPIN, **kwargs)
-
-    def _conv_linear(self, dic, conv_dict):
-        """
-        Convert indices of dictionary (linear)
-        Args:
-            dic (dict): dictionary
-            conv_dict (dict): convert dict (ind_to_num or num_to_ind)
-        Returns:
-            dictionaries with indices converted
-        """
-        return {conv_dict[k]:v for k,v in dic.items()}
-
-    def _conv_quadratic(self, dic, conv_dict):
-        """
-        Convert indices of dictionary (quadratic)
-        Args:
-            dic (dict): dictionary
-            conv_dict (dict): convert dict (ind_to_num or num_to_ind)
-        Returns:
-            dictionaries with indices converted
-        """
-        return {(conv_dict[k1], conv_dict[k2]):v for (k1,k2),v in dic.items()}
-
-    def _conv_adjacency(self, dic, conv_dict):
-        """
-        Convert indices of dictionary (adjacency)
-        Args:
-            dic (dict): dictionary
-            conv_dict (dict): convert dict (ind_to_num or num_to_ind)
-        Returns:
-            dictionaries with indices converted
-        """
-        return {conv_dict[index]:{conv_dict[k]:v for k,v in adj_dic.items()} for index,adj_dic in dic.items()}
