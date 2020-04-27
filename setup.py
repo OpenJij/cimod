@@ -16,7 +16,7 @@ NAME = 'jij_cimod'
 DESCRIPTION = 'C++ library for a binary quadratic model'
 EMAIL = 'openjij@j-ij.com'
 AUTHOR = 'Jij Inc.'
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 
 class CMakeExtension(Extension):
@@ -128,7 +128,7 @@ setup(
     description='C++ library for a binary quadratic model',
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
-    install_requires=['numpy >= 1.16.0'],
+    install_requires=['numpy >= 1.16.0', 'dimod == 0.9.1'],
     ext_modules=[CMakeExtension('cimod')],
     cmdclass=dict(build_ext=CMakeBuild, test=GoogleTestCommand,
                   pytest=PyTestCommand),

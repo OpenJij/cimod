@@ -44,6 +44,7 @@ return 0;
 
 ```python
 import cimod
+import dimod
 
 # Set linear biases and quadratic biases
 linear = {1:1.0, 2:2.0, 3:3.0, 4:4.0}
@@ -53,7 +54,7 @@ quadratic = {(1,2):12.0, (1,3):13.0, (1,4):14.0, (2,3):23.0, (2,4):24.0, (3,4):3
 offset = 0.0
 
 # Set variable type
-vartype = cimod.Vartype.BINARY
+vartype = dimod.BINARY
 
 # Create a BinaryQuadraticModel instance
 bqm = cimod.BinaryQuadraticModel(linear, quadratic, offset, vartype)

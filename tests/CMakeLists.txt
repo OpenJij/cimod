@@ -11,7 +11,7 @@ set_target_properties(cimod_test PROPERTIES
 )
 
 target_link_libraries(cimod_test PRIVATE
-    cimod_header_only
+    cxxcimod_header_only
     eigen_lib
     nlohmann_json::nlohmann_json
     gmock_main
