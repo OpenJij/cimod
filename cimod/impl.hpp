@@ -75,6 +75,5 @@ inline void declare_BQM(py::module& m, const std::string& name){
         //.def("to_serialiable", &BQM::to_serializable)
         //.def_static("from_serialiable", &BQM::from_serializable, "input"_a);
         .def("to_serializable", [](const BQM& self){return static_cast<py::object>(self.to_serializable());})
-        .def_static("_impl_from_serializable", [](const nlohmann::json& obj){return BQM::_impl_from_serializable(obj);}, "obj"_a)
         .def_static("from_serializable", [](const py::object& input){return BQM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a);
 }
