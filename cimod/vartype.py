@@ -21,6 +21,9 @@ Vartype = dimod.Vartype
 
 def to_cxxcimod(var_type):
     # convert to cxxcimod type
+    if isinstance(var_type, cxxcimod.Vartype):
+        return var_type
+    
     var_type = dimod.as_vartype(var_type)
     if var_type == dimod.SPIN:
         return cxxcimod.Vartype.SPIN

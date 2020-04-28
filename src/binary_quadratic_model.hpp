@@ -268,6 +268,25 @@ public:
     BinaryQuadraticModel(BinaryQuadraticModel&&) = default;
 
     /**
+     * @brief generate indices
+     *
+     * @return generated indices
+     */
+    std::vector<IndexType> _generate_indices() const{
+        std::unordered_set<IndexType> index_set;
+        for(auto elem : m_linear){
+            index_set.insert(elem.first);
+        }
+
+        for(auto elem : m_quadratic){
+            index_set.insert(elem.first.first);
+            index_set.insert(elem.first.second);
+        }
+
+        return std::vector<IndexType>(index_set.begin(), index_set.end());
+    }
+
+    /**
      * @brief Return the number of variables.
      * 
      * @return The number of variables.
@@ -363,52 +382,52 @@ public:
      * @brief Print informations of BinaryQuadraticModel
      * 
      */
-    void print()
-    {
-        std::cout << "[BinaryQuadraticModel]" << std::endl;
+    //void print()
+    //{
+    //    std::cout << "[BinaryQuadraticModel]" << std::endl;
 
-        // Print linear
-        std::cout << "linear = " << std::endl;
-        for(auto &it : m_linear)
-        {
-            std::cout << "" << it.first << ": " << it.second << std::endl;
-        }
+    //    // Print linear
+    //    std::cout << "linear = " << std::endl;
+    //    for(auto &it : m_linear)
+    //    {
+    //        std::cout << "" << it.first << ": " << it.second << std::endl;
+    //    }
 
-        // Print quadratic
-        std::cout << "quadratic = " << std::endl;
-        for(auto &it : m_quadratic)
-        {
-            std::cout << "(" << it.first.first << ", " << it.first.second << "): " << it.second << ", ";
-        }
-        std::cout << std::endl;
+    //    // Print quadratic
+    //    std::cout << "quadratic = " << std::endl;
+    //    for(auto &it : m_quadratic)
+    //    {
+    //        std::cout << "(" << it.first.first << ", " << it.first.second << "): " << it.second << ", ";
+    //    }
+    //    std::cout << std::endl;
 
-        // Print adjacency
-        std::cout << "adjacency = " << std::endl;
-        for(auto &it_src : m_linear)
-        {
-            std::cout << it_src.first << ": {";
-            for(auto &it_dst : m_adj[it_src.first])
-            {
-                std::cout << "(" << it_src.first << ", " << it_dst.first << "): " << it_dst.second << ", ";
-            }
-            std::cout << "}" << std::endl;
-        }
+    //    // Print adjacency
+    //    std::cout << "adjacency = " << std::endl;
+    //    for(auto &it_src : m_linear)
+    //    {
+    //        std::cout << it_src.first << ": {";
+    //        for(auto &it_dst : m_adj[it_src.first])
+    //        {
+    //            std::cout << "(" << it_src.first << ", " << it_dst.first << "): " << it_dst.second << ", ";
+    //        }
+    //        std::cout << "}" << std::endl;
+    //    }
 
-        // Print vartype
-        std::cout << "vartype = ";
-        if(m_vartype == Vartype::SPIN)
-        {
-            std::cout << "Spin" << std::endl;
-        }
-        else if(m_vartype == Vartype::BINARY)
-        {
-            std::cout << "Binary" << std::endl;
-        }
+    //    // Print vartype
+    //    std::cout << "vartype = ";
+    //    if(m_vartype == Vartype::SPIN)
+    //    {
+    //        std::cout << "Spin" << std::endl;
+    //    }
+    //    else if(m_vartype == Vartype::BINARY)
+    //    {
+    //        std::cout << "Binary" << std::endl;
+    //    }
 
-        // Print info
-        std::cout << "info = ";
-        std::cout << "\"" << m_info << "\"" << std::endl;
-    }
+    //    // Print info
+    //    std::cout << "info = ";
+    //    std::cout << "\"" << m_info << "\"" << std::endl;
+    //}
 
     /**
      * @brief Create an empty BinaryQuadraticModel
@@ -505,7 +524,7 @@ public:
     {
         if(u == v)
         {
-            std::cerr << "No self-loops allowed, therefore (" << u << ", " << v << ") is not an allowed interaction." << std::endl;
+            std::cerr << "No self-loops allowed" << std::endl;
         }
         else
         {
@@ -829,7 +848,7 @@ public:
         // check variable
         if(m_linear.count(v)==0)
         {
-           std::cout << v << " is not a variable in the binary quadratic model." << std::endl;
+           std::cerr << "not a variable in the binary quadratic model." << std::endl;
            return;
         }
 
@@ -898,12 +917,12 @@ public:
         // check variable
         if(m_linear.count(v)==0)
         {
-            std::cerr << v << " is not a variable in the binary quadratic model." << std::endl;
+            std::cerr << "not a variable in the binary quadratic model." << std::endl;
             return;
         }
         if(m_linear.count(u)==0)
         {
-            std::cerr << u << " is not a variable in the binary quadratic model." << std::endl;
+            std::cerr << "not a variable in the binary quadratic model." << std::endl;
             return;
         }
 
@@ -1170,6 +1189,25 @@ public:
     {
         Linear<IndexType, FloatType> linear;
         Quadratic<IndexType, FloatType> quadratic;
+        //for(auto&& elem : Q){
+        //    const auto& key = elem.first;
+        //    const auto& value = elem.second;
+        //    if(key.first == key.second){
+        //        linear[key.first] = value;
+        //    }
+        //    else{
+        //        quadratic[std::make_pair(key.first, key.second)] = value;
+        //    }
+        //}
+
+        std::tie(linear, quadratic) = _Q_to_h_J(Q);
+        return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::BINARY);
+    }
+
+    static std::pair<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>> 
+        _Q_to_h_J(const Quadratic<IndexType, FloatType>& Q){
+        Linear<IndexType, FloatType> linear;
+        Quadratic<IndexType, FloatType> quadratic;
         for(auto&& elem : Q){
             const auto& key = elem.first;
             const auto& value = elem.second;
@@ -1181,8 +1219,9 @@ public:
             }
         }
 
-        return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::BINARY);
-    }
+        return std::make_pair(linear, quadratic);
+
+        }
 
     /**
      * @brief Convert a binary quadratic model to Ising format.
