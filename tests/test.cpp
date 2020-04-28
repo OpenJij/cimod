@@ -65,7 +65,7 @@ namespace
 
         BinaryQuadraticModel<std::string, double> bqm_k4(linear, quadratic, offset, vartype, "BQM_Binary");
 
-        bqm_k4.print();
+        //bqm_k4.print();
 
         Linear<std::string, double> bqm_linear = bqm_k4.get_linear();
         Quadratic<std::string, double> bqm_quadratic = bqm_k4.get_quadratic();
@@ -147,7 +147,7 @@ namespace
 
         BinaryQuadraticModel<uint32_t, double> bqm(linear, quadratic, offset, vartype);
 
-        bqm.print();
+        //bqm.print();
 
         bqm.add_interaction(0, 2, 2);
         bqm.add_interaction(0, 1, 0.25);
@@ -157,7 +157,7 @@ namespace
         Quadratic<uint32_t, double> bqm_quadratic = bqm.get_quadratic();
         EXPECT_EQ(bqm_quadratic[std::make_pair(0, 1)], 0.75);
 
-        bqm.print();
+        //bqm.print();
     }
 
     TEST(FunctionTest, add_interactions_from)
@@ -332,9 +332,9 @@ namespace
         Vartype vartype = Vartype::SPIN;
 
         BinaryQuadraticModel<std::string, double> bqm(linear, quadratic, offset, vartype);
-        bqm.print();
+        //bqm.print();
         bqm.remove_interaction("b", "c");
-        bqm.print();
+        //bqm.print();
     }
 
     TEST(FunctionTest, remove_variable)
@@ -345,9 +345,9 @@ namespace
         Vartype vartype = Vartype::SPIN;
 
         BinaryQuadraticModel<std::string, double> bqm(linear, quadratic, offset, vartype);
-        bqm.print();
+        //bqm.print();
         bqm.remove_variable("a");
-        bqm.print();
+        //bqm.print();
 
         // check variables
         EXPECT_EQ(bqm.contains("a"), false);
@@ -363,12 +363,12 @@ namespace
         Vartype vartype = Vartype::SPIN;
 
         BinaryQuadraticModel<uint32_t, double> bqm(linear, quadratic, offset, vartype);
-        bqm.print();
+        //bqm.print();
 
         std::vector<uint32_t> variables = {0, 1};
 
         bqm.remove_variables_from(variables);
-        bqm.print();
+        //bqm.print();
 
         // check variables
         EXPECT_EQ(bqm.contains(0), false);
@@ -565,7 +565,7 @@ namespace
         std::cout << j << std::endl;
 
         BinaryQuadraticModel<std::string, double> bqm2 = BinaryQuadraticModel<std::string, double>::from_serializable(j);
-        bqm2.print();
+        //bqm2.print();
 
         auto bqm_linear = bqm2.get_linear();
         auto bqm_quadratic = bqm2.get_quadratic();
