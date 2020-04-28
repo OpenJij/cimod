@@ -301,6 +301,11 @@ def make_BinaryQuadraticModel(linear, quadratic):
         def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
             return cls(linear, quadratic, offset, var_type=dimod.SPIN, **kwargs)
 
+        @classmethod
+        def from_serializable(cls, obj):
+            linear, quadratic, offset, var_type, _ = cls._impl_from_serializable(obj)
+            return cls(linear, quadratic, offset, var_type)
+
     return BinaryQuadraticModel
 
 def BinaryQuadraticModel(linear, quadratic, offset=0.0,

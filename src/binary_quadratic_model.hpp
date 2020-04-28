@@ -1401,16 +1401,8 @@ public:
         return output;
     };
 
-    /**
-     * @brief Create a BinaryQuadraticModel instance from a serializable object.
-     * 
-     * @tparam IndexType_serial
-     * @tparam FloatType_serial
-     * @param input
-     * @return BinaryQuadraticModel<IndexType_serial, FloatType_serial> 
-     */
     template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
-    static BinaryQuadraticModel<IndexType_serial, FloatType_serial> from_serializable(const json &input)
+    static std::tuple<Linear<IndexType_serial, FloatType_serial>, Quadratic<IndexType_serial, FloatType_serial>, FloatType_serial, Vartype, std::string> _impl_from_serializable(const json &input)
     {
         //extract type and version
         std::string type = input["type"];
@@ -1462,6 +1454,28 @@ public:
         //extract offset and info
         FloatType_serial offset = input["offset"];
         std::string info = (input["info"].empty())?"":input["info"];
+
+        return std::make_tuple(linear, quadratic, offset, vartype, info);
+    };
+
+    /**
+     * @brief Create a BinaryQuadraticModel instance from a serializable object.
+     * 
+     * @tparam IndexType_serial
+     * @tparam FloatType_serial
+     * @param input
+     * @return BinaryQuadraticModel<IndexType_serial, FloatType_serial> 
+     */
+    template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
+    static BinaryQuadraticModel<IndexType_serial, FloatType_serial> from_serializable(const json &input)
+    {
+        Vartype vartype;
+        Linear<IndexType_serial, FloatType_serial> linear;
+        Quadratic<IndexType_serial, FloatType_serial> quadratic;
+        FloatType_serial offset;
+        std::string info;
+
+        std::tie(linear, quadratic, offset, vartype, info) = _impl_from_serializable(input);
 
         //construct a BinaryQuadraticModel instance
         BinaryQuadraticModel<IndexType_serial, FloatType_serial> bqm(linear, quadratic, offset, vartype, info);
