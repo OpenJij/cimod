@@ -1189,24 +1189,37 @@ public:
     {
         Linear<IndexType, FloatType> linear;
         Quadratic<IndexType, FloatType> quadratic;
+        //for(auto&& elem : Q){
+        //    const auto& key = elem.first;
+        //    const auto& value = elem.second;
+        //    if(key.first == key.second){
+        //        linear[key.first] = value;
+        //    }
+        //    else{
+        //        quadratic[std::make_pair(key.first, key.second)] = value;
+        //    }
+        //}
 
-        _Q_to_h_J(Q, linear, quadratic);
+        std::tie(linear, quadratic) = _Q_to_h_J(Q);
         return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::BINARY);
     }
 
-    static void 
-        _Q_to_h_J(const Quadratic<IndexType, FloatType>& Q, 
-                Linear<IndexType, FloatType>& linear, Quadratic<IndexType, FloatType>& quadratic){
-            for(auto&& elem : Q){
-                const auto& key = elem.first;
-                const auto& value = elem.second;
-                if(key.first == key.second){
-                    linear[key.first] = value;
-                }
-                else{
-                    quadratic[std::make_pair(key.first, key.second)] = value;
-                }
+    static std::pair<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>> 
+        _Q_to_h_J(const Quadratic<IndexType, FloatType>& Q){
+        Linear<IndexType, FloatType> linear;
+        Quadratic<IndexType, FloatType> quadratic;
+        for(auto&& elem : Q){
+            const auto& key = elem.first;
+            const auto& value = elem.second;
+            if(key.first == key.second){
+                linear[key.first] = value;
             }
+            else{
+                quadratic[std::make_pair(key.first, key.second)] = value;
+            }
+        }
+
+        return std::make_pair(linear, quadratic);
 
         }
 

@@ -294,9 +294,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
 
         @classmethod
         def from_qubo(cls, Q, offset=0.0, **kwargs):
-            linear = {}
-            quadratic = {}
-            cls._Q_to_h_J(Q, linear, quadratic)
+            linear, quadratic = cls._Q_to_h_J(Q)
             return cls(linear, quadratic, offset, var_type=dimod.BINARY, **kwargs)
 
         @classmethod
