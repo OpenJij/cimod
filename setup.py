@@ -129,7 +129,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     install_requires=['numpy >= 1.16.0', 'dimod == 0.9.1'],
-    ext_modules=[CMakeExtension('cimod')],
+    ext_modules=[CMakeExtension('cxxcimod')],
     cmdclass=dict(build_ext=CMakeBuild, test=GoogleTestCommand,
                   pytest=PyTestCommand),
     packages=find_packages(exclude=('tests', 'docs', 'examples')),

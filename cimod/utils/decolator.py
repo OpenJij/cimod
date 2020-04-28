@@ -17,3 +17,11 @@ def disabled(func):
         raise NotImplementedError("The function {} is disabled.".format(func.__name__))
 
     return wrapper
+
+def recalc(func):
+    def wrapper(self, *args, **kwargs):
+        self._re_calculate = True
+        self._re_calculate_indices = True
+        return func(self, *args, **kwargs)
+
+    return wrapper
