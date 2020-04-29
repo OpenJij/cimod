@@ -981,13 +981,13 @@ public:
      * @brief Create a binary quadratic model with the specified vartype.
      * 
      * @param vartype
-     * @param implace
+     * @param inplace
      * @return A new instance of the BinaryQuadraticModel class.
      */
     BinaryQuadraticModel change_vartype
     (
         const Vartype &vartype,
-        bool implace=true
+        bool inplace=true
     )
     {
         Linear<IndexType, FloatType> linear;
@@ -1009,9 +1009,9 @@ public:
 
         BinaryQuadraticModel bqm(linear, quadratic, offset, vartype, m_info);
         
-        if(implace == true)
+        if(inplace == true)
         {
-            //implace
+            //inplace
             m_linear = bqm.get_linear();
             m_quadratic = bqm.get_quadratic();
             m_offset = bqm.get_offset();

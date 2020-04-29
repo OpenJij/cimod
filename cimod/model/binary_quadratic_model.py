@@ -287,7 +287,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
             return super().contract_variables(*args, **kwargs)
     
     
-        def change_vartype(self, vartype, implace=True):
+        def change_vartype(self, vartype, inplace=True):
             """
             Create a binary quadratic model with the specified vartype
             Args:
@@ -297,7 +297,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
             """
             cxxvartype = to_cxxcimod(vartype)
             #FIXME: bottleneck: variable copies
-            bqm = super().change_vartype(cxxvartype, implace)
+            bqm = super().change_vartype(cxxvartype, inplace)
             self._re_calculate = True
             return BinaryQuadraticModel(bqm.get_linear(), bqm.get_quadratic(), bqm.get_offset(), vartype)
 

@@ -61,7 +61,7 @@ inline void declare_BQM(py::module& m, const std::string& name){
         .def("flip_variable", &BQM::flip_variable, "v"_a)
         .def("update", &BQM::update, "bqm"_a, "ignore_info"_a=true)
         .def("contract_variables", &BQM::contract_variables, "u"_a, "v"_a)
-        .def("change_vartype", &BQM::change_vartype, "vartype"_a, "implace"_a=true)
+        .def("change_vartype", &BQM::change_vartype, "vartype"_a, "inplace"_a=true)
         .def_static("spin_to_binary", &BQM::spin_to_binary, "linear"_a, "quadratic"_a, "offset"_a)
         .def_static("binary_to_spin", &BQM::binary_to_spin, "linear"_a, "quadratic"_a, "offset"_a)
         .def("energy", &BQM::energy, "sample"_a)
