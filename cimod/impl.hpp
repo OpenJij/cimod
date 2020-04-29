@@ -69,7 +69,6 @@ inline void declare_BQM(py::module& m, const std::string& name){
         .def("to_qubo", &BQM::to_qubo)
         .def("to_ising", &BQM::to_ising)
         .def_static("from_qubo", &BQM::from_qubo, "Q"_a, "offset"_a=0.0)
-        .def_static("_Q_to_h_J", &BQM::_Q_to_h_J, "Q"_a)
         .def_static("from_ising", &BQM::from_ising, "h"_a, "J"_a, "offset"_a=0.0)
         .def("interaction_matrix", &BQM::interaction_matrix, "indices"_a)
         //.def("to_serialiable", &BQM::to_serializable)
