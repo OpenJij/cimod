@@ -283,7 +283,9 @@ public:
             index_set.insert(elem.first.second);
         }
 
-        return std::vector<IndexType>(index_set.begin(), index_set.end());
+        auto ret = std::vector<IndexType>(index_set.begin(), index_set.end());
+        std::sort(ret.begin(), ret.end());
+        return ret;
     }
 
     /**
