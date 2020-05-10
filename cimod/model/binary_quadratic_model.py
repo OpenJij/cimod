@@ -64,19 +64,24 @@ def make_BinaryQuadraticModel(linear, quadratic):
         """Represents Binary quadratic model. 
            Note that the indices are converted to the integers internally. 
            The dictionaries between indices and integers are self.ind_to_num (indices -> integers) and self.num_to_ind (integers -> indices).
-           Indices are listed in self.indices.
+           Indices are listed in self._indices.
         Attributes:
             var_type (cimod.VariableType): variable type SPIN or BINARY
             linear (dict): represents linear term
             quadratic (dict): represents quadratic term
             adj (dict): represents adjacency
             indices (list): labels of each variables sorted by results variables
-            ind_to_num (list): map which specifies where the index is in self.indices
+            ind_to_num (list): map which specifies where the index is in self._indices
             offset (float): represents constant energy term when convert to SPIN from BINARY
         """
         def __init__(self, linear, quadratic, offset=0.0,
                      var_type=dimod.SPIN, **kwargs):
             super().__init__(linear, quadratic, offset, to_cxxcimod(var_type))
+
+            self._init_process()
+
+
+        def _init_process(self):
             # set recalculate flag True
             # Be sure to enable this flag when variables are changed.
             self._re_calculate = True
@@ -84,11 +89,9 @@ def make_BinaryQuadraticModel(linear, quadratic):
             # interaction_matrix
             self._interaction_matrix = None
             # indices
-            self.indices = None
+            self._indices = None
             # ind to num
             self._ind_to_num = None
-            # initial calculation of indices
-            self.update_indices()
 
     
         @property
@@ -116,18 +119,23 @@ def make_BinaryQuadraticModel(linear, quadratic):
         def offset(self):
             return self.get_offset()
 
+        @property
+        def indices(self):
+            ind, _ = self.update_indices()
+            return ind
+
         def update_indices(self):
-            """calculate self.indices and self.ind_to_num
+            """calculate self._indices and self.ind_to_num
             Returns:
-                self.indices and self._ind_to_num
+                self._indices and self._ind_to_num
             """
             if self._re_calculate_indices is True:
-                self.indices = self._generate_indices()
-                self._ind_to_num = {ind:num for num,ind in enumerate(self.indices)}
+                self._indices = self._generate_indices()
+                self._ind_to_num = {ind:num for num,ind in enumerate(self._indices)}
 
                 self._re_calculate_indices = False
 
-            return self.indices, self._ind_to_num
+            return self._indices, self._ind_to_num
 
     
         def interaction_matrix(self):
@@ -279,7 +287,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
             return super().contract_variables(*args, **kwargs)
     
     
-        def change_vartype(self, vartype, implace=True):
+        def change_vartype(self, vartype, inplace=True):
             """
             Create a binary quadratic model with the specified vartype
             Args:
@@ -288,20 +296,48 @@ def make_BinaryQuadraticModel(linear, quadratic):
                 A new instance of the BinaryQuadraticModel class.
             """
             cxxvartype = to_cxxcimod(vartype)
-            bqm = super().change_vartype(cxxvartype, implace)
+            #FIXME: bottleneck: variable copies
+            bqm = super().change_vartype(cxxvartype, inplace)
             self._re_calculate = True
-            return BinaryQuadraticModel(self.linear, self.quadratic, bqm.get_offset(), vartype)
+            return BinaryQuadraticModel(bqm.get_linear(), bqm.get_quadratic(), bqm.get_offset(), vartype)
 
         @classmethod
         def from_qubo(cls, Q, offset=0.0, **kwargs):
-            linear, quadratic = cls._Q_to_h_J(Q)
+            linear = {}
+            quadratic = {}
+            for (u, v), bias in Q.items():
+                if u == v: 
+                    linear[u] = bias
+                else:
+                    quadratic[(u, v)] = bias
+
             return cls(linear, quadratic, offset, var_type=dimod.BINARY, **kwargs)
 
         @classmethod
         def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
             return cls(linear, quadratic, offset, var_type=dimod.SPIN, **kwargs)
 
+        @classmethod
+        def from_serializable(cls, obj):
+            #FIXME: bottleneck: variable copies
+            bqm = super().from_serializable(obj)
+            return BinaryQuadraticModel(bqm.get_linear(), bqm.get_quadratic(), bqm.get_offset(), bqm.get_vartype())
+
+        #TODO: implement from_serializable
+
     return BinaryQuadraticModel
+
+# for JSON
+def make_BinaryQuadraticModel_from_JSON(obj):
+    label = obj['variable_labels'][0]
+    if isinstance(label, list):
+        #convert to tuple
+        label = tuple(label)
+
+    mock_linear = {label:1.0}
+
+    return make_BinaryQuadraticModel(mock_linear, {})
+
 
 def BinaryQuadraticModel(linear, quadratic, offset=0.0,
                  var_type=dimod.SPIN, **kwargs):
@@ -310,12 +346,15 @@ def BinaryQuadraticModel(linear, quadratic, offset=0.0,
 
     return Model(linear, quadratic, offset, var_type, **kwargs)
 
-
 #classmethods
 BinaryQuadraticModel.from_qubo = \
 lambda Q, offset=0.0, **kwargs: make_BinaryQuadraticModel({}, Q).from_qubo(Q, offset, **kwargs)
+
 BinaryQuadraticModel.from_ising = \
 lambda linear, quadratic, offset=0.0, **kwargs: make_BinaryQuadraticModel(linear, quadratic).from_ising(linear, quadratic, offset, **kwargs)
+
+BinaryQuadraticModel.from_serializable = \
+lambda obj: make_BinaryQuadraticModel_from_JSON(obj).from_serializable(obj)
 
 
 

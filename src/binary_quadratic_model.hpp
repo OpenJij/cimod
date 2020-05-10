@@ -283,7 +283,9 @@ public:
             index_set.insert(elem.first.second);
         }
 
-        return std::vector<IndexType>(index_set.begin(), index_set.end());
+        auto ret = std::vector<IndexType>(index_set.begin(), index_set.end());
+        std::sort(ret.begin(), ret.end());
+        return ret;
     }
 
     /**
@@ -981,13 +983,13 @@ public:
      * @brief Create a binary quadratic model with the specified vartype.
      * 
      * @param vartype
-     * @param implace
+     * @param inplace
      * @return A new instance of the BinaryQuadraticModel class.
      */
     BinaryQuadraticModel change_vartype
     (
         const Vartype &vartype,
-        bool implace=true
+        bool inplace=true
     )
     {
         Linear<IndexType, FloatType> linear;
@@ -1009,9 +1011,9 @@ public:
 
         BinaryQuadraticModel bqm(linear, quadratic, offset, vartype, m_info);
         
-        if(implace == true)
+        if(inplace == true)
         {
-            //implace
+            //inplace
             m_linear = bqm.get_linear();
             m_quadratic = bqm.get_quadratic();
             m_offset = bqm.get_offset();
@@ -1189,25 +1191,7 @@ public:
     {
         Linear<IndexType, FloatType> linear;
         Quadratic<IndexType, FloatType> quadratic;
-        //for(auto&& elem : Q){
-        //    const auto& key = elem.first;
-        //    const auto& value = elem.second;
-        //    if(key.first == key.second){
-        //        linear[key.first] = value;
-        //    }
-        //    else{
-        //        quadratic[std::make_pair(key.first, key.second)] = value;
-        //    }
-        //}
 
-        std::tie(linear, quadratic) = _Q_to_h_J(Q);
-        return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::BINARY);
-    }
-
-    static std::pair<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>> 
-        _Q_to_h_J(const Quadratic<IndexType, FloatType>& Q){
-        Linear<IndexType, FloatType> linear;
-        Quadratic<IndexType, FloatType> quadratic;
         for(auto&& elem : Q){
             const auto& key = elem.first;
             const auto& value = elem.second;
@@ -1219,9 +1203,8 @@ public:
             }
         }
 
-        return std::make_pair(linear, quadratic);
-
-        }
+        return BinaryQuadraticModel<IndexType, FloatType>(linear, quadratic, offset, Vartype::BINARY);
+    }
 
     /**
      * @brief Convert a binary quadratic model to Ising format.
