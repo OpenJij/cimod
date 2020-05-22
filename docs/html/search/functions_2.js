@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['change_5fvartype_80',['change_vartype',['../classcimod_1_1_binary_quadratic_model.html#a52dd6164c463fd37ce6ce4708af5560d',1,'cimod::BinaryQuadraticModel']]],
-  ['check_5fvartype_81',['check_vartype',['../namespacecimod.html#a25061c3f68f273da3b32d9fbfc52a319',1,'cimod']]],
-  ['contains_82',['contains',['../classcimod_1_1_binary_quadratic_model.html#abb7a93fbd8c439dc13dc2e70f66f1744',1,'cimod::BinaryQuadraticModel']]],
-  ['contract_5fvariables_83',['contract_variables',['../classcimod_1_1_binary_quadratic_model.html#a01f1d4095a4d5b4072330e60b2b8a46a',1,'cimod::BinaryQuadraticModel']]]
+  ['binary_5fto_5fspin_90',['binary_to_spin',['../classcimod_1_1_binary_quadratic_model.html#a81e37f1189d011db8dbb968db7cf1ae9',1,'cimod::BinaryQuadraticModel']]],
+  ['binaryquadraticmodel_91',['BinaryQuadraticModel',['../classcimod_1_1_binary_quadratic_model.html#a90915dcfa71daf26b223b11fdffe5e3e',1,'cimod::BinaryQuadraticModel::BinaryQuadraticModel(const Linear&lt; IndexType, FloatType &gt; &amp;linear, const Quadratic&lt; IndexType, FloatType &gt; &amp;quadratic, const FloatType &amp;offset, const Vartype vartype, const std::string info=&quot;&quot;)'],['../classcimod_1_1_binary_quadratic_model.html#a1b43bfe156429c0378e62ba910d3976c',1,'cimod::BinaryQuadraticModel::BinaryQuadraticModel(const BinaryQuadraticModel &amp;)=default'],['../classcimod_1_1_binary_quadratic_model.html#a041ffaf84677cea03acc821c8470a717',1,'cimod::BinaryQuadraticModel::BinaryQuadraticModel(BinaryQuadraticModel &amp;&amp;)=default']]]
 ];

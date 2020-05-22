@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['json_33',['json',['../classcimod_1_1_binary_quadratic_model.html#ac062f5a8526fcb3f84482c8b3b9c2061',1,'cimod::BinaryQuadraticModel']]]
+  ['insert_5for_5fassign_37',['insert_or_assign',['../namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d',1,'cimod']]],
+  ['interaction_5fmatrix_38',['interaction_matrix',['../classcimod_1_1_binary_quadratic_model.html#a1007850a3d93d3d2098736220d14f7b0',1,'cimod::BinaryQuadraticModel']]]
 ];

@@ -1,0 +1,1 @@
+from .decolator import disabled
