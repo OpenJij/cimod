@@ -1239,6 +1239,37 @@ public:
 
     /**
      * @brief generate interaction matrix with given list of indices
+     * The generated matrix will be the following symmetric matrix:
+     * \f[
+     * \begin{pmatrix}
+     * \tilde{J}_{0,0} & \tilde{J}_{0,1} & \tilde{J}_{0,2} & \cdots \\
+     * \tilde{J}_{1,0} & \tilde{J}_{1,1} & \tilde{J}_{1,2} & \cdots \\
+     * \tilde{J}_{2,0} & \tilde{J}_{2,1} & \tilde{J}_{2,2} & \cdots \\
+     * \vdots & \vdots & \vdots & \ddots \\
+     * \end{pmatrix}
+     * \f]
+     *
+     * where in the Ising case,
+     * \f[
+     * \tilde{J}_{f(i),f(j)} = J_{ij} + J_{ji}, \\
+     * \tilde{J}_{f(i),f(i)} = h_{i},
+     * \f]
+     * and the QUBO case,
+     * \f[
+     * \tilde{J}_{f(i),f(j)} = Q_{ij} + Q_{ji}, \\
+     * \tilde{J}_{f(i),f(i)} = Q_{ii},
+     * \f]
+     * and the function \f$f\f$ denotes a mapping from index to the corresponding number specified by the argument `indices`.
+     * For instance, if `indices` is ['a', 'b', 'c'], The following equations, \f$f(a) = 0, f(b)=1, \mathrm{and} f(c)=2\f$ hold.
+     *
+     * The original Hamiltonian can be rewritten with \f$\tilde{J_{ij}}\f$ as
+     * \f[
+     * E_{\mathrm{Ising}} = \sum_{i} \tilde{J}_{f(i),f(i)} s_i + \sum_{i < j} \tilde{J}_{f(i), f(j)} s_i s_j + \delta_{\mathrm{Ising}},
+     * \f]
+     * and
+     * \f[
+     * E_{\mathrm{QUBO}} = \sum_{i} \tilde{J}_{f(i), f(i)}x_i + \sum_{i < j} \tilde{J}_{f(i), f(j)} x_i x_j + \delta_{\mathrm{QUBO}}.
+     * \f]
      *
      * @param indices
      *

@@ -59,9 +59,6 @@ vartype = dimod.BINARY
 # Create a BinaryQuadraticModel instance
 bqm = cimod.BinaryQuadraticModel(linear, quadratic, offset, vartype)
 
-# Print informations of bqm
-bqm.print()
-```
 
 ## Install (via python)
 

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['from_5fjson_5ffunction_1051',['from_json_function',['../namespacenlohmann_1_1detail.html#a1711ee5cef66a0523055c8d9f024f322',1,'nlohmann::detail']]]
+  ['sample_141',['Sample',['../namespacecimod.html#a300c5a25892e0259f843d34e20fd4801',1,'cimod']]]
 ];

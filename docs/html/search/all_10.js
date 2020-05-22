@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['sample_54',['Sample',['../namespacecimod.html#a300c5a25892e0259f843d34e20fd4801',1,'cimod']]],
-  ['scale_55',['scale',['../classcimod_1_1_binary_quadratic_model.html#a386be82f236f88d60120a8075c577611',1,'cimod::BinaryQuadraticModel']]],
-  ['spin_56',['SPIN',['../namespacecimod.html#af804dc431446f6af153364fec5c5aaf8a01518642fd172918ac4e6fa78bbb3164',1,'cimod']]],
-  ['spin_5fto_5fbinary_57',['spin_to_binary',['../classcimod_1_1_binary_quadratic_model.html#a4de8ddb91485406dbd0c7e2d9ef7c820',1,'cimod::BinaryQuadraticModel']]]
+  ['remove_5fadjacency_54',['remove_adjacency',['../classcimod_1_1_binary_quadratic_model.html#ad6a234c7cd583d7984bf0e4f99dac355',1,'cimod::BinaryQuadraticModel']]],
+  ['remove_5finteraction_55',['remove_interaction',['../classcimod_1_1_binary_quadratic_model.html#ae6dd921afa029faca9ca53b9650ca85e',1,'cimod::BinaryQuadraticModel']]],
+  ['remove_5finteractions_5ffrom_56',['remove_interactions_from',['../classcimod_1_1_binary_quadratic_model.html#abd8bbcecacade32b12ea0509c46b1015',1,'cimod::BinaryQuadraticModel']]],
+  ['remove_5foffset_57',['remove_offset',['../classcimod_1_1_binary_quadratic_model.html#a0e578606d2411b8867cc2fc0ab770d0d',1,'cimod::BinaryQuadraticModel']]],
+  ['remove_5fvariable_58',['remove_variable',['../classcimod_1_1_binary_quadratic_model.html#a48c67325ef8831773bc3a975652a4596',1,'cimod::BinaryQuadraticModel']]],
+  ['remove_5fvariables_5ffrom_59',['remove_variables_from',['../classcimod_1_1_binary_quadratic_model.html#a6222fa4f3218f95ccef3f28f19dae86c',1,'cimod::BinaryQuadraticModel']]]
 ];
