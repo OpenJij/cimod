@@ -33,8 +33,8 @@ Vartype vartype = Vartype::BINARY;
 // Create a BinaryQuadraticModel instance
 BinaryQuadraticModel<uint32_t, double> bqm(linear, quadratic, offset, vartype);
 
-// Print informations of bqm
-bqm.print();
+//linear terms -> bqm.get_linear()
+//quadratic terms -> bqm.get_quadratic()
 
 return 0;
 }
@@ -58,6 +58,10 @@ vartype = dimod.BINARY
 
 # Create a BinaryQuadraticModel instance
 bqm = cimod.BinaryQuadraticModel(linear, quadratic, offset, vartype)
+
+print(bqm.linear)
+print(bqm.quadratic)
+
 ```
 
 ## Install 
