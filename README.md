@@ -138,7 +138,7 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
 | [dimod](https://github.com/dwavesystems/dimod)| 0.9.2   |
 
 ### Result
-![benchmark]()
+![benchmark](https://github.com/OpenJij/cimod/blob/image_store/figure.png)
 
 
 
