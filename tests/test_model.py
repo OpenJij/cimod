@@ -47,6 +47,13 @@ class ModelTest(unittest.TestCase):
         self.strQ = {('a', 'a'): 1, ('c', 'a'): -0.2, ('b', 'd'): 3, ('b', 'c'): -1}
         self.strbinaries = {'a': 0, 'b': 1, 'c': 1, 'd': 0}
 
+        self.tupleh = {(1,2,3): -2, (0,1,2): 1}
+        self.tupleJ = {((2,3,4), (3,4,5)): 0.5, ((0,1,2), (1,2,3)): -1, ((1,2,3), (2,3,4)): -3}
+        self.tuplespins = {(0,1,2): 1, (2,3,4): 1, (3,4,5): 1, (1,2,3): -1}
+
+        self.tupleQ = {((0,1,2), (0,1,2)): 1, ((2,3,4), (0,1,2)): -0.2, ((1,2,3), (3,4,5)): 3, ((1,2,3), (2,3,4)): -1}
+        self.tuplebinaries = {(0,1,2): 0, (1,2,3): 1, (2,3,4): 1, (3,4,5): 0}
+
     def test_bqm_constructor(self):
         # Test BinaryQuadraticModel constructor
         bqm = cimod.BinaryQuadraticModel(self.h, self.J)
@@ -65,6 +72,14 @@ class ModelTest(unittest.TestCase):
         bqm_qubo = cimod.BinaryQuadraticModel.from_qubo(Q=self.strQ)
         self.assertEqual(bqm_qubo.vartype, cimod.BINARY)
 
+        bqm = cimod.BinaryQuadraticModel(self.tupleh, self.tupleJ)
+        self.assertEqual(type(bqm.interaction_matrix()), np.ndarray)
+
+        self.assertEqual(bqm.vartype, cimod.SPIN)
+
+        bqm_qubo = cimod.BinaryQuadraticModel.from_qubo(Q=self.tupleQ)
+        self.assertEqual(bqm_qubo.vartype, cimod.BINARY)
+
     def test_interaction_matrix(self):
         bqm = cimod.BinaryQuadraticModel(self.h, self.J)
         ising_matrix = np.array([
@@ -78,6 +93,17 @@ class ModelTest(unittest.TestCase):
         )
 
         bqm = cimod.BinaryQuadraticModel(self.strh, self.strJ)
+        ising_matrix = np.array([
+            [1, -1,  0,  0],
+            [-1, -2, -3, 0],
+            [0, -3, 0, 0.5],
+            [0, 0, 0.5, 0]
+        ])
+        np.testing.assert_array_equal(
+            bqm.interaction_matrix(), ising_matrix
+        )
+
+        bqm = cimod.BinaryQuadraticModel(self.tupleh, self.tupleJ)
         ising_matrix = np.array([
             [1, -1,  0,  0],
             [-1, -2, -3, 0],
@@ -135,6 +161,29 @@ class ModelTest(unittest.TestCase):
 
         self.assertEqual(qubo_energy, qubo_bqm.energy(spins, convert_sample=True))
 
+        # Test to calculate energy
+
+        # Test Ising energy
+        bqm = cimod.BinaryQuadraticModel(self.tupleh, self.tupleJ)
+        ising_energy_bqm = bqm.energy(self.tuplespins)
+        true_ising_e = calculate_ising_energy(self.tupleh, self.tupleJ, self.tuplespins)
+        self.assertEqual(ising_energy_bqm, true_ising_e)
+
+        # Test QUBO energy
+        bqm = cimod.BinaryQuadraticModel.from_qubo(Q=self.tupleQ)
+        qubo_energy_bqm = bqm.energy(self.tuplebinaries)
+        true_qubo_e = calculate_qubo_energy(self.tupleQ, self.tuplebinaries)
+        self.assertEqual(qubo_energy_bqm, true_qubo_e)
+
+        # QUBO == Ising
+        spins = {(0,1,2): 1, (1,2,3): 1, (2,3,4): -1, (3,4,5): 1}
+        binary = {(0,1,2): 1, (1,2,3): 1, (2,3,4): 0, (3,4,5): 1}
+        qubo_bqm = cimod.BinaryQuadraticModel.from_qubo(Q=self.tupleQ)
+
+        qubo_energy = qubo_bqm.energy(binary)
+
+        self.assertEqual(qubo_energy, qubo_bqm.energy(spins, convert_sample=True))
+
     def test_change_vartype(self):
         bqm = cimod.BinaryQuadraticModel(self.h, self.J)
         self.assertEqual(bqm.vartype, cimod.SPIN)
@@ -142,6 +191,31 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(bqm.vartype, cimod.BINARY)
         bqm.change_vartype('SPIN', inplace=False)
         self.assertEqual(bqm.vartype, cimod.BINARY)
+
+    def test_serializable(self):
+        bqm = cimod.BinaryQuadraticModel(self.h, self.J)
+        serial = bqm.to_serializable()
+        decode_bqm = cimod.BinaryQuadraticModel.from_serializable(serial)
+        assert(bqm.linear == decode_bqm.linear)
+        assert(bqm.quadratic == decode_bqm.quadratic)
+        assert(bqm.offset == decode_bqm.offset)
+        assert(bqm.vartype == decode_bqm.vartype)
+
+        bqm = cimod.BinaryQuadraticModel(self.strh, self.strJ)
+        serial = bqm.to_serializable()
+        decode_bqm = cimod.BinaryQuadraticModel.from_serializable(serial)
+        assert(bqm.linear == decode_bqm.linear)
+        assert(bqm.quadratic == decode_bqm.quadratic)
+        assert(bqm.offset == decode_bqm.offset)
+        assert(bqm.vartype == decode_bqm.vartype)
+
+        bqm = cimod.BinaryQuadraticModel(self.tupleh, self.tupleJ)
+        serial = bqm.to_serializable()
+        decode_bqm = cimod.BinaryQuadraticModel.from_serializable(serial)
+        assert(bqm.linear == decode_bqm.linear)
+        assert(bqm.quadratic == decode_bqm.quadratic)
+        assert(bqm.offset == decode_bqm.offset)
+        assert(bqm.vartype == decode_bqm.vartype)
         
 
 
