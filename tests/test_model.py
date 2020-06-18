@@ -188,8 +188,12 @@ class ModelTest(unittest.TestCase):
     def test_change_vartype(self):
         bqm = cimod.BinaryQuadraticModel(self.h, self.J)
         self.assertEqual(bqm.vartype, cimod.SPIN)
-        bqm.change_vartype('BINARY')
+        bqm2 = bqm.change_vartype('BINARY')
         self.assertEqual(bqm.vartype, cimod.BINARY)
+        self.assertEqual(bqm.linear, bqm2.linear)
+        self.assertEqual(bqm.quadratic, bqm2.quadratic)
+        self.assertEqual(bqm.offset, bqm2.offset)
+        self.assertEqual(bqm.vartype, bqm2.vartype)
         bqm.change_vartype('SPIN', inplace=False)
         self.assertEqual(bqm.vartype, cimod.BINARY)
 
@@ -224,7 +228,7 @@ class ModelTest(unittest.TestCase):
             serial = bqm.to_serializable()
             decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
             self.assertEqual(bqm.linear, decode_bqm.linear)
-            print
+            # order of indices in quadratic is not considered.
             self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
             self.assertEqual(bqm.offset, decode_bqm.offset)
             self.assertEqual(bqm.vartype, decode_bqm.vartype)
@@ -233,6 +237,7 @@ class ModelTest(unittest.TestCase):
             serial = bqm.to_serializable()
             decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
             self.assertEqual(bqm.linear, decode_bqm.linear)
+            # order of indices in quadratic is not considered.
             self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
             self.assertEqual(bqm.offset, decode_bqm.offset)
             self.assertEqual(bqm.vartype, decode_bqm.vartype)
@@ -241,6 +246,7 @@ class ModelTest(unittest.TestCase):
             serial = bqm.to_serializable()
             decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
             self.assertEqual(bqm.linear, decode_bqm.linear)
+            # order of indices in quadratic is not considered.
             self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
             self.assertEqual(bqm.offset, decode_bqm.offset)
             self.assertEqual(bqm.vartype, decode_bqm.vartype)
