@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import cxxcimod
+import cimod
 from cimod.vartype import to_cxxcimod
 from cimod.utils.decolator import recalc
 import dimod
@@ -319,11 +320,24 @@ def make_BinaryQuadraticModel(linear, quadratic):
 
         @classmethod
         def from_serializable(cls, obj):
-            #FIXME: bottleneck: variable copies
-            bqm = super().from_serializable(obj)
-            return BinaryQuadraticModel(bqm.get_linear(), bqm.get_quadratic(), bqm.get_offset(), bqm.get_vartype())
 
-        #TODO: implement from_serializable
+            variable_labels = [tuple(elem) if type(elem) == list else elem for elem in obj['variable_labels']]
+
+            # convert to linear biases
+            linear = {elem: obj['linear_biases'][k] for k,elem in enumerate(variable_labels)}
+
+            # convert to quadratic biases
+            zipped_obj = zip(obj['quadratic_head'], obj['quadratic_tail'], obj['quadratic_biases'])
+            quadratic = {(variable_labels[elem[0]], variable_labels[elem[1]]): elem[2] for elem in zipped_obj}
+
+            # set offset
+            offset = obj['offset']
+
+            # set vartype
+            vartype = cimod.SPIN if obj['variable_type'] == 'SPIN' else cimod.BINARY
+
+            return cls(linear, quadratic, offset, vartype)
+
 
     return BinaryQuadraticModel
 
