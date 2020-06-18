@@ -16,7 +16,7 @@ NAME = 'jij_cimod'
 DESCRIPTION = 'C++ library for a binary quadratic model'
 EMAIL = 'openjij@j-ij.com'
 AUTHOR = 'Jij Inc.'
-VERSION = '1.0.3'
+VERSION = '1.0.4'
 
 
 class CMakeExtension(Extension):
