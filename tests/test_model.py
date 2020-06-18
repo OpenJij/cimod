@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 import cimod
 import cxxcimod
+import dimod
 
 
 def calculate_ising_energy(h, J, spins):
@@ -196,26 +197,53 @@ class ModelTest(unittest.TestCase):
         bqm = cimod.BinaryQuadraticModel(self.h, self.J)
         serial = bqm.to_serializable()
         decode_bqm = cimod.BinaryQuadraticModel.from_serializable(serial)
-        assert(bqm.linear == decode_bqm.linear)
-        assert(bqm.quadratic == decode_bqm.quadratic)
-        assert(bqm.offset == decode_bqm.offset)
-        assert(bqm.vartype == decode_bqm.vartype)
+        self.assertEqual(bqm.linear, decode_bqm.linear)
+        self.assertEqual(bqm.quadratic, decode_bqm.quadratic)
+        self.assertEqual(bqm.offset, decode_bqm.offset)
+        self.assertEqual(bqm.vartype, decode_bqm.vartype)
 
         bqm = cimod.BinaryQuadraticModel(self.strh, self.strJ)
         serial = bqm.to_serializable()
         decode_bqm = cimod.BinaryQuadraticModel.from_serializable(serial)
-        assert(bqm.linear == decode_bqm.linear)
-        assert(bqm.quadratic == decode_bqm.quadratic)
-        assert(bqm.offset == decode_bqm.offset)
-        assert(bqm.vartype == decode_bqm.vartype)
+        self.assertEqual(bqm.linear, decode_bqm.linear)
+        self.assertEqual(bqm.quadratic, decode_bqm.quadratic)
+        self.assertEqual(bqm.offset, decode_bqm.offset)
+        self.assertEqual(bqm.vartype, decode_bqm.vartype)
 
         bqm = cimod.BinaryQuadraticModel(self.tupleh, self.tupleJ)
         serial = bqm.to_serializable()
         decode_bqm = cimod.BinaryQuadraticModel.from_serializable(serial)
-        assert(bqm.linear == decode_bqm.linear)
-        assert(bqm.quadratic == decode_bqm.quadratic)
-        assert(bqm.offset == decode_bqm.offset)
-        assert(bqm.vartype == decode_bqm.vartype)
+        self.assertEqual(bqm.linear, decode_bqm.linear)
+        self.assertEqual(bqm.quadratic, decode_bqm.quadratic)
+        self.assertEqual(bqm.offset, decode_bqm.offset)
+        self.assertEqual(bqm.vartype, decode_bqm.vartype)
+
+    def test_serializable_consistent_with_dimod(self):
+        for (_from,_to) in [(dimod, cimod), (cimod, dimod)]:
+            bqm = _from.BinaryQuadraticModel(self.h, self.J, vartype='SPIN')
+            serial = bqm.to_serializable()
+            decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
+            self.assertEqual(bqm.linear, decode_bqm.linear)
+            print
+            self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
+            self.assertEqual(bqm.offset, decode_bqm.offset)
+            self.assertEqual(bqm.vartype, decode_bqm.vartype)
+
+            bqm = _from.BinaryQuadraticModel(self.strh, self.strJ, vartype='SPIN')
+            serial = bqm.to_serializable()
+            decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
+            self.assertEqual(bqm.linear, decode_bqm.linear)
+            self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
+            self.assertEqual(bqm.offset, decode_bqm.offset)
+            self.assertEqual(bqm.vartype, decode_bqm.vartype)
+
+            bqm = _from.BinaryQuadraticModel(self.tupleh, self.tupleJ, vartype='SPIN')
+            serial = bqm.to_serializable()
+            decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
+            self.assertEqual(bqm.linear, decode_bqm.linear)
+            self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
+            self.assertEqual(bqm.offset, decode_bqm.offset)
+            self.assertEqual(bqm.vartype, decode_bqm.vartype)
         
 
 
