@@ -27,17 +27,18 @@ PYBIND11_MODULE(cxxcimod, m){
     //BinaryQuadraticModel
      **********************************************************/
 
+    py::enum_<Vartype>(m, "Vartype")
+        .value("SPIN", Vartype::SPIN)
+        .value("BINARY", Vartype::BINARY)
+        .value("NONE", Vartype::NONE)
+        .export_values();
+
     declare_BQM<size_t, double>(m, "BinaryQuadraticModel");
     declare_BQM<std::string, double>(m, "BinaryQuadraticModel_str");
     declare_BQM<std::tuple<size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple2");
     declare_BQM<std::tuple<size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple3");
     declare_BQM<std::tuple<size_t, size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple4");
 
-    py::enum_<Vartype>(m, "Vartype")
-        .value("SPIN", Vartype::SPIN)
-        .value("BINARY", Vartype::BINARY)
-        .value("NONE", Vartype::NONE)
-        .export_values();
 }
 
 
