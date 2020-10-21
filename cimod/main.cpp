@@ -38,6 +38,7 @@ PYBIND11_MODULE(cxxcimod, m){
     declare_BQM<std::tuple<size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple2");
     declare_BQM<std::tuple<size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple3");
     declare_BQM<std::tuple<size_t, size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple4");
+
 }
 
 
