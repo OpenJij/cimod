@@ -384,52 +384,52 @@ public:
      * @brief Print informations of BinaryQuadraticModel
      * 
      */
-    //void print()
-    //{
-    //    std::cout << "[BinaryQuadraticModel]" << std::endl;
+    void print()
+    {
+        std::cout << "[BinaryQuadraticModel]" << std::endl;
 
-    //    // Print linear
-    //    std::cout << "linear = " << std::endl;
-    //    for(auto &it : m_linear)
-    //    {
-    //        std::cout << "" << it.first << ": " << it.second << std::endl;
-    //    }
+        // Print linear
+        std::cout << "linear = " << std::endl;
+        for(auto &it : m_linear)
+        {
+            std::cout << "" << it.first << ": " << it.second << std::endl;
+        }
 
-    //    // Print quadratic
-    //    std::cout << "quadratic = " << std::endl;
-    //    for(auto &it : m_quadratic)
-    //    {
-    //        std::cout << "(" << it.first.first << ", " << it.first.second << "): " << it.second << ", ";
-    //    }
-    //    std::cout << std::endl;
+        // Print quadratic
+        std::cout << "quadratic = " << std::endl;
+        for(auto &it : m_quadratic)
+        {
+            std::cout << "(" << it.first.first << ", " << it.first.second << "): " << it.second << ", ";
+        }
+        std::cout << std::endl;
 
-    //    // Print adjacency
-    //    std::cout << "adjacency = " << std::endl;
-    //    for(auto &it_src : m_linear)
-    //    {
-    //        std::cout << it_src.first << ": {";
-    //        for(auto &it_dst : m_adj[it_src.first])
-    //        {
-    //            std::cout << "(" << it_src.first << ", " << it_dst.first << "): " << it_dst.second << ", ";
-    //        }
-    //        std::cout << "}" << std::endl;
-    //    }
+        // Print adjacency
+        std::cout << "adjacency = " << std::endl;
+        for(auto &it_src : m_linear)
+        {
+            std::cout << it_src.first << ": {";
+            for(auto &it_dst : m_adj[it_src.first])
+            {
+                std::cout << "(" << it_src.first << ", " << it_dst.first << "): " << it_dst.second << ", ";
+            }
+            std::cout << "}" << std::endl;
+        }
 
-    //    // Print vartype
-    //    std::cout << "vartype = ";
-    //    if(m_vartype == Vartype::SPIN)
-    //    {
-    //        std::cout << "Spin" << std::endl;
-    //    }
-    //    else if(m_vartype == Vartype::BINARY)
-    //    {
-    //        std::cout << "Binary" << std::endl;
-    //    }
+        // Print vartype
+        std::cout << "vartype = ";
+        if(m_vartype == Vartype::SPIN)
+        {
+            std::cout << "Spin" << std::endl;
+        }
+        else if(m_vartype == Vartype::BINARY)
+        {
+            std::cout << "Binary" << std::endl;
+        }
 
-    //    // Print info
-    //    std::cout << "info = ";
-    //    std::cout << "\"" << m_info << "\"" << std::endl;
-    //}
+        // Print info
+        std::cout << "info = ";
+        std::cout << "\"" << m_info << "\"" << std::endl;
+    }
 
     /**
      * @brief Create an empty BinaryQuadraticModel
