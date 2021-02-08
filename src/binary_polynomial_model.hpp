@@ -1,6 +1,6 @@
 //
 //  binary_polynomial_model.h
-//  cimod_Xcode
+//  cimod
 //
 //  Created by Kohei Suzuki on 2021/02/05.
 //
@@ -26,208 +26,132 @@
 
 namespace cimod {
 
-/**
- * @brief Type alias for linear bias
- *
- * @tparam IndexType
- */
-template <typename IndexType, typename FloatType>
-using Linear = std::unordered_map<IndexType, FloatType>;
+//template <typename IndexType, typename FloatType>
+//using Linear = std::unordered_map<IndexType, FloatType>;
 
-/**
- * @brief Type alias for quadratic bias
- *
- * @tparam IndexType
- */
 template <typename IndexType, typename FloatType>
 using Polynominal = std::unordered_map<std::vector<IndexType>, FloatType, vector_hash>;
 
-/**
- * @brief Type alias for adjacency list
- *
- * @tparam IndexType
- */
 template <typename IndexType, typename FloatType>
-using Adjacency_Poly = std::unordered_map<IndexType, std::unordered_map<std::vector<IndexType>, FloatType, vector_hash>>;
+using Adjacency_Poly = std::unordered_map<IndexType, Polynominal<IndexType, FloatType>>;
 
-/**
- * @brief Type alias for sample
- *
- * @tparam IndexType
- */
 template <typename IndexType>
 using Sample = std::unordered_map<IndexType, int32_t>;
 
-/**
- * @brief Class for binary quadratic model.
- */
 template <typename IndexType, typename FloatType>
+
 class BinaryPolynomialModel {
    
-protected:
-   /**
-    * @brief Linear biases as a dictionary.
-    *
-    */
-   Linear<IndexType, FloatType> m_linear;
-   
-   /**
-    * @brief Polynominal biases as a dictionary.
-    *
-    */
-   Polynominal<IndexType, FloatType> m_polynominal;
-   
-   /**
-    * @brief The energy offset associated with the model.
-    *
-    */
-   FloatType m_offset;
-   
-   /**
-    * @brief The model's type.
-    *
-    */
-   Vartype m_vartype = Vartype::NONE;
-   
-   /**
-    * @brief A place to store miscellaneous data about the binary Polynominal model as a whole.
-    *
-    */
-   std::string m_info;
-   
-   /**
-    * @brief The model's interactions as nested dictionaries.
-    *
-    */
-   Adjacency_Poly<IndexType, FloatType> m_adj;
-   
-   /**
-    * @brief Add the adjacency to the adjacency list
-    *
-    */
-   void update_adjacency(const std::vector<IndexType> &u) {
-      if(m_polynominal.count(u)!=0) {
-         int min = *std::min_element(u.begin(), u.end());
-         insert_or_assign(m_adj[min], u, m_polynominal[u]);
-      }
-   }
-   
-   /* FIX ME
-    void remove_adjacency(const IndexType &u, const IndexType &v) {
-    auto k = m_adj[u].erase(v);
-    };
-    */
-   
 public:
-   /**
-    * @brief BinaryQuadraticModel constructor.
-    *
-    * @param linear
-    * @param polynominal
-    * @param offset
-    * @param vartype
-    * @param info
-    */
-   BinaryPolynomialModel
-   (
-    const Linear<IndexType, FloatType> &linear,
-    const Polynominal<IndexType, FloatType> &polynominal,
-    const FloatType &offset,
-    const Vartype vartype,
-    const std::string info = ""
-    ):
+   
+   //using Matrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+   
+   BinaryPolynomialModel(
+                         const Polynominal<IndexType, FloatType> &polynominal,
+                         const FloatType &offset,
+                         const Vartype vartype,
+                         const std::string info = ""):
    m_offset(offset),
    m_vartype(vartype),
-   m_info(info)
-   {
-      add_variables_from(linear);
+   m_info(info) {
+      add_variables_from(polynominal);
       add_interactions_from(polynominal);
    };
    
    BinaryPolynomialModel(const BinaryPolynomialModel&) = default;
-   BinaryPolynomialModel(BinaryPolynomialModel&&) = default;
+   BinaryPolynomialModel(BinaryPolynomialModel&&)      = default;
    
-   /**
-    * @brief Return the number of variables.
-    *
-    * @return The number of variables.
-    */
+   std::vector<IndexType> _generate_indices() const {
+      std::vector<IndexType> ret;
+      for (auto &it: m_polynominal) {
+         if (it.first.size() == 1) {
+            ret.push_back(it.first[0]);
+         }
+      }
+       std::sort(ret.begin(), ret.end());
+       return ret;
+   }
+   
+   //TODO(KSuzuki): Maybe too slow
    size_t length() const {
-      return m_linear.size();
-   };
+      size_t size = 0;
+      for (auto &it: m_polynominal) {
+         if (it.first.size() == 1) {
+            size++;
+         }
+      }
+      return size;
+   }
    
-   /**
-    * @brief Return true if the variable contains v.
-    *
-    * @return Return true if the variable contains v.
-    * @param v
-    */
    bool contains(const IndexType &v) {
-      if(m_linear.count(v)!=0) {
-         return true;
+      for (auto &it: m_polynominal) {
+         if (it.first.count(v) != 0) {
+            return true;
+         }
       }
-      else {
-         return false;
-      }
-   };
+      return false;
+   }
    
-   const Linear<IndexType, FloatType>& get_linear() const {
+   const Linear<IndexType, FloatType> &get_linear() const {
       return this->m_linear;
-   };
+   }
    
-   const Polynominal<IndexType, FloatType>& get_polynominal() const {
+   const Polynominal<IndexType, FloatType> &get_polynominal() const {
       return this->m_polynominal;
-   };
+   }
    
-   const Adjacency_Poly<IndexType, FloatType>& get_adjacency() const {
+   const Adjacency_Poly<IndexType, FloatType> &get_adjacency() const {
       return this->m_adj;
-   };
+   }
    
-   const FloatType& get_offset() const {
+   const FloatType &get_offset() const {
       return this->m_offset;
-   };
+   }
    
-   const Vartype& get_vartype() const {
+   const Vartype &get_vartype() const {
       return this->m_vartype;
-   };
+   }
    
-   const std::string& get_info() const {
+   const std::string &get_info() const {
       return this->m_info;
-   };
+   }
    
    void print() {
+      
+      std::vector<IndexType> indices = _generate_indices();
+      
       std::cout << "[BinaryPolynomialModel]" << std::endl;
       
-      // Print linear
+      // Print linear, which is stored in m_polynominal with the first index std::vector of the size = 1
       std::cout << "linear = " << std::endl;
-      for(auto &it : m_linear) {
-         std::cout << "" << it.first << ": " << it.second << std::endl;
+      for (auto &it_indices: indices) {
+         std::cout << it_indices << ": " << m_polynominal[std::vector<IndexType>{it_indices}] << std::endl;
       }
       
-      
-      // Print polynominal
+      // Print polynominal, which is stored in m_polynominal with the first index std::vector of the size > 1
+      //TODO(KSuzuki): Fix the order of print owing to std::unordered_map
       std::cout << "polynominal = " << std::endl;
-      for(auto &it : m_polynominal)
-      {
-         std::cout << "(";
-         for (auto &it_index : it.first) {
-            std::cout << it_index << ", ";
+      for(auto &it_polynominal : m_polynominal) {
+         if (it_polynominal.first.size() > 1) {
+            std::cout << "(";
+            for (auto &it_index : it_polynominal.first) {
+               std::cout << it_index << ", ";
+            }
+            std::cout << "): " << it_polynominal.second << ", ";
          }
-         std::cout << "): " << it.second << ", ";;
       }
       std::cout << std::endl;
       
-      
       // Print adjacency
       std::cout << "adjacency = " << std::endl;
-      for(auto &it_src : m_linear) {
-         std::cout << it_src.first << ": {";
-         for (auto &it_dst : m_adj[it_src.first]) {
+      for (auto &it_indices: indices) {
+         std::cout << it_indices << ": {";
+         for (auto &it_adj: m_adj[it_indices]) {
             std::cout << "(";
-            for (auto &it_vec : it_dst.first) {
-               std::cout << it_vec << ", ";
+            for (auto &it_interaction: it_adj.first) {
+               std::cout << it_interaction << ", ";
             }
-            std::cout << "): " << it_dst.second << ", ";
+            std::cout << "): " << it_adj.second << ", ";
          }
          std::cout << "}" << std::endl;
       }
@@ -245,69 +169,54 @@ public:
       std::cout << "info = ";
       std::cout << "\"" << m_info << "\"" << std::endl;
       
-   };
+   }
    
    void empty() {
-      m_linear = {};
       m_polynominal = {};
       m_offset = 0.0;
       m_vartype = Vartype::NONE;
       m_info = "";
    }
    
-   void add_variable
-   (
-    const IndexType &v,
-    const FloatType &bias,
-    const Vartype vartype = Vartype::NONE
-    ) {
+   void add_variable(const IndexType &v, const FloatType &bias, const Vartype vartype = Vartype::NONE) {
+      
       FloatType b = bias;
       
       // handle the case that a different vartype is provided
-      if((vartype!=Vartype::NONE)&&(vartype!=m_vartype)) {
-         if((m_vartype == Vartype::SPIN)&&(vartype == Vartype::BINARY))
-         {
+      if((vartype != Vartype::NONE) && (vartype != m_vartype)) {
+         if((m_vartype == Vartype::SPIN) && (vartype == Vartype::BINARY)) {
             b /= 2;
             m_offset += b;
          }
-         else if((m_vartype == Vartype::BINARY)&&(vartype == Vartype::SPIN))
-         {
+         else if((m_vartype == Vartype::BINARY) && (vartype == Vartype::SPIN)) {
             m_offset -= b;
             b *= 2;
          }
-         else
-         {
+         else {
             std::cerr << "Unknown vartype" << std::endl;
          }
       }
       
       // Insert or assign the bias
       FloatType value = 0;
-      if(m_linear.count(v) != 0) {
-         value = m_linear[v];
+      std::vector<IndexType> index = {v};
+      if (m_polynominal.count(index) != 0) {
+         value = m_polynominal[index];
       }
-      insert_or_assign(m_linear, v, value + b);
-   };
+      insert_or_assign(m_polynominal, index, value + b);
+   }
    
-   void add_variables_from
-   (
-    const Linear<IndexType, FloatType> &linear,
-    const Vartype vartype = Vartype::NONE
-    ) {
-      for(auto &it : linear)
-      {
-         add_variable(it.first, it.second, vartype);
+   void add_variables_from(const Polynominal<IndexType, FloatType> &polynomial, const Vartype vartype = Vartype::NONE) {
+      for (auto &it_polynomial: polynomial) {
+         if (it_polynomial.first.size() == 1) {
+            add_variable(it_polynomial.first[0], it_polynomial.second, vartype);
+         }
       }
-   };
+   }
    
    void add_interaction(const std::vector<IndexType> &u, const FloatType &bias, const Vartype vartype = Vartype::NONE) {
       
       //Check the input interaction is valid
-      if (u.size() == 1) {
-         std::cerr << "On-site potential" << " (" << u[0] << "): " << bias << " is not allowed" << std::endl;
-         return;
-      }
-      
       for (auto &it : u) {
          if (std::count(u.begin(), u.end(), it) != 1) {
             std::cerr << "No self-loops allowed, therefore (";
@@ -321,14 +230,14 @@ public:
       
       FloatType b = bias;
       
-      if((vartype!=Vartype::NONE) && (vartype!=m_vartype)) {
+      if((vartype != Vartype::NONE) && (vartype != m_vartype)) {
          if((m_vartype == Vartype::SPIN) && (vartype == Vartype::BINARY)) {
             //convert from binary to spin
             b /= 4;
             add_offset(b);
             for (auto &it : u) { add_variable(it, b); }
          }
-         else if((m_vartype == Vartype::BINARY)&&(vartype == Vartype::SPIN)) {
+         else if((m_vartype == Vartype::BINARY) && (vartype == Vartype::SPIN)) {
             //convert from spin to binary
             add_offset(b);
             for (auto &it : u) { add_variable(it, -2 * b); }
@@ -339,8 +248,16 @@ public:
          }
       }
       else {
+         //TODO(KSuzuki): Maybe bad code
          for (auto &it : u) {
-            if (m_linear.count(it) == 0) {
+            int flag = 0;
+            for (auto &it_polynomial: m_polynominal) {
+               if (it_polynomial.first.size() == 1 && it_polynomial.first[0] == it) {
+                  flag = 1;
+                  break;
+               }
+            }
+            if (flag == 0) {
                add_variable(it, 0);
             }
          }
@@ -355,25 +272,22 @@ public:
       
    };
    
-   void add_interactions_from
-   (
-    const Polynominal<IndexType, FloatType> &polynominal,
-    const Vartype vartype = Vartype::NONE
-    ) {
+   void add_interactions_from(const Polynominal<IndexType, FloatType> &polynominal, const Vartype vartype = Vartype::NONE) {
       for(auto &it : polynominal) {
-         add_interaction(it.first, it.second, vartype);
+         if (it.first.size() > 1) {
+            add_interaction(it.first, it.second, vartype);
+         }
       }
    }
    
    void remove_variable(const IndexType &v) {
-      std::vector<std::pair<IndexType, IndexType>> interactions;
-      for(auto &it : m_polynominal) {
-         if(it.first.first == v || it.first.second == v) {
-            interactions.push_back(it.first);
+      std::vector<std::vector<IndexType>> interactions;
+      for (auto &it_polynomial: m_polynominal) {
+         if (std::count(it_polynomial.first.begin(), it_polynomial.first.end(), v) != 0) {
+            interactions.push_back(it_polynomial.first);
          }
       }
       remove_interactions_from(interactions);
-      m_linear.erase(v);
       m_adj.erase(v);
    }
    
@@ -383,32 +297,20 @@ public:
       }
    };
    
-   /*
-    void remove_interaction
-    (
-    const IndexType &u,
-    const IndexType &v
-    )
-    {
-    auto p = std::make_pair(u, v);
-    if(m_polynominal.count(p)!=0)
-    {
-    auto k = m_polynominal.erase(p);
-    remove_adjacency(u, v);
-    }
-    };
-    
-    void remove_interactions_from
-    (
-    const std::vector<std::pair<IndexType, IndexType>> &interactions
-    )
-    {
-    for(auto &it : interactions)
-    {
-    remove_interaction(it.first, it.second);
-    }
-    };
-    */
+   
+   void remove_interaction(const std::vector<IndexType> &interaction) {
+      if (m_polynominal.count(interaction) != 0) {
+         m_polynominal.erase(interaction);
+         remove_adjacency(interaction);
+      }
+   };
+   
+   void remove_interactions_from(const std::vector<std::vector<IndexType>> &interaction_array) {
+      for(auto &it : interaction_array) {
+         remove_interaction(it);
+      }
+   };
+   
    
    void add_offset(const FloatType &offset) {
       m_offset += offset;
@@ -499,7 +401,7 @@ public:
     }
     };
     */
-   
+   /*
    void fix_variable(const IndexType &v, const int32_t &value) {
       std::vector<std::pair<IndexType, IndexType>> interactions;
       for(auto &it : m_polynominal) {
@@ -568,6 +470,63 @@ public:
          m_info = bpm.get_info();
       };
    };
+    */
+   
+   
+   
+protected:
+   /**
+    * @brief Linear biases as a dictionary.
+    *
+    */
+   //Linear<IndexType, FloatType> m_linear;
+   
+   /**
+    * @brief Polynominal biases as a dictionary.
+    *
+    */
+   Polynominal<IndexType, FloatType> m_polynominal;
+   
+   /**
+    * @brief The energy offset associated with the model.
+    *
+    */
+   FloatType m_offset;
+   
+   /**
+    * @brief The model's type.
+    *
+    */
+   Vartype m_vartype = Vartype::NONE;
+   
+   /**
+    * @brief A place to store miscellaneous data about the binary Polynominal model as a whole.
+    *
+    */
+   std::string m_info;
+   
+   /**
+    * @brief The model's interactions as nested dictionaries.
+    *
+    */
+   Adjacency_Poly<IndexType, FloatType> m_adj;
+   
+   /**
+    * @brief Add the adjacency to the adjacency list
+    *
+    */
+   void update_adjacency(const std::vector<IndexType> &u) {
+      if(m_polynominal.count(u)!=0) {
+         int min = *std::min_element(u.begin(), u.end());
+         insert_or_assign(m_adj[min], u, m_polynominal[u]);
+      }
+   }
+   
+   void remove_adjacency(const std::vector<IndexType> &interaction) {
+      int min = *std::min_element(interaction.begin(), interaction.end());
+      m_adj[min].erase(interaction);
+   }
+   
 };
 
 }
