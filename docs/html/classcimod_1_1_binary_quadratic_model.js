@@ -29,6 +29,7 @@ var classcimod_1_1_binary_quadratic_model =
     [ "interaction_matrix", "classcimod_1_1_binary_quadratic_model.html#a1007850a3d93d3d2098736220d14f7b0", null ],
     [ "length", "classcimod_1_1_binary_quadratic_model.html#a2207a0688694a3f84d8b821105e15aba", null ],
     [ "normalize", "classcimod_1_1_binary_quadratic_model.html#a90280e754e974f731acef873159c471e", null ],
+    [ "print", "classcimod_1_1_binary_quadratic_model.html#ae45d5da1ea2873f8b18fd1eea5d16b19", null ],
     [ "remove_adjacency", "classcimod_1_1_binary_quadratic_model.html#ad6a234c7cd583d7984bf0e4f99dac355", null ],
     [ "remove_interaction", "classcimod_1_1_binary_quadratic_model.html#ae6dd921afa029faca9ca53b9650ca85e", null ],
     [ "remove_interactions_from", "classcimod_1_1_binary_quadratic_model.html#abd8bbcecacade32b12ea0509c46b1015", null ],

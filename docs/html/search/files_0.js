@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['binary_5fquadratic_5fmodel_2ehpp_78',['binary_quadratic_model.hpp',['../binary__quadratic__model_8hpp.html',1,'']]]
+  ['binary_5fpolynomial_5fmodel_2ehpp_85',['binary_polynomial_model.hpp',['../binary__polynomial__model_8hpp.html',1,'']]],
+  ['binary_5fquadratic_5fmodel_2ehpp_86',['binary_quadratic_model.hpp',['../binary__quadratic__model_8hpp.html',1,'']]]
 ];

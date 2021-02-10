@@ -381,7 +381,7 @@ public:
     }
 
     /**
-     * @brief Print informations of BinaryQuadraticModel
+     * @brief Print information of BinaryQuadraticModel
      * 
      */
     void print()

@@ -6,7 +6,7 @@ using namespace cimod;
 int main() {
    
    // Set linear biases and quadratic biases
-   Polynominal<uint32_t, double> polynominal {
+   Polynomial<uint32_t, double> polynomial {
       // linear biases
       {{1}, 1.0}    , {{2}, 2.0}    , {{3}, 3.0},
       // quadratic biases
@@ -24,17 +24,25 @@ int main() {
    // Set variable type
    Vartype vartype = Vartype::BINARY;
    
+   //Test function of energy
+   Sample<uint32_t> sample = {{1, 1}, {2, 0}, {3, 1}, {4, 0}};
+   
    // Create a BinaryPolynominalModel instance
-   BinaryPolynomialModel<uint32_t, double> bpm(polynominal, offset, vartype);
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, offset, vartype);
    
    //Test remove_variable
-   bpm.remove_variable(3);
+   //bpm.remove_variable(3);
+   
+   bpm.normalize();
    
    // Print informations of bpm
    bpm.print();
    
+   printf("energy(polynomial): %lf\n", bpm.energy(sample));
+   printf("off_set: %lf\n", bpm.get_offset());
+   
    // Set linear biases and quadratic biases
-   Linear<uint32_t, double> linear{ {1, 1.0}, {2, 2.0}, {3, 3.0} /*, {4, 4.0}*/ };
+   Linear<uint32_t, double> linear{ {1, 1.0}, {2, 2.0}, {3, 3.0} , {4, 4.0} };
    
    Quadratic<uint32_t, double> quadratic {
       {std::make_pair(1, 2), 12.0}, {std::make_pair(1, 3), 13.0}, {std::make_pair(1, 4), 14.0},
@@ -45,19 +53,29 @@ int main() {
    
    // Create a BinaryQuadraticModel instance
    BinaryQuadraticModel<uint32_t, double> bqm(linear, quadratic, offset, vartype);
-   
+   bqm.print();
+   printf("energy=%lf\n", bqm.energy(sample));
+   printf("/*****************************/\n");
+
    //Test remove_variable
-   bqm.remove_variable(3);
+   //bqm.remove_variable(3);
    
    //Test fix_variables
-   //bqm.fix_variable(1, 2);
+   //bqm.fix_variable(1, 2.0);
+   
+   //Test flip_variable
+   //bqm.flip_variable(4);
+   
+   //Test contract_variables
+   //bqm.contract_variables(1, 2);
+   
+   bqm.normalize();
    
    // Print informations of bqm
    bqm.print();
    
-   //Test function of energy
-   Sample<uint32_t> sample = {{1, 1}, {2, 0}, {3, 1}, {4, 0}};
-   printf("energy: %lf\n", bqm.energy(sample));
    
+   printf("energy(quadratic): %lf\n", bqm.energy(sample));
+   printf("off_set: %lf\n", bqm.get_offset());
    return 0;
 }
