@@ -104,6 +104,11 @@
 
 namespace cimod {
 
+//! @brief Type alias for variable list
+//! @tparam IndexType
+template <typename IndexType>
+using Variable = std::unordered_set<IndexType>;
+
 //! @brief Type alias for polynomial bias
 //! @tparam IndexType
 //! @tparam FloatType
@@ -131,17 +136,11 @@ public:
       
    //! @brief BinaryPolynomialModel constructor
    //! @param polynomial
-   //! @param offset
    //! @param vartype
    //! @param info
    BinaryPolynomialModel(const Polynomial<IndexType, FloatType> &polynomial,
-                         const FloatType &offset,
                          const Vartype vartype,
-                         const std::string info = ""):
-   m_offset(offset),
-   m_vartype(vartype),
-   m_info(info) {
-      add_variables_from(polynomial);
+                         const std::string info = ""): m_vartype(vartype), m_info(info) {
       add_interactions_from(polynomial);
    };
    
@@ -153,14 +152,12 @@ public:
    //! @param BinaryPolynomialModel
    BinaryPolynomialModel(BinaryPolynomialModel&&) = default;
    
-   //! @brief Generate variable list in accordance with the input interactions
-   //! @return generated variable list as std::vector<IndexType>
-   std::vector<IndexType> _generate_indices() const {
+   //! @brief Generate variable list associated with the input interactions
+   //! @return Sorted variable list as std::vector<IndexType>
+   std::vector<IndexType> generate_variables() const {
       std::vector<IndexType> ret;
-      for (auto &it: m_polynomial) {
-         if (it.first.size() == 1) {
-            ret.push_back(it.first[0]);
-         }
+      for (auto &it_variables: m_variables) {
+         ret.push_back(it_variables);
       }
        std::sort(ret.begin(), ret.end());
        return ret;
@@ -168,26 +165,25 @@ public:
    
    //! @brief Return the number of variables.
    //! @return The number of variables.
-   //TODO(KSuzuki): Maybe too slow
    size_t length() const {
-      size_t size = 0;
-      for (auto &it: m_polynomial) {
-         if (it.first.size() == 1) {
-            size++;
-         }
-      }
-      return size;
+      return m_variables.size();
    }
    
    //! @brief Check if the variable v is contained in the variable list
    //! @return True if the variable list contain v, otherwise false
    bool contains(const IndexType &v) {
-      for (auto &it: m_polynomial) {
-         if (it.first.count(v) != 0) {
-            return true;
-         }
+      if (m_variables.count(v) != 0) {
+         return true;
       }
-      return false;
+      else {
+         return false;
+      }
+   }
+   
+   //! @brief Get the variable object
+   //! @return Variable list
+   const Variable<IndexType> &get_variables() const  {
+      return this->m_variables;
    }
    
    //! @brief Get the Polynomial object
@@ -202,12 +198,6 @@ public:
       return this->m_adj;
    }
    
-   //! @brief Get the offset
-   //! @return offset
-   const FloatType &get_offset() const {
-      return this->m_offset;
-   }
-   
    //! @brief Get the vartype object, which represents the type of the model
    //! @return Vartype
    const Vartype &get_vartype() const {
@@ -220,22 +210,27 @@ public:
       return this->m_info;
    }
    
-   //! @brief Print information of BinaryPolynomialModel
-   void print() {
+   //! @brief Print information of binary polynomial model
+   void print() const {
       
-      std::vector<IndexType> indices = _generate_indices();
+      std::vector<IndexType> variables = generate_variables();
       
       std::cout << "[BinaryPolynomialModel]" << std::endl;
       
+      std::cout << "Variables = " << std::endl;
+      for (auto &it_variables: variables) {
+         std::cout << it_variables << ", ";
+      }
+      std::cout << std::endl;
+      
       // Print linear, which is stored in m_polynomial with the first index std::vector of the size = 1
-      std::cout << "linear = " << std::endl;
-      for (auto &it_indices: indices) {
-         std::cout << it_indices << ": " << m_polynomial[std::vector<IndexType>{it_indices}] << std::endl;
+      std::cout << "polynomial(linear) = " << std::endl;
+      for (auto &it_variables: variables) {
+         std::cout << it_variables << ": " << m_polynomial.at(std::vector<IndexType>{it_variables}) << std::endl;
       }
       
       // Print polynomial, which is stored in m_polynomial with the first index std::vector of the size > 1
-      //TODO(KSuzuki): Fix the order of print owing to std::unordered_map
-      std::cout << "polynomial = " << std::endl;
+      std::cout << "polynomial(interaction) = " << std::endl;
       for(auto &it_polynomial : m_polynomial) {
          if (it_polynomial.first.size() > 1) {
             std::cout << "(";
@@ -249,14 +244,16 @@ public:
       
       // Print adjacency
       std::cout << "adjacency = " << std::endl;
-      for (auto &it_indices: indices) {
-         std::cout << it_indices << ": {";
-         for (auto &it_adj: m_adj[it_indices]) {
-            std::cout << "(";
-            for (auto &it_interaction: it_adj.first) {
-               std::cout << it_interaction << ", ";
+      for (auto &it_variables: variables) {
+         std::cout << it_variables << ": {";
+         if (m_adj.count(it_variables) > 0) {
+            for (auto &it_adj: m_adj.at(it_variables)) {
+               std::cout << "(";
+               for (auto &it_interaction: it_adj.first) {
+                  std::cout << it_interaction << ", ";
+               }
+               std::cout << "): " << it_adj.second << ", ";
             }
-            std::cout << "): " << it_adj.second << ", ";
          }
          std::cout << "}" << std::endl;
       }
@@ -269,6 +266,9 @@ public:
       else if(m_vartype == Vartype::BINARY) {
          std::cout << "Binary" << std::endl;
       }
+      else {
+         std::cout << "Unknown vartype" << std::endl;
+      }
       
       // Print info
       std::cout << "info = ";
@@ -276,26 +276,26 @@ public:
       
    }
    
+   //! @brief Create an empty binary polynomial model
    void empty() {
+      m_variables  = {};
       m_polynomial = {};
-      m_offset = 0.0;
-      m_vartype = Vartype::NONE;
-      m_info = "";
+      m_vartype    = Vartype::NONE;
+      m_info       = "";
    }
    
-   void add_variable(const IndexType &v, const FloatType &bias, const Vartype vartype = Vartype::NONE) {
+   //! @brief Add variable v and correponding linear bias to binary polynomial model
+   //! @param v
+   //! @param bias
+   //! @param vartype
+   void add_linear(const IndexType &v, const FloatType &bias, const Vartype vartype = Vartype::NONE) {
       
-      FloatType b = bias;
-      
-      // handle the case that a different vartype is provided
-      if((vartype != Vartype::NONE) && (vartype != m_vartype)) {
-         if((m_vartype == Vartype::SPIN) && (vartype == Vartype::BINARY)) {
-            b /= 2;
-            m_offset += b;
+      if (vartype != Vartype::NONE) {
+         if ((m_vartype == Vartype::SPIN) && (vartype == Vartype::BINARY)) {
+            std::cerr << "Cannot convert the vartype=SPIN to vartype=BINARY" << std::endl;
          }
          else if((m_vartype == Vartype::BINARY) && (vartype == Vartype::SPIN)) {
-            m_offset -= b;
-            b *= 2;
+            std::cerr << "Cannot convert the vartype=BINARY to vartype=SPIN" << std::endl;
          }
          else {
             std::cerr << "Unknown vartype" << std::endl;
@@ -308,17 +308,13 @@ public:
       if (m_polynomial.count(index) != 0) {
          value = m_polynomial[index];
       }
-      insert_or_assign(m_polynomial, index, value + b);
+      insert_or_assign(m_polynomial, index, value + bias);
    }
-   
-   void add_variables_from(const Polynomial<IndexType, FloatType> &polynomial, const Vartype vartype = Vartype::NONE) {
-      for (auto &it_polynomial: polynomial) {
-         if (it_polynomial.first.size() == 1) {
-            add_variable(it_polynomial.first[0], it_polynomial.second, vartype);
-         }
-      }
-   }
-   
+      
+   //! @Add interaction corresponding bias to binary polynomial model
+   //! @param u
+   //! @param bias
+   //! @param vartype
    void add_interaction(const std::vector<IndexType> &u, const FloatType &bias, const Vartype vartype = Vartype::NONE) {
       
       //Check the input interaction is valid
@@ -333,38 +329,18 @@ public:
          }
       }
       
-      FloatType b = bias;
-      
       if((vartype != Vartype::NONE) && (vartype != m_vartype)) {
          if((m_vartype == Vartype::SPIN) && (vartype == Vartype::BINARY)) {
-            //convert from binary to spin
-            b /= 4;
-            add_offset(b);
-            for (auto &it : u) { add_variable(it, b); }
+            std::cerr << "Cannot convert vartype=SPIN to vartype=BINARY" << std::endl;
+            return;
          }
          else if((m_vartype == Vartype::BINARY) && (vartype == Vartype::SPIN)) {
-            //convert from spin to binary
-            add_offset(b);
-            for (auto &it : u) { add_variable(it, -2 * b); }
-            b *= 4;
+            std::cerr << "Cannot convert vartype=BINARY to vartype=SPIN" << std::endl;
+            return;
          }
          else {
             std::cerr << "Unknown vartype" << std::endl;
-         }
-      }
-      else {
-         //TODO(KSuzuki): Maybe bad code
-         for (auto &it : u) {
-            int flag = 0;
-            for (auto &it_polynomial: m_polynomial) {
-               if (it_polynomial.first.size() == 1 && it_polynomial.first[0] == it) {
-                  flag = 1;
-                  break;
-               }
-            }
-            if (flag == 0) {
-               add_variable(it, 0);
-            }
+            return;
          }
       }
       
@@ -372,19 +348,32 @@ public:
       if (m_polynomial.count(u) != 0) {
          value = m_polynomial[u];
       }
-      insert_or_assign(m_polynomial, u, value + b);
-      update_adjacency(u);
+      insert_or_assign(m_polynomial, u, value + bias);
+      
+      if (u.size() > 1) {
+         update_adjacency(u);
+      }
+      
+      for (auto &it: u) {
+         if (m_variables.count(it) == 0) {
+            m_variables.emplace(it);
+            add_linear(it, 0);
+         }
+      }
       
    };
    
+   //! @Add interactions corresponding biases to binary polynomial model
+   //! @param polynomial
+   //! @param vartype
    void add_interactions_from(const Polynomial<IndexType, FloatType> &polynomial, const Vartype vartype = Vartype::NONE) {
       for(auto &it : polynomial) {
-         if (it.first.size() > 1) {
-            add_interaction(it.first, it.second, vartype);
-         }
+         add_interaction(it.first, it.second, vartype);
       }
    }
    
+   //! @Remove variable v and corresponding interactions from binary polynomial model
+   //! @param v
    void remove_variable(const IndexType &v) {
       std::vector<std::vector<IndexType>> interactions;
       for (auto &it_polynomial: m_polynomial) {
@@ -394,39 +383,41 @@ public:
       }
       remove_interactions_from(interactions);
       m_adj.erase(v);
+      m_variables.erase(v);
    }
    
+   //! @Remove variables v and corresponding interactions from BinaryPolynomialModel
+   //! @param variables
    void remove_variables_from(const std::vector<IndexType> &variables) {
       for(auto &it : variables) {
          remove_variable(it);
       }
    };
    
-   
-   void remove_interaction(const std::vector<IndexType> &interaction) {
-      if (m_polynomial.count(interaction) != 0) {
-         m_polynomial.erase(interaction);
-         remove_adjacency(interaction);
+   //! @brief Remove interaction specified by variables from BinaryPolynomialModel
+   //! @param variables
+   void remove_interaction(const std::vector<IndexType> &variables) {
+      if (m_polynomial.count(variables) != 0) {
+         m_polynomial.erase(variables);
+         remove_adjacency(variables);
       }
    };
    
-   void remove_interactions_from(const std::vector<std::vector<IndexType>> &interaction_array) {
-      for(auto &it : interaction_array) {
+   //! @brief Remove all the specified interactions from BinaryPolynomialModel
+   //! @param variable_array
+   void remove_interactions_from(const std::vector<std::vector<IndexType>> &variable_array) {
+      for(auto &it : variable_array) {
          remove_interaction(it);
       }
    };
-   
-   void add_offset(const FloatType &offset) {
-      m_offset += offset;
-   };
-   
-   void remove_offset() {
-      add_offset(-m_offset);
-   };
 
-   
+   //! @brief Multiply by the specified scalar all the biases and offset of a binary quadratic model.
+   //! @param scalar
+   //! @param ignored_interactions
+   //! @param ignored_offset
    void scale(const FloatType &scalar,
-              const std::vector<std::vector<IndexType>> &ignored_interactions = {}
+              const std::vector<std::vector<IndexType>> &ignored_interactions = {},
+              const bool ignored_offset = false
               ) {
       
       for (auto &it_polynomial: m_polynomial) {
@@ -435,11 +426,15 @@ public:
             it_polynomial.second *= scalar;
          }
       }
-      
    }
    
+   //! @brief Normalizes the biases of the binary polynomial model such that they fall in the provided range(s), and adjusts the offset appropriately.
+   //! @param bias_range
+   //! @param ignored_variables
+   //! @param ignored_offset
    void normalize(const std::pair<FloatType, FloatType>     &bias_range = {1.0, 1.0},
-                  const std::vector<std::vector<IndexType>> &ignored_variables = {}
+                  const std::vector<std::vector<IndexType>> &ignored_variables = {},
+                  const bool ignored_offset = false
                   ) {
       
       auto comp = [](const auto &a, const auto &b) { return a.second < b.second; };
@@ -449,7 +444,7 @@ public:
       FloatType inv_scale = (min < max) ? max : min;
       
       if (inv_scale != 0.0) {
-         scale(1.0/inv_scale, ignored_variables);
+         scale(1.0/inv_scale, ignored_variables, ignored_offset);
          for (auto &it_polynomial: m_polynomial) {
             if (it_polynomial.first.size() > 1) {update_adjacency(it_polynomial.first); };
          }
@@ -457,9 +452,7 @@ public:
    }
    
    void update(const BinaryPolynomialModel &bpm, const bool ignore_info = true) {
-      add_variables_from(bpm.get_polynomial(), bpm.get_vartype());
       add_interactions_from(bpm.get_polynomial(), bpm.get_vartype());
-      add_offset(bpm.get_offset());
       if(!ignore_info) {
          m_info = bpm.get_info();
       };
@@ -467,7 +460,7 @@ public:
    
 
    FloatType energy(const Sample<IndexType> &sample) {
-      FloatType en = m_offset;
+      FloatType en = 0.0;
       for (auto &it_polynomial: m_polynomial) {
          IndexType multiple_variable = 1;
          for (auto &it_vec: it_polynomial.first) {
@@ -493,47 +486,37 @@ public:
    }
       
 protected:
-   /**
-    * @brief Polynomial biases as a dictionary.
-    *
-    */
+   
+   //! @brief Variable list corresponding to the interactions
+   Variable<IndexType> m_variables;
+   
+   //! @brief Polynomial biases as a dictionary.
    Polynomial<IndexType, FloatType> m_polynomial;
    
-   /**
-    * @brief The energy offset associated with the model.
-    *
-    */
-   FloatType m_offset;
-   
-   /**
-    * @brief The model's type.
-    *
-    */
+   //! @brief The model's type. SPIN or BINARY
    Vartype m_vartype = Vartype::NONE;
    
-   /**
-    * @brief A place to store miscellaneous data about the binary Polynomial model as a whole.
-    *
-    */
+   //! @brief A place to store miscellaneous data about the binary Polynomial model as a whole.
    std::string m_info;
    
-   /**
-    * @brief The model's interactions as nested dictionaries.
-    *
-    */
+   //! @brief The model's interactions as nested dictionaries.
    Adjacency_Poly<IndexType, FloatType> m_adj;
    
-   /**
-    * @brief Add the adjacency to the adjacency list
-    *
-    */
+   //! @brief Add the adjacency to the adjacency list
    void update_adjacency(const std::vector<IndexType> &u) {
-      if(m_polynomial.count(u)!=0) {
-         int min = *std::min_element(u.begin(), u.end());
-         insert_or_assign(m_adj[min], u, m_polynomial[u]);
+      if(m_polynomial.count(u) != 0) {
+         for (auto &it: u) {
+            if (m_adj[it].count(u) == 0) {
+               insert_or_assign(m_adj[it], u, m_polynomial[u]);
+               break;
+            }
+         }
+         //int min = *std::min_element(u.begin(), u.end());
+         //insert_or_assign(m_adj[min], u, m_polynomial[u]);
       }
    }
    
+   //! @brief Remove the adjacency from the adjacency list
    void remove_adjacency(const std::vector<IndexType> &interaction) {
       int min = *std::min_element(interaction.begin(), interaction.end());
       m_adj[min].erase(interaction);

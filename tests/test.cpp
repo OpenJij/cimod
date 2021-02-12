@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 
 #include "../src/binary_quadratic_model.hpp"
+#include "../src/binary_polynomial_model.hpp"
 #include <nlohmann/json.hpp>
 
 #include <unordered_map>
@@ -58,7 +59,7 @@ namespace
         {
             {std::make_pair("a", "b"), 12.0}, {std::make_pair("a", "c"), 13.0}, {std::make_pair("a", "d"), 14.0},
             {std::make_pair("b", "c"), 23.0}, {std::make_pair("b", "d"), 24.0},
-            {std::make_pair("c", "d"), 34.0}
+            {std::make_pair("d", "c"), 34.0}
         };
         double offset = 0.0;
         Vartype vartype = Vartype::BINARY;
@@ -572,4 +573,63 @@ namespace
         EXPECT_EQ(bqm_linear["c"], linear["c"]);
         EXPECT_EQ(bqm_quadratic[std::make_pair("b", "e")], quadratic[std::make_pair("b", "e")]);
     }
+
+//google test for binary polynomial model
+TEST(ConstructionTestBPM, Construction) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      //linear biases
+      {{1}, 1.0}, {{2}, 2.0}, {{3}, 3.0}, {{4}, 4.0},
+      //quadratic biases
+      {{1, 2}, 12.0}, {{1, 3}, 13.0}, {{1, 4}, 14.0},
+      {{2, 3}, 23.0}, {{2, 4}, 24.0},
+      {{3, 4}, 34.0},
+      //polynomial biases
+      {{1, 2, 3}, 124.0}, {{1, 2, 4}, 124.0}, {{1, 3, 4}, 134.0},
+      {{2, 3, 4}, 234.0},
+      {{1, 2, 3, 4}, 1234.0}
+   };
+   
+   Vartype vartype = Vartype::BINARY;
+   
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   //Adjacency
+   //variable
+   
+   for (auto &it: bpm.get_polynomial()) {
+      EXPECT_EQ(it.second, polynomial[it.first]);
+   }
+   
+   EXPECT_EQ(vartype, bpm.get_vartype());
+   
+}
+
+
+TEST(ConstructionTestBPM, ConstructionString) {
+   
+   Polynomial<std::string, double> polynomial {
+      //linear biases
+      {{"a"}, 1.0}, {{"b"}, 2.0}, {{"c"}, 3.0},
+      //quadratic biases
+      {{"a", "b"}, 12.0}, {{"a", "c"}, 13.0}, {{"a", "d"}, 14.0},
+      {{"b", "c"}, 23.0}, {{"b", "d"}, 24.0},
+      {{"c", "d"}, 34.0},
+      //polynomial biases
+      {{"a", "b", "c"}, 124.0}
+   };
+   
+   Vartype vartype = Vartype::BINARY;
+   
+   BinaryPolynomialModel<std::string, double> bpm(polynomial, vartype);
+   
+   for (auto &it: bpm.get_polynomial()) {
+      EXPECT_EQ(it.second, polynomial[it.first]);
+   }
+   
+   EXPECT_EQ(vartype, bpm.get_vartype());
+   
+}
+ 
+
 }
