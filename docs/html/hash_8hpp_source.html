@@ -173,7 +173,7 @@ $(document).ready(function(){initNavTree('hash_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="structcimod_1_1vector__hash.html#afd4fcc1444e71713b59fc32635f24db5">   93</a></span>&#160;   std::size_t <a class="code" href="structcimod_1_1vector__hash.html#afd4fcc1444e71713b59fc32635f24db5">operator() </a>(<span class="keyword">const</span> std::vector&lt;T&gt; &amp;V)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;      std::size_t hash = V.size();</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;      <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;i : V) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;         hash ^= i + 0x9e3779b9 + (hash &lt;&lt; 6) + (hash &gt;&gt; 2);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;         hash ^= std::hash&lt;T&gt;()(i) + 0x9e3779b9 + (hash &lt;&lt; 6) + (hash &gt;&gt; 2);</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;      }</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;      <span class="keywordflow">return</span> hash;</div>
 <div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;   }</div>
@@ -182,7 +182,7 @@ $(document).ready(function(){initNavTree('hash_8hpp_source.html',''); initResiza
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="ahash_8hpp_html_a97fe967799bf3ee14956cf1058003422"><div class="ttname"><a href="hash_8hpp.html#a97fe967799bf3ee14956cf1058003422">hash_combine</a></div><div class="ttdeci">void hash_combine(std::size_t &amp;seed, const T &amp;val)</div><div class="ttdef"><b>Definition:</b> hash.hpp:34</div></div>
-<div class="ttc" id="anamespacecimod_html"><div class="ttname"><a href="namespacecimod.html">cimod</a></div><div class="ttdef"><b>Definition:</b> binary_polynomial_model.hpp:105</div></div>
+<div class="ttc" id="anamespacecimod_html"><div class="ttname"><a href="namespacecimod.html">cimod</a></div><div class="ttdef"><b>Definition:</b> binary_polynomial_model.hpp:144</div></div>
 <div class="ttc" id="astructcimod_1_1pair__hash_html"><div class="ttname"><a href="structcimod_1_1pair__hash.html">cimod::pair_hash</a></div><div class="ttdoc">Hash function for std::unordered_map.</div><div class="ttdef"><b>Definition:</b> hash.hpp:82</div></div>
 <div class="ttc" id="astructcimod_1_1pair__hash_html_ad9bd26e20927053cf727f86c728bfb5a"><div class="ttname"><a href="structcimod_1_1pair__hash.html#ad9bd26e20927053cf727f86c728bfb5a">cimod::pair_hash::operator()</a></div><div class="ttdeci">unsigned int operator()(const std::pair&lt; T1, T2 &gt; &amp;p) const</div><div class="ttdef"><b>Definition:</b> hash.hpp:84</div></div>
 <div class="ttc" id="astructcimod_1_1vector__hash_html"><div class="ttname"><a href="structcimod_1_1vector__hash.html">cimod::vector_hash</a></div><div class="ttdef"><b>Definition:</b> hash.hpp:90</div></div>

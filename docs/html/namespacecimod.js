@@ -10,6 +10,7 @@ var namespacecimod =
     [ "Polynomial", "namespacecimod.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9", null ],
     [ "Quadratic", "namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3", null ],
     [ "Sample", "namespacecimod.html#a300c5a25892e0259f843d34e20fd4801", null ],
+    [ "Variable", "namespacecimod.html#aab59a56ee2c64672c1f2f091ac051745", null ],
     [ "Vartype", "namespacecimod.html#af804dc431446f6af153364fec5c5aaf8", [
       [ "SPIN", "namespacecimod.html#af804dc431446f6af153364fec5c5aaf8a01518642fd172918ac4e6fa78bbb3164", null ],
       [ "BINARY", "namespacecimod.html#af804dc431446f6af153364fec5c5aaf8a98ad0e8750ae10ad556ed7a62affb452", null ],

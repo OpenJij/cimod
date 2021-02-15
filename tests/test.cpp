@@ -585,7 +585,7 @@ TEST(ConstructionTestBPM, Construction) {
       {{2, 3}, 23.0}, {{2, 4}, 24.0},
       {{3, 4}, 34.0},
       //polynomial biases
-      {{1, 2, 3}, 124.0}, {{1, 2, 4}, 124.0}, {{1, 3, 4}, 134.0},
+      {{1, 2, 3}, 123.0}, {{1, 2, 4}, 124.0}, {{1, 3, 4}, 134.0},
       {{2, 3, 4}, 234.0},
       {{1, 2, 3, 4}, 1234.0}
    };
@@ -593,12 +593,32 @@ TEST(ConstructionTestBPM, Construction) {
    Vartype vartype = Vartype::BINARY;
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+
+   EXPECT_EQ(bpm.length(), 4);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count(1), 1);
+   EXPECT_EQ(bpm.get_variables().count(2), 1);
+   EXPECT_EQ(bpm.get_variables().count(3), 1);
+   EXPECT_EQ(bpm.get_variables().count(4), 1);
    
    //Adjacency
-   //variable
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2}), 12.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 3}), 13.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 4}), 14.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2, 3}), 123.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2, 4}), 124.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 3, 4}), 134.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2, 3, 4}), 1234.0);
    
-   for (auto &it: bpm.get_polynomial()) {
-      EXPECT_EQ(it.second, polynomial[it.first]);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(2).at({2, 3}), 23.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(2).at({2, 4}), 24.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(2).at({2, 3, 4}), 234.0);
+
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(3).at({3, 4}), 34.0);
+   
+   for (const auto &it: bpm.get_polynomial()) {
+      EXPECT_DOUBLE_EQ(it.second, polynomial[it.first]);
    }
    
    EXPECT_EQ(vartype, bpm.get_vartype());
@@ -610,26 +630,507 @@ TEST(ConstructionTestBPM, ConstructionString) {
    
    Polynomial<std::string, double> polynomial {
       //linear biases
-      {{"a"}, 1.0}, {{"b"}, 2.0}, {{"c"}, 3.0},
+      {{"a"}, 1.0}, {{"b"}, 2.0}, {{"c"}, 3.0}, {{"d"}, 4.0},
       //quadratic biases
       {{"a", "b"}, 12.0}, {{"a", "c"}, 13.0}, {{"a", "d"}, 14.0},
       {{"b", "c"}, 23.0}, {{"b", "d"}, 24.0},
       {{"c", "d"}, 34.0},
       //polynomial biases
-      {{"a", "b", "c"}, 124.0}
+      {{"a", "b", "c"}, 123.0}, {{"a", "b", "d"}, 124.0}, {{"a", "c", "d"}, 134.0},
+      {{"b", "c", "d"}, 234.0},
+      {{"a", "b", "c", "d"}, 1234.0}
    };
    
    Vartype vartype = Vartype::BINARY;
    
    BinaryPolynomialModel<std::string, double> bpm(polynomial, vartype);
    
-   for (auto &it: bpm.get_polynomial()) {
-      EXPECT_EQ(it.second, polynomial[it.first]);
+   EXPECT_EQ(bpm.length(), 4);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count("a"), 1);
+   EXPECT_EQ(bpm.get_variables().count("b"), 1);
+   EXPECT_EQ(bpm.get_variables().count("c"), 1);
+   EXPECT_EQ(bpm.get_variables().count("d"), 1);
+   
+   //Adjacency
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b"}), 12.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "c"}), 13.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "d"}), 14.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b", "c"}), 123.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b", "d"}), 124.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "c", "d"}), 134.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b", "c", "d"}), 1234.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("b").at({"b", "c"}), 23.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("b").at({"b", "d"}), 24.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("b").at({"b", "c", "d"}), 234.0);
+
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("c").at({"c", "d"}), 34.0);
+   
+   for (const auto &it: bpm.get_polynomial()) {
+      EXPECT_DOUBLE_EQ(it.second, polynomial[it.first]);
    }
    
    EXPECT_EQ(vartype, bpm.get_vartype());
    
 }
+
+TEST(FunctionTestBPM, add_linear) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0},
+      {{0, 1}, 0.5},
+      {{0, 1, 2}, 1.5}
+   };
+   
+   Vartype vartype = Vartype::SPIN;
+
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   EXPECT_EQ(bpm.length(), 3);
+   
+   bpm.add_linear(0, 1);
+   bpm.add_linear(1, 1);
+   bpm.add_linear(2, 1);
+   bpm.add_linear(3, 1);
+   
+   EXPECT_EQ(bpm.length(), 4);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0}), 1.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1}), 2.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({2}), 1.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({3}), 1.0);
+
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1}), 0.5);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2}), 1.5);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count(0), 1);
+   EXPECT_EQ(bpm.get_variables().count(1), 1);
+   EXPECT_EQ(bpm.get_variables().count(2), 1);
+   EXPECT_EQ(bpm.get_variables().count(3), 1);
+   
+   //Adjacency
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1}), 0.5);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1, 2}), 1.5);
+
+}
+
+TEST(FunctionTestBPM, add_interaction) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0},
+      {{0, 1}, 0.5},
+      {{0, 1, 2}, 1.5}
+   };
+   
+   Vartype vartype = Vartype::SPIN;
+
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   EXPECT_EQ(bpm.length(), 3);
+   
+   bpm.add_interaction({1}, 1.0);
+   bpm.add_interaction({4}, 4.0);
+   bpm.add_interaction({1, 2}, 12.0);
+   bpm.add_interaction({0, 1, 2}, 1.5);
+   bpm.add_interaction({0, 1, 2, 3}, 123.0);
+
+   EXPECT_EQ(bpm.length(), 5);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1}), 2.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({2}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({3}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({4}), 4.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1}), 0.5);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1, 2}), 12.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2}), 3.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2, 3}), 123.0);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count(0), 1);
+   EXPECT_EQ(bpm.get_variables().count(1), 1);
+   EXPECT_EQ(bpm.get_variables().count(2), 1);
+   EXPECT_EQ(bpm.get_variables().count(3), 1);
+   EXPECT_EQ(bpm.get_variables().count(4), 1);
+
+   //Adjacency
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1}), 0.5);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1, 2}), 3.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1, 2, 3}), 123.0);
+
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2}), 12.0);
+
+}
+
+TEST(FunctionTestBPM, add_interaction_from) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0},
+      {{0, 1}, 0.5},
+      {{0, 1, 2}, 1.5}
+   };
+   
+   Vartype vartype = Vartype::SPIN;
+
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   Polynomial<uint32_t, double> add_polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 0.5},
+      {{0, 1, 2}, 1.5}, {{0, 1, 3}, 13.0}
+   };
+   
+   bpm.add_interactions_from(add_polynomial);
+   
+   EXPECT_EQ(bpm.length(), 4);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1}), 2.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({2}), 2.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({3}), 0.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1}), 1.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2}), 3.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 3}), 13.0);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count(0), 1);
+   EXPECT_EQ(bpm.get_variables().count(1), 1);
+   EXPECT_EQ(bpm.get_variables().count(2), 1);
+   EXPECT_EQ(bpm.get_variables().count(3), 1);
+   
+   //Adjacency
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1}), 1.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1, 2}), 3.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1, 3}), 13.0);
+
+}
+
+TEST(FunctionTestBPM, energy_SPIN) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, 123.0}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   Sample<uint32_t> sample_variables_spin_1{{0, +1}, {1, +1}, {2, +1}};
+   Sample<uint32_t> sample_variables_spin_2{{0, +1}, {1, -1}, {2, +1}};
+   Sample<uint32_t> sample_variables_spin_3{{0, -1}, {1, -1}, {2, -1}};
+
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_2), -123.0);
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_3), -81.0 );
+      
+}
  
+TEST(FunctionTestBPM, energy_BINARY) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, 123.0}
+   };
+
+   Vartype vartype = Vartype::BINARY;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   Sample<uint32_t> sample_variables_binary_1{{0, +1}, {1, +1}, {2, +1}};
+   Sample<uint32_t> sample_variables_binary_2{{0, +1}, {1, +0}, {2, +1}};
+   Sample<uint32_t> sample_variables_binary_3{{0, +0}, {1, +0}, {2, +0}};
+
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_2), +24.0 );
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_3), 0.0   );
+      
+}
+
+TEST(FunctionTestBPM, energies) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, 123.0}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   std::vector<Sample<uint32_t>> sample_variables_spin {
+      {{0, +1}, {1, +1}, {2, +1}},
+      {{0, +1}, {1, -1}, {2, +1}},
+      {{0, -1}, {1, -1}, {2, -1}}
+   };
+   std::vector<double> en_vec = bpm.energies(sample_variables_spin);
+   
+   EXPECT_DOUBLE_EQ(en_vec[0], +171.0);
+   EXPECT_DOUBLE_EQ(en_vec[1], -123.0);
+   EXPECT_DOUBLE_EQ(en_vec[2], -81.0 );
+   
+}
+
+TEST(FunctionTestBPM, remove_interaction) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, 123.0}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   bpm.remove_interaction({0, 2});
+   bpm.remove_interaction({0, 1, 2});
+
+   EXPECT_TRUE(bpm.get_polynomial().find({0})       != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({1})       != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({2})       != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({0, 1})    != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({0, 2})    == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({1, 2})    != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({0, 1, 2}) == bpm.get_polynomial().end());
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count(0), 1);
+   EXPECT_EQ(bpm.get_variables().count(1), 1);
+   EXPECT_EQ(bpm.get_variables().count(2), 1);
+   
+   //Adjacency
+   EXPECT_EQ(bpm.get_adjacency().at(0).count({0, 1}), 1);
+   EXPECT_EQ(bpm.get_adjacency().at(0).count({0, 2}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at(0).count({0, 1, 2}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at(1).count({1, 2}), 1);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 1}), 11.0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2}), 12.0);
+
+}
+
+TEST(FunctionTestBPM, remove_variable) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, 123.0}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   bpm.remove_variable(1);
+   
+   EXPECT_TRUE(bpm.get_polynomial().find({0})       != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({1})       == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({2})       != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({0, 1})    == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({0, 2})    != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({1, 2})    == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({0, 1, 2}) == bpm.get_polynomial().end());
+   
+   EXPECT_EQ(bpm.length(), 2);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count(0), 1);
+   EXPECT_EQ(bpm.get_variables().count(1), 0);
+   EXPECT_EQ(bpm.get_variables().count(2), 1);
+
+   //Adjacency
+   EXPECT_EQ(bpm.get_adjacency().at(0).count({0, 1}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at(0).count({0, 2}), 1);
+   EXPECT_EQ(bpm.get_adjacency().count(1), 0);
+   EXPECT_EQ(bpm.get_adjacency().at(0).count({0, 1, 2}), 0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(0).at({0, 2}), 22.0);
+
+}
+
+TEST(FunctionTestBPM, remove_variable_String) {
+   
+   Polynomial<std::string, double> polynomial {
+      {{"a"}, 0.0}, {{"b"}, 1.0}, {{"c"}, 2.0},
+      {{"a", "b"}, 11.0}, {{"a", "c"}, 22.0}, {{"b", "c"}, 12.0},
+      {{"a", "b", "c"}, 123.0}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<std::string, double> bpm(polynomial, vartype);
+   
+   bpm.remove_variable("b");
+   
+   EXPECT_TRUE(bpm.get_polynomial().find({"a"}) != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"b"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"c"}) != bpm.get_polynomial().end());
+   
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "b"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "c"}) != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"b", "c"}) == bpm.get_polynomial().end());
+   
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "b", "c"}) == bpm.get_polynomial().end());
+   
+   EXPECT_EQ(bpm.length(), 2);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count("a"), 1);
+   EXPECT_EQ(bpm.get_variables().count("b"), 0);
+   EXPECT_EQ(bpm.get_variables().count("c"), 1);
+   
+   //Adjacency
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "b"}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "c"}), 1);
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "b", "c"}), 0);
+   EXPECT_EQ(bpm.get_adjacency().count("b"), 0);
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "c"}), 22.0);
+   
+}
+
+TEST(FunctionTestBPM, remove_variable_from) {
+   
+   Polynomial<std::string, double> polynomial {
+      //linear biases
+      {{"a"}, 1.0}, {{"b"}, 2.0}, {{"c"}, 3.0}, {{"d"}, 4.0},
+      //quadratic biases
+      {{"a", "b"}, 12.0}, {{"a", "c"}, 13.0}, {{"a", "d"}, 14.0},
+      {{"b", "c"}, 23.0}, {{"b", "d"}, 24.0},
+      {{"c", "d"}, 34.0},
+      //polynomial biases
+      {{"a", "b", "c"}, 123.0}, {{"a", "b", "d"}, 124.0}, {{"a", "c", "d"}, 134.0},
+      {{"b", "c", "d"}, 234.0},
+      {{"a", "b", "c", "d"}, 1234.0}
+   };
+   
+   Vartype vartype = Vartype::BINARY;
+   BinaryPolynomialModel<std::string, double> bpm(polynomial, vartype);
+   
+   std::vector<std::string> variables = {"b", "d"};
+   bpm.remove_variables_from(variables);
+   
+   EXPECT_TRUE(bpm.get_polynomial().find({"a"}) != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"b"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"c"}) != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"d"}) == bpm.get_polynomial().end());
+
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "b"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "c"}) != bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "d"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"b", "c"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"b", "d"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"c", "d"}) == bpm.get_polynomial().end());
+
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "b", "c"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "b", "d"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "c", "d"}) == bpm.get_polynomial().end());
+   EXPECT_TRUE(bpm.get_polynomial().find({"b", "c", "d"}) == bpm.get_polynomial().end());
+
+   EXPECT_TRUE(bpm.get_polynomial().find({"a", "b", "c", "d"}) == bpm.get_polynomial().end());
+   
+   EXPECT_EQ(bpm.length(), 2);
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count("a"), 1);
+   EXPECT_EQ(bpm.get_variables().count("b"), 0);
+   EXPECT_EQ(bpm.get_variables().count("c"), 1);
+   EXPECT_EQ(bpm.get_variables().count("d"), 0);
+   
+   //Adjacency
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "b"}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "c"}), 1);
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "d"}), 0);
+   EXPECT_EQ(bpm.get_adjacency().count("b"), 0);
+   EXPECT_EQ(bpm.get_adjacency().at("c").count({"c", "d"}), 0);
+
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "b", "c"}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "b", "d"}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "c", "d"}), 0);
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"b", "c", "d"}), 0);
+   
+   EXPECT_EQ(bpm.get_adjacency().at("a").count({"a", "b", "c", "d"}), 0);
+
+}
+
+TEST(FunctionTestBPM, scale) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, +12}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   bpm.scale(0.5);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1}), 0.5);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({2}), 1.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1}), 5.5);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 2}), 11.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1, 2}), 6.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2}), 6.0);
+   
+}
+
+TEST(FunctionTestBPM, normalize) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, +12}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   bpm.normalize({-1, 1});
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1}), 1.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({2}), 2.0/22.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1}), 11.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 2}), 22.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1, 2}), 12.0/22.0);
+   
+   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2}), 12.0/22.0);
+   
+}
+
+TEST(FunctionTestBPM, generate_variables) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{0}, 0.0}, {{1}, 1.0},
+      {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
+      {{0, 1, 2}, 12.0},
+      {{0, 1, 4}, 13.0}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
+   
+   std::vector<uint32_t> variables = bpm.generate_variables();
+   EXPECT_EQ(variables.at(0), 0);
+   EXPECT_EQ(variables.at(1), 1);
+   EXPECT_EQ(variables.at(2), 2);
+   EXPECT_EQ(variables.at(3), 4);
+   
+   EXPECT_TRUE(bpm.contains(0));
+   EXPECT_TRUE(bpm.contains(1));
+   EXPECT_TRUE(bpm.contains(2));
+   EXPECT_FALSE(bpm.contains(3));
+   EXPECT_TRUE(bpm.contains(4));
+
+
+}
 
 }
