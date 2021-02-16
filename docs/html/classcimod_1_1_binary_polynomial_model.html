@@ -90,7 +90,9 @@ $(document).ready(function(){initNavTree('classcimod_1_1_binary_polynomial_model
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classcimod_1_1_binary_polynomial_model-members.html">List of all members</a>  </div>
@@ -104,6 +106,11 @@ $(document).ready(function(){initNavTree('classcimod_1_1_binary_polynomial_model
 
 <p><code>#include &lt;<a class="el" href="binary__polynomial__model_8hpp_source.html">binary_polynomial_model.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a140255a497ab528ef8bec40f2fd9b312"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a140255a497ab528ef8bec40f2fd9b312">json</a> = nlohmann::json</td></tr>
+<tr class="separator:a140255a497ab528ef8bec40f2fd9b312"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3346f64f55de8b879fc839a792a0e50a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a3346f64f55de8b879fc839a792a0e50a">BinaryPolynomialModel</a> (const <a class="el" href="namespacecimod.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9">Polynomial</a>&lt; IndexType, FloatType &gt; &amp;polynomial, const <a class="el" href="namespacecimod.html#af804dc431446f6af153364fec5c5aaf8">Vartype</a> vartype, const std::string info=&quot;&quot;)</td></tr>
@@ -179,6 +186,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5b60c9d6972010eae4f564e08a66cfc6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; FloatType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a5b60c9d6972010eae4f564e08a66cfc6">energies</a> (const std::vector&lt; <a class="el" href="namespacecimod.html#a300c5a25892e0259f843d34e20fd4801">Sample</a>&lt; IndexType &gt;&gt; &amp;samples_like) const</td></tr>
 <tr class="memdesc:a5b60c9d6972010eae4f564e08a66cfc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine the energies of the given samples.  <a href="classcimod_1_1_binary_polynomial_model.html#a5b60c9d6972010eae4f564e08a66cfc6">More...</a><br /></td></tr>
 <tr class="separator:a5b60c9d6972010eae4f564e08a66cfc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af99d0a0133c21a425c9f985cea3457b7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a140255a497ab528ef8bec40f2fd9b312">json</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#af99d0a0133c21a425c9f985cea3457b7">to_serializable</a> () const</td></tr>
+<tr class="memdesc:af99d0a0133c21a425c9f985cea3457b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the binary quadratic model to a serializable object user_bytes is assume to be set to False.  <a href="classcimod_1_1_binary_polynomial_model.html#af99d0a0133c21a425c9f985cea3457b7">More...</a><br /></td></tr>
+<tr class="separator:af99d0a0133c21a425c9f985cea3457b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a88b948251ccb4459a5e13b99621a5428"><td class="memTemplParams" colspan="2">template&lt;typename IndexType_serial  = IndexType, typename FloatType_serial  = FloatType&gt; </td></tr>
+<tr class="memitem:a88b948251ccb4459a5e13b99621a5428"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1_binary_polynomial_model.html">BinaryPolynomialModel</a>&lt; IndexType_serial, FloatType_serial &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a88b948251ccb4459a5e13b99621a5428">from_serializable</a> (const <a class="el" href="classcimod_1_1_binary_polynomial_model.html#a140255a497ab528ef8bec40f2fd9b312">json</a> &amp;input)</td></tr>
+<tr class="memdesc:a88b948251ccb4459a5e13b99621a5428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classcimod_1_1_binary_polynomial_model.html" title="Class for binary polynomial model.">BinaryPolynomialModel</a> instance from a serializable object.  <a href="classcimod_1_1_binary_polynomial_model.html#a88b948251ccb4459a5e13b99621a5428">More...</a><br /></td></tr>
+<tr class="separator:a88b948251ccb4459a5e13b99621a5428"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -219,7 +236,24 @@ class cimod::BinaryPolynomialModel&lt; IndexType, FloatType &gt;</h3>
   </table>
   </dd>
 </dl>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a140255a497ab528ef8bec40f2fd9b312"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a140255a497ab528ef8bec40f2fd9b312">&#9670;&nbsp;</a></span>json</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel</a>&lt; IndexType, FloatType &gt;::<a class="el" href="classcimod_1_1_binary_polynomial_model.html#a140255a497ab528ef8bec40f2fd9b312">json</a> =  nlohmann::json</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3346f64f55de8b879fc839a792a0e50a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3346f64f55de8b879fc839a792a0e50a">&#9670;&nbsp;</a></span>BinaryPolynomialModel() <span class="overload">[1/3]</span></h2>
 
@@ -633,6 +667,52 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An energy with respect to the sample. </dd></dl>
+
+</div>
+</div>
+<a id="a88b948251ccb4459a5e13b99621a5428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88b948251ccb4459a5e13b99621a5428">&#9670;&nbsp;</a></span>from_serializable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<div class="memtemplate">
+template&lt;typename IndexType_serial  = IndexType, typename FloatType_serial  = FloatType&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="classcimod_1_1_binary_polynomial_model.html">BinaryPolynomialModel</a>&lt;IndexType_serial, FloatType_serial&gt; <a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel</a>&lt; IndexType, FloatType &gt;::from_serializable </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classcimod_1_1_binary_polynomial_model.html#a140255a497ab528ef8bec40f2fd9b312">json</a> &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Create a <a class="el" href="classcimod_1_1_binary_polynomial_model.html" title="Class for binary polynomial model.">BinaryPolynomialModel</a> instance from a serializable object. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">IndexType_serial</td><td></td></tr>
+    <tr><td class="paramname">FloatType_serial</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">input</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>BinarypolynomialModel&lt;IndexType_serial, FloatType_serial&gt; </dd></dl>
 
 </div>
 </div>
@@ -1137,6 +1217,36 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="af99d0a0133c21a425c9f985cea3457b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af99d0a0133c21a425c9f985cea3457b7">&#9670;&nbsp;</a></span>to_serializable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a140255a497ab528ef8bec40f2fd9b312">json</a> <a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel</a>&lt; IndexType, FloatType &gt;::to_serializable </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convert the binary quadratic model to a serializable object user_bytes is assume to be set to False. </p>
+<dl class="section return"><dt>Returns</dt><dd>An object that can be serialized (nlohmann::json) </dd></dl>
 
 </div>
 </div>

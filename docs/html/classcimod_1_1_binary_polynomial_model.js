@@ -1,5 +1,6 @@
 var classcimod_1_1_binary_polynomial_model =
 [
+    [ "json", "classcimod_1_1_binary_polynomial_model.html#a140255a497ab528ef8bec40f2fd9b312", null ],
     [ "BinaryPolynomialModel", "classcimod_1_1_binary_polynomial_model.html#a3346f64f55de8b879fc839a792a0e50a", null ],
     [ "BinaryPolynomialModel", "classcimod_1_1_binary_polynomial_model.html#a657e990fff15cd3c4c8a4032f7419c76", null ],
     [ "BinaryPolynomialModel", "classcimod_1_1_binary_polynomial_model.html#a4611cde23aa62d3e3fb1979111e091d2", null ],
@@ -25,6 +26,7 @@ var classcimod_1_1_binary_polynomial_model =
     [ "remove_variable", "classcimod_1_1_binary_polynomial_model.html#a6045b99a9388d87a79b7df42dbc2fdce", null ],
     [ "remove_variables_from", "classcimod_1_1_binary_polynomial_model.html#aeae9447fcd035b9605cefef9b95eb4c8", null ],
     [ "scale", "classcimod_1_1_binary_polynomial_model.html#aa9f865096e139257b8a1f2d31acec44c", null ],
+    [ "to_serializable", "classcimod_1_1_binary_polynomial_model.html#af99d0a0133c21a425c9f985cea3457b7", null ],
     [ "update", "classcimod_1_1_binary_polynomial_model.html#a61b9e6f71dc9238e26d3f394dae6d7b3", null ],
     [ "update_adjacency", "classcimod_1_1_binary_polynomial_model.html#abaf6ea4fb3a27b2a0ae844c396e37d7c", null ],
     [ "m_adj", "classcimod_1_1_binary_polynomial_model.html#ab9268ae0893e761b7118fd7b97b9c127", null ],

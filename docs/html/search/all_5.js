@@ -5,5 +5,5 @@ var searchData=
   ['flip_5fvariable_27',['flip_variable',['../classcimod_1_1_binary_quadratic_model.html#af7610f532b8c79feb1afa9086e9ed805',1,'cimod::BinaryQuadraticModel']]],
   ['from_5fising_28',['from_ising',['../classcimod_1_1_binary_quadratic_model.html#afeda5faed84689a652510ac010fa2bb5',1,'cimod::BinaryQuadraticModel']]],
   ['from_5fqubo_29',['from_qubo',['../classcimod_1_1_binary_quadratic_model.html#ae723cd464d18bb86805d8a8662696e9f',1,'cimod::BinaryQuadraticModel']]],
-  ['from_5fserializable_30',['from_serializable',['../classcimod_1_1_binary_quadratic_model.html#ae14826bdc21e1c5d9c8d77de7d0fbba8',1,'cimod::BinaryQuadraticModel']]]
+  ['from_5fserializable_30',['from_serializable',['../classcimod_1_1_binary_polynomial_model.html#a88b948251ccb4459a5e13b99621a5428',1,'cimod::BinaryPolynomialModel::from_serializable()'],['../classcimod_1_1_binary_quadratic_model.html#ae14826bdc21e1c5d9c8d77de7d0fbba8',1,'cimod::BinaryQuadraticModel::from_serializable()']]]
 ];

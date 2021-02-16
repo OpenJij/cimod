@@ -181,7 +181,7 @@ $(document).ready(function(){initNavTree('binary__quadratic__model_8hpp_source.h
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;        <span class="keyword">const</span> IndexType &amp;v</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    )</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    {</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <span class="keyword">auto</span> k = <a class="code" href="classcimod_1_1_binary_quadratic_model.html#a69e436f2b30f33f3751d81391ff7cc7d">m_adj</a>[u].erase(v);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <a class="code" href="classcimod_1_1_binary_quadratic_model.html#a69e436f2b30f33f3751d81391ff7cc7d">m_adj</a>[u].erase(v);</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    };</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;<span class="keyword">public</span>:</div>
@@ -503,7 +503,7 @@ $(document).ready(function(){initNavTree('binary__quadratic__model_8hpp_source.h
 <div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;        <span class="keyword">auto</span> p = std::make_pair(u, v);</div>
 <div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;        <span class="keywordflow">if</span>(<a class="code" href="classcimod_1_1_binary_quadratic_model.html#a757272faba230a69ec74554c0c434866">m_quadratic</a>.count(p)!=0)</div>
 <div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;        {</div>
-<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;            <span class="keyword">auto</span> k = <a class="code" href="classcimod_1_1_binary_quadratic_model.html#a757272faba230a69ec74554c0c434866">m_quadratic</a>.erase(p);</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;            <a class="code" href="classcimod_1_1_binary_quadratic_model.html#a757272faba230a69ec74554c0c434866">m_quadratic</a>.erase(p);</div>
 <div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;            <a class="code" href="classcimod_1_1_binary_quadratic_model.html#ad6a234c7cd583d7984bf0e4f99dac355">remove_adjacency</a>(u, v);</div>
 <div class="line"><a name="l00656"></a><span class="lineno">  656</span>&#160;        }</div>
 <div class="line"><a name="l00657"></a><span class="lineno">  657</span>&#160;    };</div>

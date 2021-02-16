@@ -270,7 +270,7 @@ public:
       
       // Print polynomial, which is stored in m_polynomial with the first index std::vector of the size > 1
       std::cout << "polynomial(interaction) = " << std::endl;
-      for(auto &it_polynomial : m_polynomial) {
+      for(const auto &it_polynomial : m_polynomial) {
          if (it_polynomial.first.size() > 1) {
             std::cout << "(";
             for (const auto &it_index : it_polynomial.first) {
@@ -532,6 +532,123 @@ public:
           en_vec.push_back(energy(it));
       }
       return en_vec;
+   }
+   
+   using json = nlohmann::json;
+   
+   //! @brief Convert the binary quadratic model to a serializable object
+   //! user_bytes is assume to be set to False
+   //! @return An object that can be serialized (nlohmann::json)
+   json to_serializable() const {
+      std::string schema_version = "3.0.0";
+      //set variables (sorted)
+      std::vector<IndexType> variables = generate_variables();
+      size_t num_variables = variables.size();
+   
+      size_t num_interactions =  m_polynomial.size();
+   
+      //set polynomial index and biases
+      std::vector<std::vector<IndexType>> p_index;
+      std::vector<FloatType> p_bias;
+      for (const auto &it_polynomial: m_polynomial) {
+         p_index.push_back(std::vector<IndexType>());
+         for (const auto &it_index: it_polynomial.first) {
+            p_index[p_index.size() - 1].push_back(it_index);
+         }
+         p_bias.push_back(it_polynomial.second);
+      }
+ 
+      //set index_dtype
+      std::string index_dtype = num_variables <= 65536UL ? "uint16" : "uint32";
+
+      //set bias_type
+      std::string bias_type;
+      if(typeid(FloatType) == typeid(float)) {
+          bias_type = "float32";
+      }
+      else if(typeid(FloatType) == typeid(double)) {
+          bias_type = "float64";
+      }
+      else {
+          std::cerr << "FloatType must be float or double." << std::endl;
+      }
+
+      //set variable type
+      std::string variable_type;
+      if(m_vartype == Vartype::SPIN) {
+          variable_type = "SPIN";
+      }
+      else if(m_vartype == Vartype::BINARY) {
+          variable_type = "BINARY";
+      }
+      else {
+          std::cerr << "Variable type must be SPIN or BINARY." << std::endl;
+      }
+
+      json output;
+      output["type"]                    = "BinaryPolynomialModel";
+      output["version"]                 = {{"bqm_schema", "3.0.0"}};
+      output["variable_labels"]         = variables;
+      output["use_bytes"]               = false;
+      output["index_type"]              = index_dtype;
+      output["bias_type"]               = bias_type;
+      output["num_variables"]           = num_variables;
+      output["num_interactions"]        = num_interactions;
+      output["variable_labels"]         = variables;
+      output["variable_type"]           = variable_type;
+      output["info"]                    = m_info;
+      output["polynomial_interactions"] = p_index;
+      output["polynomial_biases"]       = p_bias;
+
+      return output;
+   }
+   
+   //! @brief Create a BinaryPolynomialModel instance from a serializable object.
+   //! @tparam IndexType_serial
+   //! @tparam FloatType_serial
+   //! @param input
+   //! @return BinarypolynomialModel<IndexType_serial, FloatType_serial>
+   template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
+   static BinaryPolynomialModel<IndexType_serial, FloatType_serial> from_serializable(const json &input) {
+      //extract type and version
+      std::string type = input["type"];
+      if(type != "BinaryPolynomialModel") {
+          throw std::runtime_error("Type must be \"BinaryPolynomialModel\".\n");
+      }
+      std::string version = input["version"]["bqm_schema"];
+      if(version != "3.0.0") {
+          throw std::runtime_error("bqm_schema must be 3.0.0.\n");
+      }
+
+      //extract variable_type
+      Vartype vartype;
+      std::string variable_type = input["variable_type"];
+      if(variable_type == "SPIN") {
+          vartype = Vartype::SPIN;
+      }
+      else if(variable_type == "BINARY") {
+          vartype = Vartype::BINARY;
+      }
+      else {
+          throw std::runtime_error("variable_type must be SPIN or BINARY.");
+      }
+      
+      //extract polynomial biases
+      std::vector<std::vector<IndexType_serial>> p_index = input["polynomial_interactions"];
+      std::vector<FloatType_serial> p_bias = input["polynomial_biases"];
+      Polynomial<IndexType_serial, FloatType_serial> polynomial;
+      for (size_t i = 0; i < p_bias.size(); i++) {
+         if (i < p_index.size()) {
+            insert_or_assign(polynomial, p_index[i], p_bias[i]);
+         }
+      }
+      
+      //extract info
+      std::string info = (input["info"].empty())?"":input["info"];
+      
+      //construct a BinaryPolynomialModel instance
+      BinaryPolynomialModel<IndexType_serial, FloatType_serial> bpm(polynomial, vartype, info);
+      return bpm;
    }
       
 protected:

@@ -218,7 +218,7 @@ protected:
         const IndexType &v
     )
     {
-        auto k = m_adj[u].erase(v);
+        m_adj[u].erase(v);
     };
 
 public:
@@ -651,7 +651,7 @@ public:
         auto p = std::make_pair(u, v);
         if(m_quadratic.count(p)!=0)
         {
-            auto k = m_quadratic.erase(p);
+            m_quadratic.erase(p);
             remove_adjacency(u, v);
         }
     };

@@ -409,7 +409,6 @@ namespace
         bqm.normalize(std::make_pair(-1.0, 1.0));
         auto bqm_linear = bqm.get_linear();
         auto bqm_quadratic = bqm.get_quadratic();
-        double bqm_offset = bqm.get_offset();
 
         auto comp = [](const auto &a, const auto &b) { return std::abs(a.second) < std::abs(b.second); };
         auto lin_max = std::max_element(bqm_linear.begin(), bqm_linear.end(), comp);
@@ -1131,6 +1130,58 @@ TEST(FunctionTestBPM, generate_variables) {
    EXPECT_TRUE(bpm.contains(4));
 
 
+}
+
+TEST(FunctionTestBPM, from_serializable) {
+   
+   Polynomial<std::string, double> polynomial {
+      //linear biases
+      {{"a"}, 1.0}, {{"b"}, 2.0}, {{"c"}, 3.0}, {{"d"}, 4.0},
+      //quadratic biases
+      {{"a", "b"}, 12.0}, {{"a", "c"}, 13.0}, {{"a", "d"}, 14.0},
+      {{"b", "c"}, 23.0}, {{"b", "d"}, 24.0},
+      {{"c", "d"}, 34.0},
+      //polynomial biases
+      {{"a", "b", "c"}, 123.0}, {{"a", "b", "d"}, 124.0}, {{"a", "c", "d"}, 134.0},
+      {{"b", "c", "d"}, 234.0},
+      {{"a", "b", "c", "d"}, 1234.0}
+   };
+
+   Vartype vartype = Vartype::SPIN;
+   BinaryPolynomialModel<std::string, double> bpm(polynomial, vartype);
+   json j = bpm.to_serializable();
+
+   BinaryPolynomialModel<std::string, double> bpm_from = BinaryPolynomialModel<std::string, double>::from_serializable(j);
+   
+   EXPECT_EQ(bpm.length(), bpm_from.length());
+   
+   //variables
+   EXPECT_EQ(bpm.get_variables().count("a"), bpm_from.get_variables().count("a"));
+   EXPECT_EQ(bpm.get_variables().count("b"), bpm_from.get_variables().count("b"));
+   EXPECT_EQ(bpm.get_variables().count("c"), bpm_from.get_variables().count("c"));
+   EXPECT_EQ(bpm.get_variables().count("d"), bpm_from.get_variables().count("d"));
+   
+   //Adjacency
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b"}), bpm_from.get_adjacency().at("a").at({"a", "b"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "c"}), bpm_from.get_adjacency().at("a").at({"a", "c"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "d"}), bpm_from.get_adjacency().at("a").at({"a", "d"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b", "c"}), bpm_from.get_adjacency().at("a").at({"a", "b", "c"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b", "d"}), bpm_from.get_adjacency().at("a").at({"a", "b", "d"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "c", "d"}), bpm_from.get_adjacency().at("a").at({"a", "c", "d"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("a").at({"a", "b", "c", "d"}), bpm_from.get_adjacency().at("a").at({"a", "b", "c", "d"}));
+   
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("b").at({"b", "c"}), bpm_from.get_adjacency().at("b").at({"b", "c"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("b").at({"b", "d"}), bpm_from.get_adjacency().at("b").at({"b", "d"}));
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("b").at({"b", "c", "d"}), bpm_from.get_adjacency().at("b").at({"b", "c", "d"}));
+
+   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at("c").at({"c", "d"}), bpm_from.get_adjacency().at("c").at({"c", "d"}));
+   
+   for (const auto &it: polynomial) {
+      EXPECT_DOUBLE_EQ(bpm.get_polynomial().at(it.first), bpm_from.get_polynomial().at(it.first));
+   }
+   
+   EXPECT_EQ(bpm.get_vartype(), bpm_from.get_vartype());
+   
 }
 
 }
