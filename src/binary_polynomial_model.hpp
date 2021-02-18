@@ -362,11 +362,14 @@ public:
       //Check the input interaction is valid
       for (const auto &it : u) {
          if (std::count(u.begin(), u.end(), it) != 1) {
+            /* Comment out in the case of IndexType = std::tuple
             std::cerr << "No self-loops allowed, therefore (";
             for (const auto &it_print : u) {
                std::cerr << it_print << ", ";
             }
             std::cerr << ") is not an allowed interaction" << std::endl;
+             */
+            std::cerr << "No self-loops allowed" << std::endl;
             return;
          }
       }
@@ -510,8 +513,9 @@ public:
       for (const auto &it_polynomial: m_polynomial) {
          int32_t multiple_variable = 1;
          for (const auto &it_vec: it_polynomial.first) {
-            if (check_vartype(sample.at(it_vec), m_vartype)) {
-               multiple_variable *= sample.at(it_vec);
+            const auto v = sample.at(it_vec);
+            if (check_vartype(v, m_vartype)) {
+               multiple_variable *= v;
             }
             else {
                multiple_variable = 0;
