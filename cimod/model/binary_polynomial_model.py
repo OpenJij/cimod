@@ -92,9 +92,12 @@ def make_BinaryPolynomialModel(polynomial):
             if vartype == cxxcimod.Vartype.SPIN:
                 return dimod.SPIN
             else:
-                #BINARY
                 return dimod.BINARY
     
+        @property
+        def length(self):
+            return super().get_length()
+            
         @property
         def empty(self, *args, **kwargs):
             return super().empty(*args, **kwargs)

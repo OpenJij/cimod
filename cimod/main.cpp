@@ -24,7 +24,7 @@ PYBIND11_MODULE(cxxcimod, m){
     m.doc() = "C++ library for a binary quadratic model";
 
     /**********************************************************
-    //BinaryQuadraticModel
+    //BinaryQuadraticModel and BinaryPolynomialModel
      **********************************************************/
 
     py::enum_<Vartype>(m, "Vartype")

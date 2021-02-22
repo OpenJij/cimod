@@ -362,7 +362,7 @@ public:
       //Check the input interaction is valid
       for (const auto &it : u) {
          if (std::count(u.begin(), u.end(), it) != 1) {
-            /* Comment out in the case of IndexType = std::tuple
+            /* Comment out in the case of IndexType = std::tuple for pybind11
             std::cerr << "No self-loops allowed, therefore (";
             for (const auto &it_print : u) {
                std::cerr << it_print << ", ";
@@ -481,11 +481,14 @@ public:
    void normalize(const std::pair<FloatType, FloatType>     &bias_range = {1.0, 1.0},
                   const std::vector<std::vector<IndexType>> &ignored_variables = {}
                   ) {
-      
+      /*
       auto comp = [](const auto &a, const auto &b) { return a.second < b.second; };
-      auto min = std::min_element(m_polynomial.begin(), m_polynomial.end(), comp)->second/bias_range.first;
-      auto max = std::max_element(m_polynomial.begin(), m_polynomial.end(), comp)->second/bias_range.second;
+      auto min_it = std::min_element(m_polynomial.begin(), m_polynomial.end(), comp);
+      auto max_it = std::max_element(m_polynomial.begin(), m_polynomial.end(), comp);
       
+      auto min = min_it->second/bias_range.first;
+      auto max = max_it->second/bias_range.second;
+
       FloatType inv_scale = (min < max) ? max : min;
       
       if (inv_scale != 0.0) {
@@ -494,6 +497,8 @@ public:
             if (it_polynomial.first.size() > 1) {update_adjacency(it_polynomial.first); };
          }
       }
+      */
+      
    }
    
    //! @brief Update binary polynomial model
