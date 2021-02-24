@@ -319,6 +319,7 @@ public:
    void empty() {
       m_variables  = {};
       m_polynomial = {};
+      m_adj        = {};
       m_vartype    = Vartype::NONE;
       m_info       = "";
    }
@@ -481,7 +482,11 @@ public:
    void normalize(const std::pair<FloatType, FloatType>     &bias_range = {1.0, 1.0},
                   const std::vector<std::vector<IndexType>> &ignored_variables = {}
                   ) {
-      /*
+      
+      if (m_polynomial.empty()) {
+         return;
+      }
+      
       auto comp = [](const auto &a, const auto &b) { return a.second < b.second; };
       auto min_it = std::min_element(m_polynomial.begin(), m_polynomial.end(), comp);
       auto max_it = std::max_element(m_polynomial.begin(), m_polynomial.end(), comp);
@@ -497,8 +502,6 @@ public:
             if (it_polynomial.first.size() > 1) {update_adjacency(it_polynomial.first); };
          }
       }
-      */
-      
    }
    
    //! @brief Update binary polynomial model

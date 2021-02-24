@@ -73,7 +73,7 @@ def make_BinaryPolynomialModel(polynomial):
         """
         def __init__(self, polynomial, var_type=dimod.SPIN, **kwargs):
             super().__init__(polynomial, to_cxxcimod(var_type))
-    
+        
         @property
         def polynomial(self):
             return self.get_polynomial()
@@ -85,7 +85,7 @@ def make_BinaryPolynomialModel(polynomial):
         @property
         def variables(self):
             return self.get_variables()
-    
+      
         @property
         def vartype(self):
             vartype = super().get_vartype()
@@ -93,66 +93,7 @@ def make_BinaryPolynomialModel(polynomial):
                 return dimod.SPIN
             else:
                 return dimod.BINARY
-    
-        @property
-        def length(self):
-            return super().get_length()
             
-        @property
-        def empty(self, *args, **kwargs):
-            return super().empty(*args, **kwargs)
-    
-        @property
-        def add_variable(self, *args, **kwargs):
-            return super().add_variable(*args, **kwargs)
-    
-        @property
-        def add_variables_from(self, *args, **kwargs):
-            return super().add_variables_from(*args, **kwargs)
-            
-        @property
-        def add_linear(self, *args, **kwargs):
-            return super().add_linear(*args, **kwargs)
-    
-        @property
-        def add_interaction(self, *args, **kwargs):
-            return super().add_interaction(*args, **kwargs)
-    
-        @property
-        def add_interactions_from(self, *args, **kwargs):
-            return super().add_interactions_from(*args, **kwargs)
-    
-        @property
-        def remove_variable(self, *args, **kwargs):
-            return super().remove_variable(*args, **kwargs)
-    
-        @property
-        def remove_variables_from(self, *args, **kwargs):
-            return super().remove_variables_from(*args, **kwargs)
-    
-        @property
-        def remove_interaction(self, *args, **kwargs):
-            return super().remove_interaction(*args, **kwargs)
-    
-        @property
-        def remove_interactions_from(self, *args, **kwargs):
-            return super().remove_interactions_from(*args, **kwargs)
-    
-        @property
-        def remove_offset(self, *args, **kwargs):
-            return super().remove_offset(*args, **kwargs)
-    
-        @property
-        def scale(self, *args, **kwargs):
-           return super().scale(*args, **kwargs)
-    
-        @property
-        def normalize(self, *args, **kwargs):
-           return super().normalize(*args, **kwargs)
-    
-        @property
-        def update(self, *args, **kwargs):
-            return super().update(*args, **kwargs) 
     return BinaryPolynomialModel
 
 def BinaryPolynomialModel(polynomial, var_type=dimod.SPIN, **kwargs):

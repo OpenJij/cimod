@@ -438,6 +438,7 @@ public:
     void empty()
     {
         m_linear = {};
+        m_adj = {};
         m_quadratic = {};
         m_offset = 0.0;
         m_vartype = Vartype::NONE;
@@ -755,6 +756,9 @@ public:
         const bool ignored_offset = false
     )
     {
+        if (m_quadratic.empty()) {
+           return;
+        }
         // parse range
         std::pair<FloatType, FloatType> l_range = bias_range;
         std::pair<FloatType, FloatType> q_range;

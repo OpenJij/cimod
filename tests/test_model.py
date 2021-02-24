@@ -251,6 +251,90 @@ class ModelTest(unittest.TestCase):
             self.assertEqual(bqm.offset, decode_bqm.offset)
             self.assertEqual(bqm.vartype, decode_bqm.vartype)
         
+class PolynomialModelTest(unittest.TestCase):
+    def setUp(self):
+        self.poly     = {(1,):1.0, (3,):3.0, (1,2):12.0, (1,3):13.0, (2,3,4):234.0, (3,5):35.0}
+        self.spins    = {1:+1, 2:-1, 3:+1, 4:-1, 5:+1} 
+        self.binaries = {1: 1, 2: 0, 3: 1, 4: 0, 4: 1}
+
+        self.poly_str     = {("a",):1.0, ("c",):3.0, ("a","b"):12.0, ("a","c"):13.0, ("b","c","d"):234.0, ("c","e"):35.0}
+        self.spins_str    = {"a":+1, "b":-1, "c":+1, "d":-1, "e":+1} 
+        self.binaries_str = {"a": 1, "b": 0, "c": 1, "d": 0, "e": 1}
+
+        self.poly_tuple2     = {((1,1),):1.0, ((3,3),):3.0, ((1,1),(2,2)):12.0, ((1,1),(3,3)):13.0, ((2,2),(3,3),(4,4)):234.0, ((3,3),(5,5)):35.0}
+        self.spins_tuple2    = {(1,1):+1, (2,2):-1, (3,3):+1, (4,4):-1, (5,5):+1} 
+        self.binaries_tuple2 = {(1,1): 1, (2,2): 0, (3,3): 1, (4,4): 0, (4,4): 1}
+
+        self.poly_tuple3     = {((1,1,1),):1.0, ((3,3,3),):3.0, ((1,1,1),(2,2,2)):12.0, ((1,1,1),(3,3,3)):13.0, ((2,2,2),(3,3,3),(4,4,4)):234.0, ((3,3,3),(5,5,5)):35.0}
+        self.spins_tuple3    = {(1,1,1):+1, (2,2,2):-1, (3,3,3):+1, (4,4,4):-1, (5,5,5):+1} 
+        self.binaries_tuple3 = {(1,1,1): 1, (2,2,2): 0, (3,3,3): 1, (4,4,4): 0, (4,4,4): 1}
+
+        self.poly_str_tuple4     = {(((1,1,1,1)),):1.0, (((3,3,3,3)),):3.0, (((1,1,1,1)),((2,2,2,2))):12.0, \
+                                    (((1,1,1,1)),((3,3,3,3))):13.0, (((2,2,2,2)),((3,3,3,3)),((4,4,4,4))):234.0, (((3,3,3,3)),((5,5,5,5))):35.0}
+        self.spins_str_tuple4    = {((1,1,1,1)):+1, ((2,2,2,2)):-1, ((3,3,3,3)):+1, ((4,4,4,4)):-1, ((5,5,5,5)):+1} 
+        self.binaries_str_tuple4 = {((1,1,1,1)): 1, ((2,2,2,2)): 0, ((3,3,3,3)): 1, ((4,4,4,4)): 0, ((5,5,5,5)): 1}
+
+
+
+    # Test BinaryPolynomialModel constructor
+    def test_bpm_constructor(self):
+        #IntegerType
+        bpm = cimod.BinaryPolynomialModel(self.poly)        
+        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
+        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
+        self.assertSetEqual (bpm.variables      , {1,2,3,4,5}) #variables
+        self.assertSetEqual (bpm.get_variables(), {1,2,3,4,5}) #get_variables()
+        self.assertDictEqual(bpm.polynomial      , self.poly | {(2,):0.0, (5,): 0.0, (4,): 0.0}) #polynomial
+        self.assertDictEqual(bpm.get_polynomial(), self.poly | {(2,):0.0, (5,): 0.0, (4,): 0.0}) #get_polynomial()
+        self.assertDictEqual(bpm.adj             , {1:{(1,2):12.0, (1,3):13.0}, 2:{(2,3,4):234.0}, 3:{(3,5):35.0}}) #adj
+        self.assertDictEqual(bpm.get_adjacency() , {1:{(1,2):12.0, (1,3):13.0}, 2:{(2,3,4):234.0}, 3:{(3,5):35.0}}) #get_adjacency()
+
+        #StringType
+        bpm = cimod.BinaryPolynomialModel(self.poly_str) 
+        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
+        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
+        self.assertSetEqual (bpm.variables      , {"a","b","c","d","e"}) #variables
+        self.assertSetEqual (bpm.get_variables(), {"a","b","c","d","e"}) #get_variables()
+        self.assertDictEqual(bpm.polynomial      , self.poly_str | {("b",):0.0, ("e",): 0.0, ("d",): 0.0}) #polynomial
+        self.assertDictEqual(bpm.get_polynomial(), self.poly_str | {("b",):0.0, ("e",): 0.0, ("d",): 0.0}) #get_polynomial()
+        self.assertDictEqual(bpm.adj             , {"a":{("a","b"):12.0, ("a","c"):13.0}, "b":{("b","c","d"):234.0}, "c":{("c","e"):35.0}}) #adj
+        self.assertDictEqual(bpm.get_adjacency() , {"a":{("a","b"):12.0, ("a","c"):13.0}, "b":{("b","c","d"):234.0}, "c":{("c","e"):35.0}}) #get_adjacency()
+        
+        #IntegerTypeTuple2
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2) 
+        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
+        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
+        self.assertSetEqual (bpm.variables      , {(1,1),(2,2),(3,3),(4,4),(5,5)}) #variables
+        self.assertSetEqual (bpm.get_variables(), {(1,1),(2,2),(3,3),(4,4),(5,5)}) #get_variables()
+        self.assertDictEqual(bpm.polynomial      , self.poly_tuple2 | {((2,2),):0.0, ((5,5),): 0.0, ((4,4),): 0.0}) #polynomial
+        self.assertDictEqual(bpm.get_polynomial(), self.poly_tuple2 | {((2,2),):0.0, ((5,5),): 0.0, ((4,4),): 0.0}) #get_polynomial()
+        self.assertDictEqual(bpm.adj             , {(1,1):{((1,1),(2,2)):12.0, ((1,1),(3,3)):13.0}, (2,2):{((2,2),(3,3),(4,4)):234.0}, (3,3):{((3,3),(5,5)):35.0}}) #adj
+        self.assertDictEqual(bpm.get_adjacency() , {(1,1):{((1,1),(2,2)):12.0, ((1,1),(3,3)):13.0}, (2,2):{((2,2),(3,3),(4,4)):234.0}, (3,3):{((3,3),(5,5)):35.0}}) #get_adjacency()
+
+        #IntegerTypeTuple3
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3) 
+        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
+        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
+        self.assertSetEqual (bpm.variables      , {(1,1,1),(2,2,2),(3,3,3),(4,4,4),(5,5,5)}) #variables
+        self.assertSetEqual (bpm.get_variables(), {(1,1,1),(2,2,2),(3,3,3),(4,4,4),(5,5,5)}) #get_variables()
+        self.assertDictEqual(bpm.polynomial      , self.poly_tuple3 | {((2,2,2),):0.0, ((5,5,5),): 0.0, ((4,4,4),): 0.0}) #polynomial
+        self.assertDictEqual(bpm.get_polynomial(), self.poly_tuple3 | {((2,2,2),):0.0, ((5,5,5),): 0.0, ((4,4,4),): 0.0}) #get_polynomial()
+        self.assertDictEqual(bpm.adj             , {(1,1,1):{((1,1,1),(2,2,2)):12.0, ((1,1,1),(3,3,3)):13.0}, (2,2,2):{((2,2,2),(3,3,3),(4,4,4)):234.0}, (3,3,3):{((3,3,3),(5,5,5)):35.0}}) #adj
+        self.assertDictEqual(bpm.get_adjacency() , {(1,1,1):{((1,1,1),(2,2,2)):12.0, ((1,1,1),(3,3,3)):13.0}, (2,2,2):{((2,2,2),(3,3,3),(4,4,4)):234.0}, (3,3,3):{((3,3,3),(5,5,5)):35.0}}) #get_adjacency()
+
+        #StringTypeTuple4
+        bpm = cimod.BinaryPolynomialModel(self.poly_str_tuple4) 
+        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
+        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
+        self.assertSetEqual (bpm.variables      , {((1,1,1,1)),((2,2,2,2)),((3,3,3,3)),((4,4,4,4)),((5,5,5,5))}) #variables
+        self.assertSetEqual (bpm.get_variables(), {((1,1,1,1)),((2,2,2,2)),((3,3,3,3)),((4,4,4,4)),((5,5,5,5))}) #get_variables()
+        self.assertDictEqual(bpm.polynomial      , self.poly_str_tuple4 | {(((2,2,2,2)),):0.0, (((5,5,5,5)),): 0.0, (((4,4,4,4)),): 0.0}) #polynomial
+        self.assertDictEqual(bpm.get_polynomial(), self.poly_str_tuple4 | {(((2,2,2,2)),):0.0, (((5,5,5,5)),): 0.0, (((4,4,4,4)),): 0.0}) #get_polynomial()
+        self.assertDictEqual(bpm.adj             , {((1,1,1,1)):{(((1,1,1,1)),((2,2,2,2))):12.0, (((1,1,1,1)),((3,3,3,3))):13.0}, \
+                                                    ((2,2,2,2)):{(((2,2,2,2)),((3,3,3,3)),((4,4,4,4))):234.0}, ((3,3,3,3)):{(((3,3,3,3)),((5,5,5,5))):35.0}}) #adj
+        self.assertDictEqual(bpm.get_adjacency() , {((1,1,1,1)):{(((1,1,1,1)),((2,2,2,2))):12.0, (((1,1,1,1)),((3,3,3,3))):13.0}, \
+                                                    ((2,2,2,2)):{(((2,2,2,2)),((3,3,3,3)),((4,4,4,4))):234.0}, ((3,3,3,3)):{(((3,3,3,3)),((5,5,5,5))):35.0}}) #get_adjacency()
+
 
 
 if __name__ == '__main__':
