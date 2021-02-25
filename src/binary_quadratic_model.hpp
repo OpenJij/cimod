@@ -305,9 +305,7 @@ public:
      * @param v
      */
     bool contains
-    (
-        const IndexType &v
-    )
+    (const IndexType &v) const
     {
         if(m_linear.count(v)!=0)
         {
@@ -419,11 +417,14 @@ public:
         std::cout << "vartype = ";
         if(m_vartype == Vartype::SPIN)
         {
-            std::cout << "Spin" << std::endl;
+           std::cout << "Spin" << std::endl;
         }
         else if(m_vartype == Vartype::BINARY)
         {
-            std::cout << "Binary" << std::endl;
+           std::cout << "Binary" << std::endl;
+        }
+        else {
+           std::cout << "Unknown vartype" << std::endl;
         }
 
         // Print info
@@ -531,6 +532,18 @@ public:
         }
         else
         {
+            //Check vartype when m_linear.empty() is true
+            if (m_linear.empty() && m_vartype == Vartype::NONE) {
+               if (vartype != Vartype::NONE) {
+                  m_vartype = vartype;
+               }
+               else {
+                  std::cerr << "Binary quadratic model is empty." << std::endl;
+                  std::cerr << "Please set vartype to Vartype::SPIN or Vartype::BINARY" << std::endl;
+                  return;
+               }
+            }
+           
             FloatType b = bias;
             if((vartype!=Vartype::NONE)&&(vartype!=m_vartype))
             {
@@ -756,7 +769,7 @@ public:
         const bool ignored_offset = false
     )
     {
-        if (m_quadratic.empty()) {
+        if (m_linear.empty()) {
            return;
         }
         // parse range
@@ -1120,10 +1133,7 @@ public:
      * @param sample
      * @return An energy with respect to the sample.
      */
-    FloatType energy
-    (
-        const Sample<IndexType> &sample
-    )
+    FloatType energy(const Sample<IndexType> &sample) const
     {
         FloatType en = m_offset;
         for(auto &&it : m_linear)
@@ -1149,10 +1159,7 @@ public:
      * @param samples_like
      * @return A vector including energies with respect to the samples.
      */
-    std::vector<FloatType> energies
-    (
-        const std::vector<Sample<IndexType>> &samples_like
-    )
+    std::vector<FloatType> energies(const std::vector<Sample<IndexType>> &samples_like) const
     {
         std::vector<FloatType> en_vec;
         for(auto &it : samples_like)
@@ -1279,7 +1286,7 @@ public:
      *
      * @return corresponding interaction matrix (Eigen)
      */
-    Matrix interaction_matrix(const std::vector<IndexType>& indices){
+    Matrix interaction_matrix(const std::vector<IndexType>& indices) const {
         // generate matrix
         size_t system_size = indices.size();
         Matrix _interaction_matrix = Matrix::Zero(system_size, system_size);

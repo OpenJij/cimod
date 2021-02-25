@@ -110,6 +110,8 @@ inline void declare_BPM(py::module& m, const std::string& name){
    .def("energies"                , &BPM::energies, "samples_like"_a)
    .def("to_serializable"         , [](const BPM& self){return static_cast<py::object>(self.to_serializable());})
    .def_static("from_serializable", [](const py::object& input){return BPM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a)
+   .def_static("from_pubo"        , &BPM::from_pubo, "polynomial"_a)
+   .def_static("from_ising"       , &BPM::from_ising, "polynomial"_a)
    .def("get_polynomial"          , [](const BPM& self) {
       py::dict py_polynomial;
       for (const auto &it_polynomial: self.get_polynomial()) {

@@ -250,7 +250,7 @@ public:
    }
    
    //! @brief Print information of binary polynomial model.
-   void print() const {
+   void print() {
       
       std::vector<IndexType> variables = generate_variables();
       
@@ -265,7 +265,7 @@ public:
       // Print linear, which is stored in m_polynomial with the first index std::vector of the size = 1
       std::cout << "polynomial(linear) = " << std::endl;
       for (const auto &it_variables: variables) {
-         std::cout << it_variables << ": " << m_polynomial.at(std::vector<IndexType>{it_variables}) << std::endl;
+         std::cout << it_variables << ": " << m_polynomial[std::vector<IndexType>{it_variables}] << std::endl;
       }
       
       // Print polynomial, which is stored in m_polynomial with the first index std::vector of the size > 1
@@ -285,14 +285,12 @@ public:
       std::cout << "adjacency = " << std::endl;
       for (const auto &it_variables: variables) {
          std::cout << it_variables << ": {";
-         if (m_adj.count(it_variables) > 0) {
-            for (const auto &it_adj: m_adj.at(it_variables)) {
-               std::cout << "(";
-               for (const auto &it_interaction: it_adj.first) {
-                  std::cout << it_interaction << ", ";
-               }
-               std::cout << "): " << it_adj.second << ", ";
+         for (const auto &it_adj: m_adj[it_variables]) {
+            std::cout << "(";
+            for (const auto &it_interaction: it_adj.first) {
+               std::cout << it_interaction << ", ";
             }
+            std::cout << "): " << it_adj.second << ", ";
          }
          std::cout << "}" << std::endl;
       }
@@ -330,16 +328,31 @@ public:
    //! @param vartype
    void add_linear(const IndexType &v, const FloatType &bias, const Vartype vartype = Vartype::NONE) {
       
+      //Check vartype when m_variables.empty() is true
+      if (m_variables.empty()) {
+         if (m_vartype == Vartype::NONE && vartype != Vartype::NONE) {
+            m_vartype = vartype;
+         }
+         else if (m_vartype == Vartype::NONE && vartype == Vartype::NONE) {
+            std::cerr << "Binary polynomial model is empty." << std::endl;
+            std::cerr << "Please set vartype to Vartype::SPIN or Vartype::BINARY" << std::endl;
+            return;
+         }
+      }
+      
       //Check vartype
-      if (vartype != Vartype::NONE) {
+      if ((vartype != Vartype::NONE) && (vartype != m_vartype)) {
          if ((m_vartype == Vartype::SPIN) && (vartype == Vartype::BINARY)) {
-            std::cerr << "Cannot convert the vartype=SPIN to vartype=BINARY" << std::endl;
+            std::cerr << "Cannot convert vartype=SPIN to vartype=BINARY" << std::endl;
+            return;
          }
          else if((m_vartype == Vartype::BINARY) && (vartype == Vartype::SPIN)) {
-            std::cerr << "Cannot convert the vartype=BINARY to vartype=SPIN" << std::endl;
+            std::cerr << "Cannot convert vartype=BINARY to vartype=SPIN" << std::endl;
+            return;
          }
          else {
             std::cerr << "Unknown vartype" << std::endl;
+            return;
          }
       }
       
@@ -375,7 +388,18 @@ public:
          }
       }
       
-      //Check vartype
+      //Check vartype when m_variables.empty() is true
+      if (m_variables.empty()) {
+         if (m_vartype == Vartype::NONE && vartype != Vartype::NONE) {
+            m_vartype = vartype;
+         }
+         else if (m_vartype == Vartype::NONE && vartype == Vartype::NONE) {
+            std::cerr << "Binary polynomial model is empty." << std::endl;
+            std::cerr << "Please set vartype to Vartype::SPIN or Vartype::BINARY" << std::endl;
+            return;
+         }
+      }
+      
       if((vartype != Vartype::NONE) && (vartype != m_vartype)) {
          if((m_vartype == Vartype::SPIN) && (vartype == Vartype::BINARY)) {
             std::cerr << "Cannot convert vartype=SPIN to vartype=BINARY" << std::endl;
@@ -599,14 +623,13 @@ public:
 
       json output;
       output["type"]                    = "BinaryPolynomialModel";
-      output["version"]                 = {{"bqm_schema", "3.0.0"}};
+      output["version"]                 = {{"bpm_schema", "3.0.0"}};
       output["variable_labels"]         = variables;
       output["use_bytes"]               = false;
       output["index_type"]              = index_dtype;
       output["bias_type"]               = bias_type;
       output["num_variables"]           = num_variables;
       output["num_interactions"]        = num_interactions;
-      output["variable_labels"]         = variables;
       output["variable_type"]           = variable_type;
       output["info"]                    = m_info;
       output["polynomial_interactions"] = p_index;
@@ -627,9 +650,9 @@ public:
       if(type != "BinaryPolynomialModel") {
           throw std::runtime_error("Type must be \"BinaryPolynomialModel\".\n");
       }
-      std::string version = input["version"]["bqm_schema"];
+      std::string version = input["version"]["bpm_schema"];
       if(version != "3.0.0") {
-          throw std::runtime_error("bqm_schema must be 3.0.0.\n");
+          throw std::runtime_error("bpm_schema must be 3.0.0.\n");
       }
 
       //extract variable_type
@@ -659,9 +682,23 @@ public:
       std::string info = (input["info"].empty())?"":input["info"];
       
       //construct a BinaryPolynomialModel instance
-      BinaryPolynomialModel<IndexType_serial, FloatType_serial> bpm(polynomial, vartype, info);
-      return bpm;
+      return BinaryPolynomialModel<IndexType_serial, FloatType_serial>(polynomial, vartype, info);
    }
+
+   //! @brief Create a binary polynomial model from an Polynomial Unconstrained Binary Optimization (PUBO) model.
+   //! @param polynomial
+   //! @return Binary polynomial model with vartype set to `Vartype.BINARY`.
+   static BinaryPolynomialModel from_pubo(const Polynomial<IndexType, FloatType> &polynomial) {
+      return BinaryPolynomialModel<IndexType, FloatType>(polynomial, Vartype::BINARY);
+   }
+
+   //! @brief Create a binary polynomial model from an Ising model.
+   //! @param polynomial
+   //! @return Binary polynomial model with vartype set to `Vartype.SPIN`.
+   static BinaryPolynomialModel from_ising(const Polynomial<IndexType, FloatType> &polynomial) {
+      return BinaryPolynomialModel<IndexType, FloatType>(polynomial, Vartype::SPIN);
+   }
+
       
 protected:
    
