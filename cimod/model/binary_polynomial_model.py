@@ -94,6 +94,23 @@ def make_BinaryPolynomialModel(polynomial):
             else:
                 return dimod.BINARY
 
+        def energy(self, sample, convert_sample=False):
+            # convert samples to SPIN or BINARY
+            if convert_sample:
+                for k in sample.keys():
+                    if sample[k] == -1 and self.vartype == dimod.BINARY:
+                        sample[k] = 0
+                    if sample[k] == 0  and self.vartype == dimod.SPIN:
+                        sample[k] = -1
+            return super().energy(sample)
+
+        def energies(self, samples_like, convert_sample=False, **kwargs):
+            en_vec = []
+            for elem in samples_like:
+                en_vec.append(self.energy(elem, convert_sample, **kwargs))
+    
+            return en_vec
+
         @classmethod
         def from_ising(cls, polynomial, **kwargs):
             return cls(polynomial, var_type=dimod.SPIN, **kwargs)

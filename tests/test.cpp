@@ -549,7 +549,7 @@ namespace
         BinaryQuadraticModel<std::string, double> bqm(linear, quadratic, offset, vartype);
 
         json j = bqm.to_serializable();
-        std::cout << j << std::endl;
+        //std::cout << j << std::endl;
     }
 
     TEST(FunctionTest, from_serializable)
@@ -562,7 +562,7 @@ namespace
         BinaryQuadraticModel<std::string, double> bqm(linear, quadratic, offset, vartype);
 
         json j = bqm.to_serializable();
-        std::cout << j << std::endl;
+        //std::cout << j << std::endl;
 
         BinaryQuadraticModel<std::string, double> bqm2 = BinaryQuadraticModel<std::string, double>::from_serializable(j);
         //bqm2.print();
