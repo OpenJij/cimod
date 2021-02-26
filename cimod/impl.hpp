@@ -20,6 +20,7 @@
 #include <pybind11/pybind11.h>
 
 #include <binary_quadratic_model.hpp>
+#include <binary_polynomial_model.hpp>
 
 namespace py = pybind11;
 
@@ -75,4 +76,72 @@ inline void declare_BQM(py::module& m, const std::string& name){
         //.def_static("from_serialiable", &BQM::from_serializable, "input"_a);
         .def("to_serializable", [](const BQM& self){return static_cast<py::object>(self.to_serializable());})
         .def_static("from_serializable", [](const py::object& input){return BQM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a);
+}
+
+template<typename IndexType, typename FloatType>
+inline void declare_BPM(py::module& m, const std::string& name){
+   
+   using BPM = BinaryPolynomialModel<IndexType, FloatType>;
+   
+   
+   py::class_<BPM>(m, name.c_str())
+   .def(py::init<Polynomial<IndexType, FloatType>, Vartype, std::string>(), "polynomial"_a, "vartype"_a, "info"_a="")
+   .def("generate_variables"      , &BPM::generate_variables)
+   .def("get_length"              , &BPM::length)
+   .def("contains"                , &BPM::contains, "v"_a)
+   .def("get_variables"           , &BPM::get_variables)
+   .def("get_vartype"             , &BPM::get_vartype)
+   .def("get_info"                , &BPM::get_info)
+   //.def("print"                   , &BPM::print) //Can not use std::cout when IndexType = std::tuple
+   .def("empty"                   , &BPM::empty)
+   .def("add_linear"              , &BPM::add_linear, "v"_a, "bias"_a, "vartype"_a=Vartype::NONE)
+   .def("add_interaction"         , &BPM::add_interaction, "u"_a, "bias"_a, "vartype"_a=Vartype::NONE)
+   .def("add_interactions_from"   , &BPM::add_interactions_from, "polynomial"_a, "vartype"_a=Vartype::NONE)
+   .def("remove_variable"         , &BPM::remove_variable, "v"_a)
+   .def("remove_variables_from"   , &BPM::remove_variables_from, "variables"_a)
+   .def("remove_interaction"      , &BPM::remove_interaction, "variables"_a)
+   .def("remove_interactions_from", &BPM::remove_interactions_from, "variable_array"_a)
+   .def("scale"                   , &BPM::scale, "scalar"_a, "ignored_interactions"_a = std::vector<std::vector<IndexType>>())
+   .def("normalize"               , &BPM::normalize,
+                                    "bias_range"_a = std::pair<FloatType, FloatType>(1.0, 1.0),
+                                    "ignored_variables"_a = std::vector<std::vector<IndexType>>())
+   .def("update"                  , &BPM::update, "bpm"_a, "ignore_info"_a = true)
+   .def("energy"                  , &BPM::energy, "sample"_a)
+   .def("energies"                , &BPM::energies, "samples_like"_a)
+   .def("to_serializable"         , [](const BPM& self){return static_cast<py::object>(self.to_serializable());})
+   .def_static("from_serializable", [](const py::object& input){return BPM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a)
+   .def_static("from_pubo"        , &BPM::from_pubo, "polynomial"_a)
+   .def_static("from_ising"       , &BPM::from_ising, "polynomial"_a)
+   .def("get_polynomial"          , [](const BPM& self) {
+      py::dict py_polynomial;
+      for (const auto &it_polynomial: self.get_polynomial()) {
+         py::tuple temp;
+         for (const auto &it_variable: it_polynomial.first) {
+            temp = temp + py::make_tuple(it_variable);
+         }
+         py_polynomial[temp] = it_polynomial.second;
+      }
+      return py_polynomial;
+   })
+   .def("get_adjacency"          , [](const BPM& self) {
+      py::dict py_adj;
+      for (const auto &it_variables: self.get_variables()) {
+         if (self.get_adjacency().count(it_variables) > 0) {
+            py::dict py_polynomial;
+            for (const auto &it_adj: self.get_adjacency().at(it_variables)) {
+               py::tuple temp;
+               for (const auto &it_interaction: it_adj.first) {
+                  temp = temp + py::make_tuple(it_interaction);
+               }
+               py_polynomial[temp] = it_adj.second;
+            }
+            py_adj[py::cast(it_variables)] = py_polynomial;
+         }
+      }
+ 
+       
+      return py_adj;
+   });
+   
+   
 }
