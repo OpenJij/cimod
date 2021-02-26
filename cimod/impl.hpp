@@ -94,7 +94,7 @@ inline void declare_BPM(py::module& m, const std::string& name){
    .def("get_info"                , &BPM::get_info)
    //.def("print"                   , &BPM::print) //Can not use std::cout when IndexType = std::tuple
    .def("empty"                   , &BPM::empty)
-   .def("add_variable"            , &BPM::add_linear, "v"_a, "bias"_a, "vartype"_a=Vartype::NONE)
+   .def("add_linear"              , &BPM::add_linear, "v"_a, "bias"_a, "vartype"_a=Vartype::NONE)
    .def("add_interaction"         , &BPM::add_interaction, "u"_a, "bias"_a, "vartype"_a=Vartype::NONE)
    .def("add_interactions_from"   , &BPM::add_interactions_from, "polynomial"_a, "vartype"_a=Vartype::NONE)
    .def("remove_variable"         , &BPM::remove_variable, "v"_a)
