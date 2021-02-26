@@ -117,7 +117,8 @@ def make_BinaryPolynomialModel(polynomial):
                 else:
                     for i in elem[0]:
                         temp += (tuple(i),)
-                polynomial |= {(temp):elem[1]}
+                polynomial.update({(temp):elem[1]})
+                #polynomial |= {(temp):elem[1]}
             
             # set vartype
             vartype = cimod.SPIN if obj['variable_type'] == 'SPIN' else cimod.BINARY

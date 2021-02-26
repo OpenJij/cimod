@@ -738,6 +738,7 @@ public:
             if(std::find(ignored_interactions.begin(), ignored_interactions.end(), it.first) != ignored_interactions.end() || ignored_variables.empty())
             {
                 it.second *= scalar;
+                update_adjacency(it.first.first, it.first.second);
             }
         }
 

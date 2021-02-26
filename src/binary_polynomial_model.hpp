@@ -495,6 +495,7 @@ public:
          if (std::find(ignored_interactions.begin(), ignored_interactions.end(), it_polynomial.first) != ignored_interactions.end()
              || ignored_interactions.empty()) {
             it_polynomial.second *= scalar;
+            update_adjacency(it_polynomial.first);
          }
       }
    }
@@ -522,9 +523,6 @@ public:
       
       if (inv_scale != 0.0) {
          scale(1.0/inv_scale, ignored_variables);
-         for (const auto &it_polynomial: m_polynomial) {
-            if (it_polynomial.first.size() > 1) {update_adjacency(it_polynomial.first); };
-         }
       }
    }
    

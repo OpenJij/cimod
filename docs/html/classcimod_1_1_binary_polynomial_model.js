@@ -19,7 +19,7 @@ var classcimod_1_1_binary_polynomial_model =
     [ "get_vartype", "classcimod_1_1_binary_polynomial_model.html#a839d682ac07b1058c11fb4d5b4b68513", null ],
     [ "length", "classcimod_1_1_binary_polynomial_model.html#a500f81e2b2bf06ee6950e1d410c6c0b1", null ],
     [ "normalize", "classcimod_1_1_binary_polynomial_model.html#a6a9df6d8279a5613eab2435a6c7c5c36", null ],
-    [ "print", "classcimod_1_1_binary_polynomial_model.html#a0be8f12619ec3f27e2f8e42318571b8f", null ],
+    [ "print", "classcimod_1_1_binary_polynomial_model.html#a24c3f9b23067bada6880d725e5f89087", null ],
     [ "remove_adjacency", "classcimod_1_1_binary_polynomial_model.html#a2d7d108945603e02917c292202eea39e", null ],
     [ "remove_interaction", "classcimod_1_1_binary_polynomial_model.html#a4d3e7317854ca5e36369c35cb4466a3e", null ],
     [ "remove_interactions_from", "classcimod_1_1_binary_polynomial_model.html#a1459801cb0e5ab5b3a14382c7330636c", null ],
