@@ -582,12 +582,14 @@ public:
       size_t num_interactions =  m_polynomial.size();
    
       //set polynomial index and biases
-      std::vector<std::vector<IndexType>> p_index;
+      std::vector<std::vector<size_t>> p_index;
       std::vector<FloatType> p_bias;
       for (const auto &it_polynomial: m_polynomial) {
-         p_index.push_back(std::vector<IndexType>());
+         p_index.push_back(std::vector<size_t>());
          for (const auto &it_index: it_polynomial.first) {
-            p_index[p_index.size() - 1].push_back(it_index);
+            auto it_ind = std::find(variables.begin(), variables.end(), it_index);
+            size_t idx  = std::distance(variables.begin(), it_ind);
+            p_index[p_index.size() - 1].push_back(idx);
          }
          p_bias.push_back(it_polynomial.second);
       }
@@ -667,12 +669,17 @@ public:
       }
       
       //extract polynomial biases
-      std::vector<std::vector<IndexType_serial>> p_index = input["polynomial_interactions"];
-      std::vector<FloatType_serial> p_bias = input["polynomial_biases"];
+      std::vector<IndexType_serial>    variables = input["variable_labels"];
+      std::vector<std::vector<size_t>> p_index   = input["polynomial_interactions"];
+      std::vector<FloatType_serial>    p_bias    = input["polynomial_biases"];
       Polynomial<IndexType_serial, FloatType_serial> polynomial;
-      for (size_t i = 0; i < p_bias.size(); i++) {
+      for (size_t i = 0; i < p_bias.size(); ++i) {
+         std::vector<IndexType_serial> temp_index;
+         for (size_t j = 0; j < p_index[i].size(); ++j) {
+            temp_index.push_back(variables[p_index[i][j]]);
+         }
          if (i < p_index.size()) {
-            insert_or_assign(polynomial, p_index[i], p_bias[i]);
+            insert_or_assign(polynomial, temp_index, p_bias[i]);
          }
       }
       
