@@ -1174,7 +1174,7 @@ TEST(FunctionTestBPM, normalize) {
    
 }
 
-TEST(FunctionTestBPM, generate_variables) {
+TEST(FunctionTestBPM, _generate_indices) {
    
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0},
@@ -1186,7 +1186,7 @@ TEST(FunctionTestBPM, generate_variables) {
    Vartype vartype = Vartype::SPIN;
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
    
-   std::vector<uint32_t> variables = bpm.generate_variables();
+   std::vector<uint32_t> variables = bpm._generate_indices();
    EXPECT_EQ(variables.at(0), 0);
    EXPECT_EQ(variables.at(1), 1);
    EXPECT_EQ(variables.at(2), 2);

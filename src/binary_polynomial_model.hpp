@@ -193,7 +193,7 @@ public:
    
    //! @brief Generate variable list associated with the input interactions.
    //! @return Sorted variable list as std::vector<IndexType>.
-   std::vector<IndexType> generate_variables() const {
+   std::vector<IndexType> _generate_indices() const {
       std::vector<IndexType> ret;
       for (const auto &it_variables: m_variables) {
          ret.push_back(it_variables);
@@ -252,7 +252,7 @@ public:
    //! @brief Print information of binary polynomial model.
    void print() {
       
-      std::vector<IndexType> variables = generate_variables();
+      std::vector<IndexType> variables = _generate_indices();
       
       std::cout << "[BinaryPolynomialModel]" << std::endl;
       
@@ -576,7 +576,7 @@ public:
    json to_serializable() const {
       std::string schema_version = "3.0.0";
       //set variables (sorted)
-      std::vector<IndexType> variables = generate_variables();
+      std::vector<IndexType> variables = _generate_indices();
       size_t num_variables = variables.size();
    
       size_t num_interactions =  m_polynomial.size();
