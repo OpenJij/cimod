@@ -673,9 +673,10 @@ public:
       std::vector<std::vector<size_t>> p_index   = input["polynomial_interactions"];
       std::vector<FloatType_serial>    p_bias    = input["polynomial_biases"];
       Polynomial<IndexType_serial, FloatType_serial> polynomial;
-      for (size_t i = 0; i < p_bias.size(); ++i) {
+
+      for (std::size_t i = 0; i < p_bias.size(); ++i) {
          std::vector<IndexType_serial> temp_index;
-         for (size_t j = 0; j < p_index[i].size(); ++j) {
+         for (std::size_t j = 0; j < p_index[i].size(); ++j) {
             temp_index.push_back(variables[p_index[i][j]]);
          }
          if (i < p_index.size()) {

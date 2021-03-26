@@ -148,6 +148,8 @@ def make_BinaryPolynomialModel(polynomial):
         @classmethod
         def from_serializable(cls, obj):
     
+            variable_labels = [tuple(elem) if type(elem) == list else elem for elem in obj['variable_labels']]
+
             #convert to polynomial biases
             zipped_obj = zip(obj["polynomial_interactions"], obj["polynomial_biases"])
 
@@ -156,10 +158,10 @@ def make_BinaryPolynomialModel(polynomial):
                 temp = ()
                 if (type(elem[0][0]) == int) or (type(elem[0][0]) == str):
                     for i in elem[0]:
-                        temp += (i,)
+                        temp += (variable_labels[i],)
                 else:
                     for i in elem[0]:
-                        temp += (tuple(i),)
+                        temp += (tuple(variable_labels[i]),)
                 polynomial.update({(temp):elem[1]})
                 #polynomial |= {(temp):elem[1]}
             
