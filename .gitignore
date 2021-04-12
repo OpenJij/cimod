@@ -168,3 +168,7 @@ project_template/tutorial
 *.iobj
 *.ipdb
 .vs/
+
+# Xcode Projrct File
+*.xcodeproj
+*.DS_Store

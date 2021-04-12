@@ -31,6 +31,10 @@ var NAVTREE =
         [ "Ising model", "index.html#ss_ising", null ],
         [ "QUBO model", "index.html#ss_qubo", null ]
       ] ],
+      [ "Binary polynomial model", "index.html#s_bpm", [
+        [ "Ising model", "index.html#ss_bpm_Ising", null ],
+        [ "PUBO model", "index.html#ss_bpm_pubo", null ]
+      ] ],
       [ "Example", "index.html#s_example", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -64,7 +68,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html"
+""
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

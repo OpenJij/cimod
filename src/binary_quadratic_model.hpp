@@ -218,7 +218,7 @@ protected:
         const IndexType &v
     )
     {
-        auto k = m_adj[u].erase(v);
+        m_adj[u].erase(v);
     };
 
 public:
@@ -305,9 +305,7 @@ public:
      * @param v
      */
     bool contains
-    (
-        const IndexType &v
-    )
+    (const IndexType &v) const
     {
         if(m_linear.count(v)!=0)
         {
@@ -381,55 +379,58 @@ public:
     }
 
     /**
-     * @brief Print informations of BinaryQuadraticModel
+     * @brief Print information of BinaryQuadraticModel
      * 
      */
-    //void print()
-    //{
-    //    std::cout << "[BinaryQuadraticModel]" << std::endl;
+    void print()
+    {
+        std::cout << "[BinaryQuadraticModel]" << std::endl;
 
-    //    // Print linear
-    //    std::cout << "linear = " << std::endl;
-    //    for(auto &it : m_linear)
-    //    {
-    //        std::cout << "" << it.first << ": " << it.second << std::endl;
-    //    }
+        // Print linear
+        std::cout << "linear = " << std::endl;
+        for(auto &it : m_linear)
+        {
+            std::cout << "" << it.first << ": " << it.second << std::endl;
+        }
 
-    //    // Print quadratic
-    //    std::cout << "quadratic = " << std::endl;
-    //    for(auto &it : m_quadratic)
-    //    {
-    //        std::cout << "(" << it.first.first << ", " << it.first.second << "): " << it.second << ", ";
-    //    }
-    //    std::cout << std::endl;
+        // Print quadratic
+        std::cout << "quadratic = " << std::endl;
+        for(auto &it : m_quadratic)
+        {
+            std::cout << "(" << it.first.first << ", " << it.first.second << "): " << it.second << ", ";
+        }
+        std::cout << std::endl;
 
-    //    // Print adjacency
-    //    std::cout << "adjacency = " << std::endl;
-    //    for(auto &it_src : m_linear)
-    //    {
-    //        std::cout << it_src.first << ": {";
-    //        for(auto &it_dst : m_adj[it_src.first])
-    //        {
-    //            std::cout << "(" << it_src.first << ", " << it_dst.first << "): " << it_dst.second << ", ";
-    //        }
-    //        std::cout << "}" << std::endl;
-    //    }
+        // Print adjacency
+        std::cout << "adjacency = " << std::endl;
+        for(auto &it_src : m_linear)
+        {
+            std::cout << it_src.first << ": {";
+            for(auto &it_dst : m_adj[it_src.first])
+            {
+                std::cout << "(" << it_src.first << ", " << it_dst.first << "): " << it_dst.second << ", ";
+            }
+            std::cout << "}" << std::endl;
+        }
 
-    //    // Print vartype
-    //    std::cout << "vartype = ";
-    //    if(m_vartype == Vartype::SPIN)
-    //    {
-    //        std::cout << "Spin" << std::endl;
-    //    }
-    //    else if(m_vartype == Vartype::BINARY)
-    //    {
-    //        std::cout << "Binary" << std::endl;
-    //    }
+        // Print vartype
+        std::cout << "vartype = ";
+        if(m_vartype == Vartype::SPIN)
+        {
+           std::cout << "Spin" << std::endl;
+        }
+        else if(m_vartype == Vartype::BINARY)
+        {
+           std::cout << "Binary" << std::endl;
+        }
+        else {
+           std::cout << "Unknown vartype" << std::endl;
+        }
 
-    //    // Print info
-    //    std::cout << "info = ";
-    //    std::cout << "\"" << m_info << "\"" << std::endl;
-    //}
+        // Print info
+        std::cout << "info = ";
+        std::cout << "\"" << m_info << "\"" << std::endl;
+    }
 
     /**
      * @brief Create an empty BinaryQuadraticModel
@@ -438,6 +439,7 @@ public:
     void empty()
     {
         m_linear = {};
+        m_adj = {};
         m_quadratic = {};
         m_offset = 0.0;
         m_vartype = Vartype::NONE;
@@ -530,6 +532,18 @@ public:
         }
         else
         {
+            //Check vartype when m_linear.empty() is true
+            if (m_linear.empty() && m_vartype == Vartype::NONE) {
+               if (vartype != Vartype::NONE) {
+                  m_vartype = vartype;
+               }
+               else {
+                  std::cerr << "Binary quadratic model is empty." << std::endl;
+                  std::cerr << "Please set vartype to Vartype::SPIN or Vartype::BINARY" << std::endl;
+                  return;
+               }
+            }
+           
             FloatType b = bias;
             if((vartype!=Vartype::NONE)&&(vartype!=m_vartype))
             {
@@ -651,7 +665,7 @@ public:
         auto p = std::make_pair(u, v);
         if(m_quadratic.count(p)!=0)
         {
-            auto k = m_quadratic.erase(p);
+            m_quadratic.erase(p);
             remove_adjacency(u, v);
         }
     };
@@ -724,6 +738,7 @@ public:
             if(std::find(ignored_interactions.begin(), ignored_interactions.end(), it.first) != ignored_interactions.end() || ignored_variables.empty())
             {
                 it.second *= scalar;
+                update_adjacency(it.first.first, it.first.second);
             }
         }
 
@@ -755,6 +770,9 @@ public:
         const bool ignored_offset = false
     )
     {
+        if (m_linear.empty()) {
+           return;
+        }
         // parse range
         std::pair<FloatType, FloatType> l_range = bias_range;
         std::pair<FloatType, FloatType> q_range;
@@ -1116,10 +1134,7 @@ public:
      * @param sample
      * @return An energy with respect to the sample.
      */
-    FloatType energy
-    (
-        const Sample<IndexType> &sample
-    )
+    FloatType energy(const Sample<IndexType> &sample) const
     {
         FloatType en = m_offset;
         for(auto &&it : m_linear)
@@ -1145,10 +1160,7 @@ public:
      * @param samples_like
      * @return A vector including energies with respect to the samples.
      */
-    std::vector<FloatType> energies
-    (
-        const std::vector<Sample<IndexType>> &samples_like
-    )
+    std::vector<FloatType> energies(const std::vector<Sample<IndexType>> &samples_like) const
     {
         std::vector<FloatType> en_vec;
         for(auto &it : samples_like)
@@ -1275,7 +1287,7 @@ public:
      *
      * @return corresponding interaction matrix (Eigen)
      */
-    Matrix interaction_matrix(const std::vector<IndexType>& indices){
+    Matrix interaction_matrix(const std::vector<IndexType>& indices) const {
         // generate matrix
         size_t system_size = indices.size();
         Matrix _interaction_matrix = Matrix::Zero(system_size, system_size);
