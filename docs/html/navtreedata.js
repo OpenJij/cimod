@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "cimod : C++ library for a binary quadratic model", "index.html", [
+  [ "cimod : C++ library for a binary (and polynomial) quadratic model", "index.html", [
     [ "cimod", "index.html", [
       [ "Overview", "index.html#s_overview", null ],
       [ "Binary quadratic model", "index.html#s_bqm", [
