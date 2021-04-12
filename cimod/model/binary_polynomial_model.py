@@ -73,6 +73,32 @@ def make_BinaryPolynomialModel(polynomial):
         """
         def __init__(self, polynomial, var_type=dimod.SPIN, **kwargs):
             super().__init__(polynomial, to_cxxcimod(var_type))
+            self._init_process()
+
+        def _init_process(self):
+            # indices
+            self._re_calculate_indices = True
+            self._indices    = None
+            self._ind_to_num = None
+
+        
+        @property
+        def indices(self):
+            ind, _ = self.update_indices()
+            return ind
+
+        def update_indices(self):
+            """calculate self._indices and self.ind_to_num
+            Returns:
+                self._indices and self._ind_to_num
+            """
+            if self._re_calculate_indices is True:
+                self._indices = self._generate_indices()
+                self._ind_to_num = {ind:num for num,ind in enumerate(self._indices)}
+
+                self._re_calculate_indices = False
+
+            return self._indices, self._ind_to_num
         
         @property
         def polynomial(self):
@@ -122,6 +148,8 @@ def make_BinaryPolynomialModel(polynomial):
         @classmethod
         def from_serializable(cls, obj):
     
+            variable_labels = [tuple(elem) if type(elem) == list else elem for elem in obj['variable_labels']]
+
             #convert to polynomial biases
             zipped_obj = zip(obj["polynomial_interactions"], obj["polynomial_biases"])
 
@@ -130,10 +158,10 @@ def make_BinaryPolynomialModel(polynomial):
                 temp = ()
                 if (type(elem[0][0]) == int) or (type(elem[0][0]) == str):
                     for i in elem[0]:
-                        temp += (i,)
+                        temp += (variable_labels[i],)
                 else:
                     for i in elem[0]:
-                        temp += (tuple(i),)
+                        temp += (tuple(variable_labels[i]),)
                 polynomial.update({(temp):elem[1]})
                 #polynomial |= {(temp):elem[1]}
             

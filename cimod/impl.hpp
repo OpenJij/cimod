@@ -86,7 +86,7 @@ inline void declare_BPM(py::module& m, const std::string& name){
    
    py::class_<BPM>(m, name.c_str())
    .def(py::init<Polynomial<IndexType, FloatType>, Vartype, std::string>(), "polynomial"_a, "vartype"_a, "info"_a="")
-   .def("generate_variables"      , &BPM::generate_variables)
+   .def("_generate_indices"      , &BPM::_generate_indices)
    .def("get_length"              , &BPM::length)
    .def("contains"                , &BPM::contains, "v"_a)
    .def("get_variables"           , &BPM::get_variables)
