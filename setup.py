@@ -13,10 +13,10 @@ from distutils.version import LooseVersion
 
 # Package meta-data.
 NAME = 'jij_cimod'
-DESCRIPTION = 'C++ library for a binary quadratic model'
+DESCRIPTION = 'C++ library for a binary (and polynomial) quadratic model'
 EMAIL = 'openjij@j-ij.com'
 AUTHOR = 'Jij Inc.'
-VERSION = '1.0.5'
+VERSION = '1.1.0'
 
 
 class CMakeExtension(Extension):
