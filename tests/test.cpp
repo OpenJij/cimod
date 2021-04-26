@@ -642,6 +642,7 @@ TEST(FunctionTest, empty) {
    
 }
 
+/*
 //google test for binary polynomial model
 TEST(ConstructionTestBPM, Construction) {
    
@@ -1415,5 +1416,7 @@ TEST(FunctionTestBPM, empty) {
    EXPECT_EQ(bpm.get_vartype(), Vartype::BINARY);
    
 }
+
+*/
 
 }

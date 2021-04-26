@@ -1,4 +1,4 @@
-# Copyright 2020 Jij Inc.
+# Copyright 2021 Jij Inc.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+'''
 import cxxcimod
 import cimod
 from cimod.vartype import to_cxxcimod
@@ -192,3 +193,4 @@ BinaryPolynomialModel.from_ising = \
 lambda polynomial, **kwargs: make_BinaryPolynomialModel(polynomial).from_ising(polynomial, **kwargs)
 BinaryPolynomialModel.from_pubo = \
 lambda polynomial, **kwargs: make_BinaryPolynomialModel(polynomial).from_pubo(polynomial, **kwargs)
+'''

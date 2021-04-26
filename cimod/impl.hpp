@@ -1,4 +1,4 @@
-//    Copyright 2020 Jij Inc.
+//    Copyright 2021 Jij Inc.
 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -78,6 +78,7 @@ inline void declare_BQM(py::module& m, const std::string& name){
         .def_static("from_serializable", [](const py::object& input){return BQM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a);
 }
 
+/*
 template<typename IndexType, typename FloatType>
 inline void declare_BPM(py::module& m, const std::string& name){
    
@@ -145,3 +146,4 @@ inline void declare_BPM(py::module& m, const std::string& name){
    
    
 }
+*/
