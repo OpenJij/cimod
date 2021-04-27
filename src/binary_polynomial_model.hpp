@@ -142,35 +142,97 @@ namespace cimod {
 template <typename IndexType, typename FloatType>
 class BinaryPolynomialModel {
 
-   using InteractionKey = std::vector<IndexType>;
+   using PolyKeyType = std::vector<IndexType>;
 
-   using InteractionValue = FloatType;
+   using PolyValueType = FloatType;
 
-   using InteractionMap = std::unordered_map<InteractionKey, InteractionValue, vector_hash>;
+   using PolyMapType = std::unordered_map<PolyKeyType, PolyValueType, vector_hash>;
 
-   using InteractionKeyList = std::vector<InteractionKey>;
+   using PolyKeyListType = std::vector<PolyKeyType>;
 
-   using InteractionValueList = std::vector<InteractionValue>;
+   using PolyValueListType = std::vector<PolyValueType>;
    
 public:
       
    //! @brief BinaryPolynomialModel constructor.
-   //! @param polynomial
+   //! @param poly_map
    //! @param vartype
    //! @param info
-   BinaryPolynomialModel(const InteractionMap &interaction_map,
+   BinaryPolynomialModel(const PolyMapType &poly_map,
                          const Vartype vartype,
                          const std::string info = ""): vartype_(vartype), info_(info) {
-      add_interactions_from(interaction_map);
+      add_interactions_from(poly_map);
+   }
+   
+   BinaryPolynomialModel(PolyKeyListType &key_list, 
+                         const PolyValueListType &value_list,
+                         const Vartype vartype,
+                         const std::string info = ""): vartype_(vartype), info_(info) {
+      add_interactions_from(key_list, value_list);
    }
 
-   void add_interaction(InteractionKey &key, const InteractionValue &value, const Vartype vartype = Vartype::NONE) {
+   BinaryPolynomialModel(const PolyKeyListType &key_list, 
+                         const PolyValueListType &value_list,
+                         const Vartype vartype,
+                         const std::string info = ""): vartype_(vartype), info_(info) {
+      add_interactions_from(key_list, value_list);
+   }
+
+   PolyMapType get_polynomial() const {
+      PolyMapType poly_map;
+      for (std::size_t i = 0; i < poly_key_list_.size(); ++i) {
+         poly_map[PolyKeyType{poly_key_list_[i].begin(), poly_key_list_[i].end()}] = poly_value_list_[i];
+      }
+      return poly_map;
+   }
+
+   PolyValueType get_polynomial(PolyKeyType &key) {
+      std::sort(key.begin(), key.end());
+      CheckKeySelfLoop(key);
+      if (poly_key_inv_.count(key) != 0) {
+         return poly_value_list_[poly_key_inv_[key]];
+      }
+      else {
+         return 0.0;
+      }
+   }
+
+   PolyValueType get_polynomial(const PolyKeyType &key) {
+      PolyKeyType copied_key = key;
+      return get_polynomial(copied_key);
+   }
+
+   const PolyKeyListType &get_polynomial_key() const {
+      return poly_key_list_;
+   }
+
+   const PolyValueListType &get_polynomial_value() const {
+      return poly_value_list_;
+   }
+
+   FloatType get_offset() {
+      return get_polynomial(PolyKeyType{});
+   }
+
+   Vartype get_vartype() const {
+      return vartype_;
+   }
+
+   std::size_t get_num_interactions() {
+      return poly_key_list_.size();
+   }
+
+   std::size_t get_num_variables() {
+      return variable_set_.size();
+   }
+
+   void add_interaction(PolyKeyType &key, const PolyValueType &value, const Vartype vartype = Vartype::NONE) {
       if (std::abs(value) < 0.0) {
          return;
       }
       std::sort(key.begin(), key.end());
       CheckKeySelfLoop(key);
-
+      UpdateDegree(key.size());
       if (vartype_ == vartype || vartype == Vartype::NONE) {
          SetKeyAndValue(key, value);
       }
@@ -179,15 +241,15 @@ public:
          const std::size_t changed_key_list_size = IntegerPower(2, original_key_size);
 
          if (vartype_ == Vartype::SPIN && vartype == Vartype::BINARY) {
-            for (std::size_t i = 0; i < original_key_size; ++i) {
+            for (std::size_t i = 0; i < changed_key_list_size; ++i) {
                const auto changed_key = GenerateChangedKey(key, i);
                int sign = ((original_key_size - changed_key.size())%2 == 0) ? 1.0 : -1.0;
                SetKeyAndValue(changed_key, value*IntegerPower(2, changed_key.size())*sign);
             }
          }
          else if (vartype_ == Vartype::BINARY && vartype == Vartype::SPIN) {
-            FloatType changed_value = value*(1.0/IntegerPower(2, original_key_size));
-            for (std::size_t i = 0; i < original_key_size; ++i) {
+            FloatType changed_value = value*(1.0/changed_key_list_size);
+            for (std::size_t i = 0; i < changed_key_list_size; ++i) {
                SetKeyAndValue(GenerateChangedKey(key, i), changed_value);
             }
          }
@@ -197,16 +259,85 @@ public:
       }
    }
 
-   void add_interactions_from(InteractionMap &interaction_map, const Vartype vartype = Vartype::NONE) {
-      for (auto &&it: interaction_map) {
-         add_interaction(it.first, it.second, vartype);
+   void add_interaction(const PolyKeyType &key, const PolyValueType &value, const Vartype vartype = Vartype::NONE) {
+      PolyKeyType copied_key = key;
+      add_interaction(copied_key, value, vartype);
+   }
+
+   void add_interactions_from(const PolyMapType &interaction_map, const Vartype vartype = Vartype::NONE) {
+      for (const auto &it: interaction_map) {
+         PolyKeyType copied_key = it.first;
+         add_interaction(copied_key, it.second, vartype);
       }
    }
 
+   void add_interactions_from(PolyKeyListType &key_list, const PolyValueListType &value_list, const Vartype vartype = Vartype::NONE) {
+      if (key_list.size() != value_list.size()) {
+         throw std::runtime_error("The sizes of key_list and value_list must match each other");
+      }
+      for (std::size_t i = 0; i < key_list.size(); ++i) {
+         add_interaction(key_list[i], value_list[i], vartype);
+      }
+   }
 
+   void add_interactions_from(const PolyKeyListType &key_list, const PolyValueListType &value_list, const Vartype vartype = Vartype::NONE) {
+      PolyKeyListType copied_key_list = key_list;
+      add_interactions_from(copied_key_list, value_list, vartype);
+   }
 
+   void add_offset(PolyValueType offset) {
+      add_interaction(PolyKeyType{}, offset);
+   }
 
-   
+   BinaryPolynomialModel to_spin() const {
+      if (vartype_ == Vartype::SPIN) {
+         return *this;
+      }
+
+      PolyKeyListType   new_key_list;
+      PolyValueListType new_value_list;
+
+      for (std::size_t i = 0; i < poly_key_list_.size(); ++i) {
+         const PolyKeyType   original_key          = poly_key_list_[i];
+         const PolyValueType original_value        = poly_value_list_[i];
+         const std::size_t   original_key_size     = original_key.size();
+         const std::size_t   changed_key_list_size = IntegerPower(2, original_key_size);
+
+         FloatType changed_value = original_value*(1.0/changed_key_list_size);
+
+         for (std::size_t j = 0; j < changed_key_list_size; ++j) {
+            new_key_list.push_back(GenerateChangedKey(original_key , j));
+            new_value_list.push_back(changed_value);
+         }
+      }
+
+      return BinaryPolynomialModel(new_key_list, new_value_list, Vartype::SPIN);
+   }
+
+   BinaryPolynomialModel to_binary() const {
+
+      if (vartype_ == Vartype::BINARY) {
+         return *this;
+      }
+
+      PolyKeyListType   new_key_list;
+      PolyValueListType new_value_list;
+
+      for (std::size_t i = 0; i < poly_key_list_.size(); ++i) {
+         const PolyKeyType   original_key          = poly_key_list_[i];
+         const PolyValueType original_value        = poly_value_list_[i];
+         const std::size_t   original_key_size     = original_key.size();
+         const std::size_t   changed_key_list_size = IntegerPower(2, original_key_size);
+         
+         for (std::size_t j = 0; j < changed_key_list_size; ++j) {
+            const auto changed_key = GenerateChangedKey(original_key, j);
+            int sign = ((original_key_size - changed_key.size())%2 == 0) ? 1.0 : -1.0;
+            new_key_list.push_back(changed_key);
+            new_value_list.push_back(original_value*IntegerPower(2, changed_key.size())*sign);
+         }
+      }
+      return BinaryPolynomialModel(new_key_list, new_value_list, Vartype::BINARY);
+   }
 
 
   
@@ -215,17 +346,22 @@ protected:
    
    std::unordered_set<IndexType> variable_set_;
    
-   InteractionKeyList interaction_key_list_;
+   PolyKeyListType poly_key_list_;
 
-   InteractionValueList interaction_value_list_;
+   PolyValueListType poly_value_list_;
 
-   std::unordered_map<InteractionKey, std::size_t, vector_hash> interaction_key_inv_;
+   std::unordered_map<PolyKeyType, std::size_t, vector_hash> poly_key_inv_;
    
    Vartype vartype_ = Vartype::NONE;
    
-   std::string info_;
+   std::string info_ = "";
 
-   void CheckKeySelfLoop(InteractionKey &key) {
+   std::size_t degree_ = 0;
+
+
+   
+
+   void CheckKeySelfLoop(PolyKeyType &key) {
       //key is assumed to be sorted
       for (std::size_t i = 0; i < key.size() - 1; ++i) {
          if (key[i] == key[i + 1]) {
@@ -234,15 +370,15 @@ protected:
       }
    }
 
-   void SetKeyAndValue(const InteractionKey &key, const InteractionValue &value) {
-      if (interaction_key_inv_.count(key) == 0) {
-         interaction_key_inv_[key] = interaction_value_list_.size();
-         interaction_key_list_.push_back(key);
-         interaction_value_list_.push_back(value);
+   void SetKeyAndValue(const PolyKeyType &key, const PolyValueType &value) {
+      if (poly_key_inv_.count(key) == 0) {
+         poly_key_inv_[key] = poly_value_list_.size();
+         poly_key_list_.push_back(key);
+         poly_value_list_.push_back(value);
          variable_set_.insert(key.begin(), key.end());
       }
       else {
-         interaction_value_list_[interaction_key_inv_[key]] += value;
+         poly_value_list_[poly_key_inv_[key]] += value;
       }
    }
 
@@ -254,16 +390,22 @@ protected:
       return val;
    }
 
-   InteractionKey GenerateChangedKey(const InteractionKey &original_key, const std::size_t num_of_key) {
+   PolyKeyType GenerateChangedKey(const PolyKeyType &original_key, const std::size_t num_of_key) {
       const std::size_t original_key_size = original_key.size();
       std::bitset<original_key_size> bs(num_of_key);
-      InteractionKey changed_key;
+      PolyKeyType changed_key;
       for (std::size_t i = 0; i < original_key_size; ++i) {
          if (bs[i]) {
             changed_key.push_back(original_key[i]);
          }
       }
       return changed_key;
+   }
+
+   void UpdateDegree(std::size_t degree) {
+      if (degree_ < degree) {
+         degree_ = degree;
+      }
    }
 
    
