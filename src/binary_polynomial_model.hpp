@@ -157,31 +157,27 @@ public:
    //! @brief BinaryPolynomialModel constructor.
    //! @param poly_map
    //! @param vartype
-   //! @param info
    BinaryPolynomialModel(const PolyMapType &poly_map,
-                         const Vartype vartype,
-                         const std::string info = ""): vartype_(vartype), info_(info) {
+                         const Vartype vartype): vartype_(vartype) {
       add_interactions_from(poly_map);
    }
    
    BinaryPolynomialModel(PolyKeyListType &key_list,
                          const PolyValueListType &value_list,
-                         const Vartype vartype,
-                         const std::string info = ""): vartype_(vartype), info_(info) {
+                         const Vartype vartype): vartype_(vartype) {
       add_interactions_from(key_list, value_list);
    }
    
    BinaryPolynomialModel(const PolyKeyListType &key_list,
                          const PolyValueListType &value_list,
-                         const Vartype vartype,
-                         const std::string info = ""): vartype_(vartype), info_(info) {
+                         const Vartype vartype): vartype_(vartype) {
       add_interactions_from(key_list, value_list);
    }
    
    PolyMapType get_polynomial() const {
       PolyMapType poly_map;
       for (std::size_t i = 0; i < poly_key_list_.size(); ++i) {
-         poly_map[PolyKeyType{poly_key_list_[i].begin(), poly_key_list_[i].end()}] = poly_value_list_[i];
+         poly_map[poly_key_list_[i]] = poly_value_list_[i];
       }
       return poly_map;
    }
@@ -193,7 +189,7 @@ public:
          return poly_value_list_[poly_key_inv_[key]];
       }
       else {
-         return 0.0;
+         return 0;
       }
    }
    
@@ -209,6 +205,16 @@ public:
    const PolyValueListType &get_polynomial_value() const {
       return poly_value_list_;
    }
+
+   PolyKeyType get_variables() const {
+      PolyKeyType variable_list;
+      variable_list.reserve(get_num_variables());
+      for (const auto &index: each_variable_num_) {
+         variable_list.push_back(index.first);
+      }
+      std::sort(variable_list.begin(), variable_list.end());
+      return variable_list;
+   }
    
    FloatType get_offset() const {
       return get_polynomial(PolyKeyType{});
@@ -223,7 +229,7 @@ public:
    }
    
    std::size_t get_num_variables() const {
-      return variable_set_.size();
+      return each_variable_num_.size();
    }
    
    BinaryPolynomialModel empty(const Vartype vartype) const {
@@ -231,7 +237,7 @@ public:
    }
    
    void clear() {
-      variable_set_.clear();
+      each_variable_num_.clear();
       PolyKeyListType().swap(poly_key_list_);
       PolyValueListType().swap(poly_value_list_);
       poly_key_inv_.clear();
@@ -244,9 +250,62 @@ public:
       if (poly_key_inv_.count(key) == 0) {
          return;
       }
-   
-   
-      
+
+      for (const auto &index: key) {
+         if (each_variable_num_[index] >= 2) {
+            each_variable_num_[index]--;
+         }
+         else if (each_variable_num_[index] == 1) {
+            each_variable_num_.erase(index);
+         }
+      }
+
+      std::size_t inv = poly_key_inv_[key];
+
+      std::swap(poly_key_inv_[key], poly_key_inv_[poly_key_list_.back()]);
+      poly_key_inv_.erase(key);
+
+      std::swap(poly_key_list_[inv], poly_key_list_.back());
+      poly_key_list_.pop_back();
+
+      std::swap(poly_value_list_[inv], poly_value_list_.back());
+      poly_value_list_.pop_back();
+
+   }
+
+   void remove_interaction(const PolyKeyType &key) {
+      PolyKeyType copied_key = key;
+      remove_interaction(copied_key);
+   }
+
+   void remove_interactions_from(PolyKeyListType &key_list) {
+      for (auto &&key: key_list) {
+         remove_interaction(key);
+      }
+   }
+
+   void remove_interactions_from(const PolyKeyListType &key_list) {
+      for (const auto &key: key_list) {
+         remove_interaction(key);
+      }
+   }
+
+   void remove_offset() {
+      remove_interaction(PolyValueType{});
+   }
+
+   void remove_variable(const IndexType &index) {
+      for (auto &&key: poly_key_list_) {
+         if (std::binary_search(key.begin(), key.end(), index)) {
+            remove_interaction(key);
+         }
+      }
+   }
+
+   void remove_variables_from(const PolyKeyType &key) {
+      for (const auto &index: key) {
+         remove_variable(index);
+      }
    }
    
    void add_interaction(PolyKeyType &key, const PolyValueType &value, const Vartype vartype = Vartype::NONE) {
@@ -411,63 +470,30 @@ public:
       
       if (vartype == Vartype::SPIN) {
          if (inplace) {
-            *this = to_spin();
+            *this = ToSpin();
             return *this;
          }
          else {
-            return to_spin();
+            return ToSpin();
          }
       }
       else if (vartype == Vartype::BINARY) {
          if (inplace) {
-            *this = to_binary();
+            *this = ToBinary();
             return *this;
          }
          else {
-            return to_binary();
+            return ToBinary();
          }
       }
       else {
          throw std::runtime_error("Unknown vartype error");
-      }
-      
+      }  
    }
-   
-   BinaryPolynomialModel to_spin() const {
-      if (vartype_ == Vartype::SPIN) {
-         return *this;
-      }
-      
-      PolyKeyListType   new_key_list;
-      PolyValueListType new_value_list;
+
+   PolyMapType to_hubo() {
+      PolyMapType poly_map;
       std::size_t num_interactions = get_num_interactions();
-      
-      for (std::size_t i = 0; i < num_interactions; ++i) {
-         const PolyKeyType   original_key          = poly_key_list_[i];
-         const PolyValueType original_value        = poly_value_list_[i];
-         const std::size_t   original_key_size     = original_key.size();
-         const std::size_t   changed_key_list_size = IntegerPower(2, original_key_size);
-         
-         FloatType changed_value = original_value*(1.0/changed_key_list_size);
-         
-         for (std::size_t j = 0; j < changed_key_list_size; ++j) {
-            new_key_list.push_back(GenerateChangedKey(original_key , j));
-            new_value_list.push_back(changed_value);
-         }
-      }
-      return BinaryPolynomialModel(new_key_list, new_value_list, Vartype::SPIN);
-   }
-   
-   BinaryPolynomialModel to_binary() const {
-      
-      if (vartype_ == Vartype::BINARY) {
-         return *this;
-      }
-      
-      PolyKeyListType   new_key_list;
-      PolyValueListType new_value_list;
-      std::size_t num_interactions = get_num_interactions();
-      
       for (std::size_t i = 0; i < num_interactions; ++i) {
          const PolyKeyType   original_key          = poly_key_list_[i];
          const PolyValueType original_value        = poly_value_list_[i];
@@ -477,19 +503,97 @@ public:
          for (std::size_t j = 0; j < changed_key_list_size; ++j) {
             const auto changed_key = GenerateChangedKey(original_key, j);
             int sign = ((original_key_size - changed_key.size())%2 == 0) ? 1.0 : -1.0;
-            new_key_list.push_back(changed_key);
-            new_value_list.push_back(original_value*IntegerPower(2, changed_key.size())*sign);
+            poly_map[changed_key] = original_value*IntegerPower(2, changed_key.size())*sign;
          }
       }
-      return BinaryPolynomialModel(new_key_list, new_value_list, Vartype::BINARY);
+      return poly_map;
+   }
+
+   PolyMapType to_hising() {
+      PolyMapType poly_map;
+      std::size_t num_interactions = get_num_interactions();
+      for (std::size_t i = 0; i < num_interactions; ++i) {
+         const PolyKeyType   original_key          = poly_key_list_[i];
+         const PolyValueType original_value        = poly_value_list_[i];
+         const std::size_t   original_key_size     = original_key.size();
+         const std::size_t   changed_key_list_size = IntegerPower(2, original_key_size);
+         const FloatType     changed_value         = original_value*(1.0/changed_key_list_size);
+         
+         for (std::size_t j = 0; j < changed_key_list_size; ++j) {
+            poly_map[GenerateChangedKey(original_key , j)] = changed_value;
+         }
+      }
+      return poly_map;
+   }
+
+   nlohmann::json to_serializable() const {
+      nlohmann::json output;
+      if (vartype_ == Vartype::BINARY) {
+         output["vartype"] = "BINARY";
+      }
+      else if (vartype_ == Vartype::SPIN) {
+         output["vartype"] = "SPIN";
+      }
+      else {
+         throw std::runtime_error("Variable type must be SPIN or BINARY.");
+      }
+
+      output["poly_key_list"]   = poly_key_list_;
+      output["poly_value_list"] = poly_value_list_;
+      output["type"]            = "BinaryPolynomialModel";
+
+      return output;
+   }
+
+   template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
+   static BinaryPolynomialModel<IndexType_serial, FloatType_serial> from_serializable(nlohmann::json &input) {
+      if(input["type"] != "BinaryPolynomialModel") {
+         throw std::runtime_error("Type must be \"BinaryQuadraticModel\".\n");
+      }
+
+      Vartype vartype;
+      if (input["vartype"] == "SPIN") {
+         vartype = Vartype::SPIN;
+      }
+      else if (input["vartype"] == "BINARY") {
+         vartype = Vartype::BINARY;
+      }
+      else {
+         throw std::runtime_error("Variable type must be SPIN or BINARY.");
+      }
+      return BinaryPolynomialModel<IndexType_serial, FloatType_serial>(input["poly_key_list"], input["poly_value_list"], input["type"]);
+   }
+
+
+
+   static BinaryPolynomialModel from_hubo(const PolyMapType &poly_map) {
+      return BinaryPolynomialModel<IndexType, FloatType>(poly_map, Vartype::BINARY);
    }
    
-   
-   
-   
+   static BinaryPolynomialModel from_hubo(const PolyKeyListType &key_list, const PolyValueListType &value_list) {
+      return BinaryPolynomialModel<IndexType, FloatType>(key_list, value_list, Vartype::BINARY);
+   }
+
+   static BinaryPolynomialModel from_hubo(PolyKeyListType &key_list, const PolyValueListType &value_list) {
+      return BinaryPolynomialModel<IndexType, FloatType>(key_list, value_list, Vartype::BINARY);
+   }
+
+   static BinaryPolynomialModel from_hising(const PolyMapType &poly_map) {
+      return BinaryPolynomialModel<IndexType, FloatType>(poly_map, Vartype::SPIN);
+   }
+
+   static BinaryPolynomialModel from_hising(const PolyKeyListType &key_list, const PolyValueListType &value_list) {
+      return BinaryPolynomialModel<IndexType, FloatType>(key_list, value_list, Vartype::SPIN);
+   }
+
+   static BinaryPolynomialModel from_hising(PolyKeyListType &key_list, const PolyValueListType &value_list) {
+      return BinaryPolynomialModel<IndexType, FloatType>(key_list, value_list, Vartype::SPIN);
+   }
+
+
 protected:
    
-   std::unordered_set<IndexType> variable_set_;
+   std::unordered_map<IndexType, std::size_t> each_variable_num_;
    
    PolyKeyListType poly_key_list_;
    
@@ -502,9 +606,6 @@ protected:
    std::string info_ = "";
    
    std::size_t degree_ = 0;
-   
-   
-   
    
    void CheckKeySelfLoop(PolyKeyType &key) const {
       //key is assumed to be sorted
@@ -520,10 +621,12 @@ protected:
          poly_key_inv_[key] = poly_value_list_.size();
          poly_key_list_.push_back(key);
          poly_value_list_.push_back(value);
-         variable_set_.insert(key.begin(), key.end());
       }
       else {
          poly_value_list_[poly_key_inv_[key]] += value;
+      }
+      for (const auto &index: key) {
+         each_variable_num_[index]++;
       }
    }
    
@@ -552,6 +655,58 @@ protected:
          degree_ = degree;
       }
    }
+
+   BinaryPolynomialModel ToSpin() const {
+      if (vartype_ == Vartype::SPIN) {
+         return *this;
+      }
+      
+      PolyKeyListType   new_key_list;
+      PolyValueListType new_value_list;
+      std::size_t num_interactions = get_num_interactions();
+      
+      for (std::size_t i = 0; i < num_interactions; ++i) {
+         const PolyKeyType   original_key          = poly_key_list_[i];
+         const PolyValueType original_value        = poly_value_list_[i];
+         const std::size_t   original_key_size     = original_key.size();
+         const std::size_t   changed_key_list_size = IntegerPower(2, original_key_size);
+         
+         FloatType changed_value = original_value*(1.0/changed_key_list_size);
+         
+         for (std::size_t j = 0; j < changed_key_list_size; ++j) {
+            new_key_list.push_back(GenerateChangedKey(original_key , j));
+            new_value_list.push_back(changed_value);
+         }
+      }
+      return BinaryPolynomialModel(new_key_list, new_value_list, Vartype::SPIN);
+   }
+   
+   BinaryPolynomialModel ToBinary() const {
+      
+      if (vartype_ == Vartype::BINARY) {
+         return *this;
+      }
+      
+      PolyKeyListType   new_key_list;
+      PolyValueListType new_value_list;
+      std::size_t num_interactions = get_num_interactions();
+      
+      for (std::size_t i = 0; i < num_interactions; ++i) {
+         const PolyKeyType   original_key          = poly_key_list_[i];
+         const PolyValueType original_value        = poly_value_list_[i];
+         const std::size_t   original_key_size     = original_key.size();
+         const std::size_t   changed_key_list_size = IntegerPower(2, original_key_size);
+         
+         for (std::size_t j = 0; j < changed_key_list_size; ++j) {
+            const auto changed_key = GenerateChangedKey(original_key, j);
+            int sign = ((original_key_size - changed_key.size())%2 == 0) ? 1.0 : -1.0;
+            new_key_list.push_back(changed_key);
+            new_value_list.push_back(original_value*IntegerPower(2, changed_key.size())*sign);
+         }
+      }
+      return BinaryPolynomialModel(new_key_list, new_value_list, Vartype::BINARY);
+   }
+   
    
    
 };
