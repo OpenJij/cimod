@@ -663,29 +663,15 @@ TEST(ConstructionTestBPM, Construction) {
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
 
-   EXPECT_EQ(bpm.length(), 4);
+   EXPECT_EQ(bpm.get_num_variables(), 4);
    
    //variables
-   EXPECT_EQ(bpm.get_variables().count(1), 1);
-   EXPECT_EQ(bpm.get_variables().count(2), 1);
-   EXPECT_EQ(bpm.get_variables().count(3), 1);
-   EXPECT_EQ(bpm.get_variables().count(4), 1);
-   
-   //Adjacency
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2}), 12.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 3}), 13.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 4}), 14.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2, 3}), 123.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2, 4}), 124.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 3, 4}), 134.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(1).at({1, 2, 3, 4}), 1234.0);
-   
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(2).at({2, 3}), 23.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(2).at({2, 4}), 24.0);
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(2).at({2, 3, 4}), 234.0);
-
-   EXPECT_DOUBLE_EQ(bpm.get_adjacency().at(3).at({3, 4}), 34.0);
-   
+   auto variables = bpm.get_variables();
+   EXPECT_EQ(variables[0], 1);
+   EXPECT_EQ(variables[1], 2);
+   EXPECT_EQ(variables[2], 3);
+   EXPECT_EQ(variables[3], 4);
+      
    for (const auto &it: bpm.get_polynomial()) {
       EXPECT_DOUBLE_EQ(it.second, polynomial[it.first]);
    }
