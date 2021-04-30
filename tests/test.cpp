@@ -23,7 +23,7 @@ namespace
         Linear<std::string, double> linear{ {"a", 1.0}, {"b", 2.0}, {"c", 3.0}, {"d", 4.0} };
         Quadratic<std::string, double> quadratic
         {
-            {std::make_pair("a", "b"), 12.0}, {std::make_pair("a", "c"), 13.0}, {std::make_pair("a", "d"), 14.0},
+            {std::make_pair("a", "b"), 12.0}, {std::make_pair("b", "a"), 12.0}, {std::make_pair("a", "c"), 13.0}, {std::make_pair("a", "d"), 14.0},
             {std::make_pair("b", "c"), 23.0}, {std::make_pair("b", "d"), 24.0},
             {std::make_pair("d", "c"), 34.0}
         };

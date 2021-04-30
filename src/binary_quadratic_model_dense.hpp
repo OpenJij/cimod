@@ -118,7 +118,7 @@ protected:
     }
 
     /**
-     * @brief refer _quadmat(i,j)
+     * @brief get reference of _quadmat(i,j)
      *
      * @param i
      * @param j
@@ -136,7 +136,7 @@ protected:
     }
 
     /**
-     * @brief refer _quadmat(i,i)
+     * @brief get reference of _quadmat(i,i)
      *
      * @param i
      *
@@ -147,7 +147,7 @@ protected:
     }
 
     /**
-     * @brief refer _quadmat(i,j)
+     * @brief get reference of _quadmat(i,j)
      *
      * @param i
      * @param j
@@ -165,7 +165,7 @@ protected:
     }
 
     /**
-     * @brief refer _quadmat(i,i)
+     * @brief get reference of _quadmat(i,i)
      *
      * @param i
      *
@@ -196,19 +196,20 @@ protected:
         //allocate _quadmat
         size_t mat_size = _idx_to_label.size() + 1;
         _quadmat = Matrix(mat_size, mat_size);
+        _quadmat.fill(0);
         _quadmat(mat_size-1, mat_size-1) = 1;
 
         //copy linear and quadratic to _quadmat
         for(const auto& kv : linear){
             IndexType key = kv.first;
             FloatType val = kv.second;
-            _mat(_label_to_idx[key]) = val;
+            _mat(_label_to_idx[key]) += val;
         }
 
         for(const auto& kv : quadratic){
             std::pair<IndexType, IndexType> key = kv.first;
             FloatType val = kv.second;
-            _mat(_label_to_idx[key.first], _label_to_idx[key.second]) = val;
+            _mat(_label_to_idx[key.first], _label_to_idx[key.second]) += val;
         }
     }
 
@@ -234,24 +235,14 @@ public:
         m_vartype(vartype)
     {
         _initialize_quadmat(linear, quadratic);
+        for(const auto& elem : _idx_to_label){
+            std::cout << elem << std::endl;
+        }
+        for(const auto& elem : _label_to_idx){
+            std::cout << "(" << elem.first << "," << elem.second << ")" << std::endl;
+        }
+        std::cout << _quadmat << std::endl;
     };
-
-    /**
-     * @brief Copy constructor of BinaryQuadraticModel
-     * 
-     * @param bqm 
-     */
-    //BinaryQuadraticModel
-    //(
-    //    const BinaryQuadraticModel &bqm
-    //)
-    //{
-    //    m_offset = bqm.get_offset();
-    //    m_vartype = bqm.get_vartype();
-    //    m_info = bqm.get_info();
-    //    add_variables_from(bqm.get_linear());
-    //    add_interactions_from(bqm.get_quadratic());
-    //};
 
     BinaryQuadraticModel_Dense(const BinaryQuadraticModel_Dense&) = default;
     BinaryQuadraticModel_Dense(BinaryQuadraticModel_Dense&&) = default;
