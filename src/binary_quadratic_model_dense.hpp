@@ -1043,12 +1043,12 @@ public:
         }
     }
 
-    ///**
-    // * @brief Enforce u, v being the same variable in a binary quadratic model.
-    // * 
-    // * @param u
-    // * @param v
-    // */
+    /**
+     * @brief Enforce u, v being the same variable in a binary quadratic model. (currently disabled)
+     * 
+     * @param u
+     * @param v
+     */
     //void contract_variables
     //(
     //    const IndexType &u,
@@ -1058,50 +1058,53 @@ public:
 
     //    auto p1 = std::make_pair(u, v);
     //    auto p2 = std::make_pair(v, u);
-    //    if(m_quadratic.count(p1) != 0)
+
+    //    const Quadratic<IndexType, FloatType>& quadratic = this->get_quadratic();
+
+    //    if(quadratic.count(p1) != 0)
     //    {
     //        if(m_vartype == Vartype::BINARY)
     //        {
-    //            add_variable(u, m_quadratic[p1]);
+    //            add_variable(u, quadratic.at(p1));
     //        }
     //        else if(m_vartype == Vartype::SPIN)
     //        {
-    //            add_offset(m_quadratic[p1]);
+    //            add_offset(quadratic.at(p1));
     //        }
     //        remove_interaction(u, v);
     //    }
-    //    if(m_quadratic.count(p2) != 0)
+    //    if(quadratic.count(p2) != 0)
     //    {
     //        if(m_vartype == Vartype::BINARY)
     //        {
-    //            add_variable(u, m_quadratic[p2]);
+    //            add_variable(u, quadratic.at(p2));
     //        }
     //        else if(m_vartype == Vartype::SPIN)
     //        {
-    //            add_offset(m_quadratic[p2]);
+    //            add_offset(quadratic.at(p2));
     //        }
     //        remove_interaction(v, u);
     //    }
 
     //    std::vector<std::pair<IndexType, IndexType>> interactions;
-    //    for(auto &it : m_quadratic)
+    //    for(const auto &it : quadratic)
     //    {
     //        if(it.first.first == v)
     //        {
+    //            std::cout << u << " " << it.first.second << std::endl;
     //            add_interaction(u, it.first.second, it.second);
-    //            update_adjacency(u, it.first.second);
     //            interactions.push_back(it.first);
     //        }
     //        else if(it.first.second == v)
     //        {
+    //            std::cout << it.first.first << " " << u << std::endl;
     //            add_interaction(it.first.first, u, it.second);
-    //            update_adjacency(it.first.first, u);
     //            interactions.push_back(it.first);
     //        }
     //    }
     //    remove_interactions_from(interactions);
 
-    //    add_variable(u, m_linear[v]);
+    //    add_variable(u, _mat(v));
     //    remove_variable(v);
     //}
 
@@ -1267,46 +1270,25 @@ public:
     {
         return BinaryQuadraticModel_Dense<IndexType, FloatType>(linear, quadratic, offset, Vartype::SPIN);
     }
-//
-//
-//    /**
-//     * @brief generate interaction matrix with given list of indices
-//     * The generated matrix will be the following symmetric matrix:
-//     * \f[
-//     * \begin{pmatrix}
-//     * \tilde{J}_{0,0} & \tilde{J}_{0,1} & \tilde{J}_{0,2} & \cdots \\
-//     * \tilde{J}_{1,0} & \tilde{J}_{1,1} & \tilde{J}_{1,2} & \cdots \\
-//     * \tilde{J}_{2,0} & \tilde{J}_{2,1} & \tilde{J}_{2,2} & \cdots \\
-//     * \vdots & \vdots & \vdots & \ddots \\
-//     * \end{pmatrix}
-//     * \f]
-//     *
-//     * where in the Ising case,
-//     * \f[
-//     * \tilde{J}_{f(i),f(j)} = J_{ij} + J_{ji}, \\
-//     * \tilde{J}_{f(i),f(i)} = h_{i},
-//     * \f]
-//     * and the QUBO case,
-//     * \f[
-//     * \tilde{J}_{f(i),f(j)} = Q_{ij} + Q_{ji}, \\
-//     * \tilde{J}_{f(i),f(i)} = Q_{ii},
-//     * \f]
-//     * and the function \f$f\f$ denotes a mapping from index to the corresponding number specified by the argument `indices`.
-//     * For instance, if `indices` is ['a', 'b', 'c'], The following equations, \f$f(a) = 0, f(b)=1, \mathrm{and} f(c)=2\f$ hold.
-//     *
-//     * The original Hamiltonian can be rewritten with \f$\tilde{J_{ij}}\f$ as
-//     * \f[
-//     * E_{\mathrm{Ising}} = \sum_{i} \tilde{J}_{f(i),f(i)} s_i + \sum_{i < j} \tilde{J}_{f(i), f(j)} s_i s_j + \delta_{\mathrm{Ising}},
-//     * \f]
-//     * and
-//     * \f[
-//     * E_{\mathrm{QUBO}} = \sum_{i} \tilde{J}_{f(i), f(i)}x_i + \sum_{i < j} \tilde{J}_{f(i), f(j)} x_i x_j + \delta_{\mathrm{QUBO}}.
-//     * \f]
-//     *
-//     * @param indices
-//     *
-//     * @return corresponding interaction matrix (Eigen)
-//     */
+
+
+    /**
+     * @brief generate interaction matrix with given list of indices
+     * The generated matrix will be the following triangular matrix:
+     * \f[
+     * \begin{pmatrix}
+     * J_{0,0} & J_{0,1} & \cdots & J_{0,N-1} & h_{0}\\
+     * 0 & J_{1,1} & \cdots & J_{1,N-1} & h_{1}\\
+     * \vdots & \vdots & \vdots & \vdots & \vdots \\
+     * 0 & 0 & \cdots & J_{N-1,N-1} & h_{N-1}\\
+     * 0 & 0 & \cdots & 0 & 1 \\
+     * \end{pmatrix}
+     * \f]
+     *
+     * @param indices
+     *
+     * @return corresponding interaction matrix (Eigen)
+     */
     Matrix interaction_matrix() const {
         return this->_quadmat;
     }

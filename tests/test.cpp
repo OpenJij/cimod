@@ -684,6 +684,67 @@ namespace
         EXPECT_DOUBLE_EQ(bqm.get_offset(), 1.5);
     }
 
+    // currently disabled
+    //TEST(DenseBQMFunctionTest, contract_variables)
+    //{
+    //    Linear<uint32_t, double> linear{ {1, 1.0}, {2, 2.0}, {3, 3.0}, {4, 4.0} };
+    //    Quadratic<uint32_t, double> quadratic
+    //    {
+    //        {std::make_pair(1, 2), 12.0}, {std::make_pair(1, 3), 13.0}, {std::make_pair(1, 4), 14.0},
+    //        {std::make_pair(2, 3), 23.0}, {std::make_pair(2, 4), 24.0},
+    //        {std::make_pair(3, 4), 34.0}
+    //    };
+    //    double offset = 0.5;
+    //    Vartype vartype = Vartype::SPIN;
+
+    //    BinaryQuadraticModel_Dense<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+    //    bqm.contract_variables(2, 3);
+
+    //    auto bqm_quadratic = bqm.get_quadratic();
+
+    //    // check variable and quadratic bias
+    //    EXPECT_EQ(bqm.contains(3), false);
+    //    EXPECT_EQ(bqm_quadratic[std::make_pair(1, 2)], 25.0);
+    //}
+    
+    TEST(DenseBQMFunctionTest, change_vartype)
+    {
+        Linear<uint32_t, double> linear{{0, 1.0}, {1, -1.0}, {2, 0.5} };
+        Quadratic<uint32_t, double> quadratic{ {std::make_pair(0, 1), 0.5}, {std::make_pair(1, 2), 1.5} };
+        double offset = 1.4;
+        Vartype vartype = Vartype::SPIN;
+
+        BinaryQuadraticModel_Dense<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+
+        auto bqm2 = bqm.change_vartype(Vartype::BINARY, true);
+        auto lin = bqm.get_linear();
+        auto quad = bqm.get_quadratic();
+        auto lin2 = bqm2.get_linear();
+        auto quad2 = bqm2.get_quadratic();
+
+        // check quadratic matrix and offset
+        EXPECT_EQ(quad[std::make_pair(0, 1)], 2.0);
+        EXPECT_EQ(quad[std::make_pair(1, 2)], 6.0);
+        EXPECT_EQ(lin[0], 1.0);
+        EXPECT_EQ(lin[1], -6.0);
+        EXPECT_EQ(lin[2], -2.0);
+        EXPECT_EQ(bqm.get_offset(), 2.9);
+        EXPECT_EQ(bqm.get_vartype(), Vartype::BINARY);
+
+        EXPECT_EQ(quad2[std::make_pair(0, 1)], 2.0);
+        EXPECT_EQ(quad2[std::make_pair(1, 2)], 6.0);
+        EXPECT_EQ(lin2[0], 1.0);
+        EXPECT_EQ(lin2[1], -6.0);
+        EXPECT_EQ(lin2[2], -2.0);
+        EXPECT_EQ(bqm2.get_offset(), 2.9);
+        EXPECT_EQ(bqm2.get_vartype(), Vartype::BINARY);
+
+        auto bqm3 = bqm.change_vartype(Vartype::SPIN, false);
+        EXPECT_EQ(bqm.get_offset(), 2.9);
+        EXPECT_EQ(bqm.get_vartype(), Vartype::BINARY);
+
+    }
+
 
 
 
