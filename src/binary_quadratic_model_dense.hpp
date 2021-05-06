@@ -1292,184 +1292,128 @@ public:
     Matrix interaction_matrix() const {
         return this->_quadmat;
     }
-//
-//
-//    using json = nlohmann::json;
-//
-//    /**
-//     * @brief Convert the binary quadratic model to a serializable object
-//     * user_bytes is assume to be set to False
-//     *
-//     * @return An object that can be serialized (nlohmann::json)
-//     */
-//    json to_serializable() const
-//    {
-//        std::string schema_version = "3.0.0";
-//        //all variables are contained in the keys of m_linear.
-//        //All we need is to traverse the keys of m_linear.
-//        /*
-//         * output sample
-//         * >>> bqm = dimod.BinaryQuadraticModel({'c': -1, 'd': 1}, {('a', 'd'): 2, ('b', 'e'): 5, ('a', 'c'): 3}, 0.0, dimod.BINARY)
-//         *
-//         * >>> bqm.to_serializable()
-//         * {'type': 'BinaryQuadraticModel', 'version': {'bqm_schema': '3.0.0'}, 'use_bytes': False, 'index_type': 'uint16', 'bias_type': 'float32', 'num_variables': 5, 'num_interactions': 3, 'variable_labels': ['a', 'b', 'c', 'd', 'e'], 'variable_type': 'BINARY', 'offset': 0.0, 'info': {}, 'linear_biases': [0.0, 0.0, -1.0, 1.0, 0.0], 'quadratic_biases': [3.0, 2.0, 5.0], 'quadratic_head': [0, 0, 1], 'quadratic_tail': [2, 3, 4]}
-//         */
-//
-//        //set variables (sorted)
-//        std::vector<IndexType> variables;
-//        variables.reserve(m_linear.size());
-//        for(auto&& elem : m_linear)
-//        {
-//            variables.push_back(elem.first);
-//        }
-//
-//        std::sort(variables.begin(), variables.end());
-//
-//        size_t num_variables = variables.size();
-//        
-//        //set sorted linear biases
-//        std::vector<FloatType> l_bias;
-//        for(auto&& key : variables)
-//        {
-//            l_bias.push_back(m_linear.at(key));
-//        }
-//
-//        //set quadratic head, tail and biases
-//        std::vector<size_t> q_head, q_tail;
-//        std::vector<FloatType> q_bias;
-//        for(auto&& elem : m_quadratic)
-//        {
-//            auto it_head = std::find(variables.begin(), variables.end(), elem.first.first);
-//            auto it_tail = std::find(variables.begin(), variables.end(), elem.first.second);
-//            size_t idx_head = std::distance(variables.begin(), it_head);
-//            size_t idx_tail = std::distance(variables.begin(), it_tail);
-//            q_head.push_back(idx_head);
-//            q_tail.push_back(idx_tail);
-//            q_bias.push_back(elem.second);
-//        }
-//
-//        size_t num_interactions =  m_quadratic.size();
-//
-//        //set index_dtype
-//        std::string index_dtype = num_variables <= 65536UL ? "uint16" : "uint32";
-//
-//        //set bias_type
-//        std::string bias_type;
-//        if(typeid(m_offset) == typeid(float))
-//        {
-//            bias_type = "float32";
-//        }
-//        else if(typeid(m_offset) == typeid(double))
-//        {
-//            bias_type = "float64";
-//        }
-//        else
-//        {
-//            std::cerr << "FloatType must be float or double." << std::endl;
-//        }
-//
-//        //set variable type
-//        std::string variable_type;
-//        if(m_vartype == Vartype::SPIN)
-//        {
-//            variable_type = "SPIN";
-//        }
-//        else if(m_vartype == Vartype::BINARY)
-//        {
-//            variable_type = "BINARY";
-//        }
-//        else
-//        {
-//            std::cerr << "Variable type must be SPIN or BINARY." << std::endl;
-//        }
-//
-//        json output;
-//        output["type"] = "BinaryQuadraticModel";
-//        output["version"] = {{"bqm_schema", "3.0.0"}}
-//        output["variable_labels"] = variables;
-//        output["use_bytes"] = false;
-//        output["index_type"] = index_dtype;
-//        output["bias_type"] = bias_type;
-//        output["num_variables"] = num_variables;
-//        output["num_interactions"] = num_interactions;
-//        output["variable_labels"] = variables;
-//        output["variable_type"] = variable_type;
-//        output["offset"] = m_offset;
-//        output["info"] = m_info;
-//        output["linear_biases"] = l_bias;
-//        output["quadratic_biases"] = q_bias;
-//        output["quadratic_head"] = q_head;
-//        output["quadratic_tail"] = q_tail;
-//
-//        return output;
-//    }
-//
-//    /**
-//     * @brief Create a BinaryQuadraticModel instance from a serializable object.
-//     * 
-//     * @tparam IndexType_serial
-//     * @tparam FloatType_serial
-//     * @param input
-//     * @return BinaryQuadraticModel<IndexType_serial, FloatType_serial> 
-//     */
-//    template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
-//    static BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial> from_serializable(const json &input)
-//    {
-//        //extract type and version
-//        std::string type = input["type"];
-//        if(type != "BinaryQuadraticModel")
-//        {
-//            throw std::runtime_error("Type must be \"BinaryQuadraticModel\".\n");
-//        }
-//        std::string version = input["version"]["bqm_schema"];
-//        if(version != "3.0.0")
-//        {
-//            throw std::runtime_error("bqm_schema must be 3.0.0.\n");
-//        }
-//
-//        //extract variable_type
-//        Vartype vartype;
-//        std::string variable_type = input["variable_type"];
-//        if(variable_type == "SPIN")
-//        {
-//            vartype = Vartype::SPIN;
-//        }
-//        else if(variable_type == "BINARY")
-//        {
-//            vartype = Vartype::BINARY;
-//        }
-//        else
-//        {
-//            throw std::runtime_error("variable_type must be SPIN or BINARY.");
-//        }
-//
-//        //extract linear biases
-//        Linear<IndexType_serial, FloatType_serial> linear;
-//        std::vector<IndexType_serial> variables = input["variable_labels"];
-//        std::vector<FloatType_serial> l_bias = input["linear_biases"];
-//        for(size_t i = 0; i < variables.size(); ++i)
-//        {
-//            insert_or_assign(linear, variables[i], l_bias[i]);
-//        }
-//
-//        //extract quadratic biases
-//        Quadratic<IndexType_serial, FloatType_serial> quadratic;
-//        std::vector<size_t> q_head = input["quadratic_head"];
-//        std::vector<size_t> q_tail = input["quadratic_tail"];
-//        std::vector<FloatType_serial> q_bias = input["quadratic_biases"];
-//        for(size_t i = 0; i < q_head.size(); ++i)
-//        {
-//            insert_or_assign(quadratic, std::make_pair(variables[q_head[i]], variables[q_tail[i]]), q_bias[i]);
-//        }
-//
-//        //extract offset and info
-//        FloatType_serial offset = input["offset"];
-//        std::string info = (input["info"].empty())?"":input["info"];
-//
-//        //construct a BinaryQuadraticModel instance
-//        BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial> bqm(linear, quadratic, offset, vartype, info);
-//        return bqm;
-//    }
+
+
+    using json = nlohmann::json;
+
+    /**
+     * @brief Convert the binary quadratic model to a dense-version serializable object
+     *
+     * @return An object that can be serialized (nlohmann::json)
+     */
+    json to_serializable() const
+    {
+        std::string schema_version = "3.0.0-dense";
+        /*
+         * output sample
+         * >>> bqm = dimod.BinaryQuadraticModel({'c': -1, 'd': 1}, {('a', 'd'): 2, ('b', 'e'): 5, ('a', 'c'): 3}, 0.0, dimod.BINARY)
+         *
+         * >>> bqm.to_serializable()
+         * {'type': 'BinaryQuadraticModel', 'version': {'bqm_schema': '3.0.0-dense'}, 'use_bytes': False, 'index_type': 'uint16', 'bias_type': 'float32', 'num_variables': 5, 'variable_labels': ['a', 'b', 'c', 'd', 'e'], 'variable_type': 'BINARY', 'offset': 0.0, 'info': {}, 'biases': [0.0, 0.0, -1.0, 1.0, 0.0,...]}
+         */
+
+        //set index_dtype
+        std::string index_dtype = this->get_num_variables() <= 65536UL ? "uint16" : "uint32";
+
+        //set bias_type
+        std::string bias_type;
+        if(typeid(m_offset) == typeid(float))
+        {
+            bias_type = "float32";
+        }
+        else if(typeid(m_offset) == typeid(double))
+        {
+            bias_type = "float64";
+        }
+        else
+        {
+            throw std::runtime_error("FloatType must be float or double.");
+        }
+
+        //set variable type
+        std::string variable_type;
+        if(m_vartype == Vartype::SPIN)
+        {
+            variable_type = "SPIN";
+        }
+        else if(m_vartype == Vartype::BINARY)
+        {
+            variable_type = "BINARY";
+        }
+        else
+        {
+            throw std::runtime_error("Variable type must be SPIN or BINARY.");
+        }
+
+        //copy matrix to std::vector
+        std::vector<FloatType> biases(_quadmat.data(), _quadmat.data() + _quadmat.size());
+
+        json output;
+        output["type"] = "BinaryQuadraticModel";
+        output["version"] = {{"bqm_schema", schema_version}};
+        output["variable_labels"] = this->get_variables();
+        output["use_bytes"] = false;
+        output["index_type"] = index_dtype;
+        output["bias_type"] = bias_type;
+        output["num_variables"] = this->get_num_variables();
+        output["variable_type"] = variable_type;
+        output["offset"] = m_offset;
+        output["info"] = {};
+        output["biases"] = biases;
+
+        return output;
+    }
+
+    /**
+     * @brief Create a BinaryQuadraticModel instance from a serializable object.
+     * 
+     * @tparam IndexType_serial
+     * @tparam FloatType_serial
+     * @param input
+     * @return BinaryQuadraticModel<IndexType_serial, FloatType_serial> 
+     */
+    template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
+    static BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial> from_serializable(const json &input)
+    {
+        //extract type and version
+        std::string type = input["type"];
+        if(type != "BinaryQuadraticModel")
+        {
+            throw std::runtime_error("Type must be \"BinaryQuadraticModel\".\n");
+        }
+        std::string version = input["version"]["bqm_schema"];
+        if(version != "3.0.0-dense")
+        {
+            throw std::runtime_error("bqm_schema must be 3.0.0-dense.\n");
+        }
+
+        //extract variable_type
+        Vartype vartype;
+        std::string variable_type = input["variable_type"];
+        if(variable_type == "SPIN")
+        {
+            vartype = Vartype::SPIN;
+        }
+        else if(variable_type == "BINARY")
+        {
+            vartype = Vartype::BINARY;
+        }
+        else
+        {
+            throw std::runtime_error("variable_type must be SPIN or BINARY.");
+        }
+
+        //extract biases
+        std::vector<IndexType_serial> variables = input["variable_labels"];
+        std::vector<FloatType_serial> biases = input["biases"];
+        FloatType offset = input["offset"];
+
+        size_t mat_size = variables.size() + 1;
+        Eigen::Map<Matrix> mat(biases.data(), mat_size, mat_size);
+
+        BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial> bqm(mat, variables, offset, vartype);
+        return bqm;
+    }
 
 };
 }

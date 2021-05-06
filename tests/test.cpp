@@ -745,6 +745,40 @@ namespace
 
     }
 
+    TEST(DenseBQMFunctionTest, to_serializable)
+    {
+        Linear<std::string, double> linear{ {"c", -1.0}, {"d", 1.0} };
+        Quadratic<std::string, double> quadratic{ {std::make_pair("a", "d"), 2.0}, {std::make_pair("b", "e"), 5.0}, {std::make_pair("a", "c"), 3.0} };
+        double offset = 5.0;
+        Vartype vartype = Vartype::BINARY;
+
+        BinaryQuadraticModel_Dense<std::string, double> bqm(linear, quadratic, offset, vartype);
+
+        json j = bqm.to_serializable();
+    }
+
+    TEST(DenseBQMFunctionTest, from_serializable)
+    {
+        Linear<std::string, double> linear{ {"c", -1.0}, {"d", 1.0} };
+        Quadratic<std::string, double> quadratic{ {std::make_pair("a", "d"), 2.0}, {std::make_pair("b", "e"), 5.0}, {std::make_pair("a", "c"), 3.0} };
+        double offset = 5.0;
+        Vartype vartype = Vartype::BINARY;
+
+        BinaryQuadraticModel<std::string, double> bqm(linear, quadratic, offset, vartype);
+
+        json j = bqm.to_serializable();
+        //std::cout << j << std::endl;
+
+        BinaryQuadraticModel<std::string, double> bqm2 = BinaryQuadraticModel<std::string, double>::from_serializable(j);
+        //bqm2.print();
+
+        auto bqm_linear = bqm2.get_linear();
+        auto bqm_quadratic = bqm2.get_quadratic();
+        EXPECT_EQ(bqm2.get_offset(), bqm.get_offset());
+        EXPECT_EQ(bqm_linear["c"], linear["c"]);
+        EXPECT_EQ(bqm_quadratic[std::make_pair("b", "e")], quadratic[std::make_pair("b", "e")]);
+    }
+
 
 
 
