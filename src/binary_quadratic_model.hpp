@@ -86,6 +86,8 @@
 #ifndef BINARY_QUADRATIC_MODEL_HPP__
 #define BINARY_QUADRATIC_MODEL_HPP__
 
+#include "disable_eigen_warning.hpp"
+
 #include "vartypes.hpp"
 #include "hash.hpp"
 #include "utilities.hpp"
