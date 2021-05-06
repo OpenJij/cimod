@@ -12,15 +12,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-'''
+
 import cxxcimod
 import cimod
-from cimod.vartype import to_cxxcimod
-from cimod.utils.decolator import recalc
 import dimod
 import numpy as np
+from cimod.vartype import to_cxxcimod
+from cimod.utils.decolator import methoddispatch
+from functools import singledispatch
+from enum import Enum
 
-def make_BinaryPolynomialModel(polynomial):
+class Polynomial:
+    def __init__(self, bpm):
+        self._bpm = bpm
+
+    def __repr__(self):
+        return  str(self._bpm.get_polynomial())
+
+class Variables:
+    def __init__(self, bpm):
+        self._bpm = bpm
+
+    def __repr__(self):
+        return  str(self._bpm.get_variables())
+
+class IndexType(Enum):
+    INT = 1
+    STRING = 2
+    INT_TUPLE_2 = 3
+    INT_TUPLE_3 = 4
+    INT_TUPLE_4 = 5
+
+def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
     """BinaryPolynomialModel factory.
        Generate BinaryPolynomialModel class with the base class specified by the arguments linear and quadratic
     Args:
@@ -28,36 +51,44 @@ def make_BinaryPolynomialModel(polynomial):
     Returns:
         generated BinaryPolynomialModel class
     """
-    # select base class
+
+    def base_selector(index_type, index):
+        if index_type == int or index_type == None:
+            return cxxcimod.BinaryPolynomialModel, IndexType.INT
+        elif index_type == str:
+            return cxxcimod.BinaryPolynomialModel_str, IndexType.STRING
+        elif index_type == tuple:
+            if len(index) == 2:
+                return cxxcimod.BinaryPolynomialModel_tuple2, IndexType.INT_TUPLE_2
+            elif len(index) == 3:
+                return cxxcimod.BinaryPolynomialModel_tuple3, IndexType.INT_TUPLE_3
+            elif len(index) == 4:
+                return cxxcimod.BinaryPolynomialModel_tuple4, IndexType.INT_TUPLE_4
+            raise TypeError("Invalid length of tuple")
+        else:
+            raise TypeError("Invalid types of polynomial")
+
     index = set()
-    base = None
+    base  = None
 
     if polynomial != {}:
-        first_tuple_size = len(next(iter(polynomial)))
-        for i in range (first_tuple_size):
-            index.add(next(iter(polynomial))[i])
-
-    if len(set(type(i) for i in index)) != 1:
-        raise TypeError("invalid types of polynomial")
-    else:
-
-        ind = next(iter(index))
-
-        if isinstance(ind, int):
-            base = cxxcimod.BinaryPolynomialModel
-        elif isinstance(ind, str):
-            base = cxxcimod.BinaryPolynomialModel_str
-        elif isinstance(ind, tuple):
-            if len(ind) == 2:
-                base = cxxcimod.BinaryPolynomialModel_tuple2
-            elif len(ind) == 3:
-                base = cxxcimod.BinaryPolynomialModel_tuple3
-            elif len(ind) == 4:
-                base = cxxcimod.BinaryPolynomialModel_tuple4
-            else:
-                raise TypeError("invalid length of tuple")
+        if len(polynomial) == 1 and tuple() in polynomial:
+            base, base_type = base_selector(index_type, [1 for _ in range(min(tuple_size, 4))])
+        elif len(polynomial) > 1 and next(iter(polynomial)) == tuple():
+            iter_poly = iter(polynomial)
+            next(iter_poly)
+            second_tuple = next(iter_poly)
+            if len(set(type(i) for i in second_tuple)) != 1:
+                raise TypeError("Invalid types of polynomial")
+            base, base_type = base_selector(type(second_tuple[0]), second_tuple[0])
         else:
-            raise TypeError("invalid types of polynomial")
+            iter_poly = iter(polynomial)
+            first_tuple = next(iter_poly)
+            if len(set(type(i) for i in first_tuple)) != 1:
+                raise TypeError("Invalid types of polynomial")
+            base, base_type = base_selector(type(first_tuple[0]), first_tuple[0])
+    else:
+        base, base_type = base_selector(index_type, [1 for _ in range(min(tuple_size, 4))])
 
     # now define class
     class BinaryPolynomialModel(base):
@@ -66,131 +97,187 @@ def make_BinaryPolynomialModel(polynomial):
            The dictionaries between indices and integers are self.ind_to_num (indices -> integers) and self.num_to_ind (integers -> indices).
            Indices are listed in self._indices.
         Attributes:
-            var_type (cimod.VariableType): variable type SPIN or BINARY
+            vartype (cimod.VariableType): variable type SPIN or BINARY
             polynomial (dict): represents polynomial term including linear term
-            adj (dict): represents adjacency
-            indices (list): labels of each variables sorted by results variables
-            ind_to_num (list): map which specifies where the index is in self._indices
+            variables (list): labels of each variables sorted by results variables
         """
-        def __init__(self, polynomial, var_type=dimod.SPIN, **kwargs):
-            super().__init__(polynomial, to_cxxcimod(var_type))
-            self._init_process()
+        @methoddispatch
+        def __init__(self, polynomial: dict, vartype):
+            self.index_type = base_type
+            super().__init__(polynomial, to_cxxcimod(vartype))
+                
+        @__init__.register
+        def __init__from_list(self, keys: list, values: list, vartype):
+            self.index_type = base_type
+            super().__init__(keys, values, to_cxxcimod(vartype))
 
-        def _init_process(self):
-            # indices
-            self._re_calculate_indices = True
-            self._indices    = None
-            self._ind_to_num = None
+        def _model_selector(self):
+            if self.index_type == IndexType.INT:
+                return make_BinaryPolynomialModel({}, int)
+            elif self.index_type == IndexType.STRING:
+                return make_BinaryPolynomialModel({}, str)
+            elif self.index_type == IndexType.INT_TUPLE_2:
+                return make_BinaryPolynomialModel({}, int, 2)
+            elif self.index_type == IndexType.INT_TUPLE_3:
+                return make_BinaryPolynomialModel({}, int, 3)
+            elif self.index_type == IndexType.INT_TUPLE_4:
+                return make_BinaryPolynomialModel({}, int, 4)
+            else:
+                raise TypeError("invalid types of polynomial")
 
-        
-        @property
-        def indices(self):
-            ind, _ = self.update_indices()
-            return ind
-
-        def update_indices(self):
-            """calculate self._indices and self.ind_to_num
-            Returns:
-                self._indices and self._ind_to_num
-            """
-            if self._re_calculate_indices is True:
-                self._indices = self._generate_indices()
-                self._ind_to_num = {ind:num for num,ind in enumerate(self._indices)}
-
-                self._re_calculate_indices = False
-
-            return self._indices, self._ind_to_num
-        
         @property
         def polynomial(self):
-            return self.get_polynomial()
-    
-        @property
-        def adj(self):
-            return self.get_adjacency()
+            return Polynomial(self)
             
         @property
         def variables(self):
-            return self.get_variables()
-      
+            return Variables(self)
+
+        @property
+        def degree(self):
+            return super().get_degree()
+
+        @property
+        def num_interactions(self):
+            return super().get_num_interactions()
+
+        @property
+        def num_variables(self):
+            return super().get_num_variables()
+
         @property
         def vartype(self):
             vartype = super().get_vartype()
             if vartype == cxxcimod.Vartype.SPIN:
                 return dimod.SPIN
-            else:
+            elif vartype == cxxcimod.Vartype.BINARY:
                 return dimod.BINARY
+            else:
+                raise Exception("Unknown vartype detected")
 
-        def energy(self, sample, convert_sample=False):
-            # convert samples to SPIN or BINARY
-            if convert_sample:
-                for k in sample.keys():
-                    if sample[k] == -1 and self.vartype == dimod.BINARY:
-                        sample[k] = 0
-                    if sample[k] == 0  and self.vartype == dimod.SPIN:
-                        sample[k] = -1
-            return super().energy(sample)
+        def print(self):
+            print("[BinaryPolynomialModel]")
+            print("index_type =", self.index_type)
+            print("Variables =")
+            print(self.get_variables())
+            print("polynomial =")
+            print(self.get_polynomial())
+            print("vartype =", self.get_vartype())
+            print("num_variables =", self.get_num_variables())
+            print("num_interactions =", self.get_num_interactions())
 
-        def energies(self, samples_like, convert_sample=False, **kwargs):
-            en_vec = []
-            for elem in samples_like:
-                en_vec.append(self.energy(elem, convert_sample, **kwargs))
-    
-            return en_vec
+        def empty(self, vartype):
+            Model = self._model_selector()
+            return Model({}, to_cxxcimod(vartype))
+
+        def add_interaction(self, key: list, value, vartype = cxxcimod.Vartype.NONE):
+            return super().add_interaction(key, value, to_cxxcimod(vartype))
+
+        def get_variables(self):
+            return set(super().get_variables())
+
+        def get_polynomial(self, *args, **kwargs):
+            if args == tuple():
+                return super().get_polynomial()
+            elif self.index_type == IndexType.INT or self.index_type == IndexType.STRING:
+                if type(next(iter(args))) == int or type(next(iter(args))) == str:
+                    return super().get_polynomial(args)
+                else:
+                    return super().get_polynomial(*args, **kwargs)
+            else:
+                if type(next(iter(args))[0]) == int or type(next(iter(args))[0]) == str:
+                    return super().get_polynomial(args)
+                else:
+                    return super().get_polynomial(*args, **kwargs)
+
+        @methoddispatch
+        def add_interactions_from(self, polynomial: dict, vartype):
+            return super().add_interactions_from(polynomial, to_cxxcimod(vartype))
+
+        @add_interactions_from.register
+        def _add_interactions_from_from_list(self, keys: list, values: list, vartype):
+            return super().add_interactions_from(keys, values, to_cxxcimod(vartype))
+
+        def change_vartype(self, vartype, inplace = None):
+            vartype = to_cxxcimod(vartype)
+            if inplace == None or inplace == True:
+                return super().change_vartype(vartype)
+            elif inplace == False:
+                Model = self._model_selector()
+                if to_cxxcimod(self.vartype) == vartype:
+                    return Model(self.get_keys(), self.get_values(), vartype)
+                else:
+                    if vartype == cxxcimod.SPIN:
+                        return Model(self.to_hising(), vartype)
+                    elif vartype == cxxcimod.BINARY:
+                        return Model(self.to_hubo(), vartype)
+                    else:
+                        raise Exception("Unknown vartype error")
+            else:
+                raise TypeError("Invalid inplace value")
 
         @classmethod
-        def from_ising(cls, polynomial, **kwargs):
-            return cls(polynomial, var_type=dimod.SPIN, **kwargs)
+        def from_hising(cls, *args, **kwargs):
+            return cls(*args, **kwargs, vartype = dimod.SPIN)
             
         @classmethod
-        def from_pubo(cls, polynomial, **kwargs):
-            return cls(polynomial, var_type=dimod.BINARY, **kwargs)
+        def from_hubo(cls, *args, **kwargs):
+            return cls(*args, **kwargs, vartype = dimod.BINARY)
         
         @classmethod
         def from_serializable(cls, obj):
-    
-            variable_labels = [tuple(elem) if type(elem) == list else elem for elem in obj['variable_labels']]
-
-            #convert to polynomial biases
-            zipped_obj = zip(obj["polynomial_interactions"], obj["polynomial_biases"])
-
-            polynomial = {}
-            for elem in zipped_obj:
-                temp = ()
-                if (type(elem[0][0]) == int) or (type(elem[0][0]) == str):
-                    for i in elem[0]:
-                        temp += (variable_labels[i],)
-                else:
-                    for i in elem[0]:
-                        temp += (tuple(variable_labels[i]),)
-                polynomial.update({(temp):elem[1]})
-                #polynomial |= {(temp):elem[1]}
-            
-            # set vartype
-            vartype = cimod.SPIN if obj['variable_type'] == 'SPIN' else cimod.BINARY
-
-            return cls(polynomial, vartype)
-
+            if(obj["type"] != "BinaryPolynomialModel"):
+                raise Exception("Type must be \"BinaryPolynomialModel\".\n")
+            return cls(obj['poly_key_list'], obj['poly_value_list'], obj['vartype'])
 
     return BinaryPolynomialModel
 
-# for JSON
 def make_BinaryPolynomialModel_from_JSON(obj):
-    label = obj['variable_labels'][0]
+    label = obj["poly_key_list"][0][0]
     if isinstance(label, list):
-        #convert to tuple
         label = tuple(label)
-    mock_linear = {(label,):1.0}
-    return make_BinaryPolynomialModel(mock_linear)
+    mock_polynomial = {(label,):1.0}
+    return make_BinaryPolynomialModel(mock_polynomial)
 
-def BinaryPolynomialModel(polynomial, var_type=dimod.SPIN, **kwargs):
+@singledispatch
+def BinaryPolynomialModel(polynomial: dict, vartype):
     Model = make_BinaryPolynomialModel(polynomial)
-    return Model(polynomial, var_type, **kwargs)
+    return Model(polynomial, vartype)
+
+@BinaryPolynomialModel.register
+def _BinaryPolynomialModel_from_list(keys: list, values: list, vartype):
+    label = keys[0][0]
+    if isinstance(label, list):
+        label = tuple(label)
+    mock_polynomial = {(label,):1.0}
+    Model = make_BinaryPolynomialModel(mock_polynomial)
+    return Model(keys, values, vartype)
+
+@singledispatch
+def make_BinaryPolynomialModel_from_hising(polynomial: dict):
+    return make_BinaryPolynomialModel(polynomial).from_hising(polynomial)
+
+@make_BinaryPolynomialModel_from_hising.register
+def _make_BinaryPolynomialModel_from_hising_from_list(keys: list, values: list):
+    label = keys[0][0]
+    if isinstance(label, list):
+        label = tuple(label)
+    mock_polynomial = {(label,):1.0}
+    return make_BinaryPolynomialModel(mock_polynomial).from_hising(keys, values)
+
+@singledispatch
+def make_BinaryPolynomialModel_from_hubo(polynomial: dict):
+    return make_BinaryPolynomialModel(polynomial).from_hubo(polynomial)
+
+def _make_BinaryPolynomialModel_from_hubo_from_list(keys: list, values: list):
+    label = keys[0][0]
+    if isinstance(label, list):
+        label = tuple(label)
+    mock_polynomial = {(label,):1.0}
+    return make_BinaryPolynomialModel(mock_polynomial).from_hubo(keys, values)
 
 #classmethods
 BinaryPolynomialModel.from_serializable = lambda obj: make_BinaryPolynomialModel_from_JSON(obj).from_serializable(obj)
-BinaryPolynomialModel.from_ising = \
-lambda polynomial, **kwargs: make_BinaryPolynomialModel(polynomial).from_ising(polynomial, **kwargs)
-BinaryPolynomialModel.from_pubo = \
-lambda polynomial, **kwargs: make_BinaryPolynomialModel(polynomial).from_pubo(polynomial, **kwargs)
-'''
+BinaryPolynomialModel.from_hising       = lambda *args, **kwargs: make_BinaryPolynomialModel_from_hising(*args, **kwargs)
+BinaryPolynomialModel.from_hubo         = lambda *args, **kwargs: make_BinaryPolynomialModel_from_hubo(*args, **kwargs)
+

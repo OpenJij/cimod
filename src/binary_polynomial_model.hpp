@@ -158,20 +158,15 @@ public:
    //! @brief BinaryPolynomialModel constructor.
    //! @param poly_map
    //! @param vartype
-   BinaryPolynomialModel(const Polynomial<IndexType, FloatType> &poly_map,
-                         const Vartype vartype): vartype_(vartype) {
+   BinaryPolynomialModel(const Polynomial<IndexType, FloatType> &poly_map, const Vartype vartype): vartype_(vartype) {
       add_interactions_from(poly_map);
    }
    
-   BinaryPolynomialModel(PolynomialKeyList<IndexType> &key_list,
-                         const PolynomialValueList<FloatType> &value_list,
-                         const Vartype vartype): vartype_(vartype) {
+   BinaryPolynomialModel(PolynomialKeyList<IndexType> &key_list, const PolynomialValueList<FloatType> &value_list, const Vartype vartype): vartype_(vartype) {
       add_interactions_from(key_list, value_list);
    }
    
-   BinaryPolynomialModel(const PolynomialKeyList<IndexType> &key_list,
-                         const PolynomialValueList<FloatType> &value_list,
-                         const Vartype vartype): vartype_(vartype) {
+   BinaryPolynomialModel(const PolynomialKeyList<IndexType> &key_list, const PolynomialValueList<FloatType> &value_list, const Vartype vartype): vartype_(vartype) {
       add_interactions_from(key_list, value_list);
    }
    
@@ -199,19 +194,19 @@ public:
       return get_polynomial(copied_key);
    }
    
-   const PolynomialKeyList<IndexType> &get_polynomial_key() const {
+   const PolynomialKeyList<IndexType> &get_keys() const {
       return poly_key_list_;
    }
    
-   const PolynomialValueList<FloatType> &get_polynomial_value() const {
+   const PolynomialValueList<FloatType> &get_values() const {
       return poly_value_list_;
    }
    
-   const std::unordered_set<IndexType> &get_variables() const {
+   const std::unordered_set<IndexType> &GetVariables() const {
       return variables_;
    }
    
-   std::vector<IndexType> _generate_sorted_variables() const {
+   std::vector<IndexType> get_sorted_variables() const {
       std::vector<IndexType> sorted_variables(variables_.begin(), variables_.end());
       std::sort(sorted_variables.begin(), sorted_variables.end());
       return sorted_variables;
@@ -302,7 +297,7 @@ public:
    }
    
    void remove_offset() {
-      remove_interaction(FloatType{});
+      remove_interaction(std::vector<IndexType>{});
    }
    
    void remove_variable(const IndexType &index) {
@@ -358,8 +353,7 @@ public:
    
    void add_interactions_from(const Polynomial<IndexType, FloatType> &interaction_map, const Vartype vartype = Vartype::NONE) {
       for (const auto &it: interaction_map) {
-         std::vector<IndexType> copied_key = it.first;
-         add_interaction(copied_key, it.second, vartype);
+         add_interaction(it.first, it.second, vartype);
       }
    }
    
@@ -373,8 +367,13 @@ public:
    }
    
    void add_interactions_from(const PolynomialKeyList<IndexType> &key_list, const PolynomialValueList<FloatType> &value_list, const Vartype vartype = Vartype::NONE) {
-      PolynomialKeyList<IndexType> copied_key_list = key_list;
-      add_interactions_from(copied_key_list, value_list, vartype);
+      if (key_list.size() != value_list.size()) {
+         throw std::runtime_error("The sizes of key_list and value_list must match each other");
+      }
+      for (std::size_t i = 0; i < key_list.size(); ++i) {
+         std::vector<IndexType> copied_key = key_list[i];
+         add_interaction(copied_key, value_list[i], vartype);
+      }
    }
    
    void add_offset(FloatType offset) {
@@ -399,7 +398,7 @@ public:
             int32_t spin_multiple = 1;
             for (const auto &index: poly_key_list_[i]) {
                spin_multiple *= sample.at(index);
-               if (std::abs(spin_multiple) <= 0.0) {
+               if (spin_multiple == 0.0) {
                   break;
                }
             }
@@ -411,7 +410,7 @@ public:
             int32_t spin_multiple = 1;
             for (const auto &index: poly_key_list_[i]) {
                spin_multiple *= sample.at(index);
-               if (std::abs(spin_multiple) <= 0.0) {
+               if (spin_multiple == 0.0) {
                   break;
                }
             }
@@ -432,7 +431,7 @@ public:
    
    void scale(const FloatType scalar,
               const PolynomialKeyList<IndexType> &ignored_interactions = {},
-              const bool ignore_offset = false) {
+              const bool ignored_offset = false) {
       
       std::size_t num_interactions = get_num_interactions();
       
@@ -447,14 +446,14 @@ public:
          }
       }
       
-      if (ignore_offset == true && poly_key_inv_.count(std::vector<IndexType>{}) != 0 && std::count(ignored_interactions.begin(), ignored_interactions.end(), std::vector<IndexType>{}) == 0) {
+      if (ignored_offset == true && poly_key_inv_.count(std::vector<IndexType>{}) != 0 && std::count(ignored_interactions.begin(), ignored_interactions.end(), std::vector<IndexType>{}) == 0) {
          poly_value_list_[poly_key_inv_[std::vector<IndexType>{}]] *= scalar_inv;
       }
    }
    
    void normalize(const std::pair<FloatType, FloatType> &range = {1.0, 1.0},
                   const PolynomialKeyList<IndexType> &ignored_interactions = {},
-                  const bool ignore_offset = false) {
+                  const bool ignored_offset = false) {
       
       if (get_num_interactions() == 0) {
          return;
@@ -475,11 +474,11 @@ public:
       FloatType inv_scale = std::max(min_poly_value/range.first, max_poly_value/range.second);
       
       if (inv_scale != 0.0) {
-         scale(1.0/inv_scale, ignored_interactions, ignore_offset);
+         scale(1.0/inv_scale, ignored_interactions, ignored_offset);
       }
    }
    
-   BinaryPolynomialModel change_vartype(const Vartype &vartype, const bool inplace) {
+   BinaryPolynomialModel change_vartype(const Vartype vartype, const bool inplace) {
       
       if (vartype == Vartype::SPIN) {
          if (inplace) {
@@ -504,7 +503,7 @@ public:
       }
    }
    
-   void change_vartype(const Vartype &vartype) {
+   void change_vartype(const Vartype vartype) {
       if (vartype == Vartype::SPIN) {
          *this = ToSpin();
       }
@@ -516,36 +515,48 @@ public:
       }
    }
    
-   Polynomial<IndexType, FloatType> to_hubo() {
+   Polynomial<IndexType, FloatType> to_hubo() const {
+      if (vartype_ == Vartype::BINARY) {
+         return get_polynomial();
+      }
       Polynomial<IndexType, FloatType> poly_map;
       std::size_t num_interactions = get_num_interactions();
       for (std::size_t i = 0; i < num_interactions; ++i) {
-         const std::vector<IndexType> original_key = poly_key_list_[i];
-         const FloatType   original_value          = poly_value_list_[i];
-         const std::size_t original_key_size       = original_key.size();
-         const std::size_t changed_key_list_size   = IntegerPower(2, original_key_size);
+         const std::vector<IndexType> &original_key = poly_key_list_[i];
+         const FloatType   original_value           = poly_value_list_[i];
+         const std::size_t original_key_size        = original_key.size();
+         const std::size_t changed_key_list_size    = IntegerPower(2, original_key_size);
          
          for (std::size_t j = 0; j < changed_key_list_size; ++j) {
             const auto changed_key = GenerateChangedKey(original_key, j);
             int sign = ((original_key_size - changed_key.size())%2 == 0) ? 1.0 : -1.0;
-            poly_map[changed_key] += original_value*IntegerPower(2, changed_key.size())*sign;
+            FloatType changed_value = original_value*IntegerPower(2, changed_key.size())*sign;
+            //if (poly_map[changed_key] + changed_value != 0.0) {
+            poly_map[changed_key] += changed_value;
+            //}
          }
       }
       return poly_map;
    }
    
-   Polynomial<IndexType, FloatType> to_hising() {
+   Polynomial<IndexType, FloatType> to_hising() const {
+      if (vartype_ == Vartype::SPIN) {
+         return get_polynomial();
+      }
       Polynomial<IndexType, FloatType> poly_map;
-      std::size_t num_interactions = get_num_interactions();
+      const std::size_t num_interactions = get_num_interactions();
       for (std::size_t i = 0; i < num_interactions; ++i) {
-         const std::vector<IndexType> original_key = poly_key_list_[i];
-         const FloatType   original_value          = poly_value_list_[i];
-         const std::size_t original_key_size       = original_key.size();
-         const std::size_t changed_key_list_size   = IntegerPower(2, original_key_size);
-         const FloatType   changed_value           = original_value*(1.0/changed_key_list_size);
+         const std::vector<IndexType> &original_key = poly_key_list_[i];
+         const FloatType   original_value           = poly_value_list_[i];
+         const std::size_t original_key_size        = original_key.size();
+         const std::size_t changed_key_list_size    = IntegerPower(2, original_key_size);
+         const FloatType   changed_value            = original_value*(1.0/changed_key_list_size);
          
          for (std::size_t j = 0; j < changed_key_list_size; ++j) {
-            poly_map[GenerateChangedKey(original_key , j)] += changed_value;
+            const auto changed_key = GenerateChangedKey(original_key, j);
+            //if (poly_map[changed_key] + changed_value != 0.0) {
+            poly_map[changed_key] += changed_value;
+            //}
          }
       }
       return poly_map;
@@ -573,7 +584,7 @@ public:
    template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
    static BinaryPolynomialModel<IndexType_serial, FloatType_serial> from_serializable(nlohmann::json &input) {
       if(input["type"] != "BinaryPolynomialModel") {
-         throw std::runtime_error("Type must be \"BinaryQuadraticModel\".\n");
+         throw std::runtime_error("Type must be \"BinaryPolynomialModel\".\n");
       }
       Vartype vartype;
       if (input["vartype"] == "SPIN") {
@@ -623,7 +634,7 @@ protected:
    std::unordered_set<IndexType> variables_;
    
    std::unordered_map<IndexType, std::size_t> each_variable_num_;
-      
+   
    PolynomialKeyList<IndexType> poly_key_list_;
    
    PolynomialValueList<FloatType> poly_value_list_;
@@ -631,7 +642,7 @@ protected:
    std::unordered_map<std::vector<IndexType>, std::size_t, vector_hash> poly_key_inv_;
    
    Vartype vartype_ = Vartype::NONE;
-      
+   
    void CheckKeySelfLoop(std::vector<IndexType> &key) const {
       if (0 < key.size()) {
          //key is assumed to be sorted
@@ -696,10 +707,10 @@ protected:
       std::size_t num_interactions = get_num_interactions();
       
       for (std::size_t i = 0; i < num_interactions; ++i) {
-         const std::vector<IndexType> original_key = poly_key_list_[i];
-         const FloatType   original_value          = poly_value_list_[i];
-         const std::size_t original_key_size       = original_key.size();
-         const std::size_t changed_key_list_size   = IntegerPower(2, original_key_size);
+         const std::vector<IndexType> &original_key = poly_key_list_[i];
+         const FloatType   original_value           = poly_value_list_[i];
+         const std::size_t original_key_size        = original_key.size();
+         const std::size_t changed_key_list_size    = IntegerPower(2, original_key_size);
          
          FloatType changed_value = original_value*(1.0/changed_key_list_size);
          
@@ -722,10 +733,10 @@ protected:
       std::size_t num_interactions = get_num_interactions();
       
       for (std::size_t i = 0; i < num_interactions; ++i) {
-         const std::vector<IndexType> original_key = poly_key_list_[i];
-         const FloatType   original_value          = poly_value_list_[i];
-         const std::size_t original_key_size       = original_key.size();
-         const std::size_t changed_key_list_size   = IntegerPower(2, original_key_size);
+         const std::vector<IndexType> &original_key = poly_key_list_[i];
+         const FloatType   original_value           = poly_value_list_[i];
+         const std::size_t original_key_size        = original_key.size();
+         const std::size_t changed_key_list_size    = IntegerPower(2, original_key_size);
          
          for (std::size_t j = 0; j < changed_key_list_size; ++j) {
             const auto changed_key = GenerateChangedKey(original_key, j);

@@ -67,7 +67,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
            The dictionaries between indices and integers are self.ind_to_num (indices -> integers) and self.num_to_ind (integers -> indices).
            Indices are listed in self._indices.
         Attributes:
-            var_type (cimod.VariableType): variable type SPIN or BINARY
+            vartype (cimod.VariableType): variable type SPIN or BINARY
             linear (dict): represents linear term
             quadratic (dict): represents quadratic term
             adj (dict): represents adjacency
@@ -76,8 +76,8 @@ def make_BinaryQuadraticModel(linear, quadratic):
             offset (float): represents constant energy term when convert to SPIN from BINARY
         """
         def __init__(self, linear, quadratic, offset=0.0,
-                     var_type=dimod.SPIN, **kwargs):
-            super().__init__(linear, quadratic, offset, to_cxxcimod(var_type))
+                     vartype=dimod.SPIN, **kwargs):
+            super().__init__(linear, quadratic, offset, to_cxxcimod(vartype))
 
             self._init_process()
 
@@ -292,7 +292,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
             """
             Create a binary quadratic model with the specified vartype
             Args:
-                var_type (cimod.Vartype): SPIN or BINARY
+                vartype (cimod.Vartype): SPIN or BINARY
             Returns:
                 A new instance of the BinaryQuadraticModel class.
             """
@@ -312,11 +312,11 @@ def make_BinaryQuadraticModel(linear, quadratic):
                 else:
                     quadratic[(u, v)] = bias
 
-            return cls(linear, quadratic, offset, var_type=dimod.BINARY, **kwargs)
+            return cls(linear, quadratic, offset, vartype=dimod.BINARY, **kwargs)
 
         @classmethod
         def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
-            return cls(linear, quadratic, offset, var_type=dimod.SPIN, **kwargs)
+            return cls(linear, quadratic, offset, vartype=dimod.SPIN, **kwargs)
 
         @classmethod
         def from_serializable(cls, obj):
@@ -354,11 +354,11 @@ def make_BinaryQuadraticModel_from_JSON(obj):
 
 
 def BinaryQuadraticModel(linear, quadratic, offset=0.0,
-                 var_type=dimod.SPIN, **kwargs):
+                 vartype=dimod.SPIN, **kwargs):
 
     Model = make_BinaryQuadraticModel(linear, quadratic)
 
-    return Model(linear, quadratic, offset, var_type, **kwargs)
+    return Model(linear, quadratic, offset, vartype, **kwargs)
 
 #classmethods
 BinaryQuadraticModel.from_qubo = \

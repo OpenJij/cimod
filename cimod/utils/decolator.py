@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from functools import singledispatch, update_wrapper
+
 def disabled(func):
     def wrapper(*args, **kwargs):
         raise NotImplementedError("The function {} is disabled.".format(func.__name__))
@@ -24,4 +26,12 @@ def recalc(func):
         self._re_calculate_indices = True
         return func(self, *args, **kwargs)
 
+    return wrapper
+
+def methoddispatch(func):
+    dispatcher = singledispatch(func)
+    def wrapper(*args, **kw):
+        return dispatcher.dispatch(args[1].__class__)(*args, **kw)
+    wrapper.register = dispatcher.register
+    update_wrapper(wrapper, func)
     return wrapper

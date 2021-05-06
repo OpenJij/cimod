@@ -19,13 +19,13 @@ SPIN = dimod.SPIN
 BINARY = dimod.BINARY
 Vartype = dimod.Vartype
 
-def to_cxxcimod(var_type):
+def to_cxxcimod(vartype):
     # convert to cxxcimod type
-    if isinstance(var_type, cxxcimod.Vartype):
-        return var_type
+    if isinstance(vartype, cxxcimod.Vartype):
+        return vartype
     
-    var_type = dimod.as_vartype(var_type)
-    if var_type == dimod.SPIN:
+    vartype = dimod.as_vartype(vartype)
+    if vartype == dimod.SPIN:
         return cxxcimod.Vartype.SPIN
-    if var_type == dimod.BINARY:
+    if vartype == dimod.BINARY:
         return cxxcimod.Vartype.BINARY

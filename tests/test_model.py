@@ -259,7 +259,8 @@ class ModelTest(unittest.TestCase):
             self.assertEqual(bqm.offset, decode_bqm.offset)
             self.assertEqual(bqm.vartype, decode_bqm.vartype)
 
-"""
+
+#BinaryPolynomialModel
 class PolynomialModelTest(unittest.TestCase):
     def setUp(self):
         self.poly     = {(1,):1.0, (3,):3.0, (1,2):12.0, (1,3):13.0, (2,3,4):234.0, (3,5):35.0}
@@ -278,288 +279,191 @@ class PolynomialModelTest(unittest.TestCase):
         self.spins_tuple3    = {(1,1,1):+1, (2,2,2):-1, (3,3,3):+1, (4,4,4):-1, (5,5,5):+1} 
         self.binaries_tuple3 = {(1,1,1): 1, (2,2,2): 0, (3,3,3): 1, (4,4,4): 0, (5,5,5): 1}
 
-        self.poly_tuple4     = {(((1,1,1,1)),):1.0, (((3,3,3,3)),):3.0, (((1,1,1,1)),((2,2,2,2))):12.0, \
-                                    (((1,1,1,1)),((3,3,3,3))):13.0, (((2,2,2,2)),((3,3,3,3)),((4,4,4,4))):234.0, (((3,3,3,3)),((5,5,5,5))):35.0}
-        self.spins_tuple4    = {((1,1,1,1)):+1, ((2,2,2,2)):-1, ((3,3,3,3)):+1, ((4,4,4,4)):-1, ((5,5,5,5)):+1} 
-        self.binaries_tuple4 = {((1,1,1,1)): 1, ((2,2,2,2)): 0, ((3,3,3,3)): 1, ((4,4,4,4)): 0, ((5,5,5,5)): 1}
+        self.poly_tuple4     = {((1,1,1,1),):1.0, ((3,3,3,3),):3.0, ((1,1,1,1),(2,2,2,2)):12.0, ((1,1,1,1),(3,3,3,3)):13.0, ((2,2,2,2),(3,3,3,3),(4,4,4,4)):234.0, ((3,3,3,3),(5,5,5,5)):35.0}
+        self.spins_tuple4    = {(1,1,1,1):+1, (2,2,2,2):-1, (3,3,3,3):+1, (4,4,4,4):-1, (5,5,5,5):+1} 
+        self.binaries_tuple4 = {(1,1,1,1): 1, (2,2,2,2): 0, (3,3,3,3): 1, (4,4,4,4): 0, (5,5,5,5): 1}
 
-
+    def state_test_bpm(self, bpm, poly: dict, vartype):
+        self.assertEqual(bpm.vartype, vartype)
+        self.assertEqual(bpm.num_interactions, len(poly))
+        self.assertEqual(bpm.num_variables, len(set(j for i in poly.keys() for j in i)))
+        self.assertEqual(bpm.degree, max([len(i) for i in poly.keys()]))
+        self.assertDictEqual(bpm.get_polynomial(), poly)
+        self.assertSetEqual(bpm.get_variables(), set(j for i in poly.keys() for j in i))
+        self.assertAlmostEqual(bpm.get_offset(), poly[()] if tuple() in poly else 0.0)
+        for index in poly.keys():
+            self.assertAlmostEqual(bpm.get_polynomial(index), poly[index])
+            self.assertAlmostEqual(bpm.get_polynomial(list(index)), poly[index])
+            self.assertAlmostEqual(bpm.get_polynomial(*index), poly[index])   
 
     # Test BinaryPolynomialModel constructor
     def test_bpm_constructor(self):
-        #IntegerType
-        bpm = cimod.BinaryPolynomialModel(self.poly)
-        temp_poly = {(2,):0.0, (5,): 0.0, (4,): 0.0}
-        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
-        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
-        self.assertSetEqual (bpm.variables      , {1,2,3,4,5}) #variables
-        self.assertSetEqual (bpm.get_variables(), {1,2,3,4,5}) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , {**self.poly, **temp_poly}) #polynomial
-        self.assertDictEqual(bpm.get_polynomial(), {**self.poly, **temp_poly}) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , {1:{(1,2):12.0, (1,3):13.0}, 2:{(2,3,4):234.0}, 3:{(3,5):35.0}}) #adj
-        self.assertDictEqual(bpm.get_adjacency() , {1:{(1,2):12.0, (1,3):13.0}, 2:{(2,3,4):234.0}, 3:{(3,5):35.0}}) #get_adjacency()
-
-        #StringType
-        bpm = cimod.BinaryPolynomialModel(self.poly_str)
-        temp_poly = {("b",):0.0, ("e",): 0.0, ("d",): 0.0}
-        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
-        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
-        self.assertSetEqual (bpm.variables      , {"a","b","c","d","e"}) #variables
-        self.assertSetEqual (bpm.get_variables(), {"a","b","c","d","e"}) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , {**self.poly_str, **temp_poly}) #polynomial
-        self.assertDictEqual(bpm.get_polynomial(), {**self.poly_str, **temp_poly}) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , {"a":{("a","b"):12.0, ("a","c"):13.0}, "b":{("b","c","d"):234.0}, "c":{("c","e"):35.0}}) #adj
-        self.assertDictEqual(bpm.get_adjacency() , {"a":{("a","b"):12.0, ("a","c"):13.0}, "b":{("b","c","d"):234.0}, "c":{("c","e"):35.0}}) #get_adjacency()
-        
-        #IntegerTypeTuple2
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2) 
-        temp_poly = {((2,2),):0.0, ((5,5),): 0.0, ((4,4),): 0.0}
-        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
-        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
-        self.assertSetEqual (bpm.variables      , {(1,1),(2,2),(3,3),(4,4),(5,5)}) #variables
-        self.assertSetEqual (bpm.get_variables(), {(1,1),(2,2),(3,3),(4,4),(5,5)}) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , {**self.poly_tuple2, **temp_poly}) #polynomial
-        self.assertDictEqual(bpm.get_polynomial(), {**self.poly_tuple2, **temp_poly}) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , {(1,1):{((1,1),(2,2)):12.0, ((1,1),(3,3)):13.0}, (2,2):{((2,2),(3,3),(4,4)):234.0}, (3,3):{((3,3),(5,5)):35.0}}) #adj
-        self.assertDictEqual(bpm.get_adjacency() , {(1,1):{((1,1),(2,2)):12.0, ((1,1),(3,3)):13.0}, (2,2):{((2,2),(3,3),(4,4)):234.0}, (3,3):{((3,3),(5,5)):35.0}}) #get_adjacency()
-
-        #IntegerTypeTuple3
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3) 
-        temp_poly = {((2,2,2),):0.0, ((5,5,5),): 0.0, ((4,4,4),): 0.0}
-        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
-        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
-        self.assertSetEqual (bpm.variables      , {(1,1,1),(2,2,2),(3,3,3),(4,4,4),(5,5,5)}) #variables
-        self.assertSetEqual (bpm.get_variables(), {(1,1,1),(2,2,2),(3,3,3),(4,4,4),(5,5,5)}) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , {**self.poly_tuple3, **temp_poly}) #polynomial
-        self.assertDictEqual(bpm.get_polynomial(), {**self.poly_tuple3, **temp_poly}) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , {(1,1,1):{((1,1,1),(2,2,2)):12.0, ((1,1,1),(3,3,3)):13.0}, (2,2,2):{((2,2,2),(3,3,3),(4,4,4)):234.0}, (3,3,3):{((3,3,3),(5,5,5)):35.0}}) #adj
-        self.assertDictEqual(bpm.get_adjacency() , {(1,1,1):{((1,1,1),(2,2,2)):12.0, ((1,1,1),(3,3,3)):13.0}, (2,2,2):{((2,2,2),(3,3,3),(4,4,4)):234.0}, (3,3,3):{((3,3,3),(5,5,5)):35.0}}) #get_adjacency()
-
-        #StringTypeTuple4
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4)
-        temp_poly = {(((2,2,2,2)),):0.0, (((5,5,5,5)),): 0.0, (((4,4,4,4)),): 0.0}
-        self.assertEqual    (bpm.vartype        , cimod.SPIN)  #vartype
-        self.assertEqual    (bpm.get_length()   , 5)           #get_length()
-        self.assertSetEqual (bpm.variables      , {((1,1,1,1)),((2,2,2,2)),((3,3,3,3)),((4,4,4,4)),((5,5,5,5))}) #variables
-        self.assertSetEqual (bpm.get_variables(), {((1,1,1,1)),((2,2,2,2)),((3,3,3,3)),((4,4,4,4)),((5,5,5,5))}) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , {**self.poly_tuple4, **temp_poly}) #polynomial
-        self.assertDictEqual(bpm.get_polynomial(), {**self.poly_tuple4, **temp_poly}) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , {((1,1,1,1)):{(((1,1,1,1)),((2,2,2,2))):12.0, (((1,1,1,1)),((3,3,3,3))):13.0}, \
-                                                    ((2,2,2,2)):{(((2,2,2,2)),((3,3,3,3)),((4,4,4,4))):234.0}, ((3,3,3,3)):{(((3,3,3,3)),((5,5,5,5))):35.0}}) #adj
-        self.assertDictEqual(bpm.get_adjacency() , {((1,1,1,1)):{(((1,1,1,1)),((2,2,2,2))):12.0, (((1,1,1,1)),((3,3,3,3))):13.0}, \
-                                                    ((2,2,2,2)):{(((2,2,2,2)),((3,3,3,3)),((4,4,4,4))):234.0}, ((3,3,3,3)):{(((3,3,3,3)),((5,5,5,5))):35.0}}) #get_adjacency()
+        self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly       , cimod.SPIN), self.poly       , cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_str   , cimod.SPIN), self.poly_str   , cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN), self.poly_tuple2, cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN), self.poly_tuple3, cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN), self.poly_tuple4, cimod.SPIN)
 
     #Tese energy calculations
     def test_bpm_calc_energy(self):
         #Spin
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly).energy(self.spins)              , calculate_bpm_energy(self.poly, self.spins))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str).energy(self.spins_str)      , calculate_bpm_energy(self.poly_str, self.spins_str))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2).energy(self.spins_tuple2), calculate_bpm_energy(self.poly_tuple2, self.spins_tuple2))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3).energy(self.spins_tuple3), calculate_bpm_energy(self.poly_tuple3, self.spins_tuple3))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4).energy(self.spins_tuple4), calculate_bpm_energy(self.poly_tuple4, self.spins_tuple4))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly       , cimod.SPIN).energy(self.spins)       , calculate_bpm_energy(self.poly       , self.spins)       )
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str   , cimod.SPIN).energy(self.spins_str)   , calculate_bpm_energy(self.poly_str   , self.spins_str)   )
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN).energy(self.spins_tuple2), calculate_bpm_energy(self.poly_tuple2, self.spins_tuple2))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN).energy(self.spins_tuple3), calculate_bpm_energy(self.poly_tuple3, self.spins_tuple3))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN).energy(self.spins_tuple4), calculate_bpm_energy(self.poly_tuple4, self.spins_tuple4))
 
         #Binary
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly, cimod.BINARY).energy(self.binaries)        , calculate_bpm_energy(self.poly, self.binaries))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str, cimod.BINARY).energy(self.binaries_str), calculate_bpm_energy(self.poly_str, self.binaries_str))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly       , cimod.BINARY).energy(self.binaries)       , calculate_bpm_energy(self.poly       , self.binaries)       )
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str   , cimod.BINARY).energy(self.binaries_str)   , calculate_bpm_energy(self.poly_str   , self.binaries_str)   )
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.BINARY).energy(self.binaries_tuple2), calculate_bpm_energy(self.poly_tuple2, self.binaries_tuple2))
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.BINARY).energy(self.binaries_tuple3), calculate_bpm_energy(self.poly_tuple3, self.binaries_tuple3))
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.BINARY).energy(self.binaries_tuple4), calculate_bpm_energy(self.poly_tuple4, self.binaries_tuple4))
 
-        #PUBO == Ising
-        temp_spins        = {**self.spins}
-        temp_spins_str    = {**self.spins_str}
-        temp_spins_tuple2 = {**self.spins_tuple2}
-        temp_spins_tuple3 = {**self.spins_tuple3}
-        temp_spins_tuple4 = {**self.spins_tuple4}
+    
 
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly, cimod.BINARY).energy(temp_spins, convert_sample=True), calculate_bpm_energy(self.poly, self.binaries))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str, cimod.BINARY).energy(temp_spins_str, convert_sample=True), calculate_bpm_energy(self.poly_str, self.binaries_str))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.BINARY).energy(temp_spins_tuple2, convert_sample=True), calculate_bpm_energy(self.poly_tuple2, self.binaries_tuple2))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.BINARY).energy(temp_spins_tuple3, convert_sample=True), calculate_bpm_energy(self.poly_tuple3, self.binaries_tuple3))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.BINARY).energy(temp_spins_tuple4, convert_sample=True), calculate_bpm_energy(self.poly_tuple4, self.binaries_tuple4))
-
-        #Ising == PUBO
-        temp_binaries        = {**self.binaries}
-        temp_binaries_str    = {**self.binaries_str}
-        temp_binaries_tuple2 = {**self.binaries_tuple2}
-        temp_binaries_tuple3 = {**self.binaries_tuple3}
-        temp_binaries_tuple4 = {**self.binaries_tuple4}
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly       ).energy(temp_binaries, convert_sample=True),        calculate_bpm_energy(self.poly,        self.spins))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str   ).energy(temp_binaries_str, convert_sample=True),    calculate_bpm_energy(self.poly_str,    self.spins_str))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2).energy(temp_binaries_tuple2, convert_sample=True), calculate_bpm_energy(self.poly_tuple2, self.spins_tuple2))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3).energy(temp_binaries_tuple3, convert_sample=True), calculate_bpm_energy(self.poly_tuple3, self.spins_tuple3))
-        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4).energy(temp_binaries_tuple4, convert_sample=True), calculate_bpm_energy(self.poly_tuple4, self.spins_tuple4))
-
-    # Test BinaryPolynomialModel from_pubo function
-    def test_bqm_from_pubo(self):
+    '''
+    # Test BinaryPolynomialModel from_hubo function
+    def test_bqm_from_hubo(self):
         bpm = cimod.BinaryPolynomialModel(self.poly, cimod.BINARY)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_pubo(self.poly)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_hubo(self.poly)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
         
         bpm = cimod.BinaryPolynomialModel(self.poly_str, cimod.BINARY)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_pubo(self.poly_str)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_hubo(self.poly_str)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
         bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.BINARY)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_pubo(self.poly_tuple2)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_hubo(self.poly_tuple2)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
         bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.BINARY)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_pubo(self.poly_tuple3)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_hubo(self.poly_tuple3)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
         bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.BINARY)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_pubo(self.poly_tuple4)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_hubo(self.poly_tuple4)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
     # Test BinaryPolynomialModel from_ising function
     def test_bqm_from_ising(self):
-        bpm = cimod.BinaryPolynomialModel(self.poly)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_ising(self.poly)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_ising(self.poly)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
         
-        bpm = cimod.BinaryPolynomialModel(self.poly_str)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_ising(self.poly_str)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, cimod.SPIN)
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_ising(self.poly_str)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_ising(self.poly_tuple2)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN)
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_ising(self.poly_tuple2)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_ising(self.poly_tuple3)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN)
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_ising(self.poly_tuple3)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4)
-        bpm_from_pubo = cimod.BinaryPolynomialModel.from_ising(self.poly_tuple4)
-        self.assertEqual    (bpm_from_pubo.vartype         , bpm.vartype)         #vartype
-        self.assertEqual    (bpm_from_pubo.get_length()    , bpm.get_length())    #get_length()
-        self.assertSetEqual (bpm_from_pubo.variables       , bpm.variables)       #variables
-        self.assertSetEqual (bpm_from_pubo.get_variables() , bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm_from_pubo.polynomial      , bpm.polynomial)      #polynomial
-        self.assertDictEqual(bpm_from_pubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
-        self.assertDictEqual(bpm_from_pubo.adj             , bpm.adj)             #adj
-        self.assertDictEqual(bpm_from_pubo.get_adjacency() , bpm.get_adjacency()) #get_adjacency()
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN)
+        bpm_from_hubo = cimod.BinaryPolynomialModel.from_ising(self.poly_tuple4)
+        self.assertEqual    (bpm_from_hubo.vartype         , bpm.vartype)         #vartype
+        self.assertEqual    (bpm_from_hubo.num_variables    , bpm.num_variables)    #get_length()
+        self.assertSetEqual (bpm_from_hubo.get_variables()       , bpm.get_variables())       #variables
+        self.assertSetEqual (bpm_from_hubo.get_variables() , bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm_from_hubo.get_polynomial()      , bpm.get_polynomial())      #polynomial
+        self.assertDictEqual(bpm_from_hubo.get_polynomial(), bpm.get_polynomial())#get_polynomial()
 
     def test_bpm_serializable(self):
-        bpm = cimod.BinaryPolynomialModel(self.poly)
+        bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)
         decode_bpm = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
         self.assertEqual    (bpm.vartype         , decode_bpm.vartype)  #vartype
-        self.assertEqual    (bpm.get_length()    , decode_bpm.get_length())           #get_length()
-        self.assertSetEqual (bpm.variables       , decode_bpm.variables) #variables
-        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , decode_bpm.polynomial) #polynomial
+        self.assertEqual    (bpm.num_variables , decode_bpm.num_variables)           #get_length()
+        self.assertSetEqual (bpm.get_variables()       , decode_bpm.get_variables()) #variables
+        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm.get_polynomial()      , decode_bpm.get_polynomial()) #polynomial
         self.assertDictEqual(bpm.get_polynomial(), decode_bpm.get_polynomial()) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , decode_bpm.adj ) #adj
-        self.assertDictEqual(bpm.get_adjacency() , decode_bpm.get_adjacency()) #get_adjacency()
 
-        bpm = cimod.BinaryPolynomialModel(self.poly_str)
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, cimod.SPIN)
         decode_bpm = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
         self.assertEqual    (bpm.vartype         , decode_bpm.vartype)  #vartype
-        self.assertEqual    (bpm.get_length()    , decode_bpm.get_length())           #get_length()
-        self.assertSetEqual (bpm.variables       , decode_bpm.variables) #variables
-        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , decode_bpm.polynomial) #polynomial
+        self.assertEqual    (bpm.num_variables , decode_bpm.num_variables)           #get_length()
+        self.assertSetEqual (bpm.get_variables()       , decode_bpm.get_variables()) #variables
+        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm.get_polynomial()      , decode_bpm.get_polynomial()) #polynomial
         self.assertDictEqual(bpm.get_polynomial(), decode_bpm.get_polynomial()) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , decode_bpm.adj ) #adj
-        self.assertDictEqual(bpm.get_adjacency() , decode_bpm.get_adjacency()) #get_adjacency()
 
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2)
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN)
         decode_bpm = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
         self.assertEqual    (bpm.vartype         , decode_bpm.vartype)  #vartype
-        self.assertEqual    (bpm.get_length()    , decode_bpm.get_length())           #get_length()
-        self.assertSetEqual (bpm.variables       , decode_bpm.variables) #variables
-        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , decode_bpm.polynomial) #polynomial
+        self.assertEqual    (bpm.num_variables , decode_bpm.num_variables)           #get_length()
+        self.assertSetEqual (bpm.get_variables()       , decode_bpm.get_variables()) #variables
+        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm.get_polynomial()      , decode_bpm.get_polynomial()) #polynomial
         self.assertDictEqual(bpm.get_polynomial(), decode_bpm.get_polynomial()) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , decode_bpm.adj ) #adj
-        self.assertDictEqual(bpm.get_adjacency() , decode_bpm.get_adjacency()) #get_adjacency()
 
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3)
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN)
         decode_bpm = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
         self.assertEqual    (bpm.vartype         , decode_bpm.vartype)  #vartype
-        self.assertEqual    (bpm.get_length()    , decode_bpm.get_length())           #get_length()
-        self.assertSetEqual (bpm.variables       , decode_bpm.variables) #variables
-        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , decode_bpm.polynomial) #polynomial
+        self.assertEqual    (bpm.num_variables , decode_bpm.num_variables)           #get_length()
+        self.assertSetEqual (bpm.get_variables()       , decode_bpm.get_variables()) #variables
+        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm.get_polynomial()      , decode_bpm.get_polynomial()) #polynomial
         self.assertDictEqual(bpm.get_polynomial(), decode_bpm.get_polynomial()) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , decode_bpm.adj ) #adj
-        self.assertDictEqual(bpm.get_adjacency() , decode_bpm.get_adjacency()) #get_adjacency()
 
-        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4)
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN)
         decode_bpm = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
         self.assertEqual    (bpm.vartype         , decode_bpm.vartype)  #vartype
-        self.assertEqual    (bpm.get_length()    , decode_bpm.get_length())           #get_length()
-        self.assertSetEqual (bpm.variables       , decode_bpm.variables) #variables
-        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #get_variables()
-        self.assertDictEqual(bpm.polynomial      , decode_bpm.polynomial) #polynomial
+        self.assertEqual    (bpm.num_variables , decode_bpm.num_variables)           #get_length()
+        self.assertSetEqual (bpm.get_variables()       , decode_bpm.get_variables()) #variables
+        self.assertSetEqual (bpm.get_variables() , decode_bpm.get_variables()) #GetVariables()
+        self.assertDictEqual(bpm.get_polynomial()      , decode_bpm.get_polynomial()) #polynomial
         self.assertDictEqual(bpm.get_polynomial(), decode_bpm.get_polynomial()) #get_polynomial()
-        self.assertDictEqual(bpm.adj             , decode_bpm.adj ) #adj
-        self.assertDictEqual(bpm.get_adjacency() , decode_bpm.get_adjacency()) #get_adjacency()
-"""
+        '''
+
 
 
 if __name__ == '__main__':
