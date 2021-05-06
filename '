@@ -1043,32 +1043,70 @@ public:
         }
     }
 
-    ///**
-    // * @brief Enforce u, v being the same variable in a binary quadratic model. (currently disabled)
-    // * 
-    // * @param u
-    // * @param v
-    // */
-    //void contract_variables
-    //(
-    //    const IndexType &u,
-    //    const IndexType &v
-    //)
-    //{
+    /**
+     * @brief Enforce u, v being the same variable in a binary quadratic model. (currently disabled)
+     * 
+     * @param u
+     * @param v
+     */
+    void contract_variables
+    (
+        const IndexType &u,
+        const IndexType &v
+    )
+    {
 
-    //    if(this->m_vartype == Vartype::BINARY){
-    //        // the quadratic bias becomes linear
-    //        _mat(u) += _mat(v) + _mat(u,v);
-    //    }
-    //    else if(this->m_vartype == Vartype::SPIN){
-    //        _mat(u) += _mat(v);
-    //        m_offset += _mat(u,v);
-    //    }
-    //    this->remove_interaction(u,v);
+        auto p1 = std::make_pair(u, v);
+        auto p2 = std::make_pair(v, u);
 
+        const Quadratic<IndexType, FloatType>& quadratic = this->get_quadratic();
 
+        if(quadratic.count(p1) != 0)
+        {
+            if(m_vartype == Vartype::BINARY)
+            {
+                add_variable(u, quadratic.at(p1));
+            }
+            else if(m_vartype == Vartype::SPIN)
+            {
+                add_offset(quadratic.at(p1));
+            }
+            remove_interaction(u, v);
+        }
+        if(quadratic.count(p2) != 0)
+        {
+            if(m_vartype == Vartype::BINARY)
+            {
+                add_variable(u, quadratic.at(p2));
+            }
+            else if(m_vartype == Vartype::SPIN)
+            {
+                add_offset(quadratic.at(p2));
+            }
+            remove_interaction(v, u);
+        }
 
-    //}
+        std::vector<std::pair<IndexType, IndexType>> interactions;
+        for(const auto &it : quadratic)
+        {
+            if(it.first.first == v)
+            {
+                std::cout << u << " " << it.first.second << std::endl;
+                add_interaction(u, it.first.second, it.second);
+                interactions.push_back(it.first);
+            }
+            else if(it.first.second == v)
+            {
+                std::cout << it.first.first << " " << u << std::endl;
+                add_interaction(it.first.first, u, it.second);
+                interactions.push_back(it.first);
+            }
+        }
+        remove_interactions_from(interactions);
+
+        add_variable(u, _mat(v));
+        remove_variable(v);
+    }
 
     /* Transformations */
 
