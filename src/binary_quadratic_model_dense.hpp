@@ -35,6 +35,7 @@
 #include "json.hpp"
 
 #include <algorithm>
+#include <type_traits>
 #include <limits>
 #include <cstdint>
 #include <cassert>
@@ -49,6 +50,7 @@
 #include <vector>
 #include <functional>
 #include <Eigen/Dense>
+#include <Eigen/Sparse>
 
 #include "binary_quadratic_model.hpp"
 
@@ -61,14 +63,32 @@ namespace cimod
      * @brief Class for dense binary quadratic model.
      */
     
-    template <typename IndexType, typename FloatType, typename MatrixType>
+    template <typename IndexType, typename FloatType, typename DataType=Sparse>
     class BinaryQuadraticModel_Dense
     {
+    private:
+
+        /**
+         * @brief template type for dispatch
+         * used for SFINAE
+         *
+         * @tparam T
+         * @tparam U
+         */
+        template<typename T, typename U>
+        using dispatch_t = std::enable_if_t<std::is_same_v<T, U>, std::nullptr_t>;
     public:
     /**
      * @brief Eigen Matrix
+     * if DataType is Dense , Matrix is equal to Eigen::Matrix
+     * if DataType is Sparse, Matrix is equal to Eigen::SparseMatrix
      */
-    using Matrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+    using Matrix = std::conditional_t<
+            std::is_same_v<DataType, Dense>,
+            Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>,
+            Eigen::SparseMatrix<FloatType, Eigen::RowMajor>
+          >;
+
     using Vector = Eigen::Matrix<FloatType, Eigen::Dynamic, 1>;
     
     protected:
@@ -123,6 +143,67 @@ namespace cimod
                 _label_to_idx[_idx_to_label[i]] = i;
             }
         }
+
+        /**
+         * @brief access elements for dense matrix
+         *
+         * @tparam T
+         * @param i
+         * @param j
+         * @param dispatch_t
+         *
+         * @return 
+         */
+        template<typename T=DataType>
+        inline FloatType& _quadmat_get(size_t i, size_t j, dispatch_t<T, Dense> = nullptr){
+            return _quadmat(i, j);
+        }
+
+        /**
+         * @brief access elements for dense matrix
+         *
+         * @tparam T
+         * @param i
+         * @param j
+         * @param dispatch_t
+         *
+         * @return 
+         */
+        template<typename T=DataType>
+        const inline FloatType& _quadmat_get(size_t i, size_t j, dispatch_t<T, Dense> = nullptr) const{
+            return _quadmat(i, j);
+        }
+
+        /**
+         * @brief access elements for sparse matrix
+         *
+         * @tparam T
+         * @param i
+         * @param j
+         * @param dispatch_t
+         *
+         * @return 
+         */
+        template<typename T=DataType>
+        inline FloatType& _quadmat_get(size_t i, size_t j, dispatch_t<T, Sparse> = nullptr){
+            return _quadmat.coeffRef(i, j);
+        }
+
+        /**
+         * @brief access elements for sparse matrix
+         *
+         * @tparam T
+         * @param i
+         * @param j
+         * @param dispatch_t
+         *
+         * @return 
+         */
+        template<typename T=DataType>
+        const inline FloatType& _quadmat_get(size_t i, size_t j, dispatch_t<T, Sparse> = nullptr) const{
+            return _quadmat.coeff(i, j);
+        }
+
     
         /**
          * @brief get reference of _quadmat(i,j)
@@ -136,7 +217,7 @@ namespace cimod
             size_t i = _label_to_idx.at(label_i);
             size_t j = _label_to_idx.at(label_j);
             if(i != j)
-                return _quadmat(std::min(i, j), std::max(i, j));
+                return _quadmat_get(std::min(i, j), std::max(i, j));
             else
                 throw std::runtime_error("No self-loop (mat(i,i)) allowed");
         }
@@ -150,7 +231,7 @@ namespace cimod
          */
         inline FloatType& _mat(IndexType label_i){
             size_t i = _label_to_idx.at(label_i);
-            return _quadmat(i, _quadmat.rows()-1);
+            return _quadmat_get(i, _quadmat.rows()-1);
         }
     
         /**
@@ -166,7 +247,7 @@ namespace cimod
             size_t j = _label_to_idx.at(label_j);
     
             if(i != j)
-                return _quadmat(std::min(i, j), std::max(i, j));
+                return _quadmat_get(std::min(i, j), std::max(i, j));
             else
                 throw std::runtime_error("No self-loop (mat(i,i)) allowed");
         }
@@ -180,7 +261,7 @@ namespace cimod
          */
         const inline FloatType& _mat(IndexType label_i) const{
             size_t i = _label_to_idx.at(label_i);
-            return _quadmat(i, _quadmat.rows()-1);
+            return _quadmat_get(i, _quadmat.rows()-1);
         }
     
         /**
@@ -334,7 +415,7 @@ namespace cimod
             size_t mat_size = _idx_to_label.size() + 1;
             _quadmat = Matrix(mat_size, mat_size);
             _quadmat.fill(0);
-            _quadmat(mat_size-1, mat_size-1) = 1;
+            _quadmat_get(mat_size-1, mat_size-1) = 1;
     
             //copy linear and quadratic to _quadmat
             for(const auto& kv : linear){
@@ -397,7 +478,7 @@ namespace cimod
                 //insert elements
                 _quadmat += mat.template triangularView<Eigen::StrictlyUpper>();
                 _quadmat += mat.template triangularView<Eigen::StrictlyLower>().transpose();
-                _quadmat(mat_size-1, mat_size-1) = 1;
+                _quadmat_get(mat_size-1, mat_size-1) = 1;
             }
             else if((size_t)mat.rows() == _idx_to_label.size()){
                 //convert matrix
@@ -408,7 +489,7 @@ namespace cimod
                 //local fields
                 Vector loc = mat.diagonal();
                 _quadmat.block(0,mat_size-1,mat_size-1,1) += loc;
-                _quadmat(mat_size-1, mat_size-1) = 1;
+                _quadmat_get(mat_size-1, mat_size-1) = 1;
             }
             else{
                 throw std::runtime_error("the number of variables and dimension do not match.");
@@ -419,7 +500,7 @@ namespace cimod
         inline Linear<IndexType, FloatType> _generate_linear() const{
             Linear<IndexType, FloatType> ret_linear;
             for(size_t i=0; i<_idx_to_label.size(); i++){
-                FloatType val = _quadmat(i, _idx_to_label.size());
+                FloatType val = _quadmat_get(i, _idx_to_label.size());
                 if(val != 0)
                     ret_linear[_idx_to_label[i]] = val;
             }
@@ -431,7 +512,7 @@ namespace cimod
             Quadratic<IndexType, FloatType> ret_quadratic;
             for(size_t i=0; i<_idx_to_label.size(); i++){
                 for(size_t j=i+1; j<_idx_to_label.size(); j++){
-                    FloatType val = _quadmat(i, j);
+                    FloatType val = _quadmat_get(i, j);
                     if(val != 0)
                         ret_quadratic[std::make_pair(_idx_to_label[i], _idx_to_label[j])] = val;
                 }
@@ -701,9 +782,9 @@ namespace cimod
          * 
          * @return empty object
          */
-        BinaryQuadraticModel_Dense<IndexType, FloatType> empty(Vartype vartype)
+        BinaryQuadraticModel_Dense<IndexType, FloatType, DataType> empty(Vartype vartype)
         {
-            return BinaryQuadraticModel_Dense<IndexType, FloatType>(
+            return BinaryQuadraticModel_Dense<IndexType, FloatType, DataType>(
                     Linear<FloatType, IndexType>(),
                     Quadratic<FloatType, IndexType>(),
                     0.0,
@@ -1104,13 +1185,13 @@ namespace cimod
          *
          * @return created object
          */
-        BinaryQuadraticModel_Dense<IndexType, FloatType> change_vartype
+        BinaryQuadraticModel_Dense<IndexType, FloatType, DataType> change_vartype
         (
             const Vartype &vartype,
             bool inplace
         )
         {
-            BinaryQuadraticModel_Dense<IndexType, FloatType> new_bqm = *this;
+            BinaryQuadraticModel_Dense<IndexType, FloatType, DataType> new_bqm = *this;
             if(inplace == true){
                 this->change_vartype(vartype);
             }
@@ -1166,7 +1247,7 @@ namespace cimod
         std::tuple<Quadratic<IndexType, FloatType>, FloatType> to_qubo()
         {
             // change vartype to binary
-            BinaryQuadraticModel_Dense bqm = change_vartype(Vartype::BINARY, false);
+            BinaryQuadraticModel_Dense<IndexType, FloatType, DataType> bqm = change_vartype(Vartype::BINARY, false);
     
             const Linear<IndexType, FloatType>& linear = bqm.get_linear();
             Quadratic<IndexType, FloatType> Q = bqm.get_quadratic();
@@ -1186,7 +1267,7 @@ namespace cimod
          *
          * @return Binary quadratic model with vartype set to `.Vartype.BINARY`.
          */
-        static BinaryQuadraticModel_Dense from_qubo(const Quadratic<IndexType, FloatType>& Q, FloatType offset=0.0)
+        static BinaryQuadraticModel_Dense<IndexType, FloatType, DataType> from_qubo(const Quadratic<IndexType, FloatType>& Q, FloatType offset=0.0)
         {
             Linear<IndexType, FloatType> linear;
             Quadratic<IndexType, FloatType> quadratic;
@@ -1202,7 +1283,7 @@ namespace cimod
                 }
             }
     
-            return BinaryQuadraticModel_Dense<IndexType, FloatType>(linear, quadratic, offset, Vartype::BINARY);
+            return BinaryQuadraticModel_Dense<IndexType, FloatType, DataType>(linear, quadratic, offset, Vartype::BINARY);
         }
     
         /**
@@ -1213,7 +1294,7 @@ namespace cimod
         std::tuple<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType> to_ising()
         {
             // change vartype to spin
-            BinaryQuadraticModel_Dense bqm = change_vartype(Vartype::SPIN, false);
+            BinaryQuadraticModel_Dense<IndexType, FloatType, DataType> bqm = change_vartype(Vartype::SPIN, false);
     
             const Linear<IndexType, FloatType>& linear = bqm.get_linear();
             const Quadratic<IndexType, FloatType>& quadratic = bqm.get_quadratic();
@@ -1230,9 +1311,9 @@ namespace cimod
          *
          * @return Binary quadratic model with vartype set to `.Vartype.SPIN`.
          */
-        static BinaryQuadraticModel_Dense from_ising(const Linear<IndexType, FloatType>& linear, const Quadratic<IndexType, FloatType>& quadratic, FloatType offset=0.0)
+        static BinaryQuadraticModel_Dense<IndexType, FloatType, DataType> from_ising(const Linear<IndexType, FloatType>& linear, const Quadratic<IndexType, FloatType>& quadratic, FloatType offset=0.0)
         {
-            return BinaryQuadraticModel_Dense<IndexType, FloatType>(linear, quadratic, offset, Vartype::SPIN);
+            return BinaryQuadraticModel_Dense<IndexType, FloatType, DataType>(linear, quadratic, offset, Vartype::SPIN);
         }
     
     
@@ -1337,7 +1418,7 @@ namespace cimod
          * @return BinaryQuadraticModel<IndexType_serial, FloatType_serial> 
          */
         template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
-        static BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial> from_serializable(const json &input)
+        static BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial, DataType> from_serializable(const json &input)
         {
             //extract type and version
             std::string type = input["type"];
@@ -1375,7 +1456,7 @@ namespace cimod
             size_t mat_size = variables.size() + 1;
             Eigen::Map<Matrix> mat(biases.data(), mat_size, mat_size);
     
-            BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial> bqm(mat, variables, offset, vartype);
+            BinaryQuadraticModel_Dense<IndexType_serial, FloatType_serial, DataType> bqm(mat, variables, offset, vartype);
             return bqm;
         }
     

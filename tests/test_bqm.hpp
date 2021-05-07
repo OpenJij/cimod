@@ -16,7 +16,7 @@
 using json = nlohmann::json;
 using namespace cimod;
 
-template<template<typename, typename> class BQM>
+template<template<typename, typename, typename> class BQM, typename DataType>
 struct BQMTester{
     static void test_DenseConstructionTest_Construction()
     {
@@ -30,7 +30,7 @@ struct BQMTester{
         double offset = 0.0;
         Vartype vartype = Vartype::BINARY;
 
-        BQM<uint32_t, double> bqm_k4(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm_k4(linear, quadratic, offset, vartype);
 
         Linear<uint32_t, double> bqm_linear = bqm_k4.get_linear();
         Quadratic<uint32_t, double> bqm_quadratic = bqm_k4.get_quadratic();
@@ -55,7 +55,7 @@ struct BQMTester{
         //reorder test
         linear = Linear<uint32_t, double>{};
         quadratic = Quadratic<uint32_t, double>{{std::make_pair(3, 4), 34.0}, {std::make_pair(4, 3), 34.0}};
-        bqm_k4 = BQM<uint32_t, double>(linear, quadratic, offset, vartype);
+        bqm_k4 = BQM<uint32_t, double, DataType>(linear, quadratic, offset, vartype);
         bqm_quadratic = bqm_k4.get_quadratic();
         std::pair<uint32_t, uint32_t> indexpair = std::make_pair(3,4);
         for(auto &it : bqm_quadratic)
@@ -65,7 +65,7 @@ struct BQMTester{
         }
 
         //another constructor
-        bqm_k4 = BQM<uint32_t, double>(linear, quadratic, vartype);
+        bqm_k4 = BQM<uint32_t, double, DataType>(linear, quadratic, vartype);
         EXPECT_EQ(offset, 0.0);
     }
 
@@ -81,7 +81,7 @@ struct BQMTester{
         double offset = 0.0;
         Vartype vartype = Vartype::BINARY;
 
-        BQM<std::string, double> bqm_k4(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm_k4(linear, quadratic, offset, vartype);
 
         //bqm_k4.print();
 
@@ -133,7 +133,7 @@ struct BQMTester{
 
         auto labels = std::vector<std::string>{"a", "b", "d", "e"};
 
-        BQM<std::string, double> bqm(m, labels, 0.0, Vartype::SPIN);
+        BQM<std::string, double, DataType> bqm(m, labels, 0.0, Vartype::SPIN);
 
         Matrix int_mat = bqm.interaction_matrix();
         EXPECT_DOUBLE_EQ(int_mat(0,0), 0);
@@ -204,7 +204,7 @@ struct BQMTester{
 
         auto labels = std::vector<std::string>{"a", "b", "d", "e"};
 
-        BQM<std::string, double> bqm(m, labels, 0.0, Vartype::SPIN);
+        BQM<std::string, double, DataType> bqm(m, labels, 0.0, Vartype::SPIN);
 
         Matrix int_mat = bqm.interaction_matrix();
         EXPECT_DOUBLE_EQ(int_mat(0,0), 0);
@@ -255,7 +255,7 @@ struct BQMTester{
         double offset = -0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         // check length
         EXPECT_EQ(bqm.get_num_variables(), 2);
@@ -285,7 +285,7 @@ struct BQMTester{
         double offset = 0.0;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         // check length
         EXPECT_EQ(bqm.get_num_variables(), 0);
@@ -314,7 +314,7 @@ struct BQMTester{
         double offset = -0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         //bqm.print();
 
@@ -339,7 +339,7 @@ struct BQMTester{
         double offset = 0.0;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         Quadratic<uint32_t, double> quadratic1{ {std::make_pair(0, 1), -0.5} };
         bqm.add_interactions_from(quadratic1);
@@ -371,7 +371,7 @@ struct BQMTester{
         double offset = -0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         bqm.add_offset(1.0);
 
@@ -386,7 +386,7 @@ struct BQMTester{
         double offset = 0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         // check energy
         Sample<uint32_t> sample1{ {1, -1}, {2, -1} };
@@ -402,7 +402,7 @@ struct BQMTester{
         double offset = 0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         Sample<uint32_t> sample1{ {1, -1}, {2, -1} };
         Sample<uint32_t> sample2{ {1, 1}, {2, 1} };
@@ -421,7 +421,7 @@ struct BQMTester{
         double offset = 1.4;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         auto t_qubo = bqm.to_qubo();
         Quadratic<uint32_t, double> Q = std::get<0>(t_qubo);
@@ -443,7 +443,7 @@ struct BQMTester{
         double offset = 1.4;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         auto t_ising = bqm.to_ising();
         Linear<uint32_t, double> h = std::get<0>(t_ising);
@@ -464,7 +464,7 @@ struct BQMTester{
         Quadratic<uint32_t, double> origQ{ {std::make_pair(0, 1), 0.5}, {std::make_pair(1, 2), 1.5}, {std::make_pair(0, 0), 1.0}, {std::make_pair(1, 1), -1.0}, {std::make_pair(2, 2), 0.5}};
         double offset = 1.4;
 
-        auto bqm = BQM<uint32_t, double>::from_qubo(origQ, offset);
+        auto bqm = BQM<uint32_t, double, DataType>::from_qubo(origQ, offset);
 
         Linear<uint32_t, double> linear = bqm.get_linear();
         Quadratic<uint32_t, double> Q = bqm.get_quadratic();
@@ -485,7 +485,7 @@ struct BQMTester{
         Quadratic<uint32_t, double> quadratic{ {std::make_pair(0, 1), 0.5}, {std::make_pair(1, 2), 1.5} };
         double offset = 1.4;
 
-        auto bqm = BQM<uint32_t, double>::from_ising(linear, quadratic, offset);
+        auto bqm = BQM<uint32_t, double, DataType>::from_ising(linear, quadratic, offset);
         Linear<uint32_t, double> h = bqm.get_linear();
         Quadratic<uint32_t, double> J = bqm.get_quadratic();
         double offset_ising = bqm.get_offset();
@@ -506,7 +506,7 @@ struct BQMTester{
         double offset = -0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<std::string, double> bqm(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
         //bqm.print();
         bqm.remove_variable("a");
         //bqm.print();
@@ -530,7 +530,7 @@ struct BQMTester{
         double offset = -0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
         //bqm.print();
 
         std::vector<uint32_t> variables = {0, 1};
@@ -557,7 +557,7 @@ struct BQMTester{
         double offset = 0.0;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<std::string, double> bqm(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
         bqm.remove_interaction("b", "c");
 
         EXPECT_EQ(bqm.contains("a"), true);
@@ -590,7 +590,7 @@ struct BQMTester{
         double offset = 1.0;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<std::string, double> bqm(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         bqm.scale(0.5);
         auto bqm_linear = bqm.get_linear();
@@ -610,7 +610,7 @@ struct BQMTester{
         double offset = 1.0;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<std::string, double> bqm(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         bqm.normalize(std::make_pair(-1.0, 1.0));
         auto bqm_linear = bqm.get_linear();
@@ -632,7 +632,7 @@ struct BQMTester{
         double offset = 0.0;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<std::string, double> bqm(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         bqm.fix_variable("a", -1);
         auto bqm_linear = bqm.get_linear();
@@ -651,7 +651,7 @@ struct BQMTester{
         double offset = 0.5;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         bqm.flip_variable(1);
         auto bqm_linear = bqm.get_linear();
@@ -670,7 +670,7 @@ struct BQMTester{
         double offset = 0.5;
         Vartype vartype = Vartype::BINARY;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         bqm.flip_variable(1);
         auto bqm_linear = bqm.get_linear();
@@ -713,7 +713,7 @@ struct BQMTester{
         double offset = 1.4;
         Vartype vartype = Vartype::SPIN;
 
-        BQM<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+        BQM<uint32_t, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         auto bqm2 = bqm.change_vartype(Vartype::BINARY, true);
         auto lin = bqm.get_linear();
@@ -751,7 +751,7 @@ struct BQMTester{
         double offset = 5.0;
         Vartype vartype = Vartype::BINARY;
 
-        BQM<std::string, double> bqm(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         json j = bqm.to_serializable();
     }
@@ -763,12 +763,12 @@ struct BQMTester{
         double offset = 5.0;
         Vartype vartype = Vartype::BINARY;
 
-        BQM<std::string, double> bqm(linear, quadratic, offset, vartype);
+        BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         json j = bqm.to_serializable();
         //std::cout << j << std::endl;
 
-        BQM<std::string, double> bqm2 = BQM<std::string, double>::from_serializable(j);
+        BQM<std::string, double, DataType> bqm2 = BQM<std::string, double, DataType>::from_serializable(j);
         //bqm2.print();
 
         auto bqm_linear = bqm2.get_linear();

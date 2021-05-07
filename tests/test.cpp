@@ -23,132 +23,132 @@ namespace
 {
     TEST(DenseConstructionTest, Construction)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseConstructionTest_Construction();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseConstructionTest_Construction();
     }
 
     TEST(DenseConstructionTest, ConstructionString)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseConstructionTest_ConstructionString();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseConstructionTest_ConstructionString();
     }
 
     TEST(DenseConstructionTest, ConstructionMatrix)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseConstructionTest_ConstructionMatrix();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseConstructionTest_ConstructionMatrix();
     }
 
     TEST(DenseConstructionTest, ConstructionMatrix2)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseConstructionTest_ConstructionMatrix2();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseConstructionTest_ConstructionMatrix2();
     }
 
     TEST(DenseBQMFunctionTest, add_variable)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_add_variable();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_add_variable();
     }
 
     TEST(DenseBQMFunctionTest, add_variables_from)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_add_variables_from();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_add_variables_from();
     }
 
     TEST(DenseBQMFunctionTest, add_interaction)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_add_interaction();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_add_interaction();
     }
 
     TEST(DenseBQMFunctionTest, add_interactions_from)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_add_interactions_from();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_add_interactions_from();
     }
 
     TEST(DenseBQMFunctionTest, add_offset)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_add_offset();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_add_offset();
     }
 
     TEST(DenseBQMFunctionTest, energy)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_energy();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_energy();
     }
 
     TEST(DenseBQMFunctionTest, energies)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_energies();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_energies();
     }
 
     TEST(DenseBQMFunctionTest, to_qubo)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_to_qubo();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_to_qubo();
     }
 
     TEST(DenseBQMFunctionTest, to_ising)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_to_ising();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_to_ising();
     }
 
     TEST(DenseBQMFunctionTest, from_qubo)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_from_qubo();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_from_qubo();
     }
 
     TEST(DenseBQMFunctionTest, from_ising)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_from_ising();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_from_ising();
     }
 
     TEST(DenseBQMFunctionTest, remove_variable)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_remove_variable();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_remove_variable();
     }
 
     TEST(DenseBQMFunctionTest, remove_variables_from)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_remove_variables_from();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_remove_variables_from();
     }
 
     TEST(DenseBQMFunctionTest, remove_interaction)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_remove_interaction();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_remove_interaction();
     }
 
     TEST(DenseBQMFunctionTest, scale)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_scale();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_scale();
     }
 
     TEST(DenseBQMFunctionTest, normalize)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_normalize();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_normalize();
     }
 
     TEST(DenseBQMFunctionTest, fix_variable)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_fix_variable();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_fix_variable();
     }
 
     TEST(DenseBQMFunctionTest, flip_variable)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_flip_variable();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_flip_variable();
     }
 
     TEST(DenseBQMFunctionTest, flip_variable_binary)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_flip_variable_binary();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_flip_variable_binary();
     }
 
     TEST(DenseBQMFunctionTest, change_vartype)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_change_vartype();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_change_vartype();
     }
 
     TEST(DenseBQMFunctionTest, to_serializable)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_to_serializable();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_to_serializable();
     }
 
     TEST(DenseBQMFunctionTest, from_serializable)
     {
-        BQMTester<BinaryQuadraticModel_Dense>::test_DenseBQMFunctionTest_from_serializable();
+        BQMTester<BinaryQuadraticModel_Dense, Dense>::test_DenseBQMFunctionTest_from_serializable();
     }
     // currently disabled
     //TEST(DenseBQMFunctionTest, contract_variables)
@@ -163,7 +163,7 @@ namespace
     //    double offset = 0.5;
     //    Vartype vartype = Vartype::SPIN;
 
-    //    BinaryQuadraticModel_Dense<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+    //    BinaryQuadraticModel_Dense, Dense<uint32_t, double> bqm(linear, quadratic, offset, vartype);
     //    bqm.contract_variables(2, 3);
 
     //    auto bqm_quadratic = bqm.get_quadratic();
