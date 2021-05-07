@@ -173,22 +173,52 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
         def add_interaction(self, key: list, value, vartype = cxxcimod.Vartype.NONE):
             return super().add_interaction(key, value, to_cxxcimod(vartype))
 
-        def get_variables(self):
-            return set(super().get_variables())
-
         def get_polynomial(self, *args, **kwargs):
+            if kwargs != {}:
+                return super().get_polynomial(*args, **kwargs)
+
             if args == tuple():
                 return super().get_polynomial()
             elif self.index_type == IndexType.INT or self.index_type == IndexType.STRING:
-                if type(next(iter(args))) == int or type(next(iter(args))) == str:
+                if type(args[0]) == int or type(args[0]) == str:
                     return super().get_polynomial(args)
                 else:
                     return super().get_polynomial(*args, **kwargs)
             else:
-                if type(next(iter(args))[0]) == int or type(next(iter(args))[0]) == str:
+                if type(args[0][0]) == int or type(args[0][0]) == str:
                     return super().get_polynomial(args)
                 else:
                     return super().get_polynomial(*args, **kwargs)
+
+        def remove_interaction(self, *args, **kwargs):
+            if kwargs != {}:
+                return super().remove_interaction(*args, **kwargs)
+
+            if self.index_type == IndexType.INT or self.index_type == IndexType.STRING:
+                if type(args[0]) == int or type(args[0]) == str:
+                    return super().remove_interaction(args)
+                else:
+                    return super().remove_interaction(*args, **kwargs)
+            else:
+                if type(args[0][0]) == int or type(args[0][0]) == str:
+                    return super().remove_interaction(args)
+                else:
+                    return super().remove_interaction(*args, **kwargs)
+
+        def remove_interactions_from(self, *args, **kwargs):
+            if kwargs != {}:
+                return super().remove_interactions_from(*args, **kwargs)
+
+            if self.index_type == IndexType.INT or self.index_type == IndexType.STRING:
+                if type(args[0][0]) == int or type(args[0][0]) == str:
+                    return super().remove_interactions_from(args)
+                else:
+                    return super().remove_interactions_from(*args, **kwargs)
+            else:
+                if type(args[0][0][0]) == int or type(args[0][0][0]) == str:
+                    return super().remove_interactions_from(args)
+                else:
+                    return super().remove_interactions_from(*args, **kwargs)
 
         @methoddispatch
         def add_interactions_from(self, polynomial: dict, vartype):
@@ -205,7 +235,7 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
             elif inplace == False:
                 Model = self._model_selector()
                 if to_cxxcimod(self.vartype) == vartype:
-                    return Model(self.get_keys(), self.get_values(), vartype)
+                    return Model(self._get_keys(), self._get_values(), vartype)
                 else:
                     if vartype == cxxcimod.SPIN:
                         return Model(self.to_hising(), vartype)
@@ -229,6 +259,10 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
             if(obj["type"] != "BinaryPolynomialModel"):
                 raise Exception("Type must be \"BinaryPolynomialModel\".\n")
             return cls(obj['poly_key_list'], obj['poly_value_list'], obj['vartype'])
+
+        def __repr__(self):
+            ss = "BinaryPolynomialModel(" + str(self.get_polynomial()) + ", " + str(self.get_vartype()) + ")"
+            return ss
 
     return BinaryPolynomialModel
 

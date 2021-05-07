@@ -89,8 +89,8 @@ inline void declare_BPM(py::module& m, const std::string& name){
    .def(py::init<PolynomialKeyList<IndexType>, PolynomialValueList<FloatType>, Vartype>(), "keys"_a, "values"_a, "vartype"_a)
    .def("get_polynomial"          , [](const BPM& self) {
       py::dict py_polynomial;
-      const auto &poly_key_list   = self.get_keys();
-      const auto &poly_value_list = self.get_values();
+      const auto &poly_key_list   = self._get_keys();
+      const auto &poly_value_list = self._get_values();
       for (std::size_t i = 0; i < poly_key_list.size(); ++i) {
          py::tuple tuple;
          for (const auto &index: poly_key_list[i]) {
@@ -101,8 +101,8 @@ inline void declare_BPM(py::module& m, const std::string& name){
       return py_polynomial;
    })
    .def("get_polynomial"          , py::overload_cast<std::vector<IndexType>&>(&BPM::get_polynomial, py::const_), "key"_a)
-   .def("get_keys"                , &BPM::get_keys)
-   .def("get_values"              , &BPM::get_values)
+   .def("_get_keys"               , &BPM::_get_keys)
+   .def("_get_values"             , &BPM::_get_values)
    .def("get_variables"           , &BPM::get_sorted_variables)
    .def("get_degree"              , &BPM::get_degree)
    .def("get_offset"              , &BPM::get_offset)

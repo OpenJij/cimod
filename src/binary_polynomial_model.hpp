@@ -194,11 +194,11 @@ public:
       return get_polynomial(copied_key);
    }
    
-   const PolynomialKeyList<IndexType> &get_keys() const {
+   const PolynomialKeyList<IndexType> &_get_keys() const {
       return poly_key_list_;
    }
    
-   const PolynomialValueList<FloatType> &get_values() const {
+   const PolynomialValueList<FloatType> &_get_values() const {
       return poly_value_list_;
    }
    

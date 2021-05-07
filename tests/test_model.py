@@ -289,7 +289,7 @@ class PolynomialModelTest(unittest.TestCase):
         self.assertEqual(bpm.num_variables, len(set(j for i in poly.keys() for j in i)))
         self.assertEqual(bpm.degree, max([len(i) for i in poly.keys()]))
         self.assertDictEqual(bpm.get_polynomial(), poly)
-        self.assertSetEqual(bpm.get_variables(), set(j for i in poly.keys() for j in i))
+        self.assertListEqual(bpm.get_variables(), sorted(list(set(j for i in poly.keys() for j in i))))
         self.assertAlmostEqual(bpm.get_offset(), poly[()] if tuple() in poly else 0.0)
         for index in poly.keys():
             self.assertAlmostEqual(bpm.get_polynomial(index), poly[index])

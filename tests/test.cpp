@@ -686,38 +686,38 @@ void StateTestBPMUINT(const BinaryPolynomialModel<uint32_t, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 2, 3, 4}), 1234.0);
    
    //Polynomial Key
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1}         ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{2}         ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{3}         ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{4}         ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1, 2}      ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1, 3}      ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1, 4}      ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{2, 3}      ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{2, 4}      ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{3, 4}      ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1, 2, 3}   ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1, 2, 4}   ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1, 3, 4}   ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{2, 3, 4}   ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{1, 2, 3, 4}), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1}         ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2}         ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{3}         ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{4}         ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2}      ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 3}      ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 4}      ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 3}      ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 4}      ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{3, 4}      ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2, 3}   ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2, 4}   ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 3, 4}   ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 3, 4}   ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2, 3, 4}), 1);
 
    //Polynomial Val
-   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm.get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm._get_values()));
 
    //sorted_variables
    auto sorted_variables = bpm.get_sorted_variables();
@@ -761,38 +761,38 @@ void StateTestBPMINT(const BinaryPolynomialModel<int32_t, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3, -2, -1}), 1234.0);
    
    //Polynomial Key
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-1}            ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-2}            ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-3}            ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4}            ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-2, -1}        ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-3, -1}        ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4, -1}        ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-3, -2}        ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4, -2}        ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4, -3}        ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-3, -2, -1}    ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4, -2, -1}    ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4, -3, -1}    ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4, -3, -2}    ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<int32_t>{-4, -3, -2, -1}), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-1}            ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-2}            ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3}            ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4}            ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-2, -1}        ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3, -1}        ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -1}        ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3, -2}        ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -2}        ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3}        ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3, -2, -1}    ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -2, -1}    ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3, -1}    ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3, -2}    ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3, -2, -1}), 1);
 
    //Polynomial Val
-   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm.get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm._get_values()));
 
    //sorted_variables
    auto sorted_variables = bpm.get_sorted_variables();
@@ -836,38 +836,38 @@ void StateTestBPMString(const BinaryPolynomialModel<std::string, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "b", "c", "d"}), 1234.0);
    
    //Polynomial Key
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a"}               ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"b"}               ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"c"}               ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"d"}               ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a", "b"}          ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a", "c"}          ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a", "d"}          ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"b", "c"}          ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"b", "d"}          ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"c", "d"}          ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a", "b", "c"}     ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a", "b", "d"}     ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a", "c", "d"}     ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"b", "c", "d"}     ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<std::string>{"a", "b", "c", "d"}), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a"}               ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b"}               ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"c"}               ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"d"}               ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b"}          ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "c"}          ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "d"}          ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b", "c"}          ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b", "d"}          ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"c", "d"}          ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b", "c"}     ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b", "d"}     ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "c", "d"}     ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b", "c", "d"}     ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b", "c", "d"}), 1);
 
    //Polynomial Value
-   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm.get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm._get_values()));
 
    //sorted_variables
    auto sorted_variables = bpm.get_sorted_variables();
@@ -898,10 +898,10 @@ void StateTestBPMEmpty(const BinaryPolynomialModel<IndexType, double> &bpm) {
    EXPECT_EQ(bpm.get_polynomial().size(), 0);
    
    //Polynomial Key
-   EXPECT_EQ(bpm.get_keys().size(), 0);
+   EXPECT_EQ(bpm._get_keys().size(), 0);
    
    //Polynomial Val
-   EXPECT_EQ(bpm.get_values().size(), 0);
+   EXPECT_EQ(bpm._get_values().size(), 0);
 
    //sorted_variables
    auto sorted_variables = bpm.get_sorted_variables();
@@ -1161,15 +1161,15 @@ TEST(remove_interactionBPM, basic) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 11}     ), -9.0);
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({11, 12, 14}), -1.0);
    
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{}          ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{7}         ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{2, 11}     ), 1);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{}          ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{7}         ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 11}     ), 1);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 1);
    
-   EXPECT_TRUE(EXPECT_CONTAIN(-3.0, bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(-2.0, bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(-9.0, bpm.get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(-1.0, bpm.get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-3.0, bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-2.0, bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-9.0, bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-1.0, bpm._get_values()));
 
    bpm.remove_interaction({}          );
    bpm.remove_interaction({7}         );
@@ -1181,15 +1181,15 @@ TEST(remove_interactionBPM, basic) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 11}     ), 0.0);
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({11, 12, 14}), 0.0);
    
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{}          ), 0);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{7}         ), 0);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{2, 11}     ), 0);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{}          ), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{7}         ), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 11}     ), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 0);
    
-   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm.get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm.get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm.get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm.get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm._get_values()));
    
    StateTestBPMUINT(bpm);
    
@@ -1239,15 +1239,15 @@ TEST(remove_interactions_fromBPM, basic) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 11}     ), 0.0);
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({11, 12, 14}), 0.0);
    
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{}          ), 0);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{7}         ), 0);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{2, 11}     ), 0);
-   EXPECT_EQ(std::count(bpm.get_keys().begin(), bpm.get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{}          ), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{7}         ), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 11}     ), 0);
+   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 0);
    
-   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm.get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm.get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm.get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm.get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm._get_values()));
    
    StateTestBPMUINT(bpm);
    
