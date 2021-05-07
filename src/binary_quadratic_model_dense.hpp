@@ -388,12 +388,14 @@ namespace cimod
         }
     
         /**
-         * @brief initialize matrix with linear and quadratic dicts
+         * @brief initialize matrix with linear and quadratic dicts (for dense matrix)
          *
          * @param linear
          * @param quadratic
          */
-        inline void _initialize_quadmat(const Linear<IndexType, FloatType> &linear, const Quadratic<IndexType, FloatType> &quadratic){
+        template<typename T=DataType>
+        inline void _initialize_quadmat(const Linear<IndexType, FloatType> &linear, const Quadratic<IndexType, FloatType> &quadratic,
+                dispatch_t<T, Dense> = nullptr){
             //gather labels
             std::unordered_set<IndexType> labels;
             
@@ -429,6 +431,64 @@ namespace cimod
                 FloatType val = kv.second;
                 _mat(key.first, key.second) += val;
             }
+        }
+
+        /**
+         * @brief initialize matrix with linear and quadratic dicts (for sparse matrix)
+         *
+         * @param linear
+         * @param quadratic
+         */
+        template<typename T=DataType>
+        inline void _initialize_quadmat(const Linear<IndexType, FloatType> &linear, const Quadratic<IndexType, FloatType> &quadratic,
+                dispatch_t<T, Sparse> = nullptr){
+            //gather labels
+            std::unordered_set<IndexType> labels;
+            
+            for(const auto& kv : linear){
+                labels.insert(kv.first);
+            }
+    
+            for(const auto& kv : quadratic){
+                labels.insert(kv.first.first);
+                labels.insert(kv.first.second);
+            }
+    
+            // init label <-> index conversion variables
+            _idx_to_label = std::vector<IndexType>(labels.begin(), labels.end());
+            std::sort(_idx_to_label.begin(), _idx_to_label.end());
+            _set_label_to_idx();
+    
+            //initialize _quadmat
+            size_t mat_size = _idx_to_label.size() + 1;
+            _quadmat = Matrix(mat_size, mat_size);
+
+            std::vector<Eigen::Triplet<FloatType>> triplets;
+            const size_t buffer = 5;
+            triplets.reserve(linear.size() + quadratic.size() + buffer);
+    
+            //set triplets to _quadmat
+            for(const auto& kv : linear){
+                size_t idx1 = _label_to_idx.at(kv.first);
+                size_t idx2 = mat_size-1;
+                FloatType val = kv.second;
+
+                //NOTE: duplicated elements are summed up.
+                triplets.emplace_back(std::min(idx1, idx2), std::max(idx1, idx2), val);
+            }
+    
+            for(const auto& kv : quadratic){
+                size_t idx1 = _label_to_idx.at(kv.first.first);
+                size_t idx2 = _label_to_idx.at(kv.first.second);
+                FloatType val = kv.second;
+
+                //NOTE: duplicated elements are summed up.
+                triplets.emplace_back(std::min(idx1, idx2), std::max(idx1, idx2), val);
+            }
+
+            triplets.emplace_back(mat_size-1, mat_size-1, 1);
+
+            _quadmat.setFromTriplets(triplets.begin(), triplets.end());
         }
     
         /**

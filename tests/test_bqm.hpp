@@ -16,7 +16,10 @@
 using json = nlohmann::json;
 using namespace cimod;
 
-template<template<typename, typename, typename> class BQM, typename DataType>
+template<typename IndexType, typename FloatType, typename DataType>
+using BQM = BinaryQuadraticModel_Dense<IndexType, FloatType, DataType>;
+
+template<typename DataType>
 struct BQMTester{
     static void test_DenseConstructionTest_Construction()
     {
