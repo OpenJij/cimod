@@ -170,7 +170,7 @@ namespace cimod
          * @return 
          */
         template<typename T=DataType>
-        const inline FloatType& _quadmat_get(size_t i, size_t j, dispatch_t<T, Dense> = nullptr) const{
+        inline FloatType _quadmat_get(size_t i, size_t j, dispatch_t<T, Dense> = nullptr) const{
             return _quadmat(i, j);
         }
 
@@ -200,7 +200,7 @@ namespace cimod
          * @return 
          */
         template<typename T=DataType>
-        const inline FloatType& _quadmat_get(size_t i, size_t j, dispatch_t<T, Sparse> = nullptr) const{
+        inline FloatType _quadmat_get(size_t i, size_t j, dispatch_t<T, Sparse> = nullptr) const{
             return _quadmat.coeff(i, j);
         }
 
@@ -242,7 +242,7 @@ namespace cimod
          *
          * @return reference of _quadmat(i,j)
          */
-        const inline FloatType& _mat(IndexType label_i, IndexType label_j) const{
+        inline FloatType _mat(IndexType label_i, IndexType label_j) const{
             size_t i = _label_to_idx.at(label_i);
             size_t j = _label_to_idx.at(label_j);
     
@@ -259,7 +259,7 @@ namespace cimod
          *
          * @return reference of _quadmat(i,i)
          */
-        const inline FloatType& _mat(IndexType label_i) const{
+        inline FloatType _mat(IndexType label_i) const{
             size_t i = _label_to_idx.at(label_i);
             return _quadmat_get(i, _quadmat.rows()-1);
         }
@@ -269,7 +269,7 @@ namespace cimod
          *
          * @return 
          */
-        const inline FloatType _max_linear() const{
+        inline FloatType _max_linear() const{
             size_t N = _quadmat.rows();
             return _quadmat.block(0,N-1,N-1,1).maxCoeff();
         }
@@ -279,7 +279,7 @@ namespace cimod
          *
          * @return 
          */
-        const inline FloatType _max_quadratic() const{
+        inline FloatType _max_quadratic() const{
             size_t N = _quadmat.rows();
             return _quadmat.block(0,0,N-1,N-1).maxCoeff();
         }
@@ -289,7 +289,7 @@ namespace cimod
          *
          * @return 
          */
-        const inline FloatType _min_linear() const{
+        inline FloatType _min_linear() const{
             size_t N = _quadmat.rows();
             return _quadmat.block(0,N-1,N-1,1).minCoeff();
         }
@@ -299,7 +299,7 @@ namespace cimod
          *
          * @return 
          */
-        const inline FloatType _min_quadratic() const{
+        inline FloatType _min_quadratic() const{
             size_t N = _quadmat.rows();
             return _quadmat.block(0,0,N-1,N-1).minCoeff();
         }
