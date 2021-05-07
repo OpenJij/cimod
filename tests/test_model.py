@@ -4,6 +4,7 @@ import numpy as np
 import cimod
 import cxxcimod
 import dimod
+import random
 
 
 def calculate_ising_energy(h, J, spins):
@@ -284,25 +285,217 @@ class PolynomialModelTest(unittest.TestCase):
         self.binaries_tuple4 = {(1,1,1,1): 1, (2,2,2,2): 0, (3,3,3,3): 1, (4,4,4,4): 0, (5,5,5,5): 1}
 
     def state_test_bpm(self, bpm, poly: dict, vartype):
-        self.assertEqual(bpm.vartype, vartype)
-        self.assertEqual(bpm.num_interactions, len(poly))
-        self.assertEqual(bpm.num_variables, len(set(j for i in poly.keys() for j in i)))
-        self.assertEqual(bpm.degree, max([len(i) for i in poly.keys()]))
-        self.assertDictEqual(bpm.get_polynomial(), poly)
-        self.assertListEqual(bpm.get_variables(), sorted(list(set(j for i in poly.keys() for j in i))))
-        self.assertAlmostEqual(bpm.get_offset(), poly[()] if tuple() in poly else 0.0)
+        self.assertEqual(bpm.vartype, vartype) #Check Vartype
+        self.assertEqual(bpm.num_interactions, len(poly)) #Check the number of the interactions
+        self.assertEqual(bpm.num_variables, len(set(j for i in poly.keys() for j in i))) #Check the number of the variables
+        self.assertEqual(bpm.degree, max([len(i) for i in poly.keys()])) #Check the max degree of the interactions
+        self.assertDictEqual(bpm.get_polynomial(), poly) #Check the interactions
+        self.assertListEqual(bpm.get_variables(), sorted(list(set(j for i in poly.keys() for j in i)))) #Check the variables
+        self.assertAlmostEqual(bpm.get_offset(), poly[()] if tuple() in poly else 0.0) #Check the offset
+        
+         #Check the specific interactions 
         for index in poly.keys():
-            self.assertAlmostEqual(bpm.get_polynomial(index), poly[index])
-            self.assertAlmostEqual(bpm.get_polynomial(list(index)), poly[index])
-            self.assertAlmostEqual(bpm.get_polynomial(*index), poly[index])   
+            self.assertAlmostEqual(bpm.get_polynomial(index)                           , poly[index])
+            self.assertAlmostEqual(bpm.get_polynomial(random.sample(index, len(index))), poly[index])
+            self.assertAlmostEqual(bpm.get_polynomial(list(index))                     , poly[index])
+            self.assertAlmostEqual(bpm.get_polynomial(*index)                          , poly[index])   
+            self.assertAlmostEqual(bpm.get_polynomial(key = index)                     , poly[index])
+
+    def state_test_bpm_empty(self, bpm, vartype):
+        self.assertEqual(bpm.vartype, vartype)
+        self.assertEqual(bpm.num_interactions, 0)
+        self.assertEqual(bpm.num_variables, 0)
+        self.assertEqual(bpm.degree, 0)
+        self.assertDictEqual(bpm.get_polynomial(), {})
+        self.assertListEqual(bpm.get_variables(), [])
+        self.assertAlmostEqual(bpm.get_offset(), 0.0)
 
     # Test BinaryPolynomialModel constructor
-    def test_bpm_constructor(self):
+    def test_construction_bpm(self):
         self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly       , cimod.SPIN), self.poly       , cimod.SPIN)
         self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_str   , cimod.SPIN), self.poly_str   , cimod.SPIN)
         self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN), self.poly_tuple2, cimod.SPIN)
         self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN), self.poly_tuple3, cimod.SPIN)
         self.state_test_bpm(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN), self.poly_tuple4, cimod.SPIN)
+
+        self.state_test_bpm(cimod.BinaryPolynomialModel(list(self.poly.keys())       , list(self.poly.values())       , cimod.SPIN), self.poly       , cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(list(self.poly_str.keys())   , list(self.poly_str.values())   , cimod.SPIN), self.poly_str   , cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(list(self.poly_tuple2.keys()), list(self.poly_tuple2.values()), cimod.SPIN), self.poly_tuple2, cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(list(self.poly_tuple3.keys()), list(self.poly_tuple3.values()), cimod.SPIN), self.poly_tuple3, cimod.SPIN)
+        self.state_test_bpm(cimod.BinaryPolynomialModel(list(self.poly_tuple4.keys()), list(self.poly_tuple4.values()), cimod.SPIN), self.poly_tuple4, cimod.SPIN)
+
+    def test_add_interaction_bpm_basic(self):
+        bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)
+        bpm.add_interaction((-12345, -2, 897654321), 0.1234567)
+        self.poly[tuple(sorted([-12345, -2, 897654321]))] = 0.1234567
+        self.state_test_bpm(bpm, self.poly, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, cimod.SPIN)
+        bpm.add_interaction(("åß∂ƒ©", "あいうえお", "ABCD"), -123)
+        self.poly_str[tuple(sorted(["åß∂ƒ©", "あいうえお", "ABCD"]))] = -123
+        self.state_test_bpm(bpm, self.poly_str, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN)
+        bpm.add_interaction(((-11, 11), (22, 22)), -123)
+        self.poly_tuple2[tuple(sorted([(-11, 11), (22, 22)]))] = -123
+        self.state_test_bpm(bpm, self.poly_tuple2, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN)
+        bpm.add_interaction(((-11, 11, -321), (22, 22, -321)), -123)
+        self.poly_tuple3[tuple(sorted([(-11, 11, -321), (22, 22, -321)]))] = -123
+        self.state_test_bpm(bpm, self.poly_tuple3, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN)
+        bpm.add_interaction(((-11, 11, -321, 0), (22, 22, -321, 0)), -123)
+        self.poly_tuple4[tuple(sorted([(-11, 11, -321, 0), (22, 22, -321, 0)]))] = -123
+        self.state_test_bpm(bpm, self.poly_tuple4, cimod.SPIN)
+
+    def test_add_interaction_bpm_duplicate_value_1(self):
+        bpm = cimod.BinaryPolynomialModel({k: v/2 for k, v in self.poly.items()}, cimod.SPIN)
+        for k, v in self.poly.items():
+            bpm.add_interaction(k, v/2)
+        self.state_test_bpm(bpm, self.poly, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel({k: v/2 for k, v in self.poly_str.items()}, cimod.SPIN)
+        for k, v in self.poly_str.items():
+            bpm.add_interaction(k, v/2)
+        self.state_test_bpm(bpm, self.poly_str, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel({k: v/2 for k, v in self.poly_tuple2.items()}, cimod.SPIN)
+        for k, v in self.poly_tuple2.items():
+            bpm.add_interaction(k, v/2)
+        self.state_test_bpm(bpm, self.poly_tuple2, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel({k: v/2 for k, v in self.poly_tuple3.items()}, cimod.SPIN)
+        for k, v in self.poly_tuple3.items():
+            bpm.add_interaction(k, v/2)
+        self.state_test_bpm(bpm, self.poly_tuple3, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel({k: v/2 for k, v in self.poly_tuple4.items()}, cimod.SPIN)
+        for k, v in self.poly_tuple4.items():
+            bpm.add_interaction(k, v/2)
+        self.state_test_bpm(bpm, self.poly_tuple4, cimod.SPIN)
+
+    def test_add_interaction_bpm_duplicate_value_2(self):
+        bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)
+        for k, v in self.poly.items():
+            bpm.add_interaction(k, -v)
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, cimod.SPIN)
+        for k, v in self.poly_str.items():
+            bpm.add_interaction(k, -v)
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN)
+        for k, v in self.poly_tuple2.items():
+            bpm.add_interaction(k, -v)
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN)
+        for k, v in self.poly_tuple3.items():
+            bpm.add_interaction(k, -v)
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN)
+        for k, v in self.poly_tuple4.items():
+            bpm.add_interaction(k, -v)
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
+
+    def test_add_interactions_from_bpm_dict(self):
+        bpm = cimod.BinaryPolynomialModel(self.poly, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(self.poly)
+        self.state_test_bpm(bpm, self.poly, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(self.poly_str)
+        self.state_test_bpm(bpm, self.poly_str, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(self.poly_tuple2)
+        self.state_test_bpm(bpm, self.poly_tuple2, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(self.poly_tuple3)
+        self.state_test_bpm(bpm, self.poly_tuple3, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(self.poly_tuple4)
+        self.state_test_bpm(bpm, self.poly_tuple4, cimod.SPIN)
+
+    def test_add_interactions_from_bpm_keyvalues(self):
+        bpm = cimod.BinaryPolynomialModel(self.poly, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(list(self.poly.keys()), list(self.poly.values()))
+        self.state_test_bpm(bpm, self.poly, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(list(self.poly_str.keys()), list(self.poly_str.values()))
+        self.state_test_bpm(bpm, self.poly_str, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(list(self.poly_tuple2.keys()), list(self.poly_tuple2.values()))
+        self.state_test_bpm(bpm, self.poly_tuple2, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(list(self.poly_tuple3.keys()), list(self.poly_tuple3.values()))
+        self.state_test_bpm(bpm, self.poly_tuple3, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, "SPIN").empty("SPIN")
+        bpm.add_interactions_from(list(self.poly_tuple4.keys()), list(self.poly_tuple4.values()))
+        self.state_test_bpm(bpm, self.poly_tuple4, cimod.SPIN)
+
+    def test_add_offset_bpm(self):
+        bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)
+        bpm.add_offset(3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 3.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 3.0)
+        bpm.add_interaction((), 3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 6.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 6.0)
+        bpm.add_offset(-6.0)
+        self.state_test_bpm(bpm, self.poly, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, cimod.SPIN)
+        bpm.add_offset(3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 3.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 3.0)
+        bpm.add_interaction((), 3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 6.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 6.0)
+        bpm.add_offset(-6.0)
+        self.state_test_bpm(bpm, self.poly_str, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN)
+        bpm.add_offset(3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 3.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 3.0)
+        bpm.add_interaction((), 3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 6.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 6.0)
+        bpm.add_offset(-6.0)
+        self.state_test_bpm(bpm, self.poly_tuple2, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN)
+        bpm.add_offset(3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 3.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 3.0)
+        bpm.add_interaction((), 3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 6.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 6.0)
+        bpm.add_offset(-6.0)
+        self.state_test_bpm(bpm, self.poly_tuple3, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN)
+        bpm.add_offset(3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 3.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 3.0)
+        bpm.add_interaction((), 3.0)
+        self.assertAlmostEqual(bpm.get_offset(), 6.0)
+        self.assertAlmostEqual(bpm.get_polynomial(()), 6.0)
+        bpm.add_offset(-6.0)
+        self.state_test_bpm(bpm, self.poly_tuple4, cimod.SPIN)
+
 
     #Tese energy calculations
     def test_bpm_calc_energy(self):
