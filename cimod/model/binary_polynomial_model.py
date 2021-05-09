@@ -311,6 +311,7 @@ def _make_BinaryPolynomialModel_from_hising_from_list(keys: list, values: list):
 def make_BinaryPolynomialModel_from_hubo(polynomial: dict):
     return make_BinaryPolynomialModel(polynomial).from_hubo(polynomial)
 
+@make_BinaryPolynomialModel_from_hubo.register
 def _make_BinaryPolynomialModel_from_hubo_from_list(keys: list, values: list):
     label = keys[0][0]
     if isinstance(label, list):
