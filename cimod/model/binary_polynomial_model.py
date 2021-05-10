@@ -222,6 +222,11 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
                 else:
                     return super().remove_interactions_from(*args, **kwargs)
 
+        def to_serializable(self):
+            obj = super().to_serializable()
+            obj["index_type"] = self.index_type
+            return obj
+
         @methoddispatch
         def add_interactions_from(self, polynomial: dict, vartype = cxxcimod.Vartype.NONE):
             return super().add_interactions_from(polynomial, to_cxxcimod(vartype))
@@ -259,8 +264,8 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
         @classmethod
         def from_serializable(cls, obj):
             if(obj["type"] != "BinaryPolynomialModel"):
-                raise Exception("Type must be \"BinaryPolynomialModel\".\n")
-            return cls(obj['variables'], obj['each_variable_num_key'], obj['each_variable_num_val'], obj['poly_key_list'], obj['poly_value_list'], to_cxxcimod(obj['vartype']))
+                raise Exception("Type must be \"BinaryPolynomialModel\"")
+            return cls(obj['variables'], obj['poly_key_distance_list'], obj['poly_value_list'], to_cxxcimod(obj['vartype']))
 
         def __repr__(self):
             ss = "BinaryPolynomialModel(" + str(self.get_polynomial()) + ", " + str(self.get_vartype()) + ")"
@@ -270,11 +275,20 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
 
 def make_BinaryPolynomialModel_from_JSON(obj):
     if(obj["type"] != "BinaryPolynomialModel"):
-        raise Exception("Type must be \"BinaryPolynomialModel\".\n")
-    label = obj["poly_key_list"][0][0]
-    if isinstance(label, list):
-        label = tuple(label)
-    mock_polynomial = {(label,):1.0}
+        raise Exception("Type must be \"BinaryPolynomialModel\"")
+    mock_polynomial = {}
+    if obj["index_type"] == IndexType.INT:
+        mock_polynomial = {(0,1):1}
+    elif obj["index_type"] == IndexType.STRING:
+        mock_polynomial = {("a","b"):1}
+    elif obj["index_type"] == IndexType.INT_TUPLE_2:
+        mock_polynomial = {((0,1),(1,2)):1}
+    elif obj["index_type"] == IndexType.INT_TUPLE_3:
+        mock_polynomial = {((0,1,2),(1,2,3)):1}
+    elif obj["index_type"] == IndexType.INT_TUPLE_4:
+        mock_polynomial = {((0,1,2,3),(1,2,3,4)):1}
+    else:
+        raise TypeError("Invalid types of polynomial")
     return make_BinaryPolynomialModel(mock_polynomial)
 
 @singledispatch
@@ -284,12 +298,27 @@ def BinaryPolynomialModel(polynomial: dict, vartype):
 
 @BinaryPolynomialModel.register
 def _BinaryPolynomialModel_from_list(keys: list, values: list, vartype):
-    label = keys[0][0]
-    if isinstance(label, list):
-        label = tuple(label)
-    mock_polynomial = {(label,):1.0}
-    Model = make_BinaryPolynomialModel(mock_polynomial)
-    return Model(keys, values, to_cxxcimod(vartype))
+    if len(keys) == 0:
+        Model = make_BinaryPolynomialModel({})
+        return Model(keys, values, to_cxxcimod(vartype))
+
+    i = 0
+    label = None
+    while i < len(keys):
+        if len(keys[i]) > 0:
+            label = keys[i][0]
+            break
+        i += 1
+
+    if label == None:
+        Model = make_BinaryPolynomialModel({():1.0})
+        return Model(keys, values, to_cxxcimod(vartype))
+    else:
+        if isinstance(label, list):
+            label = tuple(label)
+        mock_polynomial = {(label,):1.0}
+        Model = make_BinaryPolynomialModel(mock_polynomial)
+        return Model(keys, values, to_cxxcimod(vartype))
 
 @singledispatch
 def make_BinaryPolynomialModel_from_hising(polynomial: dict):
@@ -297,11 +326,24 @@ def make_BinaryPolynomialModel_from_hising(polynomial: dict):
 
 @make_BinaryPolynomialModel_from_hising.register
 def _make_BinaryPolynomialModel_from_hising_from_list(keys: list, values: list):
-    label = keys[0][0]
-    if isinstance(label, list):
-        label = tuple(label)
-    mock_polynomial = {(label,):1.0}
-    return make_BinaryPolynomialModel(mock_polynomial).from_hising(keys, values)
+    if len(keys) == 0:
+        return make_BinaryPolynomialModel({}).from_hising(keys, values)
+
+    i = 0
+    label = None
+    while i < len(keys):
+        if len(keys[i]) > 0:
+            label = keys[i][0]
+            break
+        i += 1
+
+    if label == None:
+        return make_BinaryPolynomialModel({():1.0}).from_hising(keys, values)
+    else:
+        if isinstance(label, list):
+            label = tuple(label)
+        mock_polynomial = {(label,):1.0}
+        return make_BinaryPolynomialModel(mock_polynomial).from_hising(keys, values)
 
 @singledispatch
 def make_BinaryPolynomialModel_from_hubo(polynomial: dict):
@@ -309,11 +351,24 @@ def make_BinaryPolynomialModel_from_hubo(polynomial: dict):
 
 @make_BinaryPolynomialModel_from_hubo.register
 def _make_BinaryPolynomialModel_from_hubo_from_list(keys: list, values: list):
-    label = keys[0][0]
-    if isinstance(label, list):
-        label = tuple(label)
-    mock_polynomial = {(label,):1.0}
-    return make_BinaryPolynomialModel(mock_polynomial).from_hubo(keys, values)
+    if len(keys) == 0:
+        return make_BinaryPolynomialModel({}).from_hubo(keys, values)
+
+    i = 0
+    label = None
+    while i < len(keys):
+        if len(keys[i]) > 0:
+            label = keys[i][0]
+            break
+        i += 1
+
+    if label == None:
+        return make_BinaryPolynomialModel({():1.0}).from_hubo(keys, values)
+    else:
+        if isinstance(label, list):
+            label = tuple(label)
+        mock_polynomial = {(label,):1.0}
+        return make_BinaryPolynomialModel(mock_polynomial).from_hubo(keys, values)
 
 #classmethods
 BinaryPolynomialModel.from_serializable = lambda obj: make_BinaryPolynomialModel_from_JSON(obj).from_serializable(obj)

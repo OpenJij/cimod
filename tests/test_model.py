@@ -328,6 +328,12 @@ class PolynomialModelTest(unittest.TestCase):
         self.state_test_bpm(cimod.BinaryPolynomialModel(list(self.poly_tuple3.keys()), list(self.poly_tuple3.values()), cimod.SPIN), self.poly_tuple3, cimod.SPIN)
         self.state_test_bpm(cimod.BinaryPolynomialModel(list(self.poly_tuple4.keys()), list(self.poly_tuple4.values()), cimod.SPIN), self.poly_tuple4, cimod.SPIN)
 
+        bpm = cimod.BinaryPolynomialModel({}, "SPIN")
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel([], [], "SPIN")
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
     def test_add_interaction_bpm_basic(self):
         bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)
         bpm.add_interaction((-12345, -2, 897654321), 0.1234567)
@@ -954,6 +960,37 @@ class PolynomialModelTest(unittest.TestCase):
         bpm_from = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
         self.state_test_bpm(bpm_from, self.poly_tuple4, cimod.SPIN)
 
+    def test_serializable_bpm_empty(self):
+        bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)
+        bpm.clear()
+        bpm_from = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
+        self.state_test_bpm_empty(bpm_from, cimod.SPIN)
+        self.assertEqual(bpm_from.index_type, bpm.index_type)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_str, cimod.SPIN)
+        bpm.clear()
+        bpm_from = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
+        self.state_test_bpm_empty(bpm_from, cimod.SPIN)
+        self.assertEqual(bpm_from.index_type, bpm.index_type)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN)
+        bpm.clear()
+        bpm_from = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
+        self.state_test_bpm_empty(bpm_from, cimod.SPIN)
+        self.assertEqual(bpm_from.index_type, bpm.index_type)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN)
+        bpm.clear()
+        bpm_from = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
+        self.state_test_bpm_empty(bpm_from, cimod.SPIN)
+        self.assertEqual(bpm_from.index_type, bpm.index_type)
+
+        bpm = cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN)
+        bpm.clear()
+        bpm_from = cimod.BinaryPolynomialModel.from_serializable(bpm.to_serializable())
+        self.state_test_bpm_empty(bpm_from, cimod.SPIN)
+        self.assertEqual(bpm_from.index_type, bpm.index_type)
+
     def test_from_hubo_bpm_from_dict(self):
         bpm = cimod.BinaryPolynomialModel.from_hubo(self.poly)
         self.state_test_bpm(bpm, self.poly, cimod.BINARY)
@@ -969,6 +1006,9 @@ class PolynomialModelTest(unittest.TestCase):
 
         bpm = cimod.BinaryPolynomialModel.from_hubo(self.poly_tuple4)
         self.state_test_bpm(bpm, self.poly_tuple4, cimod.BINARY)
+
+        bpm = cimod.BinaryPolynomialModel.from_hubo({})
+        self.state_test_bpm_empty(bpm, cimod.BINARY)
 
     def test_from_hubo_bpm_from_key_value(self):
         bpm = cimod.BinaryPolynomialModel.from_hubo(list(self.poly.keys()), list(self.poly.values()))
@@ -986,6 +1026,9 @@ class PolynomialModelTest(unittest.TestCase):
         bpm = cimod.BinaryPolynomialModel.from_hubo(list(self.poly_tuple4.keys()), list(self.poly_tuple4.values()))
         self.state_test_bpm(bpm, self.poly_tuple4, cimod.BINARY)
 
+        bpm = cimod.BinaryPolynomialModel.from_hubo([], [])
+        self.state_test_bpm_empty(bpm, cimod.BINARY)
+
     def test_from_hising_bpm_from_dict(self):
         bpm = cimod.BinaryPolynomialModel.from_hising(self.poly)
         self.state_test_bpm(bpm, self.poly, cimod.SPIN)
@@ -1002,6 +1045,9 @@ class PolynomialModelTest(unittest.TestCase):
         bpm = cimod.BinaryPolynomialModel.from_hising(self.poly_tuple4)
         self.state_test_bpm(bpm, self.poly_tuple4, cimod.SPIN)
 
+        bpm = cimod.BinaryPolynomialModel.from_hising({})
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
+
     def test_from_hising_bpm_from_key_value(self):
         bpm = cimod.BinaryPolynomialModel.from_hising(list(self.poly.keys()), list(self.poly.values()))
         self.state_test_bpm(bpm, self.poly, cimod.SPIN)
@@ -1017,6 +1063,9 @@ class PolynomialModelTest(unittest.TestCase):
 
         bpm = cimod.BinaryPolynomialModel.from_hising(list(self.poly_tuple4.keys()), list(self.poly_tuple4.values()))
         self.state_test_bpm(bpm, self.poly_tuple4, cimod.SPIN)
+
+        bpm = cimod.BinaryPolynomialModel.from_hising([], [])
+        self.state_test_bpm_empty(bpm, cimod.SPIN)
 
     def test_clear_bpm(self):
         bpm = cimod.BinaryPolynomialModel(self.poly, cimod.SPIN)

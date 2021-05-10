@@ -171,44 +171,41 @@ public:
    }
    
    BinaryPolynomialModel(const std::vector<IndexType>         &variables,
-                         const std::vector<IndexType>         &each_variable_num_key,
-                         const std::vector<std::size_t>       &each_variable_num_val,
-                         const PolynomialKeyList<IndexType>   &poly_key_list,
+                         const PolynomialKeyList<std::size_t> &poly_key_distance_list,
                          const PolynomialValueList<FloatType> &poly_value_list,
                          const Vartype vartype
                          ): vartype_(vartype) {
 
-      if (poly_key_list.size() != poly_value_list.size()) {
+      if (poly_key_distance_list.size() != poly_value_list.size()) {
          throw std::runtime_error("The sizes of key_list and value_list must match each other");
       }
-      
-      if (variables.size() != each_variable_num_key.size() || each_variable_num_key.size() != each_variable_num_val.size()) {
-         throw std::runtime_error("Unknown error. The number of variables dose not match");
-      }
-      
+
       variables_ = std::unordered_set<IndexType>(variables.begin(), variables.end());
       
       if (variables_.size() != variables.size()) {
          throw std::runtime_error("Unknown error. It seems that the input variables contain the same variables");
       }
-      
-      std::size_t num_variables = variables_.size();
-      for (std::size_t i = 0; i < num_variables; ++i) {
-         each_variable_num_[each_variable_num_key[i]] = each_variable_num_val[i];
-      }
-      
-      std::size_t num_interactions = poly_key_list.size();
+            
+      std::size_t num_interactions = poly_key_distance_list.size();
       poly_key_list_.resize(num_interactions);
       poly_value_list_.resize(num_interactions);
       
 #pragma omp paralle for
       for (std::size_t i = 0; i < num_interactions; ++i) {
-         poly_key_list_[i]   = poly_key_list[i];
+         std::vector<IndexType> temp;
+         for (const auto &it: poly_key_distance_list[i]) {
+            temp.push_back(variables[it]);
+         }
+         std::sort(temp.begin(), temp.end());
+         poly_key_list_[i]   = temp;
          poly_value_list_[i] = poly_value_list[i];
       }
       
       for (std::size_t i = 0; i < num_interactions; ++i) {
          poly_key_inv_[poly_key_list_[i]] = i;
+         for (const auto &it: poly_key_list_[i]) {
+            each_variable_num_[it]++;
+         }
       }
    }
    
@@ -620,40 +617,45 @@ public:
          throw std::runtime_error("Variable type must be SPIN or BINARY.");
       }
       
-      std::vector<IndexType>   each_variable_num_key;
-      std::vector<std::size_t> each_variable_num_val;
+      std::size_t num_interactions = get_num_interactions();
+      PolynomialKeyList<std::size_t> poly_key_distance_list(num_interactions);
+      std::vector<IndexType> sorted_variables = get_sorted_variables();
       
-      for (const auto &it: each_variable_num_) {
-         each_variable_num_key.push_back(it.first);
-         each_variable_num_val.push_back(it.second);
+#pragma omp parallel for
+      for (std::size_t i = 0; i < num_interactions; ++i) {
+         std::vector<std::size_t> temp;
+         for (const auto &it: poly_key_list_[i]) {
+            auto it_index = std::lower_bound(sorted_variables.begin(), sorted_variables.end(), it);
+            std::size_t index_distance = std::distance(sorted_variables.begin(), it_index);
+            temp.push_back(index_distance);
+         }
+         poly_key_distance_list[i] = temp;
       }
-      
-      output["variables"]             = variables_;
-      output["each_variable_num_key"] = each_variable_num_key;
-      output["each_variable_num_val"] = each_variable_num_val;
-      output["poly_key_list"]         = poly_key_list_;
-      output["poly_value_list"]       = poly_value_list_;
-      output["type"]                  = "BinaryPolynomialModel";
+            
+      output["variables"]              = sorted_variables;
+      output["poly_key_distance_list"] = poly_key_distance_list;
+      output["poly_value_list"]        = poly_value_list_;
+      output["type"]                   = "BinaryPolynomialModel";
       
       return output;
    }
    
    template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
    static BinaryPolynomialModel<IndexType_serial, FloatType_serial> from_serializable(const nlohmann::json &input) {
-      if(input["type"] != "BinaryPolynomialModel") {
+      if(input.at("type") != "BinaryPolynomialModel") {
          throw std::runtime_error("Type must be \"BinaryPolynomialModel\".\n");
       }
       Vartype vartype;
-      if (input["vartype"] == "SPIN") {
+      if (input.at("vartype") == "SPIN") {
          vartype = Vartype::SPIN;
       }
-      else if (input["vartype"] == "BINARY") {
+      else if (input.at("vartype") == "BINARY") {
          vartype = Vartype::BINARY;
       }
       else {
          throw std::runtime_error("Variable type must be SPIN or BINARY.");
       }
-      return BinaryPolynomialModel<IndexType_serial, FloatType_serial>(input["variables"], input["each_variable_num_key"], input["each_variable_num_val"], input["poly_key_list"], input["poly_value_list"], vartype);
+      return BinaryPolynomialModel<IndexType_serial, FloatType_serial>(input["variables"], input["poly_key_distance_list"], input["poly_value_list"], vartype);
    }
    
    static BinaryPolynomialModel from_hubo(const Polynomial<IndexType, FloatType> &poly_map) {

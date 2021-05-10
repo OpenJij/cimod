@@ -1509,6 +1509,29 @@ TEST(serializableBPM, String) {
    StateTestBPMString(bpm_from);
 }
 
+TEST(serializableBPM, StringToUINT) {
+   BinaryPolynomialModel<std::string, double> bpm(GeneratePolynomialString(), Vartype::SPIN);
+   auto obj = bpm.to_serializable();
+   std::vector<std::size_t> string_to_num(obj["variables"].size());
+   std::iota(string_to_num.begin(), string_to_num.end(), 1);
+   obj["variables"] = string_to_num;
+   BinaryPolynomialModel<uint32_t, double> bpm_from = BinaryPolynomialModel<uint32_t, double>::from_serializable(obj);
+   StateTestBPMUINT(bpm_from);
+}
+
+TEST(serializableBPM, StringToINT) {
+   BinaryPolynomialModel<std::string, double> bpm(GeneratePolynomialString(), Vartype::SPIN);
+   auto obj = bpm.to_serializable();
+   std::vector<std::size_t> string_to_num(4);
+   string_to_num[0] = -1;
+   string_to_num[1] = -2;
+   string_to_num[2] = -3;
+   string_to_num[3] = -4;
+   obj["variables"] = string_to_num;
+   BinaryPolynomialModel<int32_t, double> bpm_from = BinaryPolynomialModel<int32_t, double>::from_serializable(obj);
+   StateTestBPMINT(bpm_from);
+}
+
 TEST(from_hubo, MapUINT) {
    auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hubo(GeneratePolynomialUINT());
    EXPECT_EQ(Vartype::BINARY, bpm.get_vartype());
