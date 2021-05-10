@@ -5,7 +5,7 @@ import cimod
 import cxxcimod
 import dimod
 
-
+"""
 def calculate_ising_energy(h, J, spins):
     energy = 0.0
     for (i, j), Jij in J.items():
@@ -258,6 +258,7 @@ class ModelTest(unittest.TestCase):
             self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
             self.assertEqual(bqm.offset, decode_bqm.offset)
             self.assertEqual(bqm.vartype, decode_bqm.vartype)
+"""
 
 """
 class PolynomialModelTest(unittest.TestCase):

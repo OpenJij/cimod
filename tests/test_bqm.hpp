@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 
 #include "../src/binary_quadratic_model.hpp"
-#include "../src/binary_quadratic_model_dense.hpp"
 
 #include <nlohmann/json.hpp>
 
@@ -17,7 +16,7 @@ using json = nlohmann::json;
 using namespace cimod;
 
 template<typename IndexType, typename FloatType, typename DataType>
-using BQM = BinaryQuadraticModel_Dense<IndexType, FloatType, DataType>;
+using BQM = BinaryQuadraticModel<IndexType, FloatType, DataType>;
 
 template<typename DataType>
 struct BQMTester{
@@ -757,6 +756,8 @@ struct BQMTester{
         BQM<std::string, double, DataType> bqm(linear, quadratic, offset, vartype);
 
         json j = bqm.to_serializable();
+
+        std::cout << j << std::endl;
     }
 
     static void test_DenseBQMFunctionTest_from_serializable()

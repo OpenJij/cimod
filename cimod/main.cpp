@@ -33,11 +33,11 @@ PYBIND11_MODULE(cxxcimod, m){
         .value("NONE", Vartype::NONE)
         .export_values();
 
-    declare_BQM<size_t, double>(m, "BinaryQuadraticModel");
-    declare_BQM<std::string, double>(m, "BinaryQuadraticModel_str");
-    declare_BQM<std::tuple<size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple2");
-    declare_BQM<std::tuple<size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple3");
-    declare_BQM<std::tuple<size_t, size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple4");
+    //declare_BQM<size_t, double>(m, "BinaryQuadraticModel");
+    //declare_BQM<std::string, double>(m, "BinaryQuadraticModel_str");
+    //declare_BQM<std::tuple<size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple2");
+    //declare_BQM<std::tuple<size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple3");
+    //declare_BQM<std::tuple<size_t, size_t, size_t, size_t>, double>(m, "BinaryQuadraticModel_tuple4");
    /*
     declare_BPM<size_t, double>(m, "BinaryPolynomialModel");
     declare_BPM<std::string, double>(m, "BinaryPolynomialModel_str");
