@@ -531,9 +531,10 @@ public:
             const auto changed_key = GenerateChangedKey(original_key, j);
             int sign = ((original_key_size - changed_key.size())%2 == 0) ? 1.0 : -1.0;
             FloatType changed_value = original_value*IntegerPower(2, changed_key.size())*sign;
-            //if (poly_map[changed_key] + changed_value != 0.0) {
             poly_map[changed_key] += changed_value;
-            //}
+            if (poly_map[changed_key] == 0.0) {
+               poly_map.erase(changed_key);
+            }
          }
       }
       return poly_map;
@@ -554,9 +555,10 @@ public:
          
          for (std::size_t j = 0; j < changed_key_list_size; ++j) {
             const auto changed_key = GenerateChangedKey(original_key, j);
-            //if (poly_map[changed_key] + changed_value != 0.0) {
             poly_map[changed_key] += changed_value;
-            //}
+            if (poly_map[changed_key] == 0.0) {
+               poly_map.erase(changed_key);
+            }
          }
       }
       return poly_map;
