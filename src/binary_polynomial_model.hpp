@@ -170,6 +170,50 @@ public:
       add_interactions_from(key_list, value_list);
    }
    
+   BinaryPolynomialModel(const std::vector<IndexType>         &variables,
+                         const std::vector<IndexType>         &each_variable_num_key,
+                         const std::vector<std::size_t>       &each_variable_num_val,
+                         const PolynomialKeyList<IndexType>   &poly_key_list,
+                         const PolynomialValueList<FloatType> &poly_value_list,
+                         const Vartype vartype
+                         ): vartype_(vartype) {
+
+      if (poly_key_list.size() != poly_value_list.size()) {
+         throw std::runtime_error("The sizes of key_list and value_list must match each other");
+      }
+      
+      if (variables.size() != each_variable_num_key.size() || each_variable_num_key.size() != each_variable_num_val.size()) {
+         throw std::runtime_error("Unknown error. The number of variables dose not match");
+      }
+      
+      variables_ = std::unordered_set<IndexType>(variables.begin(), variables.end());
+      
+      if (variables_.size() != variables.size()) {
+         throw std::runtime_error("Unknown error. It seems that the input variables contain the same variables");
+      }
+      
+      std::size_t num_variables = variables_.size();
+      for (std::size_t i = 0; i < num_variables; ++i) {
+         each_variable_num_[each_variable_num_key[i]] = each_variable_num_val[i];
+      }
+      
+      std::size_t num_interactions = poly_key_list.size();
+      poly_key_list_.resize(num_interactions);
+      poly_value_list_.resize(num_interactions);
+      
+#pragma omp paralle for
+      for (std::size_t i = 0; i < num_interactions; ++i) {
+         poly_key_list_[i]   = poly_key_list[i];
+         poly_value_list_[i] = poly_value_list[i];
+      }
+      
+      for (std::size_t i = 0; i < num_interactions; ++i) {
+         poly_key_inv_[poly_key_list_[i]] = i;
+      }
+   }
+   
+
+   
    Polynomial<IndexType, FloatType> get_polynomial() const {
       Polynomial<IndexType, FloatType> poly_map;
       for (std::size_t i = 0; i < poly_key_list_.size(); ++i) {
@@ -576,15 +620,26 @@ public:
          throw std::runtime_error("Variable type must be SPIN or BINARY.");
       }
       
-      output["poly_key_list"]   = poly_key_list_;
-      output["poly_value_list"] = poly_value_list_;
-      output["type"]            = "BinaryPolynomialModel";
+      std::vector<IndexType>   each_variable_num_key;
+      std::vector<std::size_t> each_variable_num_val;
+      
+      for (const auto &it: each_variable_num_) {
+         each_variable_num_key.push_back(it.first);
+         each_variable_num_val.push_back(it.second);
+      }
+      
+      output["variables"]             = variables_;
+      output["each_variable_num_key"] = each_variable_num_key;
+      output["each_variable_num_val"] = each_variable_num_val;
+      output["poly_key_list"]         = poly_key_list_;
+      output["poly_value_list"]       = poly_value_list_;
+      output["type"]                  = "BinaryPolynomialModel";
       
       return output;
    }
    
    template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
-   static BinaryPolynomialModel<IndexType_serial, FloatType_serial> from_serializable(nlohmann::json &input) {
+   static BinaryPolynomialModel<IndexType_serial, FloatType_serial> from_serializable(const nlohmann::json &input) {
       if(input["type"] != "BinaryPolynomialModel") {
          throw std::runtime_error("Type must be \"BinaryPolynomialModel\".\n");
       }
@@ -598,13 +653,7 @@ public:
       else {
          throw std::runtime_error("Variable type must be SPIN or BINARY.");
       }
-      return BinaryPolynomialModel<IndexType_serial, FloatType_serial>(input["poly_key_list"], input["poly_value_list"], vartype);
-   }
-   
-   template <typename IndexType_serial = IndexType, typename FloatType_serial = FloatType>
-   static BinaryPolynomialModel<IndexType_serial, FloatType_serial> from_serializable(const nlohmann::json &input) {
-      nlohmann::json copied_input = input;
-      return from_serializable(copied_input);
+      return BinaryPolynomialModel<IndexType_serial, FloatType_serial>(input["variables"], input["each_variable_num_key"], input["each_variable_num_val"], input["poly_key_list"], input["poly_value_list"], vartype);
    }
    
    static BinaryPolynomialModel from_hubo(const Polynomial<IndexType, FloatType> &poly_map) {

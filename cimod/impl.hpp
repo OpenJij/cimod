@@ -85,8 +85,10 @@ inline void declare_BPM(py::module& m, const std::string& name){
    using BPM = BinaryPolynomialModel<IndexType, FloatType>;
    
    py::class_<BPM>(m, name.c_str())
-   .def(py::init<Polynomial<IndexType, FloatType>, Vartype>(), "polynomial"_a, "vartype"_a)
-   .def(py::init<PolynomialKeyList<IndexType>, PolynomialValueList<FloatType>, Vartype>(), "keys"_a, "values"_a, "vartype"_a)
+   .def(py::init<Polynomial<IndexType, FloatType>&, const Vartype>(), "polynomial"_a, "vartype"_a)
+   .def(py::init<PolynomialKeyList<IndexType>&, PolynomialValueList<FloatType>&, const Vartype>(), "keys"_a, "values"_a, "vartype"_a)
+   .def(py::init<const std::vector<IndexType>&, const std::vector<IndexType>&, const std::vector<std::size_t>&, const PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&, const Vartype>(),
+        "variables"_a, "each_variable_num_key"_a, "each_variable_num_val"_a, "keys"_a, "values"_a, "vartype"_a)
    .def("get_polynomial"          , [](const BPM& self) {
       py::dict py_polynomial;
       const auto &poly_key_list   = self._get_keys();
