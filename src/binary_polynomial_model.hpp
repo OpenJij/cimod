@@ -41,7 +41,7 @@
  * Note that this library assumes that the quadratic bias is not symmetric, i.e., \f$Q_{ij} \neq Q_{ji}\f$ if \f$i \neq j\f$.
  *
  * @section s_bpm Binary polynomial model
- * A binary polynomial model, which can be regarded as an extended model of the binary quadratic model, can handle Ising and PUBO models.
+ * A binary polynomial model, which can be regarded as an extended model of the binary quadratic model, can handle Ising and HUBO models.
  * @subsection ss_bpm_Ising Ising model
  * An energy of an "extended" Ising model \f$E_{\mathrm{Ising}}\f$ is represented by
  * \f[
@@ -51,10 +51,10 @@
  * Note that \f$ i \neq j \neq k \f$ means \f$ i \neq j \f$, \f$ j \neq k \f$, and \f$ i \neq k \f$.
  * This library assumes that the interaction is not symmetric. For example, \f$J_{ij} \neq J_{ji}\f$ for \f$  i\neq j\f$, \f$J_{ijk} \neq J_{jik}\f$ for \f$ i \neq j \neq k \f$, and so on.
  *
- * @subsection ss_bpm_pubo PUBO model
- * An energy of an "extended" QUBO model \f$ E_{\mathrm{PUBO}}\f$, here we call polynomial unconstrained binary optimization (PUBO), is represented by
+ * @subsection ss_bpm_hubo HUBO model
+ * An energy of an "extended" QUBO model \f$ E_{\mathrm{HUBO}}\f$, here we call polynomial unconstrained binary optimization (HUBO), is represented by
  * \f[
- * E_{\mathrm{PUBO}} = \sum_{i \neq j} Q_{ij} x_i x_j +  \sum_{i \neq j \neq k} Q_{ijk} x_i x_j x_k + \ldots
+ * E_{\mathrm{HUBO}} = \sum_{i \neq j} Q_{ij} x_i x_j +  \sum_{i \neq j \neq k} Q_{ijk} x_i x_j x_k + \ldots
  * \f]
  * Here \f$ x_i \in \{0, 1\} \f$ denotes the spin at the site \f$ i \f$ and \f$Q_{ijk\ldots}\f$ represents the interaction between the sites.
  * Note that \f$ i \neq j \neq k \f$ means \f$ i \neq j \f$, \f$ j \neq k \f$, and \f$ i \neq k \f$.

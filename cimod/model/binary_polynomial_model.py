@@ -26,6 +26,15 @@ class Polynomial:
     def __init__(self, bpm):
         self._bpm = bpm
 
+    def items(self):
+        return self._bpm.get_polynomial().items()
+
+    def keys(self):
+        return self._bpm.get_polynomial().keys()
+
+    def values(self):
+        return self._bpm.get_polynomial().values()
+
     def __repr__(self):
         return  str(self._bpm.get_polynomial())
 
