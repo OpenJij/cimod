@@ -32,16 +32,20 @@ inline void declare_BQM(py::module& m, const std::string& name){
 
     using BQM = BinaryQuadraticModel<IndexType, FloatType, DataType>;
 
+    using DenseMatrix   = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+    using SparseMatrix  = Eigen::SparseMatrix<FloatType, Eigen::RowMajor>;
+
     py::class_<BQM>(m, name.c_str())
-        .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType, Vartype, std::string>(), "linear"_a, "quadratic"_a, "offset"_a, "vartype"_a, "info"_a="")
-        .def("_generate_indices", &BQM::_generate_indices)
+        .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType, Vartype>(), "linear"_a, "quadratic"_a, "offset"_a, "vartype"_a)
+        .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, Vartype>(), "linear"_a, "quadratic"_a, "vartype"_a)
         .def("length", &BQM::length)
+        .def("get_num_variables", &BQM::get_num_variables)
         .def("contains", &BQM::contains, "v"_a)
         .def("get_linear", &BQM::get_linear)
         .def("get_quadratic", &BQM::get_quadratic)
-        .def("get_adjacency", &BQM::get_adjacency)
         .def("get_offset", &BQM::get_offset)
         .def("get_vartype", &BQM::get_vartype)
+        .def("get_variables", &BQM::get_variables)
         .def("get_info", &BQM::get_info)
         //.def("print", &BQM::print)
         .def("empty", &BQM::empty)
@@ -61,7 +65,7 @@ inline void declare_BQM(py::module& m, const std::string& name){
         .def("fix_variables", &BQM::fix_variables, "fixed"_a)
         .def("flip_variable", &BQM::flip_variable, "v"_a)
         .def("update", &BQM::update, "bqm"_a, "ignore_info"_a=true)
-        .def("contract_variables", &BQM::contract_variables, "u"_a, "v"_a)
+        //.def("contract_variables", &BQM::contract_variables, "u"_a, "v"_a)
         .def("change_vartype", &BQM::change_vartype, "vartype"_a, "inplace"_a=true)
         .def_static("spin_to_binary", &BQM::spin_to_binary, "linear"_a, "quadratic"_a, "offset"_a)
         .def_static("binary_to_spin", &BQM::binary_to_spin, "linear"_a, "quadratic"_a, "offset"_a)

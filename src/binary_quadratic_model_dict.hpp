@@ -64,10 +64,14 @@ namespace cimod
     {
         using DataType = Dict;
     public:
-    /**
-     * @brief Eigen Matrix
-     */
-    using Matrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+
+        using DenseMatrix   = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+        using SparseMatrix  = Eigen::SparseMatrix<FloatType, Eigen::RowMajor>;
+
+        /**
+         * @brief Eigen Matrix
+         */
+        using Matrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
     protected:
         /**
          * @brief Linear biases as a dictionary.
@@ -129,6 +133,46 @@ namespace cimod
             const Quadratic<IndexType, FloatType> &quadratic,
             const Vartype vartype
         ): BinaryQuadraticModel(linear, quadratic, 0.0, vartype){}
+
+        /**
+         * @brief BinaryQuadraticModel constructor (with matrix);
+         * This constructor is not be implemented.
+         *
+         * @param mat
+         * @param labels_vec
+         * @param offset
+         * @param vartype
+         *
+         */
+        BinaryQuadraticModel
+        (
+            const DenseMatrix& mat,
+            const std::vector<IndexType>& labels_vec,
+            const FloatType &offset,
+            const Vartype vartype
+        )
+        {
+            throw std::runtime_error("Initialization from matrix is not implemented on dict-type BQM");
+        }
+
+        /**
+         * @brief BinaryQuadraticModel constructor (with matrix);
+         * This constructor is not be implemented.
+         *
+         * @param mat
+         * @param labels_vec
+         * @param vartype
+         *
+         */
+        BinaryQuadraticModel
+        (
+            const DenseMatrix& mat,
+            const std::vector<IndexType>& labels_vec,
+            const Vartype vartype
+        )
+        {
+            throw std::runtime_error("Initialization from matrix is not implemented on dict-type BQM");
+        }
     
         /**
          * @brief Copy constructor of BinaryQuadraticModel
@@ -216,6 +260,17 @@ namespace cimod
             }
             
         }
+
+        /**
+         * @brief Get the element of linear object
+         *
+         * @param label_i
+         *
+         * @return 
+         */
+        FloatType get_linear(IndexType label_i) const{
+            return this->m_linear.at(label_i);
+        }
         
         /**
          * @brief Get the linear object
@@ -225,6 +280,16 @@ namespace cimod
         const Linear<IndexType, FloatType>& get_linear() const
         {
             return this->m_linear;
+        }
+
+        /**
+         * @brief Get the element of quadratic object
+         * 
+         * @return A quadratic bias.
+         */
+        FloatType get_quadratic(IndexType label_i, IndexType label_j) const
+        {
+            return this->m_quadratic.at(std::make_tuple(std::min(label_i, label_j), std::max(label_i, label_j)));
         }
     
         /**
