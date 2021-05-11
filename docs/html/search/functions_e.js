@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['scale_142',['scale',['../classcimod_1_1_binary_polynomial_model.html#aa9f865096e139257b8a1f2d31acec44c',1,'cimod::BinaryPolynomialModel::scale()'],['../classcimod_1_1_binary_quadratic_model.html#a386be82f236f88d60120a8075c577611',1,'cimod::BinaryQuadraticModel::scale(const FloatType &amp;scalar, const std::vector&lt; IndexType &gt; &amp;ignored_variables={}, const std::vector&lt; std::pair&lt; IndexType, IndexType &gt;&gt; &amp;ignored_interactions={}, const bool ignored_offset=false)']]],
-  ['spin_5fto_5fbinary_143',['spin_to_binary',['../classcimod_1_1_binary_quadratic_model.html#a4de8ddb91485406dbd0c7e2d9ef7c820',1,'cimod::BinaryQuadraticModel']]]
+  ['scale_173',['scale',['../classcimod_1_1_binary_polynomial_model.html#afa360e2dea26dc527cdb8cc55e5cd1c1',1,'cimod::BinaryPolynomialModel::scale()'],['../classcimod_1_1_binary_quadratic_model.html#a386be82f236f88d60120a8075c577611',1,'cimod::BinaryQuadraticModel::scale()']]],
+  ['setkeyandvalue_174',['SetKeyAndValue',['../classcimod_1_1_binary_polynomial_model.html#a7427fb3d2bc707a31b7de468e2438ca9',1,'cimod::BinaryPolynomialModel']]],
+  ['spin_5fto_5fbinary_175',['spin_to_binary',['../classcimod_1_1_binary_quadratic_model.html#a4de8ddb91485406dbd0c7e2d9ef7c820',1,'cimod::BinaryQuadraticModel']]]
 ];

@@ -1,8 +1,8 @@
 var binary__polynomial__model_8hpp =
 [
     [ "BinaryPolynomialModel", "classcimod_1_1_binary_polynomial_model.html", "classcimod_1_1_binary_polynomial_model" ],
-    [ "Adjacency_Poly", "binary__polynomial__model_8hpp.html#a784111b8d7d65ef56431f07ca590db60", null ],
     [ "Polynomial", "binary__polynomial__model_8hpp.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9", null ],
-    [ "Sample", "binary__polynomial__model_8hpp.html#a300c5a25892e0259f843d34e20fd4801", null ],
-    [ "Variable", "binary__polynomial__model_8hpp.html#aab59a56ee2c64672c1f2f091ac051745", null ]
+    [ "PolynomialKeyList", "binary__polynomial__model_8hpp.html#a292564b3ace60c496890860f23bfa8bf", null ],
+    [ "PolynomialValueList", "binary__polynomial__model_8hpp.html#a6d7c106b4a0e76035c564cbcd688d2db", null ],
+    [ "Sample", "binary__polynomial__model_8hpp.html#a300c5a25892e0259f843d34e20fd4801", null ]
 ];
