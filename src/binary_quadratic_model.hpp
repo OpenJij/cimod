@@ -12,6 +12,65 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
+/**
+ * @mainpage cimod
+ * 
+ * @section s_overview Overview
+ * cimod is a C++ library for a binary quadratic model.
+ * This library provides a binary quadratic model class which contains an Ising model or a quadratic unconstrained binary optimization (QUBO) model.
+ * It also provides utilities for constructing a model and transforming to some other interfaces.
+ * This library is created based on dimod (https://github.com/dwavesystems/dimod).
+ * 
+ * @section s_bqm Binary quadratic model
+ * A binary quadratic model class can contain an Ising model or a QUBO model.
+ * 
+ * @subsection ss_ising Ising model
+ * An energy of an Ising model \f$E_{\mathrm{Ising}}\f$ is represented by
+ * \f[
+ * E_{\mathrm{Ising}} = \sum_{i} h_i s_i + \sum_{i \neq j} J_{ij} s_i s_j + \delta_{\mathrm{Ising}},
+ * \f]
+ * where \f$s_i \in \{+1, -1\}\f$ denotes a spin at the site \f$i\f$, \f$h_i\f$ denotes an external magnetic field parameter, \f$J_{ij}\f$ denotes an interaction parameter and \f$\delta_{\mathrm{Ising}}\f$ denotes an offset.
+ * Note that this library assumes that the interaction is not symmetric, i.e., \f$J_{ij} \neq J_{ji}\f$.
+ * 
+ * @subsection ss_qubo QUBO model
+ * An evaluation function of a QUBO model \f$E_{\mathrm{QUBO}}\f$ is represented by
+ * \f[
+ * E_{\mathrm{QUBO}} = \sum_{i, j} Q_{ij} x_i x_j + \delta_{\mathrm{QUBO}},
+ * \f]
+ * where \f$x_i \in \{0, 1\}\f$ denotes a decision variable, \f$Q_{ij}\f$ denotes a quadratic bias and \f$\delta_{\mathrm{QUBO}}\f$ denotes an offset.
+ * Note that this library assumes that the quadratic bias is not symmetric, i.e., \f$Q_{ij} \neq Q_{ji}\f$ if \f$i \neq j\f$.
+ * 
+ * @section s_example Example
+ * @code
+ * #include "src/binary_quadratic_model.hpp"
+ * 
+ * using namespace cimod;
+ * int main()
+ * {
+ * // Set linear biases and quadratic biases
+ * Linear<uint32_t, double> linear{ {1, 1.0}, {2, 2.0}, {3, 3.0}, {4, 4.0} };
+ * Quadratic<uint32_t, double> quadratic
+ * {
+ *      {std::make_pair(1, 2), 12.0}, {std::make_pair(1, 3), 13.0}, {std::make_pair(1, 4), 14.0},
+ *      {std::make_pair(2, 3), 23.0}, {std::make_pair(2, 4), 24.0},
+ *      {std::make_pair(3, 4), 34.0}
+ *  };
+ * 
+ * // Set offset
+ * double offset = 0.0;
+ * 
+ * // Set variable type
+ * Vartype vartype = Vartype::BINARY;
+ * // Create a BinaryQuadraticModel instance
+ * BinaryQuadraticModel<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+ * 
+ * // Print informations of bqm
+ * bqm.print();
+ * 
+ * return 0;
+ * }
+ * @endcode
+ */
 
 /**
  * @file binary_quadratic_model.hpp
@@ -92,9 +151,12 @@ namespace cimod
 
     /**
      * @brief Class for dense binary quadratic model.
+     * @tparam IndexType index type. type must be hashable and comparable.
+     * @tparam FloatType 
+     * @tparam IndexType 
      */
     
-    template <typename IndexType, typename FloatType, typename DataType=Dense>
+    template <typename IndexType, typename FloatType, typename DataType>
     class BinaryQuadraticModel
     {
     private:
@@ -1305,8 +1367,8 @@ namespace cimod
         BinaryQuadraticModel<IndexType, FloatType, DataType> empty(Vartype vartype)
         {
             return BinaryQuadraticModel<IndexType, FloatType, DataType>(
-                    Linear<FloatType, IndexType>(),
-                    Quadratic<FloatType, IndexType>(),
+                    Linear<IndexType, FloatType>(),
+                    Quadratic<IndexType, FloatType>(),
                     0.0,
                     vartype
                     );
@@ -2027,6 +2089,7 @@ namespace cimod
             output["quadratic_biases"] = q_bias;
             output["quadratic_head"] = q_head;
             output["quadratic_tail"] = q_tail;
+            output["num_interactions"] = q_bias.size();
 
             return output;
         }

@@ -27,10 +27,10 @@ namespace py = pybind11;
 using namespace py::literals;
 using namespace cimod;
 
-template<typename IndexType, typename FloatType>
+template<typename IndexType, typename FloatType, typename DataType>
 inline void declare_BQM(py::module& m, const std::string& name){
 
-    using BQM = BinaryQuadraticModel<IndexType, FloatType>;
+    using BQM = BinaryQuadraticModel<IndexType, FloatType, DataType>;
 
     py::class_<BQM>(m, name.c_str())
         .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType, Vartype, std::string>(), "linear"_a, "quadratic"_a, "offset"_a, "vartype"_a, "info"_a="")
