@@ -66,6 +66,8 @@ class ModelTest(unittest.TestCase):
         # Test BinaryQuadraticModel constructor
         bqm = cimod.model.legacy.BinaryQuadraticModel(self.h, self.J, 'SPIN')
         self.assertEqual(type(bqm.interaction_matrix()), np.ndarray)
+        self.assertEqual(bqm.variables, [0,1,2,3])
+        self.assertEqual(bqm.num_variables, 4)
 
         self.assertEqual(bqm.vartype, cimod.SPIN)
 
