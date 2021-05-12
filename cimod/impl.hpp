@@ -11,6 +11,9 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
+//
+
+#include "../../src/disable_eigen_warning.hpp"
 
 #include <pybind11_json/pybind11_json.hpp>
 #include <nlohmann/json.hpp>
@@ -20,6 +23,7 @@
 #include <pybind11/pybind11.h>
 
 #include <binary_quadratic_model.hpp>
+#include <binary_quadratic_model_dict.hpp>
 #include <binary_polynomial_model.hpp>
 
 namespace py = pybind11;
@@ -33,26 +37,29 @@ inline void declare_BQM(py::module& m, const std::string& name){
     using BQM = BinaryQuadraticModel<IndexType, FloatType, DataType>;
 
     using DenseMatrix   = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
-    using SparseMatrix  = Eigen::SparseMatrix<FloatType, Eigen::RowMajor>;
 
-    py::class_<BQM>(m, name.c_str())
+    auto pyclass_BQM = py::class_<BQM>(m, name.c_str());
+
+    pyclass_BQM
         .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType, Vartype>(), "linear"_a, "quadratic"_a, "offset"_a, "vartype"_a)
         .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, Vartype>(), "linear"_a, "quadratic"_a, "vartype"_a)
+        .def(py::init<Eigen::Ref<const DenseMatrix>, std::vector<IndexType>, FloatType, Vartype>(), "mat"_a, "labels_vec"_a, "offset"_a, "vartype"_a)
+        .def(py::init<Eigen::Ref<const DenseMatrix>, std::vector<IndexType>, Vartype>(), "mat"_a, "labels_vec"_a, "vartype"_a)
         .def("length", &BQM::length)
         .def("get_num_variables", &BQM::get_num_variables)
-        .def("contains", &BQM::contains, "v"_a)
-        .def("get_linear", &BQM::get_linear)
-        .def("get_quadratic", &BQM::get_quadratic)
+        .def("get_linear", py::overload_cast<IndexType>(&BQM::get_linear, py::const_))
+        .def("get_linear", py::overload_cast<>(&BQM::get_linear, py::const_))
+        .def("get_quadratic", py::overload_cast<IndexType ,IndexType>(&BQM::get_quadratic, py::const_))
+        .def("get_quadratic", py::overload_cast<>(&BQM::get_quadratic, py::const_))
         .def("get_offset", &BQM::get_offset)
         .def("get_vartype", &BQM::get_vartype)
         .def("get_variables", &BQM::get_variables)
-        .def("get_info", &BQM::get_info)
         //.def("print", &BQM::print)
-        .def("empty", &BQM::empty)
-        .def("add_variable", &BQM::add_variable, "v"_a, "bias"_a, "vartype"_a=Vartype::NONE)
-        .def("add_variables_from", &BQM::add_variables_from, "linear"_a, "vartype"_a)
-        .def("add_interaction", &BQM::add_interaction, "u"_a, "v"_a, "bias"_a, "vartype"_a=Vartype::NONE)
-        .def("add_interactions_from", &BQM::add_interactions_from, "quadratic"_a, "vartype"_a)
+        .def("empty", &BQM::empty, "vartype"_a)
+        .def("add_variable", &BQM::add_variable, "v"_a, "bias"_a)
+        .def("add_variables_from", &BQM::add_variables_from, "linear"_a)
+        .def("add_interaction", &BQM::add_interaction, "u"_a, "v"_a, "bias"_a)
+        .def("add_interactions_from", &BQM::add_interactions_from, "quadratic"_a)
         .def("remove_variable", &BQM::remove_variable, "v"_a)
         .def("remove_variables_from", &BQM::remove_variables_from, "variables"_a)
         .def("remove_interaction", &BQM::remove_interaction, "u"_a, "v"_a)
@@ -64,22 +71,28 @@ inline void declare_BQM(py::module& m, const std::string& name){
         .def("fix_variable", &BQM::fix_variable, "v"_a, "value"_a)
         .def("fix_variables", &BQM::fix_variables, "fixed"_a)
         .def("flip_variable", &BQM::flip_variable, "v"_a)
-        .def("update", &BQM::update, "bqm"_a, "ignore_info"_a=true)
         //.def("contract_variables", &BQM::contract_variables, "u"_a, "v"_a)
-        .def("change_vartype", &BQM::change_vartype, "vartype"_a, "inplace"_a=true)
-        .def_static("spin_to_binary", &BQM::spin_to_binary, "linear"_a, "quadratic"_a, "offset"_a)
-        .def_static("binary_to_spin", &BQM::binary_to_spin, "linear"_a, "quadratic"_a, "offset"_a)
+        .def("change_vartype", py::overload_cast<const Vartype&>(&BQM::change_vartype), "vartype"_a)
+        .def("change_vartype", py::overload_cast<const Vartype&, bool>(&BQM::change_vartype), "vartype"_a, "inplace"_a)
         .def("energy", &BQM::energy, "sample"_a)
         .def("energies", &BQM::energy, "samples_like"_a)
         .def("to_qubo", &BQM::to_qubo)
         .def("to_ising", &BQM::to_ising)
         .def_static("from_qubo", &BQM::from_qubo, "Q"_a, "offset"_a=0.0)
         .def_static("from_ising", &BQM::from_ising, "h"_a, "J"_a, "offset"_a=0.0)
-        .def("interaction_matrix", &BQM::interaction_matrix, "indices"_a)
+        .def("interaction_matrix", py::overload_cast<>(&BQM::interaction_matrix, py::const_))
         //.def("to_serialiable", &BQM::to_serializable)
         //.def_static("from_serialiable", &BQM::from_serializable, "input"_a);
         .def("to_serializable", [](const BQM& self){return static_cast<py::object>(self.to_serializable());})
         .def_static("from_serializable", [](const py::object& input){return BQM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a);
+
+    //interaction_matrix for Dict (legacy BQM) class
+    if constexpr (std::is_same_v<DataType, cimod::Dict>)
+        pyclass_BQM
+            .def("_generate_indices", &BQM::_generate_indices)
+            .def("interaction_matrix", py::overload_cast<const std::vector<IndexType>&>(&BQM::interaction_matrix, py::const_));
+            
+
 }
 
 /*

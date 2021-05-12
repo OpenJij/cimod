@@ -1184,7 +1184,7 @@ namespace cimod
          */
         BinaryQuadraticModel
         (
-            const DenseMatrix& mat,
+            const Eigen::Ref<const DenseMatrix>& mat,
             const std::vector<IndexType>& labels_vec,
             const FloatType &offset,
             const Vartype vartype
@@ -1205,7 +1205,7 @@ namespace cimod
          */
         BinaryQuadraticModel
         (
-            const DenseMatrix& mat,
+            const Eigen::Ref<const DenseMatrix>& mat,
             const std::vector<IndexType>& labels_vec,
             const Vartype vartype
         ): BinaryQuadraticModel(mat, labels_vec, 0.0, vartype){}
@@ -2052,7 +2052,7 @@ namespace cimod
             output["num_variables"] = this->get_num_variables();
             output["variable_type"] = variable_type;
             output["offset"] = m_offset;
-            output["info"] = {};
+            output["info"] = "";
 
             //biases
             size_t mat_size = this->get_num_variables() + 1;

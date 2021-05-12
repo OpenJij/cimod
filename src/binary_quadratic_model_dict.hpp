@@ -146,10 +146,10 @@ namespace cimod
          */
         BinaryQuadraticModel
         (
-            const DenseMatrix& mat,
-            const std::vector<IndexType>& labels_vec,
-            const FloatType &offset,
-            const Vartype vartype
+            const Eigen::Ref<const DenseMatrix>&,
+            const std::vector<IndexType>&,
+            const FloatType&,
+            const Vartype
         )
         {
             throw std::runtime_error("Initialization from matrix is not implemented on dict-type BQM");
@@ -166,9 +166,9 @@ namespace cimod
          */
         BinaryQuadraticModel
         (
-            const DenseMatrix& mat,
-            const std::vector<IndexType>& labels_vec,
-            const Vartype vartype
+            const Eigen::Ref<const DenseMatrix>&,
+            const std::vector<IndexType>&,
+            const Vartype
         )
         {
             throw std::runtime_error("Initialization from matrix is not implemented on dict-type BQM");
@@ -222,24 +222,6 @@ namespace cimod
         size_t get_num_variables() const{
             return m_linear.size();
         }
-
-        /**
-         * @brief Get variables
-         *
-         * @return variables
-         */
-        const std::vector<IndexType> get_variables() const{
-            std::vector<IndexType> variables;
-            variables.reserve(m_linear.size());
-            for(auto&& elem : m_linear)
-            {
-                variables.push_back(elem.first);
-            }
-    
-            std::sort(variables.begin(), variables.end());
-
-            return variables;
-        }
     
         /**
          * @brief Return true if the variable contains v.
@@ -289,7 +271,7 @@ namespace cimod
          */
         FloatType get_quadratic(IndexType label_i, IndexType label_j) const
         {
-            return this->m_quadratic.at(std::make_tuple(std::min(label_i, label_j), std::max(label_i, label_j)));
+            return this->m_quadratic.at(std::make_pair(std::min(label_i, label_j), std::max(label_i, label_j)));
         }
     
         /**
@@ -300,16 +282,6 @@ namespace cimod
         const Quadratic<IndexType, FloatType>& get_quadratic() const
         {
             return this->m_quadratic;
-        }
-    
-        /**
-         * @brief Get the adjacency object
-         * 
-         * @return A adjacency list.
-         */
-        const Adjacency<IndexType, FloatType>& get_adjacency() const
-        {
-            return this->m_adj;
         }
     
         /**
@@ -330,6 +302,24 @@ namespace cimod
         const Vartype& get_vartype() const
         {
             return this->m_vartype;
+        }
+
+        /**
+         * @brief Get variables
+         *
+         * @return variables
+         */
+        const std::vector<IndexType> get_variables() const{
+            std::vector<IndexType> variables;
+            variables.reserve(m_linear.size());
+            for(auto&& elem : m_linear)
+            {
+                variables.push_back(elem.first);
+            }
+    
+            std::sort(variables.begin(), variables.end());
+
+            return variables;
         }
     
         /**
@@ -353,16 +343,16 @@ namespace cimod
          * 
          * @param v
          * @param bias
-         * @param vartype
          */
         void add_variable
         (
             const IndexType &v,
-            const FloatType &bias,
-            const Vartype vartype = Vartype::NONE
+            const FloatType &bias
         )
         {
             FloatType b = bias;
+
+            Vartype vartype = this->get_vartype();
     
             // handle the case that a different vartype is provided
             if((vartype!=Vartype::NONE)&&(vartype!=m_vartype))
@@ -396,17 +386,15 @@ namespace cimod
          * @brief Add variables and/or linear biases to a binary quadratic model.
          * 
          * @param linear
-         * @param vartype
          */
         void add_variables_from
         (
-            const Linear<IndexType, FloatType> &linear,
-            const Vartype vartype = Vartype::NONE
+            const Linear<IndexType, FloatType> &linear
         )
         {
             for(auto &it : linear)
             {
-                add_variable(it.first, it.second, vartype);
+                add_variable(it.first, it.second);
             }
         }
     
@@ -416,18 +404,18 @@ namespace cimod
          * @param arg_u
          * @param arg_v
          * @param bias
-         * @param vartype
          */
         void add_interaction
         (
             const IndexType &arg_u,
             const IndexType &arg_v,
-            const FloatType &bias,
-            const Vartype vartype = Vartype::NONE
+            const FloatType &bias
         )
         {
             IndexType u = std::min(arg_u, arg_v);
             IndexType v = std::max(arg_u, arg_v);
+
+            Vartype vartype = this->get_vartype();
 
             if(u == v)
             {
@@ -495,17 +483,15 @@ namespace cimod
          * @brief Add interactions and/or quadratic biases to a binary quadratic model.
          * 
          * @param quadratic
-         * @param vartype
          */
         void add_interactions_from
         (
-            const Quadratic<IndexType, FloatType> &quadratic,
-            const Vartype vartype = Vartype::NONE
+            const Quadratic<IndexType, FloatType> &quadratic
         )
         {
             for(auto &it : quadratic)
             {
-                add_interaction(it.first.first, it.first.second, it.second, vartype);
+                add_interaction(it.first.first, it.first.second, it.second);
             }
         }
     
@@ -828,16 +814,6 @@ namespace cimod
             }
         }
     
-        void update
-        (
-            const BinaryQuadraticModel &bqm
-        )
-        {
-            add_variables_from(bqm.get_linear(), bqm.get_vartype());
-            add_interactions_from(bqm.get_quadratic(), bqm.get_vartype());
-            add_offset(bqm.get_offset());
-        }
-    
         /**
          * @brief Enforce u, v being the same variable in a binary quadratic model.
          * 
@@ -911,6 +887,41 @@ namespace cimod
     
         /**
          * @brief Create a binary quadratic model with the specified vartype.
+         * This function does not return any object.
+         * 
+         * @param vartype
+         */
+        void change_vartype
+        (
+            const Vartype &vartype
+        )
+        {
+            Linear<IndexType, FloatType> linear;
+            Quadratic<IndexType, FloatType> quadratic;
+            FloatType offset = 0.0;
+    
+            if(m_vartype == Vartype::BINARY && vartype == Vartype::SPIN) // binary -> spin
+            {
+                std::tie(linear, quadratic, offset) = binary_to_spin(m_linear, m_quadratic, m_offset);                
+            }
+            else if(m_vartype == Vartype::SPIN && vartype == Vartype::BINARY) // spin -> binary
+            {
+                std::tie(linear, quadratic, offset) = spin_to_binary(m_linear, m_quadratic, m_offset);
+            }
+            else
+            {
+                std::tie(linear, quadratic, offset) = std::tie(m_linear, m_quadratic, m_offset);
+            }
+    
+            //inplace
+            m_linear = linear;
+            m_quadratic = quadratic;
+            m_offset = offset;
+            m_vartype = vartype;
+        }
+
+        /**
+         * @brief Create a binary quadratic model with the specified vartype.
          * 
          * @param vartype
          * @param inplace
@@ -919,7 +930,7 @@ namespace cimod
         BinaryQuadraticModel change_vartype
         (
             const Vartype &vartype,
-            bool inplace=true
+            bool inplace
         )
         {
             Linear<IndexType, FloatType> linear;
@@ -1372,7 +1383,7 @@ namespace cimod
             output["variable_labels"] = variables;
             output["variable_type"] = variable_type;
             output["offset"] = m_offset;
-            output["info"] = {};
+            output["info"] = "";
             output["linear_biases"] = l_bias;
             output["quadratic_biases"] = q_bias;
             output["quadratic_head"] = q_head;

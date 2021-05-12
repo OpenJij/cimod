@@ -19,28 +19,6 @@ from cimod.utils.decolator import recalc
 import dimod
 import numpy as np
 
-class Linear:
-    def __init__(self, bpm):
-        self._bpm = bpm
-
-    def __repr__(self):
-        return  str(self._bpm.get_linear())
-
-class Quadratic:
-    def __init__(self, bpm):
-        self._bpm = bpm
-
-    def __repr__(self):
-        return  str(self._bpm.get_quadratic())
-
-class Variables:
-    def __init__(self, bpm):
-        self._bpm = bpm
-
-    def __repr__(self):
-        return  str(self._bpm.get_variables())
-
-
 def make_BinaryQuadraticModel(linear, quadratic):
     """BinaryQuadraticModel factory. 
        Generate BinaryQuadraticModel class with the base class specified by the arguments linear and quadratic
@@ -67,16 +45,16 @@ def make_BinaryQuadraticModel(linear, quadratic):
         ind = next(iter(index))
 
         if isinstance(ind, int):
-            base = cxxcimod.BinaryQuadraticModel
+            base = cxxcimod.BinaryQuadraticModel_Dict
         elif isinstance(ind, str):
-            base = cxxcimod.BinaryQuadraticModel_str
+            base = cxxcimod.BinaryQuadraticModel_str_Dict
         elif isinstance(ind, tuple):
             if len(ind) == 2:
-                base = cxxcimod.BinaryQuadraticModel_tuple2
+                base = cxxcimod.BinaryQuadraticModel_tuple2_Dict
             elif len(ind) == 3:
-                base = cxxcimod.BinaryQuadraticModel_tuple3
+                base = cxxcimod.BinaryQuadraticModel_tuple3_Dict
             elif len(ind) == 4:
-                base = cxxcimod.BinaryQuadraticModel_tuple4
+                base = cxxcimod.BinaryQuadraticModel_tuple4_Dict
             else:
                 raise TypeError("invalid length of tuple")
         else:
@@ -89,7 +67,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
            The dictionaries between indices and integers are self.ind_to_num (indices -> integers) and self.num_to_ind (integers -> indices).
            Indices are listed in self._indices.
         Attributes:
-            var_type (cimod.VariableType): variable type SPIN or BINARY
+            vartype (cimod.VariableType): variable type SPIN or BINARY
             linear (dict): represents linear term
             quadratic (dict): represents quadratic term
             adj (dict): represents adjacency
@@ -97,10 +75,8 @@ def make_BinaryQuadraticModel(linear, quadratic):
             ind_to_num (list): map which specifies where the index is in self._indices
             offset (float): represents constant energy term when convert to SPIN from BINARY
         """
-        def __init__(self, linear, quadratic, offset=0.0,
-                     var_type=dimod.SPIN, **kwargs):
-            super().__init__(linear, quadratic, offset, to_cxxcimod(var_type))
-
+        def __init__(self, linear, quadratic, offset, vartype):
+            super().__init__(linear, quadratic, offset, to_cxxcimod(vartype))
             self._init_process()
 
 
@@ -126,8 +102,12 @@ def make_BinaryQuadraticModel(linear, quadratic):
             return self.get_quadratic()
     
         @property
-        def adj(self):
-            return self.get_adjacency()
+        def num_variables(self):
+            return self.get_num_variables()
+
+        @property
+        def variables(self):
+            return self.get_variables()
     
         @property
         def vartype(self):
@@ -310,16 +290,20 @@ def make_BinaryQuadraticModel(linear, quadratic):
             return super().contract_variables(*args, **kwargs)
     
     
-        def change_vartype(self, vartype, inplace=True):
+        def change_vartype(self, vartype, inplace=None):
             """
             Create a binary quadratic model with the specified vartype
             Args:
-                var_type (cimod.Vartype): SPIN or BINARY
+                vartype (cimod.Vartype): SPIN or BINARY
             Returns:
                 A new instance of the BinaryQuadraticModel class.
             """
             cxxvartype = to_cxxcimod(vartype)
-            #FIXME: bottleneck: variable copies
+            if inplace is None:
+                super().change_vartype(cxxvartype)
+                return
+
+            # in the case inplace is not None
             bqm = super().change_vartype(cxxvartype, inplace)
             self._re_calculate = True
             return BinaryQuadraticModel(bqm.get_linear(), bqm.get_quadratic(), bqm.get_offset(), vartype)
@@ -334,11 +318,11 @@ def make_BinaryQuadraticModel(linear, quadratic):
                 else:
                     quadratic[(u, v)] = bias
 
-            return cls(linear, quadratic, offset, var_type=dimod.BINARY, **kwargs)
+            return cls(linear, quadratic, offset, vartype=dimod.BINARY, **kwargs)
 
         @classmethod
         def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
-            return cls(linear, quadratic, offset, var_type=dimod.SPIN, **kwargs)
+            return cls(linear, quadratic, offset, vartype=dimod.SPIN, **kwargs)
 
         @classmethod
         def from_serializable(cls, obj):
@@ -375,12 +359,24 @@ def make_BinaryQuadraticModel_from_JSON(obj):
     return make_BinaryQuadraticModel(mock_linear, {})
 
 
-def BinaryQuadraticModel(linear, quadratic, offset=0.0,
-                 var_type=dimod.SPIN, **kwargs):
-
+def BinaryQuadraticModel(linear, quadratic, *args, **kwargs):
     Model = make_BinaryQuadraticModel(linear, quadratic)
 
-    return Model(linear, quadratic, offset, var_type, **kwargs)
+    if len(args) == 2:
+        [offset, vartype] = args
+        return Model(linear, quadratic, offset, to_cxxcimod(vartype))
+    elif len(args) == 1 and len(kwargs) == 1 and 'vartype' in kwargs:
+        [offset] = args
+        vartype = kwargs['vartype']
+        return Model(linear, quadratic, offset, to_cxxcimod(vartype))
+    elif len(args) == 1 and len(kwargs) == 0:
+        [vartype] = args
+        return Model(linear, quadratic, 0.0, to_cxxcimod(vartype))
+    elif len(args) == 0 and len(kwargs) == 1 and 'vartype' in kwargs:
+        vartype = kwargs['vartype']
+        return Model(linear, quadratic, 0.0, to_cxxcimod(vartype))
+    else:
+        raise TypeError("invalid args for BinaryQuadraticModel")
 
 #classmethods
 BinaryQuadraticModel.from_qubo = \
