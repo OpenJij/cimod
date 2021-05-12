@@ -113,17 +113,17 @@ QUBO model</h2>
 <p> where \(x_i \in \{0, 1\}\) denotes a decision variable, \(Q_{ij}\) denotes a quadratic bias and \(\delta_{\mathrm{QUBO}}\) denotes an offset. Note that this library assumes that the quadratic bias is not symmetric, i.e., \(Q_{ij} \neq Q_{ji}\) if \(i \neq j\).</p>
 <h1><a class="anchor" id="s_bpm"></a>
 Binary polynomial model</h1>
-<p>A binary polynomial model, which can be regarded as an extended model of the binary quadratic model, can handle Ising and PUBO models. </p>
+<p>A binary polynomial model, which can be regarded as an extended model of the binary quadratic model, can handle Ising and HUBO models. </p>
 <h2><a class="anchor" id="ss_bpm_Ising"></a>
 Ising model</h2>
 <p>An energy of an "extended" Ising model \(E_{\mathrm{Ising}}\) is represented by </p><p class="formulaDsp">
 \[ E_{\mathrm{Ising}} = \sum_{i} h_i s_i + \sum_{i \neq j} J_{ij} s_i s_j + \sum_{i \neq j \neq k} J_{ijk} s_i s_j s_k + \ldots \]
 </p>
 <p> Here \(s_i \in \{+1, -1\}\) denotes the spin at the site \(i\), \( h_i \) denotes the external magnetic field at the site \( i \), and \(J_{ijk\ldots}\) represents the interaction between the sites. Note that \( i \neq j \neq k \) means \( i \neq j \), \( j \neq k \), and \( i \neq k \). This library assumes that the interaction is not symmetric. For example, \(J_{ij} \neq J_{ji}\) for \( i\neq j\), \(J_{ijk} \neq J_{jik}\) for \( i \neq j \neq k \), and so on.</p>
-<h2><a class="anchor" id="ss_bpm_pubo"></a>
-PUBO model</h2>
-<p>An energy of an "extended" QUBO model \( E_{\mathrm{PUBO}}\), here we call polynomial unconstrained binary optimization (PUBO), is represented by </p><p class="formulaDsp">
-\[ E_{\mathrm{PUBO}} = \sum_{i \neq j} Q_{ij} x_i x_j + \sum_{i \neq j \neq k} Q_{ijk} x_i x_j x_k + \ldots \]
+<h2><a class="anchor" id="ss_bpm_hubo"></a>
+HUBO model</h2>
+<p>An energy of an "extended" QUBO model \( E_{\mathrm{HUBO}}\), here we call polynomial unconstrained binary optimization (HUBO), is represented by </p><p class="formulaDsp">
+\[ E_{\mathrm{HUBO}} = \sum_{i \neq j} Q_{ij} x_i x_j + \sum_{i \neq j \neq k} Q_{ijk} x_i x_j x_k + \ldots \]
 </p>
 <p> Here \( x_i \in \{0, 1\} \) denotes the spin at the site \( i \) and \(Q_{ijk\ldots}\) represents the interaction between the sites. Note that \( i \neq j \neq k \) means \( i \neq j \), \( j \neq k \), and \( i \neq k \). This library assumes that the interaction is not symmetric. For example, \(Q_{ij} \neq Q_{ji}\) for \( i\neq j\), \(Q_{ijk} \neq Q_{jik}\) for \( i \neq j \neq k \), and so on.</p>
 <h1><a class="anchor" id="s_example"></a>

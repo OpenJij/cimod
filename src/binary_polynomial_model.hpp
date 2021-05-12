@@ -213,7 +213,7 @@ public:
       poly_key_list_.resize(num_interactions);
       poly_value_list_.resize(num_interactions);
       
-#pragma omp paralle for
+#pragma omp parallel for
       for (std::size_t i = 0; i < num_interactions; ++i) {
          std::vector<IndexType> temp;
          for (const auto &it: poly_key_distance_list[i]) {
