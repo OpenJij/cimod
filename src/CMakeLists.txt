@@ -1,3 +1,0 @@
-add_library(cxxcimod_header_only INTERFACE)
-
-target_include_directories(cxxcimod_header_only INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

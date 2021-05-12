@@ -638,7 +638,7 @@ public:
          for (std::size_t i = 0; i < num_interactions; ++i) {
             int32_t spin_multiple = 1;
             for (const auto &index: poly_key_list_[i]) {
-               spin_multiple *= sample_vec[variables_to_integers_[index]];
+               spin_multiple *= sample_vec[variables_to_integers_.at(index)];
                if (spin_multiple == 0.0) {
                   break;
                }
@@ -650,7 +650,7 @@ public:
          for (std::size_t i = 0; i < num_interactions; ++i) {
             int32_t spin_multiple = 1;
             for (const auto &index: poly_key_list_[i]) {
-               spin_multiple *= sample_vec[variables_to_integers_[index]];
+               spin_multiple *= sample_vec[variables_to_integers_.at(index)];
                if (spin_multiple == 0.0) {
                   break;
                }
