@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['variables_5f_195',['variables_',['../classcimod_1_1_binary_polynomial_model.html#a282f2934a629be4a566e67f4f2d5607b',1,'cimod::BinaryPolynomialModel']]],
-  ['vartype_5f_196',['vartype_',['../classcimod_1_1_binary_polynomial_model.html#a176582e28138e3e8420b9efdc124c694',1,'cimod::BinaryPolynomialModel']]]
+  ['relabel_5fflag_5ffor_5fvariables_5fto_5fintegers_5f_205',['relabel_flag_for_variables_to_integers_',['../classcimod_1_1_binary_polynomial_model.html#a1fccfd1a48e0372df6118e34b7b4ced9',1,'cimod::BinaryPolynomialModel']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['quadratic_77',['Quadratic',['../namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3',1,'cimod']]]
+  ['quadratic_80',['Quadratic',['../namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3',1,'cimod']]]
 ];

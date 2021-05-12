@@ -103,6 +103,8 @@ inline void declare_BPM(py::module& m, const std::string& name){
       return py_polynomial;
    })
    .def("get_polynomial"          , py::overload_cast<std::vector<IndexType>&>(&BPM::get_polynomial, py::const_), "key"_a)
+   .def("get_variables_to_integers",py::overload_cast<>(&BPM::get_variables_to_integers))
+   .def("get_variables_to_integers",py::overload_cast<const IndexType&>(&BPM::get_variables_to_integers), "v"_a)
    .def("_get_keys"               , &BPM::_get_keys)
    .def("_get_values"             , &BPM::_get_values)
    .def("get_variables"           , &BPM::get_sorted_variables)
@@ -122,12 +124,15 @@ inline void declare_BPM(py::module& m, const std::string& name){
    .def("add_interactions_from"   , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&, const Vartype>(&BPM::add_interactions_from), "keys"_a, "values"_a, "vartype"_a = Vartype::NONE)
    .def("add_interactions_from"   , py::overload_cast<const Polynomial<IndexType, FloatType>&, const Vartype>(&BPM::add_interactions_from), "polynomial"_a, "vartype"_a = Vartype::NONE)
    .def("add_offset"              , &BPM::add_offset, "offset"_a)
-   .def("energy"                  , &BPM::energy, "sample"_a, "omp_flag"_a = true)
-   .def("energies"                , &BPM::energies, "samples"_a)
+   .def("energy"                  , py::overload_cast<const Sample<IndexType>&, bool>(&BPM::energy, py::const_), "sample"_a, "omp_flag"_a = true)
+   .def("energy"                  , py::overload_cast<const std::vector<int32_t>&, bool>(&BPM::energy), "sample"_a, "omp_flag"_a = true)
+   .def("energies"                , py::overload_cast<const std::vector<Sample<IndexType>>&>(&BPM::energies, py::const_), "samples"_a)
+   .def("energies"                , py::overload_cast<const std::vector<std::vector<int32_t>>&>(&BPM::energies), "samples"_a)
    .def("scale"                   , &BPM::scale, "scalar"_a, "ignored_interactions"_a = PolynomialKeyList<IndexType>{}, "ignored_offset"_a = false)
    .def("normalize"               , &BPM::normalize, "range"_a = std::pair<FloatType, FloatType>{1.0, 1.0}, "ignored_interactions"_a = PolynomialKeyList<IndexType>{}, "ignored_offset"_a = false)
    .def("change_vartype"          , py::overload_cast<const Vartype, const bool>(&BPM::change_vartype), "vartype"_a, "inplace"_a)
    .def("change_vartype"          , py::overload_cast<const Vartype>(&BPM::change_vartype), "vartype"_a)
+   .def("has_variable"            , &BPM::has_variable, "v"_a)
    .def("to_hubo"                 , [](const BPM& self){
       py::dict py_polynomial;
       for (const auto &it: self.to_hubo()) {

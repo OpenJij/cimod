@@ -293,6 +293,12 @@ class PolynomialModelTest(unittest.TestCase):
         self.assertAlmostEqual(bpm.get_offset(), poly[()] if tuple() in poly else 0.0) #Check the offset
         for k, v in bpm.get_polynomial().items():#Check the interactions
             self.assertAlmostEqual(v, poly[k])
+
+        num = 0
+        for i in sorted(list(set(j for i in poly.keys() for j in i))):
+            self.assertEqual(bpm.get_variables_to_integers(i), num)
+            self.assertEqual(bpm.has_variable(i), True)
+            num += 1
         
          #Check the specific interactions 
         for index in poly.keys():
@@ -311,6 +317,7 @@ class PolynomialModelTest(unittest.TestCase):
         self.assertEqual(bpm.num_variables, 0)
         self.assertEqual(bpm.degree, 0)
         self.assertEqual(bpm.get_polynomial(), {})
+        self.assertEqual(bpm.get_variables_to_integers(), {})
         self.assertEqual(bpm.get_variables(), [])
         self.assertAlmostEqual(bpm.get_offset(), 0.0)
 
@@ -719,12 +726,24 @@ class PolynomialModelTest(unittest.TestCase):
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN).energy(self.spins_tuple3), calculate_bpm_energy(self.poly_tuple3, self.spins_tuple3))
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN).energy(self.spins_tuple4), calculate_bpm_energy(self.poly_tuple4, self.spins_tuple4))
 
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly       , cimod.SPIN).energy(list(self.spins.values()))       , calculate_bpm_energy(self.poly       , self.spins)       )
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str   , cimod.SPIN).energy(list(self.spins_str.values()))   , calculate_bpm_energy(self.poly_str   , self.spins_str)   )
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.SPIN).energy(list(self.spins_tuple2.values())), calculate_bpm_energy(self.poly_tuple2, self.spins_tuple2))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.SPIN).energy(list(self.spins_tuple3.values())), calculate_bpm_energy(self.poly_tuple3, self.spins_tuple3))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.SPIN).energy(list(self.spins_tuple4.values())), calculate_bpm_energy(self.poly_tuple4, self.spins_tuple4))
+
         #Binary
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly       , cimod.BINARY).energy(self.binaries)       , calculate_bpm_energy(self.poly       , self.binaries)       )
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str   , cimod.BINARY).energy(self.binaries_str)   , calculate_bpm_energy(self.poly_str   , self.binaries_str)   )
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.BINARY).energy(self.binaries_tuple2), calculate_bpm_energy(self.poly_tuple2, self.binaries_tuple2))
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.BINARY).energy(self.binaries_tuple3), calculate_bpm_energy(self.poly_tuple3, self.binaries_tuple3))
         self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.BINARY).energy(self.binaries_tuple4), calculate_bpm_energy(self.poly_tuple4, self.binaries_tuple4))
+
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly       , cimod.BINARY).energy(list(self.binaries.values()))       , calculate_bpm_energy(self.poly       , self.binaries)       )
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_str   , cimod.BINARY).energy(list(self.binaries_str.values()))   , calculate_bpm_energy(self.poly_str   , self.binaries_str)   )
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple2, cimod.BINARY).energy(list(self.binaries_tuple2.values())), calculate_bpm_energy(self.poly_tuple2, self.binaries_tuple2))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple3, cimod.BINARY).energy(list(self.binaries_tuple3.values())), calculate_bpm_energy(self.poly_tuple3, self.binaries_tuple3))
+        self.assertEqual(cimod.BinaryPolynomialModel(self.poly_tuple4, cimod.BINARY).energy(list(self.binaries_tuple4.values())), calculate_bpm_energy(self.poly_tuple4, self.binaries_tuple4))
 
     def test_energies_bpm(self):
         #Spin

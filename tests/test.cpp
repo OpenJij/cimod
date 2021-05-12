@@ -685,6 +685,12 @@ void StateTestBPMUINT(const BinaryPolynomialModel<uint32_t, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 3, 4}   ), 234.0 );
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 2, 3, 4}), 1234.0);
    
+   //variables_to_integers
+   EXPECT_EQ(bpm.get_variables_to_integers(1), 0);
+   EXPECT_EQ(bpm.get_variables_to_integers(2), 1);
+   EXPECT_EQ(bpm.get_variables_to_integers(3), 2);
+   EXPECT_EQ(bpm.get_variables_to_integers(4), 3);
+
    //Polynomial Key
    EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1}         ), 1);
    EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2}         ), 1);
@@ -759,6 +765,12 @@ void StateTestBPMINT(const BinaryPolynomialModel<int32_t, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3, -1}    ), 134.0 );
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3, -2}    ), 234.0 );
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3, -2, -1}), 1234.0);
+   
+   //variables_to_integers
+   EXPECT_EQ(bpm.get_variables_to_integers(-4), 0);
+   EXPECT_EQ(bpm.get_variables_to_integers(-3), 1);
+   EXPECT_EQ(bpm.get_variables_to_integers(-2), 2);
+   EXPECT_EQ(bpm.get_variables_to_integers(-1), 3);
    
    //Polynomial Key
    EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-1}            ), 1);
@@ -835,6 +847,12 @@ void StateTestBPMString(const BinaryPolynomialModel<std::string, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({"b", "c", "d"}     ), 234.0 );
    EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "b", "c", "d"}), 1234.0);
    
+   //variables_to_integers
+   EXPECT_EQ(bpm.get_variables_to_integers("a"), 0);
+   EXPECT_EQ(bpm.get_variables_to_integers("b"), 1);
+   EXPECT_EQ(bpm.get_variables_to_integers("c"), 2);
+   EXPECT_EQ(bpm.get_variables_to_integers("d"), 3);
+   
    //Polynomial Key
    EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a"}               ), 1);
    EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b"}               ), 1);
@@ -896,6 +914,9 @@ void StateTestBPMEmpty(const BinaryPolynomialModel<IndexType, double> &bpm) {
       
    //Polynomial
    EXPECT_EQ(bpm.get_polynomial().size(), 0);
+   
+   //variables_to_integers
+   EXPECT_EQ(bpm.get_variables_to_integers().size(), 0);
    
    //Polynomial Key
    EXPECT_EQ(bpm._get_keys().size(), 0);
@@ -1311,7 +1332,15 @@ TEST(energyBPM, SPIN) {
    EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_1), +171.0);
    EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_2), -123.0);
    EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_3), -81.0 );
-      
+   
+   std::vector<int32_t> sample_vec_variables_spin_1{+1, +1, +1};
+   std::vector<int32_t> sample_vec_variables_spin_2{+1, -1, +1};
+   std::vector<int32_t> sample_vec_variables_spin_3{-1, -1, -1};
+   
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_spin_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_spin_2), -123.0);
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_spin_3), -81.0 );
+
 }
 
 TEST(energyBPM, BINARY) {
@@ -1331,6 +1360,14 @@ TEST(energyBPM, BINARY) {
    EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_1), +171.0);
    EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_2), +24.0 );
    EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_3), 0.0   );
+   
+   std::vector<int32_t> sample_vec_variables_binary_1{+1, +1, +1};
+   std::vector<int32_t> sample_vec_variables_binary_2{+1, +0, +1};
+   std::vector<int32_t> sample_vec_variables_binary_3{+0, +0, +0};
+   
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_binary_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_binary_2), +24.0 );
+   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_binary_3), 0.0   );
       
 }
 
@@ -1355,6 +1392,18 @@ TEST(energiesBPM, SPIN) {
    EXPECT_DOUBLE_EQ(en_vec[1], -123.0);
    EXPECT_DOUBLE_EQ(en_vec[2], -81.0 );
    
+   std::vector<std::vector<int32_t>> sample_vec_variables_spin {
+      {+1, +1, +1},
+      {+1, -1, +1},
+      {-1, -1, -1}
+   };
+   
+   std::vector<double> en_vec_vec = bpm.energies(sample_vec_variables_spin);
+   
+   EXPECT_DOUBLE_EQ(en_vec_vec[0], +171.0);
+   EXPECT_DOUBLE_EQ(en_vec_vec[1], -123.0);
+   EXPECT_DOUBLE_EQ(en_vec_vec[2], -81.0 );
+   
 }
 
 TEST(energiesBPM, BINARY) {
@@ -1378,6 +1427,18 @@ TEST(energiesBPM, BINARY) {
    EXPECT_DOUBLE_EQ(en_vec[0], +171.0);
    EXPECT_DOUBLE_EQ(en_vec[1], +24.0 );
    EXPECT_DOUBLE_EQ(en_vec[2], 0.0   );
+   
+   std::vector<std::vector<int32_t>> sample_vec_variables_binary {
+      {+1, +1, +1},
+      {+1, +0, +1},
+      {+0, +0, +0}
+   };
+   
+   std::vector<double> en_vec_vec = bpm.energies(sample_vec_variables_binary);
+   
+   EXPECT_DOUBLE_EQ(en_vec_vec[0], +171.0);
+   EXPECT_DOUBLE_EQ(en_vec_vec[1], +24.0 );
+   EXPECT_DOUBLE_EQ(en_vec_vec[2], 0.0   );
    
 }
 

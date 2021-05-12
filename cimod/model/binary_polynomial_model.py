@@ -230,6 +230,11 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
                     return super().remove_interactions_from(args)
                 else:
                     return super().remove_interactions_from(*args, **kwargs)
+        
+        def get_variables_to_integers(self, *args, **kwargs):
+            obj = super().get_variables_to_integers(*args, **kwargs)
+            if obj != -1:
+                return obj
 
         def to_serializable(self):
             obj = super().to_serializable()
