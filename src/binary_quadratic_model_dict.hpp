@@ -149,7 +149,8 @@ namespace cimod
             const Eigen::Ref<const DenseMatrix>&,
             const std::vector<IndexType>&,
             const FloatType&,
-            const Vartype
+            const Vartype,
+            bool
         )
         {
             throw std::runtime_error("Initialization from matrix is not implemented on dict-type BQM");
@@ -167,6 +168,47 @@ namespace cimod
         BinaryQuadraticModel
         (
             const Eigen::Ref<const DenseMatrix>&,
+            const std::vector<IndexType>&,
+            const Vartype,
+            bool
+        )
+        {
+            throw std::runtime_error("Initialization from matrix is not implemented on dict-type BQM");
+        }
+
+        /**
+         * @brief BinaryQuadraticModel constructor (with sparse matrix);
+         * this constructor is for developers.
+         *
+         * @param mat
+         * @param labels_vec
+         * @param offset
+         * @param vartype
+         *
+         */
+        BinaryQuadraticModel
+        (
+            const SparseMatrix&,
+            const std::vector<IndexType>&,
+            const FloatType&,
+            const Vartype
+        )
+        {
+            throw std::runtime_error("Initialization from matrix is not implemented on dict-type BQM");
+        }
+    
+        /**
+         * @brief BinaryQuadraticModel constructor (with sparse matrix);
+         * this constructor is for developers.
+         *
+         * @param mat
+         * @param labels_vec
+         * @param vartype
+         *
+         */
+        BinaryQuadraticModel
+        (
+            const SparseMatrix&,
             const std::vector<IndexType>&,
             const Vartype
         )

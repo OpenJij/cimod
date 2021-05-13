@@ -36,15 +36,16 @@ inline void declare_BQM(py::module& m, const std::string& name){
 
     using BQM = BinaryQuadraticModel<IndexType, FloatType, DataType>;
 
-    using DenseMatrix   = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+    using DenseMatrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
 
     auto pyclass_BQM = py::class_<BQM>(m, name.c_str());
 
     pyclass_BQM
         .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, FloatType, Vartype>(), "linear"_a, "quadratic"_a, "offset"_a, "vartype"_a)
         .def(py::init<Linear<IndexType, FloatType>, Quadratic<IndexType, FloatType>, Vartype>(), "linear"_a, "quadratic"_a, "vartype"_a)
-        .def(py::init<Eigen::Ref<const DenseMatrix>, std::vector<IndexType>, FloatType, Vartype>(), "mat"_a, "labels_vec"_a, "offset"_a, "vartype"_a)
-        .def(py::init<Eigen::Ref<const DenseMatrix>, std::vector<IndexType>, Vartype>(), "mat"_a, "labels_vec"_a, "vartype"_a)
+        .def(py::init<Eigen::Ref<const DenseMatrix>, std::vector<IndexType>, FloatType, Vartype, bool>(), "mat"_a, "labels_vec"_a, "offset"_a, "vartype"_a, "fix_format"_a=true)
+        .def(py::init<Eigen::Ref<const DenseMatrix>, std::vector<IndexType>, Vartype, bool>(), "mat"_a, "labels_vec"_a, "vartype"_a, "fix_format"_a=false)
+        .def(py::init<const BQM&>(), "bqm"_a)
         .def("length", &BQM::length)
         .def("get_num_variables", &BQM::get_num_variables)
         .def("get_linear", py::overload_cast<IndexType>(&BQM::get_linear, py::const_))

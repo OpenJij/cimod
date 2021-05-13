@@ -365,14 +365,14 @@ def BinaryQuadraticModel(linear, quadratic, *args, **kwargs):
     if len(args) == 2:
         [offset, vartype] = args
         return Model(linear, quadratic, offset, to_cxxcimod(vartype))
-    elif len(args) == 1 and len(kwargs) == 1 and 'vartype' in kwargs:
+    elif len(args) == 1 and 'vartype' in kwargs:
         [offset] = args
         vartype = kwargs['vartype']
         return Model(linear, quadratic, offset, to_cxxcimod(vartype))
-    elif len(args) == 1 and len(kwargs) == 0:
+    elif len(args) == 1:
         [vartype] = args
         return Model(linear, quadratic, 0.0, to_cxxcimod(vartype))
-    elif len(args) == 0 and len(kwargs) == 1 and 'vartype' in kwargs:
+    elif len(args) == 0 and 'vartype' in kwargs:
         vartype = kwargs['vartype']
         return Model(linear, quadratic, 0.0, to_cxxcimod(vartype))
     else:

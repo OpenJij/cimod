@@ -744,16 +744,21 @@ namespace cimod
          *
          * @tparam T
          * @param mat
-         * @param dispatch_t
+         * @param fix_format
          */
         template<typename T=DataType>
-        inline void _add_triangular_elements(const DenseMatrix& mat, dispatch_t<T, Dense> = nullptr){
+        inline void _add_triangular_elements(const DenseMatrix& mat, bool fix_format, dispatch_t<T, Dense> = nullptr){
 
             size_t mat_size = _idx_to_label.size() + 1;
 
             if((size_t)mat.rows() == _idx_to_label.size() + 1){
-                _quadmat += mat.template triangularView<Eigen::StrictlyUpper>();
-                _quadmat += mat.template triangularView<Eigen::StrictlyLower>().transpose();
+                if(fix_format == false){
+                    _quadmat = mat;
+                }
+                else{
+                    _quadmat += mat.template triangularView<Eigen::StrictlyUpper>();
+                    _quadmat += mat.template triangularView<Eigen::StrictlyLower>().transpose();
+                }
             }
             else if((size_t)mat.rows() == _idx_to_label.size()){
                 _quadmat.block(0,0,mat_size-1,mat_size-1) += mat.template triangularView<Eigen::StrictlyUpper>();
@@ -772,10 +777,10 @@ namespace cimod
          *
          * @tparam T
          * @param mat
-         * @param dispatch_t
+         * @param fix_format
          */
         template<typename T=DataType>
-        inline void _add_triangular_elements(const DenseMatrix& mat, dispatch_t<T, Sparse> = nullptr){
+        inline void _add_triangular_elements(const DenseMatrix& mat, bool fix_format, dispatch_t<T, Sparse> = nullptr){
 
             //generate sparse matrix
             SparseMatrix sparse_mat;
@@ -783,10 +788,15 @@ namespace cimod
             size_t mat_size = _idx_to_label.size() + 1;
 
             if((size_t)mat.rows() == _idx_to_label.size() + 1){
-                sparse_mat = mat.sparseView();
-                _quadmat += sparse_mat.template triangularView<Eigen::StrictlyUpper>();
-                sparse_mat = mat.sparseView().transpose();
-                _quadmat += sparse_mat.template triangularView<Eigen::StrictlyUpper>();
+                if(fix_format == false){
+                    _quadmat = mat.sparseView();
+                }
+                else{
+                    sparse_mat = mat.sparseView();
+                    _quadmat += sparse_mat.template triangularView<Eigen::StrictlyUpper>();
+                    sparse_mat = mat.sparseView().transpose();
+                    _quadmat += sparse_mat.template triangularView<Eigen::StrictlyUpper>();
+                }
             }
             else if((size_t)mat.rows() == _idx_to_label.size()){
                 //generate Dense Matrix
@@ -831,11 +841,22 @@ namespace cimod
          * \end{pmatrix}
          * \f]
          *
+         * if fix_format is set to false, the following shape is assumed:
+         * \f[
+         * \begin{pmatrix}
+         * J_{0,0} & J_{0,1} & \cdots & J_{0,N-1} & h_{0}\\
+         * 0 & J_{1,1} & \cdots & J_{1,N-1} & h_{1}\\
+         * \vdots & \vdots & \vdots & \vdots & \vdots \\
+         * 0 & 0 & \cdots & J_{N-1,N-1} & h_{N-1}\\
+         * 0 & 0 & \cdots & 0 & 1 \\
+         * \end{pmatrix}
+         * \f]
          *
          * @param mat
          * @param labels
+         * @param fix_format
          */
-        inline void _initialize_quadmat(const DenseMatrix& mat, const std::vector<IndexType>& labels_vec){
+        inline void _initialize_quadmat(const DenseMatrix& mat, const std::vector<IndexType>& labels_vec, bool fix_format){
     
             //initlaize label <-> index dict
             std::unordered_set<IndexType> labels(labels_vec.begin(), labels_vec.end());
@@ -850,7 +871,7 @@ namespace cimod
             size_t mat_size = _idx_to_label.size() + 1;
             _quadmat = Matrix(mat_size, mat_size);
             _quadmat.setZero();
-            _add_triangular_elements(mat);
+            _add_triangular_elements(mat, fix_format);
             _quadmat_get(mat_size-1, mat_size-1) = 1;
         }
     
@@ -1187,12 +1208,13 @@ namespace cimod
             const Eigen::Ref<const DenseMatrix>& mat,
             const std::vector<IndexType>& labels_vec,
             const FloatType &offset,
-            const Vartype vartype
+            const Vartype vartype,
+            bool fix_format = true
         ):
             m_offset(offset),
             m_vartype(vartype)
         {
-            _initialize_quadmat(mat, labels_vec);
+            _initialize_quadmat(mat, labels_vec, fix_format);
         }
     
         /**
@@ -1207,8 +1229,9 @@ namespace cimod
         (
             const Eigen::Ref<const DenseMatrix>& mat,
             const std::vector<IndexType>& labels_vec,
-            const Vartype vartype
-        ): BinaryQuadraticModel(mat, labels_vec, 0.0, vartype){}
+            const Vartype vartype,
+            bool fix_format = true
+        ): BinaryQuadraticModel(mat, labels_vec, 0.0, vartype, fix_format){}
 
         /**
          * @brief BinaryQuadraticModel constructor (with sparse matrix);
