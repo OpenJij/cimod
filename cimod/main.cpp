@@ -51,13 +51,12 @@ PYBIND11_MODULE(cxxcimod, m){
     declare_BQM<std::tuple<size_t, size_t, size_t>, double, cimod::Dict>(m, "BinaryQuadraticModel_tuple3_Dict");
     declare_BQM<std::tuple<size_t, size_t, size_t, size_t>, double, cimod::Dict>(m, "BinaryQuadraticModel_tuple4_Dict");
 
-   /*
-    declare_BPM<size_t, double>(m, "BinaryPolynomialModel");
+    declare_BPM<int64_t, double>(m, "BinaryPolynomialModel");
     declare_BPM<std::string, double>(m, "BinaryPolynomialModel_str");
-    declare_BPM<std::tuple<size_t, size_t>, double>(m, "BinaryPolynomialModel_tuple2");
-    declare_BPM<std::tuple<size_t, size_t, size_t>, double>(m, "BinaryPolynomialModel_tuple3");
-    declare_BPM<std::tuple<size_t, size_t, size_t, size_t>, double>(m, "BinaryPolynomialModel_tuple4");
-   */
+    declare_BPM<std::tuple<int64_t, int64_t>, double>(m, "BinaryPolynomialModel_tuple2");
+    declare_BPM<std::tuple<int64_t, int64_t, int64_t>, double>(m, "BinaryPolynomialModel_tuple3");
+    declare_BPM<std::tuple<int64_t, int64_t, int64_t, int64_t>, double>(m, "BinaryPolynomialModel_tuple4");
+   
 }
 
 

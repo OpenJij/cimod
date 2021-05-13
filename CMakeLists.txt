@@ -11,7 +11,7 @@ else(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -I /usr/local/include -L /usr/local/lib -Xpreprocessor -fopenmp -lomp")
 # add fPIC option to all object files
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
  

@@ -33,7 +33,7 @@ var NAVTREE =
       ] ],
       [ "Binary polynomial model", "index.html#s_bpm", [
         [ "Ising model", "index.html#ss_bpm_Ising", null ],
-        [ "PUBO model", "index.html#ss_bpm_pubo", null ]
+        [ "HUBO model", "index.html#ss_bpm_hubo", null ]
       ] ],
       [ "Example", "index.html#s_example", null ]
     ] ],
