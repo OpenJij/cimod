@@ -22,6 +22,8 @@
 #include <binary_quadratic_model.hpp>
 #include <binary_polynomial_model.hpp>
 
+#include <sstream>
+
 namespace py = pybind11;
 
 using namespace py::literals;
@@ -160,7 +162,37 @@ inline void declare_BPM(py::module& m, const std::string& name){
    .def_static("from_hubo"        , py::overload_cast<const Polynomial<IndexType, FloatType>&>(&BPM::from_hubo), "polynomial"_a)
    .def_static("from_hubo"        , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&>(&BPM::from_hubo), "keys"_a, "value"_a)
    .def_static("from_hising"      , py::overload_cast<const Polynomial<IndexType, FloatType>&>(&BPM::from_hising), "polynomial"_a)
-   .def_static("from_hising"      , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&>(&BPM::from_hising), "keys"_a, "value"_a);
+   .def_static("from_hising"      , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&>(&BPM::from_hising), "keys"_a, "value"_a)
+   .def("__repr__", [](const BPM& self) {
+      const auto &poly_key_list   = self._get_keys();
+      const auto &poly_value_list = self._get_values();
+      std::ostringstream out;
+      out << "cxxcimod.BinaryPolynomialModel({";
+      for (std::size_t i = 0; i < poly_key_list.size(); ++i) {
+         py::tuple tuple;
+         for (const auto &it: poly_key_list[i]) {
+            tuple = tuple + py::make_tuple(it);
+         }
+         out << tuple.attr("__repr__")();
+         if (i == poly_key_list.size() - 1) {
+            out << ": " << poly_value_list[i];
+         }
+         else {
+            out << ": " << poly_value_list[i] << ", ";
+         }
+      }
+      out << "}, ";
+      if (self.get_vartype() == Vartype::SPIN) {
+         out << "Vartype.SPIN" << ")";
+      }
+      else if (self.get_vartype() == Vartype::BINARY){
+         out << "Vartype.BINARY" << ")";
+      }
+      else {
+         out << "Vartype.NONE" << ")";
+      }
+      return out.str();
+   });
    
    
 }

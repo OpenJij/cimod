@@ -44,14 +44,14 @@ class Variables:
 
     def __repr__(self):
         return  str(self._bpm.get_variables())
-
+    """
 class IndexType(Enum):
     INT = 1
     STRING = 2
     INT_TUPLE_2 = 3
     INT_TUPLE_3 = 4
     INT_TUPLE_4 = 5
-
+    """
 def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
     """BinaryPolynomialModel factory.
        Generate BinaryPolynomialModel class with the base class specified by the arguments linear and quadratic
@@ -63,16 +63,16 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
 
     def base_selector(index_type, index):
         if index_type == int or index_type == None:
-            return cxxcimod.BinaryPolynomialModel, IndexType.INT
+            return cxxcimod.BinaryPolynomialModel, 'IndexType.INT'
         elif index_type == str:
-            return cxxcimod.BinaryPolynomialModel_str, IndexType.STRING
+            return cxxcimod.BinaryPolynomialModel_str, 'IndexType.STRING'
         elif index_type == tuple:
             if len(index) == 2:
-                return cxxcimod.BinaryPolynomialModel_tuple2, IndexType.INT_TUPLE_2
+                return cxxcimod.BinaryPolynomialModel_tuple2, 'IndexType.INT_TUPLE_2'
             elif len(index) == 3:
-                return cxxcimod.BinaryPolynomialModel_tuple3, IndexType.INT_TUPLE_3
+                return cxxcimod.BinaryPolynomialModel_tuple3, 'IndexType.INT_TUPLE_3'
             elif len(index) == 4:
-                return cxxcimod.BinaryPolynomialModel_tuple4, IndexType.INT_TUPLE_4
+                return cxxcimod.BinaryPolynomialModel_tuple4, 'IndexType.INT_TUPLE_4'
             raise TypeError("Invalid length of tuple")
         else:
             raise TypeError("Invalid types of polynomial")
@@ -115,15 +115,15 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
             super().__init__(*args, **kwargs)
 
         def _model_selector(self):
-            if self.index_type == IndexType.INT:
+            if self.index_type == 'IndexType.INT':
                 return make_BinaryPolynomialModel({}, int)
-            elif self.index_type == IndexType.STRING:
+            elif self.index_type == 'IndexType.STRING':
                 return make_BinaryPolynomialModel({}, str)
-            elif self.index_type == IndexType.INT_TUPLE_2:
+            elif self.index_type == 'IndexType.INT_TUPLE_2':
                 return make_BinaryPolynomialModel({}, tuple, 2)
-            elif self.index_type == IndexType.INT_TUPLE_3:
+            elif self.index_type == 'IndexType.INT_TUPLE_3':
                 return make_BinaryPolynomialModel({}, tuple, 3)
-            elif self.index_type == IndexType.INT_TUPLE_4:
+            elif self.index_type == 'IndexType.INT_TUPLE_4':
                 return make_BinaryPolynomialModel({}, tuple, 4)
             else:
                 raise TypeError("invalid types of polynomial")
@@ -184,7 +184,7 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
                 return super().get_polynomial()
             elif args[0] == tuple() or args[0] == []:
                 return super().get_polynomial(())
-            elif self.index_type == IndexType.INT or self.index_type == IndexType.STRING:
+            elif self.index_type == 'IndexType.INT' or self.index_type == 'IndexType.STRING':
                 if type(args[0]) == int or type(args[0]) == str:
                     return super().get_polynomial(args)
                 else:
@@ -205,7 +205,7 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
             elif args[0] == tuple() or args[0] == []:
                 return super().remove_interaction(())
 
-            elif self.index_type == IndexType.INT or self.index_type == IndexType.STRING:
+            elif self.index_type == 'IndexType.INT' or self.index_type == 'IndexType.STRING':
                 if type(args[0]) == int or type(args[0]) == str:
                     return super().remove_interaction(args)
                 else:
@@ -220,7 +220,7 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
             if kwargs != {}:
                 return super().remove_interactions_from(*args, **kwargs)
 
-            if self.index_type == IndexType.INT or self.index_type == IndexType.STRING:
+            if self.index_type == 'IndexType.INT' or self.index_type == 'IndexType.STRING':
                 if type(args[0][0]) == int or type(args[0][0]) == str:
                     return super().remove_interactions_from(args)
                 else:
@@ -291,15 +291,15 @@ def make_BinaryPolynomialModel_from_JSON(obj):
     if(obj["type"] != "BinaryPolynomialModel"):
         raise Exception("Type must be \"BinaryPolynomialModel\"")
     mock_polynomial = {}
-    if obj["index_type"] == IndexType.INT:
+    if obj["index_type"] == 'IndexType.INT':
         mock_polynomial = {(0,1):1}
-    elif obj["index_type"] == IndexType.STRING:
+    elif obj["index_type"] == 'IndexType.STRING':
         mock_polynomial = {("a","b"):1}
-    elif obj["index_type"] == IndexType.INT_TUPLE_2:
+    elif obj["index_type"] == 'IndexType.INT_TUPLE_2':
         mock_polynomial = {((0,1),(1,2)):1}
-    elif obj["index_type"] == IndexType.INT_TUPLE_3:
+    elif obj["index_type"] == 'IndexType.INT_TUPLE_3':
         mock_polynomial = {((0,1,2),(1,2,3)):1}
-    elif obj["index_type"] == IndexType.INT_TUPLE_4:
+    elif obj["index_type"] == 'IndexType.INT_TUPLE_4':
         mock_polynomial = {((0,1,2,3),(1,2,3,4)):1}
     else:
         raise TypeError("Invalid types of polynomial")
