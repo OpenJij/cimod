@@ -201,6 +201,10 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
         def variables(self):
             return self.get_variables()
 
+        @property
+        def sparse(self):
+            return sparse
+
         def empty(self, vartype):
             return self.__class__(super().empty(to_cxxcimod(vartype)))
 
@@ -211,10 +215,10 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 return self.__class__(super().change_vartype(to_cxxcimod(vartype), inplace))
 
         def __str__(self):
-            return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype})"
+            return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype}, sparse={self.sparse})"
 
         def __repr__(self):
-            return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype})"
+            return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype}, sparse={self.sparse})"
 
         def energy(self, sample):
             if type(sample) == list:

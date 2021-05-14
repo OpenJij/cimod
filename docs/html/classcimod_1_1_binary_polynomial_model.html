@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">cimod : C++ library for a binary (and polynomial) quadratic model
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
   </td>
  </tr>
@@ -147,11 +147,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a46a83d4e1b9b8eef047bb70ebc92d8fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the PolynomialValueList object.  <a href="classcimod_1_1_binary_polynomial_model.html#a46a83d4e1b9b8eef047bb70ebc92d8fb">More...</a><br /></td></tr>
 <tr class="separator:a46a83d4e1b9b8eef047bb70ebc92d8fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8df0b7010f1389f4bf7a606bb224c87e"><td class="memItemLeft" align="right" valign="top">const std::unordered_map&lt; std::vector&lt; IndexType &gt;, std::size_t, <a class="el" href="structcimod_1_1vector__hash.html">vector_hash</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a8df0b7010f1389f4bf7a606bb224c87e">GetKeysInv</a> () const</td></tr>
-<tr class="memdesc:a8df0b7010f1389f4bf7a606bb224c87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the.  <a href="classcimod_1_1_binary_polynomial_model.html#a8df0b7010f1389f4bf7a606bb224c87e">More...</a><br /></td></tr>
+<tr class="memdesc:a8df0b7010f1389f4bf7a606bb224c87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get The inverse key list, which indicates the index of the poly_key_list_ and poly_value_list_.  <a href="classcimod_1_1_binary_polynomial_model.html#a8df0b7010f1389f4bf7a606bb224c87e">More...</a><br /></td></tr>
 <tr class="separator:a8df0b7010f1389f4bf7a606bb224c87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a678e34dd97fb68efa940265507c1ac60"><td class="memItemLeft" align="right" valign="top">const std::unordered_set&lt; IndexType &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a678e34dd97fb68efa940265507c1ac60">GetVariables</a> () const</td></tr>
 <tr class="memdesc:a678e34dd97fb68efa940265507c1ac60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the variables as std::unordered_set.  <a href="classcimod_1_1_binary_polynomial_model.html#a678e34dd97fb68efa940265507c1ac60">More...</a><br /></td></tr>
 <tr class="separator:a678e34dd97fb68efa940265507c1ac60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1e9bd6620adee51aad1047736ee551b"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; IndexType &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#ad1e9bd6620adee51aad1047736ee551b">indices</a> ()</td></tr>
+<tr class="memdesc:ad1e9bd6620adee51aad1047736ee551b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the sorted variables as std::vector.  <a href="classcimod_1_1_binary_polynomial_model.html#ad1e9bd6620adee51aad1047736ee551b">More...</a><br /></td></tr>
+<tr class="separator:ad1e9bd6620adee51aad1047736ee551b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe06e2f621be815f942edafb1bbf5f99"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; IndexType &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#afe06e2f621be815f942edafb1bbf5f99">get_sorted_variables</a> ()</td></tr>
+<tr class="memdesc:afe06e2f621be815f942edafb1bbf5f99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the sorted variables as std::vector.  <a href="classcimod_1_1_binary_polynomial_model.html#afe06e2f621be815f942edafb1bbf5f99">More...</a><br /></td></tr>
+<tr class="separator:afe06e2f621be815f942edafb1bbf5f99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9be331068eea675151084f99aabca4c0"><td class="memItemLeft" align="right" valign="top">std::vector&lt; IndexType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a9be331068eea675151084f99aabca4c0">get_sorted_variables</a> () const</td></tr>
 <tr class="memdesc:a9be331068eea675151084f99aabca4c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the sorted variables as std::vector.  <a href="classcimod_1_1_binary_polynomial_model.html#a9be331068eea675151084f99aabca4c0">More...</a><br /></td></tr>
 <tr class="separator:a9be331068eea675151084f99aabca4c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,9 +304,14 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a8d319a0a89e250e3e450bd7b054f376f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate <a class="el" href="classcimod_1_1_binary_polynomial_model.html" title="Class for BinaryPolynomialModel.">BinaryPolynomialModel</a> with the vartype being BINARY.  <a href="classcimod_1_1_binary_polynomial_model.html#a8d319a0a89e250e3e450bd7b054f376f">More...</a><br /></td></tr>
 <tr class="separator:a8d319a0a89e250e3e450bd7b054f376f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79f37716ea17317a9cc609b71b5079fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a79f37716ea17317a9cc609b71b5079fa">UpdateVariablesToIntegers</a> ()</td></tr>
+<tr class="memdesc:a79f37716ea17317a9cc609b71b5079fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update sorted_variables_ and variables_to_integers_.  <a href="classcimod_1_1_binary_polynomial_model.html#a79f37716ea17317a9cc609b71b5079fa">More...</a><br /></td></tr>
 <tr class="separator:a79f37716ea17317a9cc609b71b5079fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5171233413be90f2f1b7295fa209ff08"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; IndexType, int64_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a5171233413be90f2f1b7295fa209ff08">GenerateVariablesToIntegers</a> () const</td></tr>
+<tr class="memdesc:a5171233413be90f2f1b7295fa209ff08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate variables_to_integers.  <a href="classcimod_1_1_binary_polynomial_model.html#a5171233413be90f2f1b7295fa209ff08">More...</a><br /></td></tr>
 <tr class="separator:a5171233413be90f2f1b7295fa209ff08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3255cb29eb3b20704bc922a0476b6f60"><td class="memItemLeft" align="right" valign="top">std::vector&lt; IndexType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a3255cb29eb3b20704bc922a0476b6f60">GenerateSortedVariables</a> () const</td></tr>
+<tr class="memdesc:a3255cb29eb3b20704bc922a0476b6f60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate sorted variables.  <a href="classcimod_1_1_binary_polynomial_model.html#a3255cb29eb3b20704bc922a0476b6f60">More...</a><br /></td></tr>
+<tr class="separator:a3255cb29eb3b20704bc922a0476b6f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -313,6 +324,9 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a3b3a83b9aef57d76a4793a49875c17e5"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; IndexType, int64_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a3b3a83b9aef57d76a4793a49875c17e5">variables_to_integers_</a></td></tr>
 <tr class="memdesc:a3b3a83b9aef57d76a4793a49875c17e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The correspondence from variables to the integer numbers.  <a href="classcimod_1_1_binary_polynomial_model.html#a3b3a83b9aef57d76a4793a49875c17e5">More...</a><br /></td></tr>
 <tr class="separator:a3b3a83b9aef57d76a4793a49875c17e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83904c3fbbf453eb595910d2f157698b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; IndexType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a83904c3fbbf453eb595910d2f157698b">sorted_variables_</a></td></tr>
+<tr class="memdesc:a83904c3fbbf453eb595910d2f157698b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sorted variables is represents the correspondence from integer numbers.to the variables.  <a href="classcimod_1_1_binary_polynomial_model.html#a83904c3fbbf453eb595910d2f157698b">More...</a><br /></td></tr>
+<tr class="separator:a83904c3fbbf453eb595910d2f157698b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fccfd1a48e0372df6118e34b7b4ced9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html#a1fccfd1a48e0372df6118e34b7b4ced9">relabel_flag_for_variables_to_integers_</a> = true</td></tr>
 <tr class="memdesc:a1fccfd1a48e0372df6118e34b7b4ced9"><td class="mdescLeft">&#160;</td><td class="mdescRight">If true variable_to_index must be relabeled.  <a href="classcimod_1_1_binary_polynomial_model.html#a1fccfd1a48e0372df6118e34b7b4ced9">More...</a><br /></td></tr>
 <tr class="separator:a1fccfd1a48e0372df6118e34b7b4ced9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1088,6 +1102,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>The empty <a class="el" href="classcimod_1_1_binary_polynomial_model.html" title="Class for BinaryPolynomialModel.">BinaryPolynomialModel</a>. </dd></dl>
 
 </div>
 </div>
@@ -1621,6 +1636,36 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 
 </div>
 </div>
+<a id="a3255cb29eb3b20704bc922a0476b6f60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3255cb29eb3b20704bc922a0476b6f60">&#9670;&nbsp;</a></span>GenerateSortedVariables()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;IndexType&gt; <a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel</a>&lt; IndexType, FloatType &gt;::GenerateSortedVariables </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generate sorted variables. </p>
+<dl class="section return"><dt>Returns</dt><dd>sorted_variables </dd></dl>
+
+</div>
+</div>
 <a id="a5171233413be90f2f1b7295fa209ff08"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5171233413be90f2f1b7295fa209ff08">&#9670;&nbsp;</a></span>GenerateVariablesToIntegers()</h2>
 
@@ -1645,6 +1690,9 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generate variables_to_integers. </p>
+<dl class="section return"><dt>Returns</dt><dd>variables_to_integers </dd></dl>
 
 </div>
 </div>
@@ -1674,6 +1722,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the maximum degree of interaction. </p>
+<dl class="section return"><dt>Returns</dt><dd>degree </dd></dl>
 
 </div>
 </div>
@@ -1703,6 +1752,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the number of the interactions. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of the interactions. </dd></dl>
 
 </div>
 </div>
@@ -1732,6 +1782,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the number of variables. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of the variables. </dd></dl>
 
 </div>
 </div>
@@ -1761,6 +1812,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the offset. </p>
+<dl class="section return"><dt>Returns</dt><dd>The offset </dd></dl>
 
 </div>
 </div>
@@ -1868,8 +1920,38 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 
 </div>
 </div>
+<a id="afe06e2f621be815f942edafb1bbf5f99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe06e2f621be815f942edafb1bbf5f99">&#9670;&nbsp;</a></span>get_sorted_variables() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;IndexType&gt;&amp; <a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel</a>&lt; IndexType, FloatType &gt;::get_sorted_variables </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the sorted variables as std::vector. </p>
+<p>This function may need O(N) calculation time (N is the number of the variables). </p><dl class="section return"><dt>Returns</dt><dd>sorted variables as std::vector. </dd></dl>
+
+</div>
+</div>
 <a id="a9be331068eea675151084f99aabca4c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9be331068eea675151084f99aabca4c0">&#9670;&nbsp;</a></span>get_sorted_variables()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9be331068eea675151084f99aabca4c0">&#9670;&nbsp;</a></span>get_sorted_variables() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1894,6 +1976,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the sorted variables as std::vector. </p>
+<p>This function may need O(N) calculation time (N is the number of the variables). </p><dl class="section return"><dt>Returns</dt><dd>sorted variables as std::vector. </dd></dl>
 
 </div>
 </div>
@@ -2057,6 +2140,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the vartype. </p>
+<dl class="section return"><dt>Returns</dt><dd>The vartype </dd></dl>
 
 </div>
 </div>
@@ -2085,8 +2169,8 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get the. </p>
-<dl class="section return"><dt>Returns</dt><dd>PolynomialValueList object as std::vector. </dd></dl>
+<p>Get The inverse key list, which indicates the index of the poly_key_list_ and poly_value_list_. </p>
+<dl class="section return"><dt>Returns</dt><dd>The inverse key list. </dd></dl>
 
 </div>
 </div>
@@ -2116,6 +2200,7 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>Return the variables as std::unordered_set. </p>
+<dl class="section return"><dt>Returns</dt><dd>variables </dd></dl>
 
 </div>
 </div>
@@ -2153,6 +2238,37 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true or false </dd></dl>
+
+</div>
+</div>
+<a id="ad1e9bd6620adee51aad1047736ee551b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1e9bd6620adee51aad1047736ee551b">&#9670;&nbsp;</a></span>indices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt;IndexType&gt;&amp; <a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel</a>&lt; IndexType, FloatType &gt;::indices </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Return the sorted variables as std::vector. </p>
+<p>This function may need O(N) calculation time (N is the number of the variables). </p><dl class="section return"><dt>Returns</dt><dd>sorted variables as std::vector. </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated:</a></b></dt><dd>Please use <a class="el" href="classcimod_1_1_binary_polynomial_model.html#afe06e2f621be815f942edafb1bbf5f99" title="Return the sorted variables as std::vector.">get_sorted_variables()</a> </dd></dl>
 
 </div>
 </div>
@@ -2779,6 +2895,8 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Update sorted_variables_ and variables_to_integers_. </p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -2909,6 +3027,32 @@ template&lt;typename IndexType , typename FloatType &gt; </div>
 </div><div class="memdoc">
 
 <p>If true variable_to_index must be relabeled. </p>
+
+</div>
+</div>
+<a id="a83904c3fbbf453eb595910d2f157698b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83904c3fbbf453eb595910d2f157698b">&#9670;&nbsp;</a></span>sorted_variables_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename IndexType , typename FloatType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;IndexType&gt; <a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel</a>&lt; IndexType, FloatType &gt;::sorted_variables_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sorted variables is represents the correspondence from integer numbers.to the variables. </p>
 
 </div>
 </div>
