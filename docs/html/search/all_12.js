@@ -1,10 +1,11 @@
 var searchData=
 [
-  ['to_5fhising_93',['to_hising',['../classcimod_1_1_binary_polynomial_model.html#a9b1a8b65ea85df0282195b9a4c218814',1,'cimod::BinaryPolynomialModel']]],
-  ['to_5fhubo_94',['to_hubo',['../classcimod_1_1_binary_polynomial_model.html#adb5e7a289f5d261ddd8ab535b0511fa4',1,'cimod::BinaryPolynomialModel']]],
-  ['to_5fising_95',['to_ising',['../classcimod_1_1_binary_quadratic_model.html#a8b1fd27f21713b40d942e7a0a2a5174d',1,'cimod::BinaryQuadraticModel']]],
-  ['to_5fqubo_96',['to_qubo',['../classcimod_1_1_binary_quadratic_model.html#a4aff3fc4b793e858f7f2b273b0943a40',1,'cimod::BinaryQuadraticModel']]],
-  ['to_5fserializable_97',['to_serializable',['../classcimod_1_1_binary_polynomial_model.html#a29ff9fc29431b8434629a4be4cfd1dd2',1,'cimod::BinaryPolynomialModel::to_serializable()'],['../classcimod_1_1_binary_quadratic_model.html#ad0c77d86159662846c11306b17520eaf',1,'cimod::BinaryQuadraticModel::to_serializable()']]],
-  ['tobinary_98',['ToBinary',['../classcimod_1_1_binary_polynomial_model.html#a8d319a0a89e250e3e450bd7b054f376f',1,'cimod::BinaryPolynomialModel']]],
-  ['tospin_99',['ToSpin',['../classcimod_1_1_binary_polynomial_model.html#aa3c41f812d024b2d70182611e28a5e6b',1,'cimod::BinaryPolynomialModel']]]
+  ['sample_110',['Sample',['../namespacecimod.html#a300c5a25892e0259f843d34e20fd4801',1,'cimod']]],
+  ['scale_111',['scale',['../classcimod_1_1_binary_polynomial_model.html#afa360e2dea26dc527cdb8cc55e5cd1c1',1,'cimod::BinaryPolynomialModel::scale()'],['../classcimod_1_1_binary_quadratic_model.html#ac6c1d336911f6a81389f35a9afafbbc4',1,'cimod::BinaryQuadraticModel::scale()'],['../classcimod_1_1_binary_quadratic_model_3_01_index_type_00_01_float_type_00_01_dict_01_4.html#abefe08d37258b5dd02941c1b5569b89c',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::scale()']]],
+  ['setkeyandvalue_112',['SetKeyAndValue',['../classcimod_1_1_binary_polynomial_model.html#a7427fb3d2bc707a31b7de468e2438ca9',1,'cimod::BinaryPolynomialModel']]],
+  ['sparse_113',['Sparse',['../structcimod_1_1_sparse.html',1,'cimod']]],
+  ['sparsematrix_114',['SparseMatrix',['../classcimod_1_1_binary_quadratic_model.html#aa2c90602f22aff133c0e27bdd20e2525',1,'cimod::BinaryQuadraticModel::SparseMatrix()'],['../classcimod_1_1_binary_quadratic_model_3_01_index_type_00_01_float_type_00_01_dict_01_4.html#adde248d7699e80eca4c33ae8a2bd0ac1',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::SparseMatrix()']]],
+  ['spin_115',['SPIN',['../namespacecimod.html#af804dc431446f6af153364fec5c5aaf8a01518642fd172918ac4e6fa78bbb3164',1,'cimod']]],
+  ['spin_5fto_5fbinary_116',['spin_to_binary',['../classcimod_1_1_binary_quadratic_model_3_01_index_type_00_01_float_type_00_01_dict_01_4.html#a48d260effa3dfb73690f96ce8ca400fa',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;']]],
+  ['spiter_117',['SpIter',['../classcimod_1_1_binary_quadratic_model.html#ad50d8e61df5f0e319c8171aa78310599',1,'cimod::BinaryQuadraticModel']]]
 ];

@@ -944,7 +944,12 @@ namespace cimod
             size_t num_variables = _idx_to_label.size();
             m_vartype = Vartype::BINARY;
             //calc col(row)wise-sum ((num_variables, 1))
-            Vector colwise_sum = _quadmat.block(0,0,num_variables,num_variables).colwise().sum();
+            //Vector colwise_sum = _quadmat.block(0,0,num_variables,num_variables).colwise().sum();
+            Vector colwise_sum(num_variables);
+            for(size_t i=0; i<num_variables; i++){
+                colwise_sum(i) = _quadmat.block(0,0,i,num_variables).col(i).sum();
+            }
+
             Vector rowwise_sum = _quadmat.block(0,0,num_variables,num_variables).rowwise().sum();
             
             Vector local_field = _quadmat.block(0,num_variables,num_variables,1);
@@ -1060,7 +1065,11 @@ namespace cimod
             size_t num_variables = _idx_to_label.size();
             m_vartype = Vartype::SPIN;
             //calc col(row)wise-sum ((num_variables, 1))
-            Vector colwise_sum = _quadmat.block(0,0,num_variables,num_variables).colwise().sum();
+            //Vector colwise_sum = _quadmat.block(0,0,num_variables,num_variables).colwise().sum();
+            Vector colwise_sum(num_variables);
+            for(size_t i=0; i<num_variables; i++){
+                colwise_sum(i) = _quadmat.block(0,0,i,num_variables).col(i).sum();
+            }
             Vector rowwise_sum = _quadmat.block(0,0,num_variables,num_variables).rowwise().sum();
             
             Vector local_field = _quadmat.block(0,num_variables,num_variables,1);

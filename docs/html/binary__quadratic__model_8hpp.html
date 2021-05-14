@@ -98,14 +98,18 @@ $(document).ready(function(){initNavTree('binary__quadratic__model_8hpp.html',''
 </div><!--header-->
 <div class="contents">
 
-<p>BinaryQuadraticModel class.  
+<p>Dense BinaryQuadraticModel class.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="vartypes_8hpp_source.html">vartypes.hpp</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="disable__eigen__warning_8hpp_source.html">disable_eigen_warning.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="vartypes_8hpp_source.html">vartypes.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="hash_8hpp_source.html">hash.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="utilities_8hpp_source.html">utilities.hpp</a>&quot;</code><br />
 <code>#include &quot;json.hpp&quot;</code><br />
 <code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;limits&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;tuple&gt;</code><br />
@@ -117,13 +121,18 @@ $(document).ready(function(){initNavTree('binary__quadratic__model_8hpp.html',''
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;functional&gt;</code><br />
 <code>#include &lt;Eigen/Dense&gt;</code><br />
+<code>#include &lt;Eigen/Sparse&gt;</code><br />
 </div>
 <p><a href="binary__quadratic__model_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_quadratic_model.html">cimod::BinaryQuadraticModel&lt; IndexType, FloatType &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for binary quadratic model.  <a href="classcimod_1_1_binary_quadratic_model.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcimod_1_1_dense.html">cimod::Dense</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcimod_1_1_sparse.html">cimod::Sparse</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_quadratic_model.html">cimod::BinaryQuadraticModel&lt; IndexType, FloatType, DataType &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for dense binary quadratic model.  <a href="classcimod_1_1_binary_quadratic_model.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -147,7 +156,12 @@ Typedefs</h2></td></tr>
 <tr class="separator:a06883b1fbd4da42b90e0a7a751c39abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>BinaryQuadraticModel class. </p>
+<div class="textblock"><p>Dense BinaryQuadraticModel class. </p>
+<p>BinaryQuadraticModel class.</p>
+<dl class="section author"><dt>Author</dt><dd>Kohji Nishimura </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2020-03-24</dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) Jij Inc. 2020</dd></dl>
 <dl class="section author"><dt>Author</dt><dd>Fumiya Watanabe </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2020-03-24</dd></dl>

@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['polynomial_213',['Polynomial',['../namespacecimod.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9',1,'cimod']]],
-  ['polynomialkeylist_214',['PolynomialKeyList',['../namespacecimod.html#a292564b3ace60c496890860f23bfa8bf',1,'cimod']]],
-  ['polynomialvaluelist_215',['PolynomialValueList',['../namespacecimod.html#a6d7c106b4a0e76035c564cbcd688d2db',1,'cimod']]]
+  ['matrix_256',['Matrix',['../classcimod_1_1_binary_quadratic_model.html#a8e4d5a84e55ec6b74e7191ddca2a1dc4',1,'cimod::BinaryQuadraticModel::Matrix()'],['../classcimod_1_1_binary_quadratic_model_3_01_index_type_00_01_float_type_00_01_dict_01_4.html#a7ec68b86d32f75e56af03669bc57d499',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::Matrix()']]]
 ];

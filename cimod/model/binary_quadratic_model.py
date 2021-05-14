@@ -137,7 +137,6 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             if inplace is None:
                 super().change_vartype(to_cxxcimod(vartype))
             else:
-<<<<<<< HEAD
                 return self.__class__(super().change_vartype(to_cxxcimod(vartype), inplace))
 
         def __str__(self):
@@ -145,140 +144,6 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
         def __repr__(self):
             return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype})"
-=======
-                # convert to array
-                if isinstance(sample, dict):
-                    state = [0] * len(sample)
-                    for k,v in sample.items():
-                        state[ind_to_num[k]] = v
-                    sample = state
-    
-                sample = np.array(sample)
-    
-                int_mat = self.interaction_matrix()
-    
-                # calculate 
-                if self.vartype == dimod.BINARY:
-                    return np.dot(sample, np.dot(np.triu(int_mat), sample)) + self.get_offset()
-                elif self.vartype == dimod.SPIN:
-                    linear_term = np.diag(int_mat)
-                    energy = (np.dot(sample, np.dot(int_mat, sample)) -
-                          np.sum(linear_term))/2
-                    energy += np.dot(linear_term, sample)
-                    energy += self.get_offset()
-                return energy 
-    
-        def energies(self, samples_like, **kwargs):
-            en_vec = []
-    
-            for elem in samples_like:
-                en_vec.append(self.energy(elem, **kwargs))
-    
-            return en_vec
-    
-        @recalc
-        def empty(self, *args, **kwargs):
-            return super().empty(*args, **kwargs)
-    
-        @recalc
-        def add_variable(self, *args, **kwargs):
-            return super().add_variable(*args, **kwargs)
-    
-        @recalc
-        def add_variables_from(self, *args, **kwargs):
-            return super().add_variables_from(*args, **kwargs)
-    
-        @recalc
-        def add_interaction(self, *args, **kwargs):
-            return super().add_interaction(*args, **kwargs)
-    
-        @recalc
-        def add_interactions_from(self, *args, **kwargs):
-            return super().add_interactions_from(*args, **kwargs)
-    
-        @recalc
-        def remove_variable(self, *args, **kwargs):
-            return super().remove_variable(*args, **kwargs)
-    
-        @recalc
-        def remove_variables_from(self, *args, **kwargs):
-            return super().remove_variables_from(*args, **kwargs)
-    
-        @recalc
-        def remove_interaction(self, *args, **kwargs):
-            return super().remove_interaction(*args, **kwargs)
-    
-        @recalc
-        def remove_interactions_from(self, *args, **kwargs):
-            return super().remove_interactions_from(*args, **kwargs)
-    
-        @recalc
-        def add_offset(self, *args, **kwargs):
-            return super().add_offset(*args, **kwargs)
-    
-        @recalc
-        def remove_offset(self, *args, **kwargs):
-            return super().remove_offset(*args, **kwargs)
-    
-        @recalc
-        def scale(self, *args, **kwargs):
-           return super().scale(*args, **kwargs)
-    
-        @recalc
-        def normalize(self, *args, **kwargs):
-           return super().normalize(*args, **kwargs)
-    
-        @recalc
-        def fix_variable(self, *args, **kwargs):
-            return super().fix_variable(*args, **kwargs)
-    
-        @recalc
-        def fix_variables(self, *args, **kwargs):
-            return super().fix_variables(*args, **kwargs)
-    
-        @recalc
-        def flip_variable(self, *args, **kwargs):
-            return super().flip_variable(*args, **kwargs)
-    
-        @recalc
-        def update(self, *args, **kwargs):
-            return super().update(*args, **kwargs)
-    
-        @recalc
-        def contract_variables(self, *args, **kwargs):
-            return super().contract_variables(*args, **kwargs)
-    
-    
-        def change_vartype(self, vartype, inplace=True):
-            """
-            Create a binary quadratic model with the specified vartype
-            Args:
-                vartype (cimod.Vartype): SPIN or BINARY
-            Returns:
-                A new instance of the BinaryQuadraticModel class.
-            """
-            cxxvartype = to_cxxcimod(vartype)
-            #FIXME: bottleneck: variable copies
-            bqm = super().change_vartype(cxxvartype, inplace)
-            self._re_calculate = True
-            return BinaryQuadraticModel(bqm.get_linear(), bqm.get_quadratic(), bqm.get_offset(), vartype)
-
-        @classmethod
-        def from_qubo(cls, Q, offset=0.0, **kwargs):
-            linear = {}
-            quadratic = {}
-            for (u, v), bias in Q.items():
-                if u == v: 
-                    linear[u] = bias
-                else:
-                    quadratic[(u, v)] = bias
-
-            return cls(linear, quadratic, offset, vartype=dimod.BINARY, **kwargs)
-
-        @classmethod
-        def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
-            return cls(linear, quadratic, offset, vartype=dimod.SPIN, **kwargs)
->>>>>>> feature/poly_speedup
 
         @classmethod
         def from_numpy_matrix(cls, mat, variables: list, offset=0.0, vartype='BINARY', fix_format=True, **kwargs):
@@ -356,18 +221,6 @@ def bqm_from_numpy_matrix(mat, variables: list=None, offset=0.0, vartype='BINARY
 
     return make_BinaryQuadraticModel({variables[0]: 1.0}, {}, kwargs.pop('sparse', False)).from_numpy_matrix(mat, variables, offset, to_cxxcimod(vartype), True, **kwargs)
 
-<<<<<<< HEAD
-#classmethods
-=======
-def BinaryQuadraticModel(linear, quadratic, offset=0.0,
-                 vartype=dimod.SPIN, **kwargs):
->>>>>>> feature/poly_speedup
-
-
-<<<<<<< HEAD
-=======
-    return Model(linear, quadratic, offset, vartype, **kwargs)
->>>>>>> feature/poly_speedup
 
 BinaryQuadraticModel.from_numpy_matrix = bqm_from_numpy_matrix
 
