@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['update_100',['update',['../classcimod_1_1_binary_quadratic_model.html#a6c5a774a805ebf0866dfe84879682030',1,'cimod::BinaryQuadraticModel']]],
-  ['update_5fadjacency_101',['update_adjacency',['../classcimod_1_1_binary_quadratic_model.html#a08edd37acdef4ab90706b2438af510c0',1,'cimod::BinaryQuadraticModel']]],
-  ['updatevariablestointegers_102',['UpdateVariablesToIntegers',['../classcimod_1_1_binary_polynomial_model.html#a79f37716ea17317a9cc609b71b5079fa',1,'cimod::BinaryPolynomialModel']]],
-  ['utilities_2ehpp_103',['utilities.hpp',['../utilities_8hpp.html',1,'']]]
+  ['to_5fhising_97',['to_hising',['../classcimod_1_1_binary_polynomial_model.html#a9b1a8b65ea85df0282195b9a4c218814',1,'cimod::BinaryPolynomialModel']]],
+  ['to_5fhubo_98',['to_hubo',['../classcimod_1_1_binary_polynomial_model.html#adb5e7a289f5d261ddd8ab535b0511fa4',1,'cimod::BinaryPolynomialModel']]],
+  ['to_5fising_99',['to_ising',['../classcimod_1_1_binary_quadratic_model.html#a8b1fd27f21713b40d942e7a0a2a5174d',1,'cimod::BinaryQuadraticModel']]],
+  ['to_5fqubo_100',['to_qubo',['../classcimod_1_1_binary_quadratic_model.html#a4aff3fc4b793e858f7f2b273b0943a40',1,'cimod::BinaryQuadraticModel']]],
+  ['to_5fserializable_101',['to_serializable',['../classcimod_1_1_binary_polynomial_model.html#a29ff9fc29431b8434629a4be4cfd1dd2',1,'cimod::BinaryPolynomialModel::to_serializable()'],['../classcimod_1_1_binary_quadratic_model.html#ad0c77d86159662846c11306b17520eaf',1,'cimod::BinaryQuadraticModel::to_serializable()']]],
+  ['tobinary_102',['ToBinary',['../classcimod_1_1_binary_polynomial_model.html#a8d319a0a89e250e3e450bd7b054f376f',1,'cimod::BinaryPolynomialModel']]],
+  ['tospin_103',['ToSpin',['../classcimod_1_1_binary_polynomial_model.html#aa3c41f812d024b2d70182611e28a5e6b',1,'cimod::BinaryPolynomialModel']]]
 ];
