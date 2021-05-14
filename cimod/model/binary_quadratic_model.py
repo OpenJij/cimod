@@ -99,6 +99,11 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
         """
         
         def __init__(self, *args, **kwargs):
+            # replace vartype with cxxcimod type
+            vartypes = [dimod.SPIN, dimod.BINARY, cimod.SPIN, cimod.BINARY, 'SPIN', 'BINARY']
+            args    = [to_cxxcimod(elem) if type(elem) != np.ndarray and vartypes.count(elem) != 0 else elem for elem in args]
+            kwargs  = {k: to_cxxcimod(v) if type(elem) != np.ndarray and vartypes.count(v) != 0 else v for k,v in kwargs.items()}
+
             super().__init__(*args, **kwargs)
 
         @property
@@ -145,6 +150,18 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
         def __repr__(self):
             return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype})"
 
+        def energy(self, sample):
+            if type(sample) == list:
+                sample = {self.variables[k]:elem for k,elem in enumerate(sample)}
+
+            return super().energy(sample)
+
+        def energies(self, samples_like):
+            if type(samples_like[0]) == list:
+                samples_like = [{self.variables[k]:elem for k,elem in enumerate(inner_array)} for inner_array in samples_like]
+
+            return super().energies(samples_like)
+
         @classmethod
         def from_numpy_matrix(cls, mat, variables: list, offset=0.0, vartype='BINARY', fix_format=True, **kwargs):
             shape = np.shape(mat)
@@ -153,7 +170,7 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
             num_variables = shape[0] - 1
 
-            return cls(mat, variables, offset, to_cxxcimod(vartype), fix_format, **kwargs)
+            return cls(mat, variables, offset, vartype, fix_format, **kwargs)
 
         @classmethod
         def from_qubo(cls, Q, offset=0.0, **kwargs):
@@ -199,19 +216,19 @@ def BinaryQuadraticModel(linear, quadratic, *args, **kwargs):
     # offset and vartype
     if len(args) == 2:
         [offset, vartype] = args
-        return Model(linear, quadratic, offset, to_cxxcimod(vartype))
+        return Model(linear, quadratic, offset, vartype)
     elif len(args) == 1 and 'vartype' in kwargs:
         [offset] = args
         vartype = kwargs['vartype']
-        return Model(linear, quadratic, offset, to_cxxcimod(vartype))
+        return Model(linear, quadratic, offset, vartype)
     elif len(args) == 1:
         [vartype] = args
-        return Model(linear, quadratic, 0.0, to_cxxcimod(vartype))
+        return Model(linear, quadratic, 0.0, vartype)
     elif len(args) == 0 and 'vartype' in kwargs:
         vartype = kwargs['vartype']
-        return Model(linear, quadratic, 0.0, to_cxxcimod(vartype))
+        return Model(linear, quadratic, 0.0, vartype)
     else:
-        raise TypeError("invalid args for BinaryQuadraticModel. please check arguments")
+        raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
 
 def bqm_from_numpy_matrix(mat, variables: list=None, offset=0.0, vartype='BINARY', **kwargs):
     if variables is None:
@@ -219,7 +236,7 @@ def bqm_from_numpy_matrix(mat, variables: list=None, offset=0.0, vartype='BINARY
         num_variables = mat.shape[0]
         variables = list(range(num_variables))
 
-    return make_BinaryQuadraticModel({variables[0]: 1.0}, {}, kwargs.pop('sparse', False)).from_numpy_matrix(mat, variables, offset, to_cxxcimod(vartype), True, **kwargs)
+    return make_BinaryQuadraticModel({variables[0]: 1.0}, {}, kwargs.pop('sparse', False)).from_numpy_matrix(mat, variables, offset, vartype, True, **kwargs)
 
 
 BinaryQuadraticModel.from_numpy_matrix = bqm_from_numpy_matrix

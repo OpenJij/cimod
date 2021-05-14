@@ -71,6 +71,12 @@ class ModelTest(unittest.TestCase):
 
     def test_bqm_constructor(self):
         # Test BinaryQuadraticModel constructor
+
+        bqm = cimod.model.BinaryQuadraticModel(self.h, self.J, 'SPIN')
+        self.assertEqual(type(bqm.interaction_matrix()), np.ndarray)
+        self.assertEqual(bqm.variables, [0,1,2,3])
+        self.assertEqual(bqm.num_variables, 4)
+
         for (sparse, mat_type) in [(True, csr_matrix), (False, np.ndarray)]:
             bqm = cimod.model.BinaryQuadraticModel(self.h, self.J, 'SPIN', sparse=sparse)
             self.assertEqual(type(bqm.interaction_matrix()), mat_type)
@@ -122,6 +128,8 @@ class ModelTest(unittest.TestCase):
             ising_energy_bqm = bqm.energy(self.spins)
             true_ising_e = calculate_ising_energy(self.h, self.J, self.spins)
             self.assertEqual(ising_energy_bqm, true_ising_e)
+            ising_energy_bqm = bqm.energies([self.spins, self.spins])
+            self.assertEqual(ising_energy_bqm, [true_ising_e, true_ising_e])
 
             # Test QUBO energy
             bqm = cimod.model.BinaryQuadraticModel.from_qubo(Q=self.Q, sparse=sparse)
@@ -139,7 +147,26 @@ class ModelTest(unittest.TestCase):
 
             self.assertEqual(qubo_energy, qubo_bqm.energy(spins))
 
+            # QUBO == Ising
+            spins = [1,1,-1,1]
+            binary = [1,1,0,1]
+            qubo_bqm = cimod.model.BinaryQuadraticModel.from_qubo(Q=self.Q, sparse=sparse)
+
+            qubo_energy = qubo_bqm.energy(binary)
+            qubo_bqm.change_vartype('SPIN')
+
+            self.assertEqual(qubo_energy, qubo_bqm.energy(spins))
+
+            spins = [[1,1,-1,1], [-1,-1,1,1]]
+            binary = [[1,1,0,1], [0,0,1,1]]
+
             # Test to calculate energy
+            qubo_bqm = cimod.model.BinaryQuadraticModel.from_qubo(Q=self.Q, sparse=sparse)
+
+            qubo_energy = qubo_bqm.energies(binary)
+            qubo_bqm.change_vartype('SPIN')
+
+            self.assertEqual(qubo_energy, qubo_bqm.energies(spins))
 
             # Test Ising energy
             bqm = cimod.model.BinaryQuadraticModel(self.strh, self.strJ, 'SPIN', sparse=sparse)

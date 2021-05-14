@@ -78,7 +78,7 @@ inline void declare_BQM(py::module& m, const std::string& name){
         .def("change_vartype", py::overload_cast<const Vartype&>(&BQM::change_vartype), "vartype"_a)
         .def("change_vartype", py::overload_cast<const Vartype&, bool>(&BQM::change_vartype), "vartype"_a, "inplace"_a)
         .def("energy", &BQM::energy, "sample"_a)
-        .def("energies", &BQM::energy, "samples_like"_a)
+        .def("energies", &BQM::energies, "samples_like"_a)
         .def("to_qubo", &BQM::to_qubo)
         .def("to_ising", &BQM::to_ising)
         .def_static("from_qubo", &BQM::from_qubo, "Q"_a, "offset"_a=0.0)
