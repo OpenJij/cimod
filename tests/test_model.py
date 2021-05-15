@@ -1240,5 +1240,81 @@ class PolynomialModelTest(unittest.TestCase):
         bpm.change_vartype("BINARY")
         self.state_test_bpm(bpm, self.poly_tuple4, cimod.BINARY)
 
+class UtilTest(unittest.TestCase):
+    def test_convert_sample(self):
+
+        #BQM
+        strh = {'b': -2, 'a': 1}
+        strJ = {('c', 'd'): 0.5, ('a', 'b'): -1, ('b', 'c'): -3}
+        strspins = {'a': 1, 'c': 1, 'd': 1, 'b': -1}
+        raw_strspins = [1,-1,1,1]
+        raw_strspins_binaries = [1,0,1,1]
+
+        strQ = {('a', 'a'): 1, ('c', 'a'): -0.2, ('b', 'd'): 3, ('b', 'c'): -1}
+        strbinaries = {'a': 0, 'b': 1, 'c': 1, 'd': 0}
+        raw_strbinaries = [0,1,1,0]
+        raw_strbinaries_spins = [-1,1,1,-1]
+
+        for (sparse, mat_type) in [(True, csr_matrix), (False, np.ndarray)]:
+            bqm = cimod.model.BinaryQuadraticModel(strh, strJ, 'SPIN', sparse=sparse)
+
+            #spins
+            true_ising_e = calculate_ising_energy(strh, strJ, strspins)
+            state, energy = cimod.utils.get_state_and_energy(bqm, raw_strspins)
+            self.assertDictEqual(state, strspins)
+            self.assertEqual(energy, true_ising_e)
+
+            #spins with raw binaries
+            state, energy = cimod.utils.get_state_and_energy(bqm, raw_strspins_binaries, offset=10)
+            self.assertDictEqual(state, strspins)
+            self.assertEqual(energy, true_ising_e + 10)
+
+            #binaries
+            bqm = cimod.model.BinaryQuadraticModel.from_qubo(strQ, sparse=sparse)
+            true_qubo_e = calculate_qubo_energy(strQ, strbinaries)
+            state, energy = cimod.utils.get_state_and_energy(bqm, raw_strbinaries)
+            self.assertDictEqual(state, strbinaries)
+            self.assertEqual(energy, true_qubo_e)
+
+            #binaries with raw spins
+            state, energy = cimod.utils.get_state_and_energy(bqm, raw_strbinaries_spins, offset=12)
+            self.assertDictEqual(state, strbinaries)
+            self.assertEqual(energy, true_qubo_e + 12)
+
+        #BPM
+        poly_str     = {("a",):1.0, ("c",):3.0, ("a","b"):12.0, ("a","c"):13.0, ("b","c","d"):234.0, ("c","e"):35.0}
+        spins_str    = {"a":+1, "b":-1, "c":+1, "d":-1, "e":+1} 
+        binaries_str = {"a": 1, "b": 0, "c": 1, "d": 0, "e": 1}
+        raw_spins    = [1,-1,1,-1,1]
+        raw_binaries = [1,0,1,0,1]
+
+        true_ising_e = calculate_bpm_energy(poly_str, spins_str)
+        true_hubo_e = calculate_bpm_energy(poly_str, binaries_str)
+
+        #spins
+        bpm = cimod.model.BinaryPolynomialModel(poly_str, 'SPIN')
+        state, energy = cimod.utils.get_state_and_energy(bpm, raw_spins)
+        self.assertDictEqual(state, spins_str)
+        self.assertEqual(energy, true_ising_e)
+
+        #spins with raw binaries
+        state, energy = cimod.utils.get_state_and_energy(bpm, raw_binaries, offset=20)
+        self.assertDictEqual(state, spins_str)
+        self.assertEqual(energy, true_ising_e + 20)
+
+        #binaries
+        bpm = cimod.model.BinaryPolynomialModel(poly_str, 'BINARY')
+        state, energy = cimod.utils.get_state_and_energy(bpm, raw_binaries)
+        self.assertDictEqual(state, binaries_str)
+        self.assertEqual(energy, true_hubo_e)
+
+        #spins with raw binaries
+        state, energy = cimod.utils.get_state_and_energy(bpm, raw_spins, offset=30)
+        self.assertDictEqual(state, binaries_str)
+        self.assertEqual(energy, true_hubo_e + 30)
+
+
+
+
 if __name__ == '__main__':
     unittest.main()
