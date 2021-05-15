@@ -308,9 +308,6 @@ BinaryQuadraticModel.from_numpy_matrix = bqm_from_numpy_matrix
 BinaryQuadraticModel.from_qubo = \
 lambda Q, offset=0.0, **kwargs: make_BinaryQuadraticModel({}, Q, kwargs.pop('sparse', False)).from_qubo(Q, offset, **kwargs)
 
-BinaryQuadraticModel.from_qubo = \
-lambda Q, offset=0.0, **kwargs: make_BinaryQuadraticModel({}, Q, kwargs.pop('sparse', False)).from_qubo(Q, offset, **kwargs)
-
 BinaryQuadraticModel.from_ising = \
 lambda linear, quadratic, offset=0.0, **kwargs: make_BinaryQuadraticModel(linear, quadratic, kwargs.pop('sparse', False)).from_ising(linear, quadratic, offset, **kwargs)
 
