@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['hash_3c_20std_3a_3atuple_3c_20tupleargs_2e_2e_2e_20_3e_20_3e_86',['hash&lt; std::tuple&lt; TupleArgs... &gt; &gt;',['../structstd_1_1hash_3_01std_1_1tuple_3_01_tuple_args_8_8_8_01_4_01_4.html',1,'std']]]
+  ['dense_140',['Dense',['../structcimod_1_1_dense.html',1,'cimod']]],
+  ['dict_141',['Dict',['../structcimod_1_1_dict.html',1,'cimod']]]
 ];

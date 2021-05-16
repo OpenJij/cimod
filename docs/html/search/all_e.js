@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['pair_5fhash_60',['pair_hash',['../structcimod_1_1pair__hash.html',1,'cimod']]],
-  ['polynomial_61',['Polynomial',['../namespacecimod.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9',1,'cimod']]],
-  ['print_62',['print',['../classcimod_1_1_binary_polynomial_model.html#a24c3f9b23067bada6880d725e5f89087',1,'cimod::BinaryPolynomialModel::print()'],['../classcimod_1_1_binary_quadratic_model.html#ae45d5da1ea2873f8b18fd1eea5d16b19',1,'cimod::BinaryQuadraticModel::print()']]]
+  ['operator_28_29_97',['operator()',['../structcimod_1_1pair__hash.html#a1f67b767fb54f0a0ec83bdb068c2835a',1,'cimod::pair_hash::operator()()'],['../structcimod_1_1vector__hash.html#afd4fcc1444e71713b59fc32635f24db5',1,'cimod::vector_hash::operator()()']]]
 ];

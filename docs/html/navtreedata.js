@@ -33,10 +33,11 @@ var NAVTREE =
       ] ],
       [ "Binary polynomial model", "index.html#s_bpm", [
         [ "Ising model", "index.html#ss_bpm_Ising", null ],
-        [ "PUBO model", "index.html#ss_bpm_pubo", null ]
+        [ "HUBO model", "index.html#ss_bpm_hubo", null ]
       ] ],
       [ "Example", "index.html#s_example", null ]
     ] ],
+    [ "Deprecated List", "deprecated.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -50,7 +51,7 @@ var NAVTREE =
       [ "Class List", "annotated.html", "annotated_dup" ],
       [ "Class Index", "classes.html", null ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
+        [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
         [ "Typedefs", "functions_type.html", null ]
@@ -68,7 +69,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-""
+"annotated.html",
+"functions_s.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

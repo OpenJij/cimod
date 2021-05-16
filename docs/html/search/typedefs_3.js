@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['matrix_161',['Matrix',['../classcimod_1_1_binary_quadratic_model.html#af061061dd38d21bb4d0b0ce0606354b4',1,'cimod::BinaryQuadraticModel']]]
+  ['linear_261',['Linear',['../namespacecimod.html#a8a8de407e52855d095598f6e85e539b2',1,'cimod']]]
 ];

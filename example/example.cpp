@@ -39,7 +39,7 @@ int main() {
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
    
    // Print informations of bpm
-   bpm.print();
+   //bpm.print();
    
    return 0;
 }

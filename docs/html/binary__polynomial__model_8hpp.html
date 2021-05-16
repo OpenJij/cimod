@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">cimod : C++ library for a binary (and polynomial) quadratic model
-   &#160;<span id="projectnumber">1.1.0</span>
+   &#160;<span id="projectnumber">1.2.0</span>
    </div>
   </td>
  </tr>
@@ -111,13 +111,14 @@ $(document).ready(function(){initNavTree('binary__polynomial__model_8hpp.html','
 <code>#include &lt;unordered_map&gt;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;bitset&gt;</code><br />
 </div>
 <p><a href="binary__polynomial__model_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1_binary_polynomial_model.html">cimod::BinaryPolynomialModel&lt; IndexType, FloatType &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for binary polynomial model.  <a href="classcimod_1_1_binary_polynomial_model.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for <a class="el" href="classcimod_1_1_binary_polynomial_model.html" title="Class for BinaryPolynomialModel.">BinaryPolynomialModel</a>.  <a href="classcimod_1_1_binary_polynomial_model.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -127,21 +128,21 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:aab59a56ee2c64672c1f2f091ac051745"><td class="memTemplParams" colspan="2">template&lt;typename IndexType &gt; </td></tr>
-<tr class="memitem:aab59a56ee2c64672c1f2f091ac051745"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecimod.html#aab59a56ee2c64672c1f2f091ac051745">cimod::Variable</a> = std::unordered_set&lt; IndexType &gt;</td></tr>
-<tr class="memdesc:aab59a56ee2c64672c1f2f091ac051745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for variable list.  <a href="namespacecimod.html#aab59a56ee2c64672c1f2f091ac051745">More...</a><br /></td></tr>
-<tr class="separator:aab59a56ee2c64672c1f2f091ac051745"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93abe5f9ee8cc2aaa36ad29ae9700dc9"><td class="memTemplParams" colspan="2">template&lt;typename IndexType , typename FloatType &gt; </td></tr>
 <tr class="memitem:a93abe5f9ee8cc2aaa36ad29ae9700dc9"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecimod.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9">cimod::Polynomial</a> = std::unordered_map&lt; std::vector&lt; IndexType &gt;, FloatType, vector_hash &gt;</td></tr>
-<tr class="memdesc:a93abe5f9ee8cc2aaa36ad29ae9700dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for polynomial bias.  <a href="namespacecimod.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9">More...</a><br /></td></tr>
+<tr class="memdesc:a93abe5f9ee8cc2aaa36ad29ae9700dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for the polynomial interactions as std::unordered_map.  <a href="namespacecimod.html#a93abe5f9ee8cc2aaa36ad29ae9700dc9">More...</a><br /></td></tr>
 <tr class="separator:a93abe5f9ee8cc2aaa36ad29ae9700dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a784111b8d7d65ef56431f07ca590db60"><td class="memTemplParams" colspan="2">template&lt;typename IndexType , typename FloatType &gt; </td></tr>
-<tr class="memitem:a784111b8d7d65ef56431f07ca590db60"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecimod.html#a784111b8d7d65ef56431f07ca590db60">cimod::Adjacency_Poly</a> = std::unordered_map&lt; IndexType, Polynomial&lt; IndexType, FloatType &gt; &gt;</td></tr>
-<tr class="memdesc:a784111b8d7d65ef56431f07ca590db60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for adjacency list.  <a href="namespacecimod.html#a784111b8d7d65ef56431f07ca590db60">More...</a><br /></td></tr>
-<tr class="separator:a784111b8d7d65ef56431f07ca590db60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a292564b3ace60c496890860f23bfa8bf"><td class="memTemplParams" colspan="2">template&lt;typename IndexType &gt; </td></tr>
+<tr class="memitem:a292564b3ace60c496890860f23bfa8bf"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecimod.html#a292564b3ace60c496890860f23bfa8bf">cimod::PolynomialKeyList</a> = std::vector&lt; std::vector&lt; IndexType &gt; &gt;</td></tr>
+<tr class="memdesc:a292564b3ace60c496890860f23bfa8bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for the indices of the polynomial interactions (namely, the list of keys of the polynomial interactions as std::unordered_map) as std::vector&lt;std::vector&gt;&gt;.  <a href="namespacecimod.html#a292564b3ace60c496890860f23bfa8bf">More...</a><br /></td></tr>
+<tr class="separator:a292564b3ace60c496890860f23bfa8bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d7c106b4a0e76035c564cbcd688d2db"><td class="memTemplParams" colspan="2">template&lt;typename FloatType &gt; </td></tr>
+<tr class="memitem:a6d7c106b4a0e76035c564cbcd688d2db"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecimod.html#a6d7c106b4a0e76035c564cbcd688d2db">cimod::PolynomialValueList</a> = std::vector&lt; FloatType &gt;</td></tr>
+<tr class="memdesc:a6d7c106b4a0e76035c564cbcd688d2db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for the values of the polynomial interactions (namely, the list of values of the polynomial interactions as std::unordered_map) as std::vector.  <a href="namespacecimod.html#a6d7c106b4a0e76035c564cbcd688d2db">More...</a><br /></td></tr>
+<tr class="separator:a6d7c106b4a0e76035c564cbcd688d2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a300c5a25892e0259f843d34e20fd4801"><td class="memTemplParams" colspan="2">template&lt;typename IndexType &gt; </td></tr>
 <tr class="memitem:a300c5a25892e0259f843d34e20fd4801"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecimod.html#a300c5a25892e0259f843d34e20fd4801">cimod::Sample</a> = std::unordered_map&lt; IndexType, int32_t &gt;</td></tr>
-<tr class="memdesc:a300c5a25892e0259f843d34e20fd4801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for sample.  <a href="namespacecimod.html#a300c5a25892e0259f843d34e20fd4801">More...</a><br /></td></tr>
+<tr class="memdesc:a300c5a25892e0259f843d34e20fd4801"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type alias for sample, which represents the spin or binary configurations.  <a href="namespacecimod.html#a300c5a25892e0259f843d34e20fd4801">More...</a><br /></td></tr>
 <tr class="separator:a300c5a25892e0259f843d34e20fd4801"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
