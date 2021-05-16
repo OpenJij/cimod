@@ -1,6 +1,5 @@
 var NAVTREEINDEX0 =
 {
-"":[2,0,1],
 "annotated.html":[3,0],
 "binary__polynomial__model_8hpp.html":[4,0,0,0],
 "binary__polynomial__model_8hpp.html#a292564b3ace60c496890860f23bfa8bf":[4,0,0,0,2],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "functions_m.html":[3,2,0,12],
 "functions_n.html":[3,2,0,13],
 "functions_o.html":[3,2,0,14],
-"functions_p.html":[3,2,0,15]
+"functions_p.html":[3,2,0,15],
+"functions_r.html":[3,2,0,16]
 };
