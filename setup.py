@@ -16,7 +16,6 @@ NAME = 'jij_cimod'
 DESCRIPTION = 'C++ library for a binary (and polynomial) quadratic model'
 EMAIL = 'openjij@j-ij.com'
 AUTHOR = 'Jij Inc.'
-VERSION = '1.2.0'
 
 
 class CMakeExtension(Extension):
@@ -125,7 +124,8 @@ else:
 
 setup(
     name=NAME,
-    version=about['__version__'],
+    version_config=True,
+    setup_requires=['setuptools-git-versioning']
     author='Jij Inc.',
     author_email='openjij@j-ij.com',
     url='https://openjij.github.io/OpenJij/',
