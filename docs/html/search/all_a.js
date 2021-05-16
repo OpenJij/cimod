@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['length_46',['length',['../classcimod_1_1_binary_polynomial_model.html#a500f81e2b2bf06ee6950e1d410c6c0b1',1,'cimod::BinaryPolynomialModel::length()'],['../classcimod_1_1_binary_quadratic_model.html#a2207a0688694a3f84d8b821105e15aba',1,'cimod::BinaryQuadraticModel::length()']]],
-  ['linear_47',['Linear',['../namespacecimod.html#a8a8de407e52855d095598f6e85e539b2',1,'cimod']]]
+  ['json_87',['json',['../classcimod_1_1_binary_quadratic_model.html#a641c6e2ae38d3c24f4e0d98f25d63dc7',1,'cimod::BinaryQuadraticModel::json()'],['../classcimod_1_1_binary_quadratic_model_3_01_index_type_00_01_float_type_00_01_dict_01_4.html#a895f61d20d23d43d4325154f3587bc7e',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::json()']]]
 ];

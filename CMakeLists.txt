@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.11)
 project(openjij)
 
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 # Set default compile flags for GCC
 if(CMAKE_COMPILER_IS_GNUCXX)
     message(STATUS "GCC detected, adding compile flags")
@@ -11,13 +11,13 @@ else(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
-
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -I /usr/local/include -L /usr/local/lib -Xpreprocessor -fopenmp -lomp")
 # add fPIC option to all object files
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
  
 
 ##### Set default behavior #####
-set(DEFAULT_USE_OMP No)
+set(DEFAULT_USE_OMP Yes)
 set(DEFAULT_USE_TEST No)
 option(USE_TEST "Use test code" No)
 
@@ -34,7 +34,14 @@ endif()
 message(STATUS "USE_OMP = ${USE_OMP}")
 message(STATUS "USE_TEST = ${USE_TEST}")
 
-#TODO: OMP settings
+if(USE_OMP)
+    find_package(OpenMP REQUIRED)
+    if(OpenMP_FOUND)
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+        add_definitions(-DUSE_OMP)
+    endif()
+endif()
 
 list(APPEND CMAKE_MODULE_PATH external)
 if(USE_TEST)
