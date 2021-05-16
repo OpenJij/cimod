@@ -125,7 +125,7 @@ else:
 setup(
     name=NAME,
     version_config=True,
-    setup_requires=['setuptools-git-versioning']
+    setup_requires=['setuptools-git-versioning'],
     author='Jij Inc.',
     author_email='openjij@j-ij.com',
     url='https://openjij.github.io/OpenJij/',
