@@ -112,16 +112,6 @@ class PyTestCommand(TestCommand):
         super().run()
 
 
-# Load the package's __version__.py module as a dictionary.
-here = os.path.abspath(os.path.dirname(__file__))
-about = {}
-if not VERSION:
-    project_slug = NAME.lower().replace("-", "_").replace(" ", "_")
-    with open(os.path.join(here, project_slug, '__version__.py')) as f:
-        exec(f.read(), about)
-else:
-    about['__version__'] = VERSION
-
 setup(
     name=NAME,
     version_config=True,
