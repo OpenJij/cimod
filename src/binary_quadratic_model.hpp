@@ -887,13 +887,33 @@ namespace cimod
             return ret_linear;
         }
     
-        inline Quadratic<IndexType, FloatType> _generate_quadratic() const{
+        template<typename T=DataType>
+        inline Quadratic<IndexType, FloatType> _generate_quadratic(dispatch_t<T, Dense> = nullptr) const{
             Quadratic<IndexType, FloatType> ret_quadratic;
             for(size_t i=0; i<_idx_to_label.size(); i++){
                 for(size_t j=i+1; j<_idx_to_label.size(); j++){
                     FloatType val = _quadmat_get(i, j);
                     if(val != 0)
                         ret_quadratic[std::make_pair(_idx_to_label[i], _idx_to_label[j])] = val;
+                }
+            }
+    
+            return ret_quadratic;
+        }
+
+        template<typename T=DataType>
+        inline Quadratic<IndexType, FloatType> _generate_quadratic(dispatch_t<T, Sparse> = nullptr) const{
+            Quadratic<IndexType, FloatType> ret_quadratic;
+
+            for(int k=0; k<_quadmat.outerSize(); k++){
+                //k -> row index
+                for(SpIter it(_quadmat, k); it; ++it){
+                    size_t r        = it.row();
+                    size_t c        = it.col();
+                    FloatType val   = it.value();
+
+                    if(r < this->get_num_variables() && c < this->get_num_variables() && val != 0)
+                        ret_quadratic[std::make_pair(_idx_to_label[r], _idx_to_label[c])] = val;
                 }
             }
     
