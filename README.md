@@ -31,7 +31,7 @@ double offset = 0.0;
 // Set variable type
 Vartype vartype = Vartype::BINARY;
 // Create a BinaryQuadraticModel instance
-BinaryQuadraticModel<uint32_t, double> bqm(linear, quadratic, offset, vartype);
+BinaryQuadraticModel<uint32_t, double, cimod::Dense> bqm(linear, quadratic, offset, vartype);
 
 //linear terms -> bqm.get_linear()
 //quadratic terms -> bqm.get_quadratic()
