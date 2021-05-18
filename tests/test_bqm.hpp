@@ -602,6 +602,7 @@ struct BQMTester{
 
         // the number of elements of m_linear depends on the system
         //EXPECT_EQ(bqm.get_linear().size(), 1);
+        std::cout << bqm.interaction_matrix() << std::endl;
         EXPECT_EQ(bqm.get_quadratic().size(), 1);
 
         EXPECT_EQ(bqm.interaction_matrix().rows(), bqm.get_num_variables() + 1);
