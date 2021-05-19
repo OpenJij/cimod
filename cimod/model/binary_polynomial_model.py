@@ -22,19 +22,36 @@ from enum import Enum
 
 class Polynomial:
     def __init__(self, bpm):
-        self._bpm = bpm
+        self.__bpm = bpm
 
-    def items(self):
-        return self._bpm.get_polynomial().items()
+    def items(self, *args, **kwargs):
+        return self.__bpm.get_polynomial().items(*args, **kwargs)
 
-    def keys(self):
-        return self._bpm.get_polynomial().keys()
+    def keys(self, *args, **kwargs):
+        return self.__bpm.get_polynomial().keys(*args, **kwargs)
 
-    def values(self):
-        return self._bpm.get_polynomial().values()
+    def values(self, *args, **kwargs):
+        return self.__bpm.get_polynomial().values(*args, **kwargs)
 
+    def copy(self):
+        return self.__bpm.get_polynomial()
+
+    def fromkeys(self, keys = None):
+        return dict.fromkeys(self.__bpm.get_polynomial(), keys)
+
+    def get(self, arg1, arg2 = None):
+        val = self.__bpm.get_polynomial(arg1)
+        if val == 0.0:
+            if arg2 != None:
+                return arg2
+        else:
+            return val
+        
+    def __len__(self):
+        return self.__bpm.num_interactions
+        
     def __repr__(self):
-        return  str(self._bpm.get_polynomial())
+        return  str(self.__bpm.get_polynomial())
     """
 class Variables:
     def __init__(self, bpm):
