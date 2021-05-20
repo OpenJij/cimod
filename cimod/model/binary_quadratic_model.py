@@ -71,21 +71,36 @@ def get_cxxcimod_class(linear, quadratic, sparse):
     return base
 
 def extract_offset_and_vartype(*args, **kwargs):
-    # offset and vartype
-    if len(args) == 2:
-        [offset, vartype] = args
-    elif len(args) == 1 and 'vartype' in kwargs:
-        [offset] = args
-        vartype = kwargs['vartype']
-    elif len(args) == 1:
-        offset = 0.0
-        [vartype] = args
-    elif len(args) == 0 and 'vartype' in kwargs:
-        offset = 0.0
-        vartype = kwargs['vartype']
+    if kwargs == {}:
+        if len(args) == 0:
+            raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+        elif len(args) == 1:
+            offset = 0.0
+            [vartype] = args
+        elif len(args) == 2:
+             [offset, vartype] = args
+        else:
+            raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
     else:
-        raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
-
+        if 'offset' in kwargs and 'vartype' in kwargs:
+            offset  = kwargs['offset']
+            vartype = kwargs['vartype']
+        elif 'offset' in kwargs:
+            if len(args) != 1:
+                raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+            offset  = kwargs['offset']
+            [vartype] = args
+        elif 'vartype' in kwargs:
+            if len(args) >= 2:
+                raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+            elif len(args) == 0:
+                offset = 0.0
+            elif len(args) == 1:
+                [offset] = args
+            vartype = kwargs['vartype']
+        else:
+            raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+            
     return offset,vartype
 
 def make_BinaryQuadraticModel(linear, quadratic, sparse):
