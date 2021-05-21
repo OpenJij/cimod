@@ -99,7 +99,7 @@ def extract_offset_and_vartype(*args, **kwargs):
                 [offset] = args
             vartype = kwargs['vartype']
         else:
-            raise TypeError(f"Offset or vartype is configured incorrectly. Vartype must be set..")
+            raise TypeError(f"Offset or vartype is configured incorrectly. Vartype must be set.")
             
     return offset,vartype
 
