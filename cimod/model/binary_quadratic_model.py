@@ -73,33 +73,33 @@ def get_cxxcimod_class(linear, quadratic, sparse):
 def extract_offset_and_vartype(*args, **kwargs):
     if kwargs == {}:
         if len(args) == 0:
-            raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+            raise TypeError(f"Offset or vartype is configured incorrectly. Vartype must be set.")
         elif len(args) == 1:
             offset = 0.0
             [vartype] = args
         elif len(args) == 2:
              [offset, vartype] = args
         else:
-            raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+            raise TypeError(f"Offset or vartype is configured incorrectly. Vartype must be set.")
     else:
         if 'offset' in kwargs and 'vartype' in kwargs:
             offset  = kwargs['offset']
             vartype = kwargs['vartype']
         elif 'offset' in kwargs:
             if len(args) != 1:
-                raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+                raise TypeError(f"Offset or vartype is configured incorrectly. Vartype must be set.")
             offset  = kwargs['offset']
             [vartype] = args
         elif 'vartype' in kwargs:
             if len(args) >= 2:
-                raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+                raise TypeError(f"Offset or vartype is configured incorrectly. Vartype must be set.")
             elif len(args) == 0:
                 offset = 0.0
             elif len(args) == 1:
                 [offset] = args
             vartype = kwargs['vartype']
         else:
-            raise TypeError(f"Offset or vartype is configured incorrectly. offset must not be a keyword variable and vartype must be set.")
+            raise TypeError(f"Offset or vartype is configured incorrectly. Vartype must be set.")
             
     return offset,vartype
 
