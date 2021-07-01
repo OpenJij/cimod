@@ -43,6 +43,10 @@ if(USE_OMP)
     endif()
 endif()
 
+if (APPLE)
+    find_package(BLAS)
+endif()
+
 list(APPEND CMAKE_MODULE_PATH external)
 if(USE_TEST)
     include(${CMAKE_SOURCE_DIR}/external/googletest.cmake)
