@@ -25,7 +25,7 @@ jobs:
           python setup.py sdist
       - uses: actions/upload-artifact@v2
         with:
-          name: artifact
+          name: sdist
           path: dist/*.tar.gz
           retention-days: 1
           
@@ -35,7 +35,6 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-      fail-fast: false 
       max-parallel: 3
 
     steps:
@@ -83,7 +82,7 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: artifact
+          name: bdist_wheel
           path: ./wheelhouse/*.whl
           retention-days: 1
           
@@ -94,9 +93,17 @@ jobs:
     steps:
       - uses: actions/download-artifact@v2
         with:
-          name: artifact
-          path: dist
+          name: sdist
+          path: ./dist
+      - uses: actions/download-artifact@v2
+        with:
+          name: bdist_wheel
+          path: ./dist
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: ${{ secrets.PYPI_USERNAME }}
           password: ${{ secrets.PYPI_PASSWORD }}
+          packages_dir: ./dist
+          verify_metadata: true
+          skip_existing: false
+          verbose: true
