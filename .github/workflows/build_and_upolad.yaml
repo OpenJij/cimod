@@ -9,26 +9,6 @@ on:
 env:
   Python_Version: 3.9
 
-jobs:
-  build_sdist:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        name: Install Python
-        with:
-          python-version: ${{env.Python_Version}}
-      - name: Build sdist
-        run: |
-          python setup.py sdist
-      - uses: actions/upload-artifact@v2
-        with:
-          name: artifact
-          path: dist/*.tar.gz
-          retention-days: 1
-   
-   env:
-  Python_Version: 3.9
 
 jobs:
   build_sdist:
@@ -168,8 +148,8 @@ jobs:
               CXXFLAGS="-flto -O3 -pipe"
           CIBW_ENVIRONMENT_MACOS:
               CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
-              CFLAGS="$CFLAGS -I/usr/local/opt/libomp/include -lcblas -lclapack -framework Accelerate -framework OpenCL"
-              CXXFLAGS="$CXXFLAGS -I/usr/local/opt/libomp/include -lcblas -lclapack -framework Accelerate -framework OpenCL"
+              CFLAGS="-flto -O3 -pipe -I/usr/local/opt/libomp/include -lcblas -lclapack -framework Accelerate -framework OpenCL"
+              CXXFLAGS="-flto -O3 -pipe -I/usr/local/opt/libomp/include -lcblas -lclapack -framework Accelerate -framework OpenCL"
               LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/local/opt/libomp/lib -L/usr/local/opt/libomp/lib -lomp"
 
       - uses: actions/upload-artifact@v2
