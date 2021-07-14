@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.11)
 project(openjij)
 
+if (APPLE)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-command-line-argument")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-unused-command-line-argument")
+endif()
 
 set(CMAKE_CXX_STANDARD 17)
 # Set default compile flags for GCC
@@ -35,11 +39,15 @@ message(STATUS "USE_OMP = ${USE_OMP}")
 message(STATUS "USE_TEST = ${USE_TEST}")
 
 if(USE_OMP)
-    find_package(OpenMP REQUIRED)
-    if(OpenMP_FOUND)
+    if(APPLE) 
+      add_definitions(-DUSE_OMP)
+    else()
+      find_package(OpenMP REQUIRED)
+      if(OpenMP_FOUND)
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
         add_definitions(-DUSE_OMP)
+      endif()
     endif()
 endif()
 
