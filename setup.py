@@ -195,6 +195,6 @@ setup(
                 'Operating System :: Microsoft :: Windows :: Windows 10',
                 'Operating System :: MacOS :: MacOS X',
                 'Operating System :: POSIX :: Linux',
-                ]
+                ],
     zip_safe=False
 )
