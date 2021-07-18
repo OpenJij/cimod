@@ -1,7 +1,7 @@
 if (${CIMOD_BUILD_SHARED_LIBS})
-  add_library(cxxjij SHARED main.cpp)
+  add_library(cxxcimod SHARED main.cpp)
 else()
-  add_library(cxxjij MODULE main.cpp)
+  add_library(cxxcimod MODULE main.cpp)
 endif()
 
 
