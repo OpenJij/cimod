@@ -1,8 +1,4 @@
-if (${CIMOD_BUILD_SHARED_LIBS})
-  add_library(cxxcimod SHARED main.cpp)
-else()
-  add_library(cxxcimod MODULE main.cpp)
-endif()
+add_library(cxxcimod MODULE main.cpp)
 
 
 set_target_properties(cxxcimod PROPERTIES
