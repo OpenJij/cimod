@@ -13,7 +13,7 @@ set_target_properties(cxxcimod PROPERTIES
 
 target_link_libraries(cxxcimod
     pybind11::module
-    pybind11::lto
+    pybind11::thin_lto
     pybind11_json
     nlohmann_json::nlohmann_json
     $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,eigen_lib>
