@@ -19,3 +19,7 @@ if (APPLE)
       target_compile_definitions(eigen_lib INTERFACE EIGEN_USE_LAPACKE=ON)
     endif()
 endif()
+
+if(OpenMP_FOUND)
+  target_link_libraries(eigen_lib INTERFACE OpenMP::OpenMP_CXX)
+endif()
