@@ -178,7 +178,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     python_requires = ">=3.7, <3.10",
-    install_requires=['numpy >= 1.16.0', 'dimod >= 0.9.1, <0.10.0', 'scipy'],
+    install_requires=['numpy >= 1.16.0', 'dimod >= 0.9.1, < 0.11.0', 'scipy'],
     ext_modules=[CMakeExtension('cxxcimod')],
     cmdclass=dict(build_ext=CMakeBuild, test=GoogleTestCommand,
                   pytest=PyTestCommand),
