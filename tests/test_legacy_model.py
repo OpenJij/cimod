@@ -241,34 +241,35 @@ class ModelTest(unittest.TestCase):
         self.assertEqual(bqm.offset, decode_bqm.offset)
         self.assertEqual(bqm.vartype, decode_bqm.vartype)
 
-    def test_serializable_consistent_with_dimod(self):
-        for (_from,_to) in [(dimod, cimod.model.legacy), (cimod.model.legacy, dimod)]:
-            bqm = _from.BinaryQuadraticModel(self.h, self.J, vartype='SPIN')
-            serial = bqm.to_serializable()
-            decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
-            self.assertEqual(bqm.linear, decode_bqm.linear)
-            # order of indices in quadratic is not considered.
-            self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
-            self.assertEqual(bqm.offset, decode_bqm.offset)
-            self.assertEqual(bqm.vartype, decode_bqm.vartype)
+    # since the latest version of dimod (>= 0.10.0) removes from_serializable function, this test is not needed.
+    #def test_serializable_consistent_with_dimod(self):
+    #    for (_from,_to) in [(dimod, cimod.model.legacy), (cimod.model.legacy, dimod)]:
+    #        bqm = _from.BinaryQuadraticModel(self.h, self.J, vartype='SPIN')
+    #        serial = bqm.to_serializable()
+    #        decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
+    #        self.assertEqual(bqm.linear, decode_bqm.linear)
+    #        # order of indices in quadratic is not considered.
+    #        self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
+    #        self.assertEqual(bqm.offset, decode_bqm.offset)
+    #        self.assertEqual(bqm.vartype, decode_bqm.vartype)
 
-            bqm = _from.BinaryQuadraticModel(self.strh, self.strJ, vartype='SPIN')
-            serial = bqm.to_serializable()
-            decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
-            self.assertEqual(bqm.linear, decode_bqm.linear)
-            # order of indices in quadratic is not considered.
-            self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
-            self.assertEqual(bqm.offset, decode_bqm.offset)
-            self.assertEqual(bqm.vartype, decode_bqm.vartype)
+    #        bqm = _from.BinaryQuadraticModel(self.strh, self.strJ, vartype='SPIN')
+    #        serial = bqm.to_serializable()
+    #        decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
+    #        self.assertEqual(bqm.linear, decode_bqm.linear)
+    #        # order of indices in quadratic is not considered.
+    #        self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
+    #        self.assertEqual(bqm.offset, decode_bqm.offset)
+    #        self.assertEqual(bqm.vartype, decode_bqm.vartype)
 
-            bqm = _from.BinaryQuadraticModel(self.tupleh, self.tupleJ, vartype='SPIN')
-            serial = bqm.to_serializable()
-            decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
-            self.assertEqual(bqm.linear, decode_bqm.linear)
-            # order of indices in quadratic is not considered.
-            self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
-            self.assertEqual(bqm.offset, decode_bqm.offset)
-            self.assertEqual(bqm.vartype, decode_bqm.vartype)
+    #        bqm = _from.BinaryQuadraticModel(self.tupleh, self.tupleJ, vartype='SPIN')
+    #        serial = bqm.to_serializable()
+    #        decode_bqm = _to.BinaryQuadraticModel.from_serializable(serial)
+    #        self.assertEqual(bqm.linear, decode_bqm.linear)
+    #        # order of indices in quadratic is not considered.
+    #        self.assertEqual({(min(k), max(k)):v for k,v in bqm.quadratic.items()}, {(min(k), max(k)):v for k,v in decode_bqm.quadratic.items()})
+    #        self.assertEqual(bqm.offset, decode_bqm.offset)
+    #        self.assertEqual(bqm.vartype, decode_bqm.vartype)
 
 
 
