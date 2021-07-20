@@ -39,6 +39,7 @@ jobs:
     - name: Install dependencies 
       run: |
         pip install --upgrade pip wheel setuptools build
+        pip install -r requirements.txt
     - name: Install Eigen3 on ${{ matrix.os }}
       if: ${{ matrix.os == 'ubuntu-latest'}}
       run: sudo apt-get install -y libeigen3-dev
@@ -51,8 +52,5 @@ jobs:
         echo "::group::CMake Version"
         cmake --version
         echo "::endgroup::"
-        echo "::group::TEST"
         export USE_TEST=1
-        python -m build --config-setting="--debug=test,USE_TEST=1" 
-        echo "::endgroup::"
         python setup.py build --debug test
