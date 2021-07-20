@@ -48,5 +48,10 @@ jobs:
     - name: Test 
       shell: bash
       run: |
+        echo "::group::CMake Version"
+        cmake --version
+        echo "::endgroup::"
+        echo "::group::TEST"
         export USE_TEST=1
         python setup.py build --debug test
+        echo "::endgroup::"
