@@ -69,7 +69,7 @@ print(bqm.quadratic)
 ### via this directory
 
 ```sh
-$ python setup.py install
+$ python -m pip install .
 ```
 
 ### via pip
