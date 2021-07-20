@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.17)
 project(cimod)
+
+enable_language(CXX)
 
 if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
