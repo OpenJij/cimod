@@ -53,6 +53,6 @@ jobs:
         echo "::endgroup::"
         echo "::group::TEST"
         export USE_TEST=1
-        python -m build -h
         python -m build --config-setting="--debug=test"
         echo "::endgroup::"
+        python setup.py build --debug test
