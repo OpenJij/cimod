@@ -53,5 +53,5 @@ jobs:
         echo "::endgroup::"
         echo "::group::TEST"
         export USE_TEST=1
-        python -m build --config-setting=--debug(=test)
+        python -m build --config-setting=--debug(test)
         echo "::endgroup::"
