@@ -27,13 +27,16 @@ if(NOT DEFINED USE_OMP)
     set(USE_OMP ${DEFAULT_USE_OMP})
 endif()
 
+message(STATUS "FORCE_USE_OMP = ${FORCE_USE_OMP}")
+
 if(NOT APPLE) 
   if(NOT DEFINED USE_OMP) 
     set(USE_OMP ${DEFAULT_USE_OMP})
   endif() 
 else() 
-  if(DEFINED FORCE_USE_OMP) 
+  if(FORCE_USE_OMP) 
     set(USE_OMP ${DEFAULT_USE_OMP})
+    message(STATUS "APPLE_FORCE_USE_OMP = ${FORCE_USE_OMP}")
   endif()
 endif()
 
