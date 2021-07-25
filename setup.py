@@ -5,7 +5,7 @@ import platform
 import sysconfig
 import subprocess
 
-from setuptools import setup, Extension, find_packages
+from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 from setuptools.command.test import test as TestCommand
 from distutils.version import LooseVersion
@@ -178,11 +178,31 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     python_requires = ">=3.7, <3.10",
-    install_requires=['numpy >= 1.18.4, !=1.21.0, !=1.21.1', 'dimod >= 0.9.1, <0.11.0', 'scipy'],
+    setup_requires=[
+        'pytest-runner', 
+        'setuptools-git-versioning', 
+    ],
+    install_requires=[
+        "typing-extensions; python_version < '3.8'",
+        'numpy >= 1.18.4, !=1.21.0, !=1.21.1', 
+        'dimod >= 0.9.1, <0.11.0', 
+        'scipy'
+    ],
+    tests_require = [
+        'pytest',
+        'pytest-mock',
+        'pytest-cov', 
+        'pytest-html',
+        ],
     ext_modules=[CMakeExtension('cxxcimod')],
     cmdclass=dict(build_ext=CMakeBuild, test=GoogleTestCommand,
                   pytest=PyTestCommand),
-    packages=find_packages(exclude=('tests', 'docs', 'examples')),
+    packages=[  
+        'cimod', 
+        'cimod.model', 
+        'cimod.model.legacy',
+        'cimod.utils',
+        ],
     license='Apache License 2.0',
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
