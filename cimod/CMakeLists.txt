@@ -17,7 +17,7 @@ target_link_libraries(cxxcimod
     pybind11::thin_lto
     pybind11_json
     nlohmann_json::nlohmann_json
-    $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,eigen_lib>
+    $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,cimod-eigen_lib>
     $<$<TARGET_EXISTS:OpenMP::OpenMP_CXX>:OpenMP::OpenMP_CXX>
     cxxcimod_header_only
 )
