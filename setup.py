@@ -191,6 +191,7 @@ setup(
     ],
     tests_require = [
         'pytest',
+        'pytest-flakes',
         'pytest-mock',
         'pytest-cov', 
         'pytest-html',
