@@ -9,6 +9,7 @@ FetchContent_Declare(
     )
 
 set(EIGEN_CPP_STANDARD 11)
+set(EIGEN_MPL2_ONLY ON)
 FetchContent_MakeAvailable(eigen)
 
 add_library(cimod-eigen_lib INTERFACE)
