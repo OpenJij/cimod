@@ -5,9 +5,11 @@ FetchContent_Declare(
     eigen
     GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
     GIT_TAG         3.3.9
+    CMAKE_ARGS -DEIGEN_MPL2_ONLY
     )
 
-set(EIGEN_CPP_STANDARD -std=c++11)
+set(EIGEN_CPP_STANDARD 11)
+set(EIGEN_MPL2_ONLY ON)
 FetchContent_MakeAvailable(eigen)
 
 add_library(cimod-eigen_lib INTERFACE)
