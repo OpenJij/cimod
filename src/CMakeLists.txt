@@ -2,8 +2,11 @@ add_library(cxxcimod_header_only INTERFACE)
 
 target_include_directories(cxxcimod_header_only INTERFACE 
   ${CMAKE_CURRENT_SOURCE_DIR}
-  $<IF:$<TARGET_EXISTS:Eigen3::Eigen>, ${EIGEN3_INCLUDE_DIR}, ${eigen_SOURCE_DIR}> 
 )
-if(OpenMP_FOUND)
-  target_link_libraries(cxxcimod_header_only INTERFACE OpenMP::OpenMP_CXX)
-endif()
+
+  
+target_link_libraries(cxxcimod_header_only INTERFACE 
+    $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,cimod-eigen_lib>
+    $<$<TARGET_EXISTS:OpenMP::OpenMP_CXX>:OpenMP::OpenMP_CXX>
+)
+
