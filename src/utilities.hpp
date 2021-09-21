@@ -12,17 +12,6 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-/**
- * @file utilities.hpp
- * @author Fumiya Watanabe
- * @brief Utilities for cpp_dimod
- * @version 1.0.0
- * @date 2020-03-24
- * 
- * @copyright Copyright (c) 2020
- * 
- */
-
 #ifndef UTILITIES_HPP__
 #define UTILITIES_HPP__
 
@@ -62,7 +51,7 @@ void insert_or_assign
     }
 }
 
-//! @brief Format the input key: for example, {1,1,2}-->{1,2} for BINARY variable and {1,1,2}-->{2} for SPIN variable.
+//! @brief Format the input key: for example, {2,1,1}-->{1,2} for BINARY variable and {2,1,1}-->{2} for SPIN variable.
 //! @tparam IndexType Used to represent the indices of variables
 //! @param key This may be formatted.
 //! @param vartype The model's type. cimod::Vartype::SPIN or cimod::Vartype::BINARY.

@@ -36,13 +36,13 @@ class Polynomial:
     def copy(self):
         return self.__bpm.get_polynomial()
 
-    def fromkeys(self, keys = None):
+    def fromkeys(self, keys=None):
         return dict.fromkeys(self.__bpm.get_polynomial(), keys)
 
-    def get(self, arg1, arg2 = None):
+    def get(self, arg1, arg2=None):
         val = self.__bpm.get_polynomial(arg1)
         if val == 0.0:
-            if arg2 != None:
+            if arg2 is not None:
                 return arg2
         else:
             return val
@@ -51,7 +51,8 @@ class Polynomial:
         return self.__bpm.num_interactions
         
     def __repr__(self):
-        return  str(self.__bpm.get_polynomial())
+        return str(self.__bpm.get_polynomial())
+
     """
 class Variables:
     def __init__(self, bpm):
@@ -127,6 +128,7 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
         """
         def __init__(self, *args, **kwargs):
             self.index_type = base_type
+            self.model_type = 'cimod.BinaryPolynomialModel'
             super().__init__(*args, **kwargs)
 
         def _model_selector(self):
