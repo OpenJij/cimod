@@ -642,6 +642,58 @@ TEST(add_interactionBPM, basic) {
 
 }
 
+TEST(add_interactionBPM, self_loop_SPIN) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{1}, 1.0}, {{2}, 2.0},
+      {{1, 2}, 12.0},
+      {{1, 2, 3}, 123.0}
+   };
+   
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
+   
+   bpm.add_interaction({3, 3, 3}, 3.0);
+   bpm.add_interaction({4, 4, 4, 4, 4}, 4.0);
+   bpm.add_interaction({1, 3, 1, 3, 3, 1}, 13.0);
+   bpm.add_interaction({1, 1, 1, 4, 4, 4}, 14.0);
+   bpm.add_interaction({3, 3, 3, 2, 2, 2}, 23.0);
+   bpm.add_interaction({2, 4}, 24.0);
+   bpm.add_interaction({3, 4}, 34.0);
+   bpm.add_interaction({1, 2, 4}, 124.0);
+   bpm.add_interaction({1, 3, 4}, 134.0);
+   bpm.add_interaction({2, 3, 4, 2, 4, 3, 3, 4, 2}, 234.0);
+   bpm.add_interaction({1, 2, 3, 4}, 1234.0);
+   
+   StateTestBPMUINT(bpm);
+
+}
+
+TEST(add_interactionBPM, self_loop_BINARY) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{1}, 1.0}, {{2}, 2.0},
+      {{1, 2}, 12.0},
+      {{1, 2, 3}, 123.0}
+   };
+   
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::BINARY);
+   
+   bpm.add_interaction({3, 3}, 3.0);
+   bpm.add_interaction({4, 4, 4}, 4.0);
+   bpm.add_interaction({1, 1, 3}, 13.0);
+   bpm.add_interaction({1, 4, 4, 4}, 14.0);
+   bpm.add_interaction({3, 3, 2}, 23.0);
+   bpm.add_interaction({2, 4}, 24.0);
+   bpm.add_interaction({3, 4}, 34.0);
+   bpm.add_interaction({1, 2, 4}, 124.0);
+   bpm.add_interaction({1, 3, 4}, 134.0);
+   bpm.add_interaction({2, 3, 4}, 234.0);
+   bpm.add_interaction({1, 2, 3, 3, 4, 1}, 1234.0);
+   
+   StateTestBPMUINT(bpm);
+
+}
+
 TEST(add_interactionBPM, duplicate_value_1) {
    
    Polynomial<uint32_t, double> polynomial = GeneratePolynomialUINT();
