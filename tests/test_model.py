@@ -450,6 +450,31 @@ class PolynomialModelTest(unittest.TestCase):
             bpm.add_interaction(k, -v)
         self.state_test_bpm_empty(bpm, cimod.SPIN)
 
+    def test_add_interaction_bpm_self_loop(self):
+        def check(poly, vartype):
+            bpm = cimod.BinaryPolynomialModel(poly, vartype)
+            for k, v in poly.items():
+                key = []
+                for i in k:
+                    key.append(i)
+                for i in k:
+                    key.append(i)
+                for i in k:
+                    key.append(i)
+                bpm.add_interaction(key, -v)
+            self.state_test_bpm_empty(bpm, vartype)
+        
+        check(self.poly, cimod.SPIN)
+        check(self.poly_str, cimod.SPIN)
+        check(self.poly_tuple2, cimod.SPIN)
+        check(self.poly_tuple3, cimod.SPIN)
+        check(self.poly_tuple4, cimod.SPIN)
+
+        check(self.poly, cimod.BINARY)
+        check(self.poly_str, cimod.BINARY)
+        check(self.poly_tuple2, cimod.BINARY)
+        check(self.poly_tuple3, cimod.BINARY)
+        check(self.poly_tuple4, cimod.BINARY)
 
     def test_add_interactions_from_bpm_dict(self):
         bpm = cimod.BinaryPolynomialModel(self.poly, "SPIN").empty("SPIN")
