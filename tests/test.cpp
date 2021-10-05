@@ -226,73 +226,73 @@ bool EXPECT_CONTAIN(double val, const PolynomialValueList<double> &poly_value) {
 
 void StateTestBPMUINT(const BinaryPolynomialModel<uint32_t, double> &bpm) {
    
-   EXPECT_EQ(bpm.get_num_variables(), 4);
+   EXPECT_EQ(bpm.GetNumVariables(), 4);
 
-   EXPECT_DOUBLE_EQ(bpm.get_offset(), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetOffset(), 0.0);
    
-   EXPECT_EQ(bpm.get_num_interactions(), 15);
+   EXPECT_EQ(bpm.GetNumInteractions(), 15);
    
-   EXPECT_EQ(bpm.get_degree(), 4);
+   EXPECT_EQ(bpm.GetDegree(), 4);
       
    //Polynomial
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1}         ), 1.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2}         ), 2.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({3}         ), 3.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({4}         ), 4.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 2}      ), 12.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 3}      ), 13.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 4}      ), 14.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 3}      ), 23.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 4}      ), 24.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({3, 4}      ), 34.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 2, 3}   ), 123.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 2, 4}   ), 124.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 3, 4}   ), 134.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 3, 4}   ), 234.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 2, 3, 4}), 1234.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1}         ), 1.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2}         ), 2.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({3}         ), 3.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({4}         ), 4.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 2}      ), 12.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 3}      ), 13.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 4}      ), 14.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 3}      ), 23.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 4}      ), 24.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({3, 4}      ), 34.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 2, 3}   ), 123.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 2, 4}   ), 124.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 3, 4}   ), 134.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 3, 4}   ), 234.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 2, 3, 4}), 1234.0);
    
    //variables_to_integers
-   EXPECT_EQ(bpm.get_variables_to_integers(1), 0);
-   EXPECT_EQ(bpm.get_variables_to_integers(2), 1);
-   EXPECT_EQ(bpm.get_variables_to_integers(3), 2);
-   EXPECT_EQ(bpm.get_variables_to_integers(4), 3);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(1), 0);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(2), 1);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(3), 2);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(4), 3);
 
    //Polynomial Key
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1}         ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2}         ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{3}         ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{4}         ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2}      ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 3}      ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 4}      ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 3}      ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 4}      ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{3, 4}      ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2, 3}   ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2, 4}   ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 3, 4}   ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 3, 4}   ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{1, 2, 3, 4}), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1}         ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{2}         ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{3}         ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{4}         ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1, 2}      ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1, 3}      ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1, 4}      ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{2, 3}      ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{2, 4}      ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{3, 4}      ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1, 2, 3}   ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1, 2, 4}   ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1, 3, 4}   ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{2, 3, 4}   ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{1, 2, 3, 4}), 1);
 
    //Polynomial Val
-   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm.GetValueList()));
 
    //sorted_variables
-   auto sorted_variables = bpm.get_sorted_variables();
+   auto sorted_variables = bpm.GetSortedVariables();
    EXPECT_EQ(sorted_variables[0], 1);
    EXPECT_EQ(sorted_variables[1], 2);
    EXPECT_EQ(sorted_variables[2], 3);
@@ -307,73 +307,73 @@ void StateTestBPMUINT(const BinaryPolynomialModel<uint32_t, double> &bpm) {
 
 void StateTestBPMINT(const BinaryPolynomialModel<int32_t, double> &bpm) {
    
-   EXPECT_EQ(bpm.get_num_variables(), 4);
+   EXPECT_EQ(bpm.GetNumVariables(), 4);
 
-   EXPECT_DOUBLE_EQ(bpm.get_offset(), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetOffset(), 0.0);
    
-   EXPECT_EQ(bpm.get_num_interactions(), 15);
+   EXPECT_EQ(bpm.GetNumInteractions(), 15);
    
-   EXPECT_EQ(bpm.get_degree(), 4);
+   EXPECT_EQ(bpm.GetDegree(), 4);
       
    //Polynomial
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-1}            ), 1.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-2}            ), 2.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-3}            ), 3.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4}            ), 4.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-2, -1}        ), 12.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-3, -1}        ), 13.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -1}        ), 14.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-3, -2}        ), 23.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -2}        ), 24.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3}        ), 34.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-3, -2, -1}    ), 123.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -2, -1}    ), 124.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3, -1}    ), 134.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3, -2}    ), 234.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({-4, -3, -2, -1}), 1234.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-1}            ), 1.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-2}            ), 2.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-3}            ), 3.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4}            ), 4.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-2, -1}        ), 12.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-3, -1}        ), 13.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -1}        ), 14.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-3, -2}        ), 23.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -2}        ), 24.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -3}        ), 34.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-3, -2, -1}    ), 123.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -2, -1}    ), 124.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -3, -1}    ), 134.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -3, -2}    ), 234.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -3, -2, -1}), 1234.0);
    
    //variables_to_integers
-   EXPECT_EQ(bpm.get_variables_to_integers(-4), 0);
-   EXPECT_EQ(bpm.get_variables_to_integers(-3), 1);
-   EXPECT_EQ(bpm.get_variables_to_integers(-2), 2);
-   EXPECT_EQ(bpm.get_variables_to_integers(-1), 3);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(-4), 0);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(-3), 1);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(-2), 2);
+   EXPECT_EQ(bpm.GetVariablesToIntegers(-1), 3);
    
    //Polynomial Key
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-1}            ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-2}            ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3}            ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4}            ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-2, -1}        ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3, -1}        ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -1}        ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3, -2}        ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -2}        ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3}        ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-3, -2, -1}    ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -2, -1}    ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3, -1}    ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3, -2}    ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<int32_t>{-4, -3, -2, -1}), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-1}            ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-2}            ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-3}            ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4}            ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-2, -1}        ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-3, -1}        ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4, -1}        ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-3, -2}        ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4, -2}        ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4, -3}        ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-3, -2, -1}    ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4, -2, -1}    ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4, -3, -1}    ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4, -3, -2}    ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<int32_t>{-4, -3, -2, -1}), 1);
 
    //Polynomial Val
-   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm.GetValueList()));
 
    //sorted_variables
-   auto sorted_variables = bpm.get_sorted_variables();
+   auto sorted_variables = bpm.GetSortedVariables();
    EXPECT_EQ(sorted_variables[0], -4);
    EXPECT_EQ(sorted_variables[1], -3);
    EXPECT_EQ(sorted_variables[2], -2);
@@ -388,73 +388,73 @@ void StateTestBPMINT(const BinaryPolynomialModel<int32_t, double> &bpm) {
 
 void StateTestBPMString(const BinaryPolynomialModel<std::string, double> &bpm) {
    
-   EXPECT_EQ(bpm.get_num_variables(), 4);
+   EXPECT_EQ(bpm.GetNumVariables(), 4);
 
-   EXPECT_DOUBLE_EQ(bpm.get_offset(), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetOffset(), 0.0);
 
-   EXPECT_EQ(bpm.get_num_interactions(), 15);
+   EXPECT_EQ(bpm.GetNumInteractions(), 15);
    
-   EXPECT_EQ(bpm.get_degree(), 4);
+   EXPECT_EQ(bpm.GetDegree(), 4);
       
    //Polynomial
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a"}               ), 1.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"b"}               ), 2.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"c"}               ), 3.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"d"}               ), 4.0   );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "b"}          ), 12.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "c"}          ), 13.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "d"}          ), 14.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"b", "c"}          ), 23.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"b", "d"}          ), 24.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"c", "d"}          ), 34.0  );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "b", "c"}     ), 123.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "b", "d"}     ), 124.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "c", "d"}     ), 134.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"b", "c", "d"}     ), 234.0 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({"a", "b", "c", "d"}), 1234.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a"}               ), 1.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"b"}               ), 2.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"c"}               ), 3.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"d"}               ), 4.0   );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "b"}          ), 12.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "c"}          ), 13.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "d"}          ), 14.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"b", "c"}          ), 23.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"b", "d"}          ), 24.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"c", "d"}          ), 34.0  );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "b", "c"}     ), 123.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "b", "d"}     ), 124.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "c", "d"}     ), 134.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"b", "c", "d"}     ), 234.0 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "b", "c", "d"}), 1234.0);
    
    //variables_to_integers
-   EXPECT_EQ(bpm.get_variables_to_integers("a"), 0);
-   EXPECT_EQ(bpm.get_variables_to_integers("b"), 1);
-   EXPECT_EQ(bpm.get_variables_to_integers("c"), 2);
-   EXPECT_EQ(bpm.get_variables_to_integers("d"), 3);
+   EXPECT_EQ(bpm.GetVariablesToIntegers("a"), 0);
+   EXPECT_EQ(bpm.GetVariablesToIntegers("b"), 1);
+   EXPECT_EQ(bpm.GetVariablesToIntegers("c"), 2);
+   EXPECT_EQ(bpm.GetVariablesToIntegers("d"), 3);
    
    //Polynomial Key
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a"}               ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b"}               ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"c"}               ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"d"}               ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b"}          ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "c"}          ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "d"}          ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b", "c"}          ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b", "d"}          ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"c", "d"}          ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b", "c"}     ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b", "d"}     ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "c", "d"}     ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"b", "c", "d"}     ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<std::string>{"a", "b", "c", "d"}), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a"}               ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"b"}               ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"c"}               ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"d"}               ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a", "b"}          ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a", "c"}          ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a", "d"}          ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"b", "c"}          ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"b", "d"}          ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"c", "d"}          ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a", "b", "c"}     ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a", "b", "d"}     ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a", "c", "d"}     ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"b", "c", "d"}     ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<std::string>{"a", "b", "c", "d"}), 1);
 
    //Polynomial Value
-   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(2.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(3.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(4.0   , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(12.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(13.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(14.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(23.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(24.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(34.0  , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(123.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(124.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(134.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(234.0 , bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(1234.0, bpm.GetValueList()));
 
    //sorted_variables
-   auto sorted_variables = bpm.get_sorted_variables();
+   auto sorted_variables = bpm.GetSortedVariables();
    EXPECT_EQ(sorted_variables[0], "a");
    EXPECT_EQ(sorted_variables[1], "b");
    EXPECT_EQ(sorted_variables[2], "c");
@@ -470,28 +470,28 @@ void StateTestBPMString(const BinaryPolynomialModel<std::string, double> &bpm) {
 template<typename IndexType>
 void StateTestBPMEmpty(const BinaryPolynomialModel<IndexType, double> &bpm) {
    
-   EXPECT_EQ(bpm.get_num_variables(), 0);
+   EXPECT_EQ(bpm.GetNumVariables(), 0);
 
-   EXPECT_DOUBLE_EQ(bpm.get_offset(), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetOffset(), 0.0);
    
-   EXPECT_EQ(bpm.get_num_interactions(), 0);
+   EXPECT_EQ(bpm.GetNumInteractions(), 0);
    
-   EXPECT_EQ(bpm.get_degree(), 0);
+   EXPECT_EQ(bpm.GetDegree(), 0);
       
    //Polynomial
-   EXPECT_EQ(bpm.get_polynomial().size(), 0);
+   EXPECT_EQ(bpm.GetPolynomial().size(), 0);
    
    //variables_to_integers
-   EXPECT_EQ(bpm.get_variables_to_integers().size(), 0);
+   EXPECT_EQ(bpm.GetVariablesToIntegers().size(), 0);
    
    //Polynomial Key
-   EXPECT_EQ(bpm._get_keys().size(), 0);
+   EXPECT_EQ(bpm.GetKeyList().size(), 0);
    
    //Polynomial Val
-   EXPECT_EQ(bpm._get_values().size(), 0);
+   EXPECT_EQ(bpm.GetValueList().size(), 0);
 
    //sorted_variables
-   auto sorted_variables = bpm.get_sorted_variables();
+   auto sorted_variables = bpm.GetSortedVariables();
    EXPECT_EQ(sorted_variables.size(), 0);
    
    //variables
@@ -555,19 +555,19 @@ Polynomial<std::string, double> GeneratePolynomialString() {
 
 TEST(ConstructionBPM, PolyMapUINT) {
    BinaryPolynomialModel<uint32_t, double> bpm(GeneratePolynomialUINT(), Vartype::SPIN);
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMUINT(bpm);
 }
 
 TEST(ConstructionBPM, PolyMapINT) {
    BinaryPolynomialModel<int32_t, double> bpm(GeneratePolynomialINT(), Vartype::SPIN);
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMINT(bpm);
 }
 
 TEST(ConstructionBPM, PolyMapString) {
    BinaryPolynomialModel<std::string, double> bpm(GeneratePolynomialString(), Vartype::SPIN);
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMString(bpm);
 }
 
@@ -582,7 +582,7 @@ TEST(ConstructionBPM, PolyKeyValueUINT) {
    }
       
    BinaryPolynomialModel<uint32_t, double> bpm(poly_key, poly_value, Vartype::SPIN);
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMUINT(bpm);
 }
 
@@ -597,7 +597,7 @@ TEST(ConstructionBPM, PolyKeyValueINT) {
    }
       
    BinaryPolynomialModel<int32_t, double> bpm(poly_key, poly_value, Vartype::SPIN);
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMINT(bpm);
 }
 
@@ -612,11 +612,11 @@ TEST(ConstructionBPM, PolyKeyValueStrign) {
    }
       
    BinaryPolynomialModel<std::string, double> bpm(poly_key, poly_value, Vartype::SPIN);
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMString(bpm);
 }
 
-TEST(add_interactionBPM, basic) {
+TEST(AddInteractionBPM, basic) {
    
    Polynomial<uint32_t, double> polynomial {
       {{1}, 1.0}, {{2}, 2.0},
@@ -626,23 +626,23 @@ TEST(add_interactionBPM, basic) {
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   bpm.add_interaction({3}, 3.0);
-   bpm.add_interaction({4}, 4.0);
-   bpm.add_interaction({1, 3}, 13.0);
-   bpm.add_interaction({1, 4}, 14.0);
-   bpm.add_interaction({2, 3}, 23.0);
-   bpm.add_interaction({2, 4}, 24.0);
-   bpm.add_interaction({3, 4}, 34.0);
-   bpm.add_interaction({1, 2, 4}, 124.0);
-   bpm.add_interaction({1, 3, 4}, 134.0);
-   bpm.add_interaction({2, 3, 4}, 234.0);
-   bpm.add_interaction({1, 2, 3, 4}, 1234.0);
+   bpm.AddInteraction({3}, 3.0);
+   bpm.AddInteraction({4}, 4.0);
+   bpm.AddInteraction({1, 3}, 13.0);
+   bpm.AddInteraction({1, 4}, 14.0);
+   bpm.AddInteraction({2, 3}, 23.0);
+   bpm.AddInteraction({2, 4}, 24.0);
+   bpm.AddInteraction({3, 4}, 34.0);
+   bpm.AddInteraction({1, 2, 4}, 124.0);
+   bpm.AddInteraction({1, 3, 4}, 134.0);
+   bpm.AddInteraction({2, 3, 4}, 234.0);
+   bpm.AddInteraction({1, 2, 3, 4}, 1234.0);
    
    StateTestBPMUINT(bpm);
 
 }
 
-TEST(add_interactionBPM, self_loop_SPIN) {
+TEST(AddInteractionBPM, self_loop_SPIN) {
    
    Polynomial<uint32_t, double> polynomial {
       {{1}, 1.0}, {{2}, 2.0},
@@ -652,23 +652,23 @@ TEST(add_interactionBPM, self_loop_SPIN) {
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   bpm.add_interaction({3, 3, 3}, 3.0);
-   bpm.add_interaction({4, 4, 4, 4, 4}, 4.0);
-   bpm.add_interaction({1, 3, 1, 3, 3, 1}, 13.0);
-   bpm.add_interaction({1, 1, 1, 4, 4, 4}, 14.0);
-   bpm.add_interaction({3, 3, 3, 2, 2, 2}, 23.0);
-   bpm.add_interaction({2, 4}, 24.0);
-   bpm.add_interaction({3, 4}, 34.0);
-   bpm.add_interaction({1, 2, 4}, 124.0);
-   bpm.add_interaction({1, 3, 4}, 134.0);
-   bpm.add_interaction({2, 3, 4, 2, 4, 3, 3, 4, 2}, 234.0);
-   bpm.add_interaction({1, 2, 3, 4}, 1234.0);
+   bpm.AddInteraction({3, 3, 3}, 3.0);
+   bpm.AddInteraction({4, 4, 4, 4, 4}, 4.0);
+   bpm.AddInteraction({1, 3, 1, 3, 3, 1}, 13.0);
+   bpm.AddInteraction({1, 1, 1, 4, 4, 4}, 14.0);
+   bpm.AddInteraction({3, 3, 3, 2, 2, 2}, 23.0);
+   bpm.AddInteraction({2, 4}, 24.0);
+   bpm.AddInteraction({3, 4}, 34.0);
+   bpm.AddInteraction({1, 2, 4}, 124.0);
+   bpm.AddInteraction({1, 3, 4}, 134.0);
+   bpm.AddInteraction({2, 3, 4, 2, 4, 3, 3, 4, 2}, 234.0);
+   bpm.AddInteraction({1, 2, 3, 4}, 1234.0);
    
    StateTestBPMUINT(bpm);
 
 }
 
-TEST(add_interactionBPM, self_loop_BINARY) {
+TEST(AddInteractionBPM, self_loop_BINARY) {
    
    Polynomial<uint32_t, double> polynomial {
       {{1}, 1.0}, {{2}, 2.0},
@@ -678,23 +678,23 @@ TEST(add_interactionBPM, self_loop_BINARY) {
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::BINARY);
    
-   bpm.add_interaction({3, 3}, 3.0);
-   bpm.add_interaction({4, 4, 4}, 4.0);
-   bpm.add_interaction({1, 1, 3}, 13.0);
-   bpm.add_interaction({1, 4, 4, 4}, 14.0);
-   bpm.add_interaction({3, 3, 2}, 23.0);
-   bpm.add_interaction({2, 4}, 24.0);
-   bpm.add_interaction({3, 4}, 34.0);
-   bpm.add_interaction({1, 2, 4}, 124.0);
-   bpm.add_interaction({1, 3, 4}, 134.0);
-   bpm.add_interaction({2, 3, 4}, 234.0);
-   bpm.add_interaction({1, 2, 3, 3, 4, 1}, 1234.0);
+   bpm.AddInteraction({3, 3}, 3.0);
+   bpm.AddInteraction({4, 4, 4}, 4.0);
+   bpm.AddInteraction({1, 1, 3}, 13.0);
+   bpm.AddInteraction({1, 4, 4, 4}, 14.0);
+   bpm.AddInteraction({3, 3, 2}, 23.0);
+   bpm.AddInteraction({2, 4}, 24.0);
+   bpm.AddInteraction({3, 4}, 34.0);
+   bpm.AddInteraction({1, 2, 4}, 124.0);
+   bpm.AddInteraction({1, 3, 4}, 134.0);
+   bpm.AddInteraction({2, 3, 4}, 234.0);
+   bpm.AddInteraction({1, 2, 3, 3, 4, 1}, 1234.0);
    
    StateTestBPMUINT(bpm);
 
 }
 
-TEST(add_interactionBPM, duplicate_value_1) {
+TEST(AddInteractionBPM, duplicate_value_1) {
    
    Polynomial<uint32_t, double> polynomial = GeneratePolynomialUINT();
    
@@ -705,37 +705,37 @@ TEST(add_interactionBPM, duplicate_value_1) {
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
    for (const auto &it: polynomial) {
-      bpm.add_interaction(it.first, it.second);
+      bpm.AddInteraction(it.first, it.second);
    };
    
    StateTestBPMUINT(bpm);
 
 }
 
-TEST(add_interactionBPM, duplicate_value_2) {
+TEST(AddInteractionBPM, duplicate_value_2) {
    
    Polynomial<uint32_t, double> polynomial = GeneratePolynomialUINT();
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
    for (const auto &it: polynomial) {
-      bpm.add_interaction(it.first, -it.second);
+      bpm.AddInteraction(it.first, -it.second);
    };
    
    StateTestBPMEmpty(bpm);
 }
 
-TEST(add_interactions_fromBPM, PolyMap) {
+TEST(AddInteractionsFromBPM, PolyMap) {
       
    BinaryPolynomialModel<uint32_t, double> bpm({}, Vartype::SPIN);
    
-   bpm.add_interactions_from(GeneratePolynomialUINT());
+   bpm.AddInteractionsFrom(GeneratePolynomialUINT());
    
    StateTestBPMUINT(bpm);
    
 }
 
-TEST(add_interactions_fromBPM, PolyKeyValue) {
+TEST(AddInteractionsFromBPM, PolyKeyValue) {
    
    PolynomialKeyList<uint32_t> poly_key;
    PolynomialValueList<double> poly_value;
@@ -747,7 +747,7 @@ TEST(add_interactions_fromBPM, PolyKeyValue) {
    
    BinaryPolynomialModel<uint32_t, double> bpm({}, Vartype::SPIN);
    
-   bpm.add_interactions_from(poly_key, poly_value);
+   bpm.AddInteractionsFrom(poly_key, poly_value);
    
    StateTestBPMUINT(bpm);
    
@@ -755,28 +755,28 @@ TEST(add_interactions_fromBPM, PolyKeyValue) {
 
 
 
-TEST(add_offsetBPM, basic) {
+TEST(AddOffsetBPM, basic) {
    Polynomial<uint32_t, double> polynomial;
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   bpm.add_offset(3.0);
+   bpm.AddOffset(3.0);
    
-   EXPECT_DOUBLE_EQ(bpm.get_offset(), 3.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}) , 3.0);
+   EXPECT_DOUBLE_EQ(bpm.GetOffset(), 3.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}) , 3.0);
    
-   bpm.add_offset(3.0);
+   bpm.AddOffset(3.0);
 
-   EXPECT_DOUBLE_EQ(bpm.get_offset(), 6.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}) , 6.0);
+   EXPECT_DOUBLE_EQ(bpm.GetOffset(), 6.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}) , 6.0);
    
-   bpm.add_offset(-6.0);
+   bpm.AddOffset(-6.0);
    
    StateTestBPMEmpty(bpm);
    
 }
 
-TEST(remove_interactionBPM, basic) {
+TEST(RemoveInteractionBPM, basic) {
    
    Polynomial<uint32_t, double> polynomial = {
       //linear biases
@@ -795,60 +795,60 @@ TEST(remove_interactionBPM, basic) {
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}          ), -3.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({7}         ), -2.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 11}     ), -9.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({11, 12, 14}), -1.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}          ), -3.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({7}         ), -2.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 11}     ), -9.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({11, 12, 14}), -1.0);
    
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{}          ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{7}         ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 11}     ), 1);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{}          ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{7}         ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{2, 11}     ), 1);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{11, 12, 14}), 1);
    
-   EXPECT_TRUE(EXPECT_CONTAIN(-3.0, bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(-2.0, bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(-9.0, bpm._get_values()));
-   EXPECT_TRUE(EXPECT_CONTAIN(-1.0, bpm._get_values()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-3.0, bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-2.0, bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-9.0, bpm.GetValueList()));
+   EXPECT_TRUE(EXPECT_CONTAIN(-1.0, bpm.GetValueList()));
 
-   bpm.remove_interaction({}          );
-   bpm.remove_interaction({7}         );
-   bpm.remove_interaction({2, 11}     );
-   bpm.remove_interaction({11, 12, 14});
+   bpm.RemoveInteraction({}          );
+   bpm.RemoveInteraction({7}         );
+   bpm.RemoveInteraction({2, 11}     );
+   bpm.RemoveInteraction({11, 12, 14});
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}          ), 0.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({7}         ), 0.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 11}     ), 0.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({11, 12, 14}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}          ), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({7}         ), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 11}     ), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({11, 12, 14}), 0.0);
    
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{}          ), 0);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{7}         ), 0);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 11}     ), 0);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{}          ), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{7}         ), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{2, 11}     ), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{11, 12, 14}), 0);
    
-   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm._get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm._get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm._get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm.GetValueList()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm.GetValueList()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm.GetValueList()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm.GetValueList()));
    
    StateTestBPMUINT(bpm);
    
 }
 
-TEST(remove_interactionBPM, remove_all) {
+TEST(RemoveInteractionBPM, remove_all) {
    
    Polynomial<uint32_t, double> polynomial = GeneratePolynomialUINT();
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
    for (const auto &it: polynomial) {
-      bpm.remove_interaction(it.first);
+      bpm.RemoveInteraction(it.first);
    };
    
    StateTestBPMEmpty(bpm);
    
 }
 
-TEST(remove_interactions_fromBPM, basic) {
+TEST(RemoveInteractionsFromBPM, basic) {
    
    Polynomial<uint32_t, double> polynomial {
       //linear biases
@@ -871,28 +871,28 @@ TEST(remove_interactions_fromBPM, basic) {
       {11, 14, 12}, {7}, {11, 2}, {}
    };
    
-   bpm.remove_interactions_from(removed_key_list);
+   bpm.RemoveInteractionsFrom(removed_key_list);
       
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}          ), 0.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({7}         ), 0.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 11}     ), 0.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({11, 12, 14}), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}          ), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({7}         ), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 11}     ), 0.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({11, 12, 14}), 0.0);
    
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{}          ), 0);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{7}         ), 0);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{2, 11}     ), 0);
-   EXPECT_EQ(std::count(bpm._get_keys().begin(), bpm._get_keys().end(), std::vector<uint32_t>{11, 12, 14}), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{}          ), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{7}         ), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{2, 11}     ), 0);
+   EXPECT_EQ(std::count(bpm.GetKeyList().begin(), bpm.GetKeyList().end(), std::vector<uint32_t>{11, 12, 14}), 0);
    
-   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm._get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm._get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm._get_values()));
-   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm._get_values()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-3.0, bpm.GetValueList()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-2.0, bpm.GetValueList()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-9.0, bpm.GetValueList()));
+   EXPECT_FALSE(EXPECT_CONTAIN(-1.0, bpm.GetValueList()));
    
    StateTestBPMUINT(bpm);
    
 }
 
-TEST(remove_interactions_fromBPM, remove_all) {
+TEST(RemoveInteractionsFromBPM, remove_all) {
    
    Polynomial<uint32_t, double> polynomial = GeneratePolynomialUINT();
    
@@ -904,13 +904,13 @@ TEST(remove_interactions_fromBPM, remove_all) {
       removed_key_list.push_back(it.first);
    }
    
-   bpm.remove_interactions_from(removed_key_list);
+   bpm.RemoveInteractionsFrom(removed_key_list);
    
    StateTestBPMEmpty(bpm);
    
 }
 
-TEST(remove_offsetBPM, basic) {
+TEST(RemoveOffsetBPM, basic) {
    Polynomial<uint32_t, double> polynomial = {
       //linear biases
       {{1}, 1.0}, {{2}, 2.0}, {{3}, 3.0}, {{4}, 4.0},
@@ -928,12 +928,12 @@ TEST(remove_offsetBPM, basic) {
    
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   bpm.remove_offset();
+   bpm.RemoveOffset();
    
    StateTestBPMUINT(bpm);
 }
 
-TEST(energyBPM, SPIN) {
+TEST(EnergyBPM, SPIN) {
    
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
@@ -947,21 +947,21 @@ TEST(energyBPM, SPIN) {
    Sample<uint32_t> sample_variables_spin_2{{0, +1}, {1, -1}, {2, +1}};
    Sample<uint32_t> sample_variables_spin_3{{0, -1}, {1, -1}, {2, -1}};
 
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_1), +171.0);
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_2), -123.0);
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_spin_3), -81.0 );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_spin_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_spin_2), -123.0);
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_spin_3), -81.0 );
    
    std::vector<int32_t> sample_vec_variables_spin_1{+1, +1, +1};
    std::vector<int32_t> sample_vec_variables_spin_2{+1, -1, +1};
    std::vector<int32_t> sample_vec_variables_spin_3{-1, -1, -1};
    
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_spin_1), +171.0);
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_spin_2), -123.0);
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_spin_3), -81.0 );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_vec_variables_spin_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_vec_variables_spin_2), -123.0);
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_vec_variables_spin_3), -81.0 );
 
 }
 
-TEST(energyBPM, BINARY) {
+TEST(EnergyBPM, BINARY) {
    
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
@@ -975,21 +975,21 @@ TEST(energyBPM, BINARY) {
    Sample<uint32_t> sample_variables_binary_2{{0, +1}, {1, +0}, {2, +1}};
    Sample<uint32_t> sample_variables_binary_3{{0, +0}, {1, +0}, {2, +0}};
 
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_1), +171.0);
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_2), +24.0 );
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_3), 0.0   );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_binary_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_binary_2), +24.0 );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_binary_3), 0.0   );
    
    std::vector<int32_t> sample_vec_variables_binary_1{+1, +1, +1};
    std::vector<int32_t> sample_vec_variables_binary_2{+1, +0, +1};
    std::vector<int32_t> sample_vec_variables_binary_3{+0, +0, +0};
    
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_binary_1), +171.0);
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_binary_2), +24.0 );
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_vec_variables_binary_3), 0.0   );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_vec_variables_binary_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_vec_variables_binary_2), +24.0 );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_vec_variables_binary_3), 0.0   );
       
 }
 
-TEST(energiesBPM, SPIN) {
+TEST(EnergiesBPM, SPIN) {
    
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
@@ -1004,7 +1004,7 @@ TEST(energiesBPM, SPIN) {
       {{0, +1}, {1, -1}, {2, +1}},
       {{0, -1}, {1, -1}, {2, -1}}
    };
-   std::vector<double> en_vec = bpm.energies(sample_variables_spin);
+   std::vector<double> en_vec = bpm.Energies(sample_variables_spin);
    
    EXPECT_DOUBLE_EQ(en_vec[0], +171.0);
    EXPECT_DOUBLE_EQ(en_vec[1], -123.0);
@@ -1016,7 +1016,7 @@ TEST(energiesBPM, SPIN) {
       {-1, -1, -1}
    };
    
-   std::vector<double> en_vec_vec = bpm.energies(sample_vec_variables_spin);
+   std::vector<double> en_vec_vec = bpm.Energies(sample_vec_variables_spin);
    
    EXPECT_DOUBLE_EQ(en_vec_vec[0], +171.0);
    EXPECT_DOUBLE_EQ(en_vec_vec[1], -123.0);
@@ -1024,7 +1024,7 @@ TEST(energiesBPM, SPIN) {
    
 }
 
-TEST(energiesBPM, BINARY) {
+TEST(EnergiesBPM, BINARY) {
    
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
@@ -1040,7 +1040,7 @@ TEST(energiesBPM, BINARY) {
       {{0, +0}, {1, +0}, {2, +0}}
    };
    
-   std::vector<double> en_vec = bpm.energies(sample_variables_binary);
+   std::vector<double> en_vec = bpm.Energies(sample_variables_binary);
    
    EXPECT_DOUBLE_EQ(en_vec[0], +171.0);
    EXPECT_DOUBLE_EQ(en_vec[1], +24.0 );
@@ -1052,7 +1052,7 @@ TEST(energiesBPM, BINARY) {
       {+0, +0, +0}
    };
    
-   std::vector<double> en_vec_vec = bpm.energies(sample_vec_variables_binary);
+   std::vector<double> en_vec_vec = bpm.Energies(sample_vec_variables_binary);
    
    EXPECT_DOUBLE_EQ(en_vec_vec[0], +171.0);
    EXPECT_DOUBLE_EQ(en_vec_vec[1], +24.0 );
@@ -1060,7 +1060,7 @@ TEST(energiesBPM, BINARY) {
    
 }
 
-TEST(scaleBPM, all_scale) {
+TEST(ScaleBPM, all_scale) {
    
    Polynomial<uint32_t, double> polynomial = GeneratePolynomialUINT();
    
@@ -1070,13 +1070,13 @@ TEST(scaleBPM, all_scale) {
       
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   bpm.scale(0.5);
+   bpm.Scale(0.5);
    
    StateTestBPMUINT(bpm);
    
 }
 
-TEST(scaleBPM, ignored_interaction) {
+TEST(ScaleBPM, ignored_interaction) {
    
    Polynomial<uint32_t, double> polynomial = GeneratePolynomialUINT();
    
@@ -1086,21 +1086,21 @@ TEST(scaleBPM, ignored_interaction) {
       
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   bpm.scale(0.5, {{1,2}, {2, 4}, {1, 3, 4}});
+   bpm.Scale(0.5, {{1,2}, {2, 4}, {1, 3, 4}});
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 2}   ), 12.0*2 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({2, 4}   ), 24.0*2 );
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({1, 3, 4}), 134.0*2);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 2}   ), 12.0*2 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 4}   ), 24.0*2 );
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 3, 4}), 134.0*2);
 
-   bpm.add_interaction({1, 2}   , -12.0);
-   bpm.add_interaction({2, 4}   , -24.0);
-   bpm.add_interaction({1, 3, 4}, -134.0);
+   bpm.AddInteraction({1, 2}   , -12.0);
+   bpm.AddInteraction({2, 4}   , -24.0);
+   bpm.AddInteraction({1, 3, 4}, -134.0);
    
    StateTestBPMUINT(bpm);
 
 }
 
-TEST(scaleBPM, ignored_offset) {
+TEST(ScaleBPM, ignored_offset) {
    
    Polynomial<uint32_t, double> polynomial {
       {{}, 100.0}
@@ -1108,21 +1108,21 @@ TEST(scaleBPM, ignored_offset) {
       
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
    
-   bpm.scale(0.5, {std::vector<uint32_t>{}});
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}), 100.0);
+   bpm.Scale(0.5, {std::vector<uint32_t>{}});
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}), 100.0);
    
-   bpm.scale(0.5, {}, true);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}), 100.0);
+   bpm.Scale(0.5, {}, true);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}), 100.0);
    
-   bpm.scale(0.5, {{}}, true);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}), 100.0);
+   bpm.Scale(0.5, {{}}, true);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}), 100.0);
    
-   bpm.scale(0.5);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial({}), 50.0);
+   bpm.Scale(0.5);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial({}), 50.0);
    
 }
 
-TEST(normalizeBPM, all_normalize) {
+TEST(NormalizeBPM, all_normalize) {
    
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
@@ -1135,18 +1135,18 @@ TEST(normalizeBPM, all_normalize) {
    
    bpm.normalize({-1, 1});
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1}), 1.0/22.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({2}), 2.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({1}), 1.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({2}), 2.0/22.0);
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1}), 11.0/22.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 2}), 22.0/22.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1, 2}), 12.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({0, 1}), 11.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({0, 2}), 22.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({1, 2}), 12.0/22.0);
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2}), 12.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({0, 1, 2}), 12.0/22.0);
    
 }
 
-TEST(normalizeBPM, ignored_interaction) {
+TEST(NormalizeBPM, ignored_interaction) {
    
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
@@ -1159,77 +1159,77 @@ TEST(normalizeBPM, ignored_interaction) {
    
    bpm.normalize({-1, 1}, {{0, 1, 2}});
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1}), 1.0/22.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({2}), 2.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({1}), 1.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({2}), 2.0/22.0);
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1}), 11.0/22.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 2}), 22.0/22.0);
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({1, 2}), 12.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({0, 1}), 11.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({0, 2}), 22.0/22.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({1, 2}), 12.0/22.0);
    
-   EXPECT_DOUBLE_EQ(bpm.get_polynomial().at({0, 1, 2}), 12.0);
+   EXPECT_DOUBLE_EQ(bpm.GetPolynomial().at({0, 1, 2}), 12.0);
    
 }
 
-TEST(serializableBPM, UINT) {
+TEST(SerializableBPM, UINT) {
    BinaryPolynomialModel<uint32_t, double> bpm(GeneratePolynomialUINT(), Vartype::SPIN);
-   BinaryPolynomialModel<uint32_t, double> bpm_from = BinaryPolynomialModel<uint32_t, double>::from_serializable(bpm.to_serializable());
+   BinaryPolynomialModel<uint32_t, double> bpm_from = BinaryPolynomialModel<uint32_t, double>::FromSerializable(bpm.ToSerializable());
    StateTestBPMUINT(bpm_from);
 }
 
-TEST(serializableBPM, INT) {
+TEST(SerializableBPM, INT) {
    BinaryPolynomialModel<int32_t, double> bpm(GeneratePolynomialINT(), Vartype::SPIN);
-   BinaryPolynomialModel<int32_t, double> bpm_from = BinaryPolynomialModel<int32_t, double>::from_serializable(bpm.to_serializable());
+   BinaryPolynomialModel<int32_t, double> bpm_from = BinaryPolynomialModel<int32_t, double>::FromSerializable(bpm.ToSerializable());
    StateTestBPMINT(bpm_from);
 }
 
-TEST(serializableBPM, String) {
+TEST(SerializableBPM, String) {
    BinaryPolynomialModel<std::string, double> bpm(GeneratePolynomialString(), Vartype::SPIN);
-   BinaryPolynomialModel<std::string, double> bpm_from = BinaryPolynomialModel<std::string, double>::from_serializable(bpm.to_serializable());
+   BinaryPolynomialModel<std::string, double> bpm_from = BinaryPolynomialModel<std::string, double>::FromSerializable(bpm.ToSerializable());
    StateTestBPMString(bpm_from);
 }
 
-TEST(serializableBPM, StringToUINT) {
+TEST(SerializableBPM, StringToUINT) {
    BinaryPolynomialModel<std::string, double> bpm(GeneratePolynomialString(), Vartype::SPIN);
-   auto obj = bpm.to_serializable();
+   auto obj = bpm.ToSerializable();
    std::vector<std::size_t> string_to_num(obj["variables"].size());
    std::iota(string_to_num.begin(), string_to_num.end(), 1);
    obj["variables"] = string_to_num;
-   BinaryPolynomialModel<uint32_t, double> bpm_from = BinaryPolynomialModel<uint32_t, double>::from_serializable(obj);
+   BinaryPolynomialModel<uint32_t, double> bpm_from = BinaryPolynomialModel<uint32_t, double>::FromSerializable(obj);
    StateTestBPMUINT(bpm_from);
 }
 
-TEST(serializableBPM, StringToINT) {
+TEST(SerializableBPM, StringToINT) {
    BinaryPolynomialModel<std::string, double> bpm(GeneratePolynomialString(), Vartype::SPIN);
-   auto obj = bpm.to_serializable();
+   auto obj = bpm.ToSerializable();
    std::vector<std::size_t> string_to_num(4);
    string_to_num[0] = -1;
    string_to_num[1] = -2;
    string_to_num[2] = -3;
    string_to_num[3] = -4;
    obj["variables"] = string_to_num;
-   BinaryPolynomialModel<int32_t, double> bpm_from = BinaryPolynomialModel<int32_t, double>::from_serializable(obj);
+   BinaryPolynomialModel<int32_t, double> bpm_from = BinaryPolynomialModel<int32_t, double>::FromSerializable(obj);
    StateTestBPMINT(bpm_from);
 }
 
-TEST(from_hubo, MapUINT) {
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hubo(GeneratePolynomialUINT());
-   EXPECT_EQ(Vartype::BINARY, bpm.get_vartype());
+TEST(FromHubo, MapUINT) {
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHubo(GeneratePolynomialUINT());
+   EXPECT_EQ(Vartype::BINARY, bpm.GetVartype());
    StateTestBPMUINT(bpm);
 }
 
-TEST(from_hubo, MapINT) {
-   auto bpm = BinaryPolynomialModel<int32_t, double>::from_hubo(GeneratePolynomialINT());
-   EXPECT_EQ(Vartype::BINARY, bpm.get_vartype());
+TEST(FromHubo, MapINT) {
+   auto bpm = BinaryPolynomialModel<int32_t, double>::FromHubo(GeneratePolynomialINT());
+   EXPECT_EQ(Vartype::BINARY, bpm.GetVartype());
    StateTestBPMINT(bpm);
 }
 
-TEST(from_hubo, MapString) {
-   auto bpm = BinaryPolynomialModel<std::string, double>::from_hubo(GeneratePolynomialString());
-   EXPECT_EQ(Vartype::BINARY, bpm.get_vartype());
+TEST(FromHubo, MapString) {
+   auto bpm = BinaryPolynomialModel<std::string, double>::FromHubo(GeneratePolynomialString());
+   EXPECT_EQ(Vartype::BINARY, bpm.GetVartype());
    StateTestBPMString(bpm);
 }
 
-TEST(from_hubo, KeyValueUINT) {
+TEST(FromHubo, KeyValueUINT) {
    
    PolynomialKeyList<uint32_t> poly_key;
    PolynomialValueList<double> poly_value;
@@ -1239,14 +1239,14 @@ TEST(from_hubo, KeyValueUINT) {
       poly_value.push_back(it.second);
    }
       
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hubo(poly_key, poly_value);
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHubo(poly_key, poly_value);
 
-   EXPECT_EQ(Vartype::BINARY, bpm.get_vartype());
+   EXPECT_EQ(Vartype::BINARY, bpm.GetVartype());
    
    StateTestBPMUINT(bpm);
 }
 
-TEST(from_hubo, KeyValueINT) {
+TEST(FromHubo, KeyValueINT) {
    PolynomialKeyList<int32_t> poly_key;
    PolynomialValueList<double> poly_value;
    
@@ -1255,14 +1255,14 @@ TEST(from_hubo, KeyValueINT) {
       poly_value.push_back(it.second);
    }
       
-   auto bpm = BinaryPolynomialModel<int32_t, double>::from_hubo(poly_key, poly_value);
+   auto bpm = BinaryPolynomialModel<int32_t, double>::FromHubo(poly_key, poly_value);
 
-   EXPECT_EQ(Vartype::BINARY, bpm.get_vartype());
+   EXPECT_EQ(Vartype::BINARY, bpm.GetVartype());
    
    StateTestBPMINT(bpm);
 }
 
-TEST(from_hubo, KeyValueString) {
+TEST(FromHubo, KeyValueString) {
    PolynomialKeyList<std::string> poly_key;
    PolynomialValueList<double> poly_value;
    
@@ -1271,32 +1271,32 @@ TEST(from_hubo, KeyValueString) {
       poly_value.push_back(it.second);
    }
       
-   auto bpm = BinaryPolynomialModel<std::string, double>::from_hubo(poly_key, poly_value);
+   auto bpm = BinaryPolynomialModel<std::string, double>::FromHubo(poly_key, poly_value);
 
-   EXPECT_EQ(Vartype::BINARY, bpm.get_vartype());
+   EXPECT_EQ(Vartype::BINARY, bpm.GetVartype());
    
    StateTestBPMString(bpm);
 }
 
-TEST(from_hising, MapUINT) {
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hising(GeneratePolynomialUINT());
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+TEST(FromHising, MapUINT) {
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHising(GeneratePolynomialUINT());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMUINT(bpm);
 }
 
-TEST(from_hising, MapINT) {
-   auto bpm = BinaryPolynomialModel<int32_t, double>::from_hising(GeneratePolynomialINT());
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+TEST(FromHising, MapINT) {
+   auto bpm = BinaryPolynomialModel<int32_t, double>::FromHising(GeneratePolynomialINT());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMINT(bpm);
 }
 
-TEST(from_hising, MapString) {
-   auto bpm = BinaryPolynomialModel<std::string, double>::from_hising(GeneratePolynomialString());
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+TEST(FromHising, MapString) {
+   auto bpm = BinaryPolynomialModel<std::string, double>::FromHising(GeneratePolynomialString());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    StateTestBPMString(bpm);
 }
 
-TEST(from_hising, KeyValueUINT) {
+TEST(FromHising, KeyValueUINT) {
    
    PolynomialKeyList<uint32_t> poly_key;
    PolynomialValueList<double> poly_value;
@@ -1306,14 +1306,14 @@ TEST(from_hising, KeyValueUINT) {
       poly_value.push_back(it.second);
    }
       
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hising(poly_key, poly_value);
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHising(poly_key, poly_value);
 
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    
    StateTestBPMUINT(bpm);
 }
 
-TEST(from_hising, KeyValueINT) {
+TEST(FromHising, KeyValueINT) {
    PolynomialKeyList<int32_t> poly_key;
    PolynomialValueList<double> poly_value;
    
@@ -1322,14 +1322,14 @@ TEST(from_hising, KeyValueINT) {
       poly_value.push_back(it.second);
    }
       
-   auto bpm = BinaryPolynomialModel<int32_t, double>::from_hising(poly_key, poly_value);
+   auto bpm = BinaryPolynomialModel<int32_t, double>::FromHising(poly_key, poly_value);
 
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    
    StateTestBPMINT(bpm);
 }
 
-TEST(from_hising, KeyValueString) {
+TEST(FromHising, KeyValueString) {
    PolynomialKeyList<std::string> poly_key;
    PolynomialValueList<double> poly_value;
    
@@ -1338,14 +1338,14 @@ TEST(from_hising, KeyValueString) {
       poly_value.push_back(it.second);
    }
       
-   auto bpm = BinaryPolynomialModel<std::string, double>::from_hising(poly_key, poly_value);
+   auto bpm = BinaryPolynomialModel<std::string, double>::FromHising(poly_key, poly_value);
 
-   EXPECT_EQ(Vartype::SPIN, bpm.get_vartype());
+   EXPECT_EQ(Vartype::SPIN, bpm.GetVartype());
    
    StateTestBPMString(bpm);
 }
 
-TEST(clearBPM, basic) {
+TEST(ClearBPM, basic) {
    Polynomial<uint32_t, double> polynomial {
       {{0}, 0.0}, {{1}, 1.0}, {{2}, 2.0},
       {{0, 1}, 11.0}, {{0, 2}, 22.0}, {{1, 2}, 12.0},
@@ -1356,99 +1356,99 @@ TEST(clearBPM, basic) {
 
    BinaryPolynomialModel<uint32_t, double> bpm(polynomial, vartype);
 
-   bpm.clear();
+   bpm.Clear();
    
    Sample<uint32_t> sample_variables_binary_1{{0, +1}, {1, +1}, {2, +1}};
    Sample<uint32_t> sample_variables_binary_2{{0, +1}, {1, +0}, {2, +1}};
    Sample<uint32_t> sample_variables_binary_3{{0, +0}, {1, +0}, {2, +0}};
    
-   EXPECT_TRUE(bpm.get_polynomial().empty());
+   EXPECT_TRUE(bpm.GetPolynomial().empty());
    EXPECT_TRUE(bpm.GetVariables().empty());
-   EXPECT_EQ(bpm.get_vartype(), Vartype::BINARY);
+   EXPECT_EQ(bpm.GetVartype(), Vartype::BINARY);
    
    //Chech if the methods in Binary Polynomial Model work properly after executing empty()
-   EXPECT_EQ(bpm.get_num_variables(), 0);
-   bpm.remove_variable(1);
-   bpm.remove_variables_from(std::vector<uint32_t>{1,2,3,4,5});
-   bpm.remove_interaction(std::vector<uint32_t>{1,2});
-   bpm.remove_interactions_from(std::vector<std::vector<uint32_t>>{{1,2},{1,3},{1,4}});
-   bpm.scale(1.0);
+   EXPECT_EQ(bpm.GetNumVariables(), 0);
+   bpm.RemoveVariable(1);
+   bpm.RemoveVariablesFrom(std::vector<uint32_t>{1,2,3,4,5});
+   bpm.RemoveInteraction(std::vector<uint32_t>{1,2});
+   bpm.RemoveInteractionsFrom(std::vector<std::vector<uint32_t>>{{1,2},{1,3},{1,4}});
+   bpm.Scale(1.0);
    bpm.normalize();
    
    //energy
-   EXPECT_THROW(bpm.energy(sample_variables_binary_1), std::runtime_error);
-   EXPECT_THROW(bpm.energy(sample_variables_binary_2), std::runtime_error);
-   EXPECT_THROW(bpm.energy(sample_variables_binary_3), std::runtime_error);
+   EXPECT_THROW(bpm.Energy(sample_variables_binary_1), std::runtime_error);
+   EXPECT_THROW(bpm.Energy(sample_variables_binary_2), std::runtime_error);
+   EXPECT_THROW(bpm.Energy(sample_variables_binary_3), std::runtime_error);
    
    //Reset polynomial model
-   bpm.add_interaction({0, 1}   , 11.0, Vartype::BINARY);
-   bpm.add_interaction({0, 2}   , 22.0);
-   bpm.add_interaction({1, 2}   , 12.0);
-   bpm.add_interaction({0, 1, 2}, 123.0);
+   bpm.AddInteraction({0, 1}   , 11.0, Vartype::BINARY);
+   bpm.AddInteraction({0, 2}   , 22.0);
+   bpm.AddInteraction({1, 2}   , 12.0);
+   bpm.AddInteraction({0, 1, 2}, 123.0);
    
-   bpm.add_interaction({0}, 0.0);
-   bpm.add_interaction({1}, 1.0);
-   bpm.add_interaction({2}, 2.0);
+   bpm.AddInteraction({0}, 0.0);
+   bpm.AddInteraction({1}, 1.0);
+   bpm.AddInteraction({2}, 2.0);
    
    //Check energy
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_1), +171.0);
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_2), +24.0 );
-   EXPECT_DOUBLE_EQ(bpm.energy(sample_variables_binary_3), 0.0   );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_binary_1), +171.0);
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_binary_2), +24.0 );
+   EXPECT_DOUBLE_EQ(bpm.Energy(sample_variables_binary_3), 0.0   );
    
-   EXPECT_EQ(bpm.get_num_variables(), 3);
+   EXPECT_EQ(bpm.GetNumVariables(), 3);
    
    EXPECT_EQ(bpm.GetVariables().count(0), 1);
    EXPECT_EQ(bpm.GetVariables().count(1), 1);
    EXPECT_EQ(bpm.GetVariables().count(2), 1);
    
-   for (const auto &it: bpm.get_polynomial()) {
+   for (const auto &it: bpm.GetPolynomial()) {
       EXPECT_DOUBLE_EQ(it.second, polynomial[it.first]);
    }
    
-   EXPECT_EQ(bpm.get_vartype(), Vartype::BINARY);
+   EXPECT_EQ(bpm.GetVartype(), Vartype::BINARY);
    
 }
 
-TEST(vartypeBPM, SpinBinarySpin) {
+TEST(VartypeBPM, SpinBinarySpin) {
    
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hising(GeneratePolynomialUINT());
-   auto bpm_binary = BinaryPolynomialModel<uint32_t, double>(bpm.to_hubo(), Vartype::BINARY);
-   auto bpm_ising  = BinaryPolynomialModel<uint32_t, double>(bpm_binary.to_hising(), Vartype::SPIN);
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHising(GeneratePolynomialUINT());
+   auto bpm_binary = BinaryPolynomialModel<uint32_t, double>(bpm.ToHubo(), Vartype::BINARY);
+   auto bpm_ising  = BinaryPolynomialModel<uint32_t, double>(bpm_binary.ToHising(), Vartype::SPIN);
    
    StateTestBPMUINT(bpm_ising);
    
 }
 
-TEST(vartypeBPM, BinarySPINBinary) {
+TEST(VartypeBPM, BinarySPINBinary) {
    
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hubo(GeneratePolynomialUINT());
-   auto bpm_ising  = BinaryPolynomialModel<uint32_t, double>(bpm.to_hising(), Vartype::SPIN);
-   auto bpm_bianry = BinaryPolynomialModel<uint32_t, double>(bpm_ising.to_hubo(), Vartype::BINARY);
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHubo(GeneratePolynomialUINT());
+   auto bpm_ising  = BinaryPolynomialModel<uint32_t, double>(bpm.ToHising(), Vartype::SPIN);
+   auto bpm_bianry = BinaryPolynomialModel<uint32_t, double>(bpm_ising.ToHubo(), Vartype::BINARY);
    
    StateTestBPMUINT(bpm_bianry);
    
 }
 
-TEST(vartypeBPM, change_vartypeSpinBinarySpin) {
+TEST(VartypeBPM, ChangeVartypeSpinBinarySpin) {
    
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hising(GeneratePolynomialUINT());
-   auto bpm_binary = bpm.change_vartype(Vartype::BINARY, true);
-   auto bpm_ising  = bpm_binary.change_vartype(Vartype::SPIN, true);
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHising(GeneratePolynomialUINT());
+   auto bpm_binary = bpm.ChangeVartype(Vartype::BINARY, true);
+   auto bpm_ising  = bpm_binary.ChangeVartype(Vartype::SPIN, true);
    
    StateTestBPMUINT(bpm_ising);
-   bpm.change_vartype(Vartype::SPIN);
+   bpm.ChangeVartype(Vartype::SPIN);
    StateTestBPMUINT(bpm);
    
 }
 
-TEST(vartypeBPM, change_vartypeBinarySPINBinary) {
+TEST(VartypeBPM, ChangeVartypeBinarySPINBinary) {
    
-   auto bpm = BinaryPolynomialModel<uint32_t, double>::from_hubo(GeneratePolynomialUINT());
-   auto bpm_ising  = bpm.change_vartype(Vartype::SPIN, true);
-   auto bpm_binary = bpm_ising.change_vartype(Vartype::BINARY, true);
+   auto bpm = BinaryPolynomialModel<uint32_t, double>::FromHubo(GeneratePolynomialUINT());
+   auto bpm_ising  = bpm.ChangeVartype(Vartype::SPIN, true);
+   auto bpm_binary = bpm_ising.ChangeVartype(Vartype::BINARY, true);
    
    StateTestBPMUINT(bpm_binary);
-   bpm.change_vartype(Vartype::BINARY);
+   bpm.ChangeVartype(Vartype::BINARY);
    StateTestBPMUINT(bpm);
    
 }

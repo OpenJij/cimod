@@ -359,7 +359,7 @@ def make_BinaryPolynomialModel(polynomial, index_type = None, tuple_size = 0):
             elif inplace == False:
                 Model = self._model_selector()
                 if to_cxxcimod(self.vartype) == vartype:
-                    return Model(self._get_keys(), self._get_values(), vartype)
+                    return Model(self.get_key_list(), self.get_value_list(), vartype)
                 else:
                     if vartype == cxxcimod.SPIN:
                         return Model(self.to_hising(), vartype)
