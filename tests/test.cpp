@@ -251,6 +251,20 @@ void StateTestBPMUINT(const BinaryPolynomialModel<uint32_t, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.GetPolynomial({2, 3, 4}   ), 234.0 );
    EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 2, 3, 4}), 1234.0);
    
+   //Polynomial duplicate key
+   if (bpm.GetVartype() == cimod::Vartype::SPIN) {
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 1, 1}         ), 1.0 );
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 1, 1, 2}      ), 12.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 3, 3, 3}      ), 13.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({3, 2, 3, 2, 3, 2}), 23.0);
+   }
+   else if (bpm.GetVartype() == cimod::Vartype::BINARY) {
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 1, 1, 1}         ), 1.0 );
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 1, 1, 2, 2}      ), 12.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({1, 3, 3, 3, 1}      ), 13.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({3, 2, 3, 2, 3, 2, 2}), 23.0);
+   }
+   
    //variables_to_integers
    EXPECT_EQ(bpm.GetVariablesToIntegers(1), 0);
    EXPECT_EQ(bpm.GetVariablesToIntegers(2), 1);
@@ -332,6 +346,20 @@ void StateTestBPMINT(const BinaryPolynomialModel<int32_t, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -3, -2}    ), 234.0 );
    EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-4, -3, -2, -1}), 1234.0);
    
+   //Polynomial duplicate key
+   if (bpm.GetVartype() == cimod::Vartype::SPIN) {
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-1, -1, -1}            ), 1.0 );
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-1, -1, -1, -2}        ), 12.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-1, -3, -3, -3}        ), 13.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-3, -2, -3, -2, -3, -2}), 23.0);
+   }
+   else if (bpm.GetVartype() == cimod::Vartype::BINARY) {
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-1, -1, -1, -1}            ), 1.0 );
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-1, -1, -1, -2, -2}        ), 12.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-1, -3, -3, -3, -1}        ), 13.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({-3, -2, -3, -2, -3, -2, -2}), 23.0);
+   }
+   
    //variables_to_integers
    EXPECT_EQ(bpm.GetVariablesToIntegers(-4), 0);
    EXPECT_EQ(bpm.GetVariablesToIntegers(-3), 1);
@@ -412,6 +440,20 @@ void StateTestBPMString(const BinaryPolynomialModel<std::string, double> &bpm) {
    EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "c", "d"}     ), 134.0 );
    EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"b", "c", "d"}     ), 234.0 );
    EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "b", "c", "d"}), 1234.0);
+   
+   //Polynomial duplicate key
+   if (bpm.GetVartype() == cimod::Vartype::SPIN) {
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "a", "a"}            ), 1.0 );
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "a", "a", "b"}        ), 12.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "c", "c", "c"}        ), 13.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"c", "b", "c", "b", "c", "b"}), 23.0);
+   }
+   else if (bpm.GetVartype() == cimod::Vartype::BINARY) {
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "a", "a", "a"}            ), 1.0 );
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "a", "a", "b", "b"}        ), 12.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"a", "c", "c", "c", "a"}        ), 13.0);
+      EXPECT_DOUBLE_EQ(bpm.GetPolynomial({"c", "b", "c", "b", "c", "b", "b"}), 23.0);
+   }
    
    //variables_to_integers
    EXPECT_EQ(bpm.GetVariablesToIntegers("a"), 0);
@@ -753,8 +795,6 @@ TEST(AddInteractionsFromBPM, PolyKeyValue) {
    
 }
 
-
-
 TEST(AddOffsetBPM, basic) {
    Polynomial<uint32_t, double> polynomial;
    
@@ -846,6 +886,42 @@ TEST(RemoveInteractionBPM, remove_all) {
    
    StateTestBPMEmpty(bpm);
    
+}
+
+TEST(RemoveInteractionBPM, self_loop_SPIN) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{1}, 1.0}, {{2}, 2.0},
+      {{1, 2}, 12.0},
+      {{1, 2, 3}, 123.0}
+   };
+   
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::SPIN);
+   
+   bpm.RemoveInteraction({1, 1, 1});
+   bpm.RemoveInteraction({2, 2, 2, 2, 2});
+   bpm.RemoveInteraction({1, 1, 1, 2, 2, 2, 2, 2});
+   bpm.RemoveInteraction({1, 1, 1, 2, 2, 2, 3, 3, 3});
+   
+   StateTestBPMEmpty(bpm);
+}
+
+TEST(RemoveInteractionBPM, self_loop_BINARY) {
+   
+   Polynomial<uint32_t, double> polynomial {
+      {{1}, 1.0}, {{2}, 2.0},
+      {{1, 2}, 12.0},
+      {{1, 2, 3}, 123.0}
+   };
+   
+   BinaryPolynomialModel<uint32_t, double> bpm(polynomial, Vartype::BINARY);
+   
+   bpm.RemoveInteraction({1, 1});
+   bpm.RemoveInteraction({2, 2, 2, 2});
+   bpm.RemoveInteraction({1, 1, 1, 2, 2, 2});
+   bpm.RemoveInteraction({1, 1, 2, 2, 2, 3});
+   
+   StateTestBPMEmpty(bpm);
 }
 
 TEST(RemoveInteractionsFromBPM, basic) {
