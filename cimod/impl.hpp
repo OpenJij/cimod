@@ -111,8 +111,8 @@ inline void declare_BPM(py::module& m, const std::string& name){
         "variables"_a, "keys_distance"_a, "values"_a, "vartype"_a)
    .def("get_polynomial"          , [](const BPM& self) {
       py::dict py_polynomial;
-      const auto &poly_key_list   = self._get_keys();
-      const auto &poly_value_list = self._get_values();
+      const auto &poly_key_list   = self.GetKeyList();
+      const auto &poly_value_list = self.GetValueList();
       for (std::size_t i = 0; i < poly_key_list.size(); ++i) {
          py::tuple tuple;
          for (const auto &index: poly_key_list[i]) {
@@ -122,41 +122,41 @@ inline void declare_BPM(py::module& m, const std::string& name){
       }
       return py_polynomial;
    })
-   .def("get_polynomial"          , py::overload_cast<std::vector<IndexType>&>(&BPM::get_polynomial, py::const_), "key"_a)
-   .def("get_variables_to_integers",py::overload_cast<>(&BPM::get_variables_to_integers))
-   .def("get_variables_to_integers",py::overload_cast<const IndexType&>(&BPM::get_variables_to_integers), "v"_a)
-   .def("_get_keys"               , &BPM::_get_keys)
-   .def("_get_values"             , &BPM::_get_values)
-   .def("get_variables"           , py::overload_cast<>(&BPM::get_sorted_variables))
-   .def("indices"                 , &BPM::indices)
-   .def("get_degree"              , &BPM::get_degree)
-   .def("get_offset"              , &BPM::get_offset)
-   .def("get_vartype"             , &BPM::get_vartype)
-   .def("get_num_interactions"    , &BPM::get_num_interactions)
-   .def("get_num_variables"       , &BPM::get_num_variables)
-   .def("empty"                   , &BPM::empty, "vartype"_a)
-   .def("clear"                   , &BPM::clear)
-   .def("remove_interaction"      , py::overload_cast<std::vector<IndexType>&>(&BPM::remove_interaction), "key"_a)
-   .def("remove_interactions_from", py::overload_cast<PolynomialKeyList<IndexType>&>(&BPM::remove_interactions_from), "keys"_a)
-   .def("remove_offset"           , &BPM::remove_offset)
-   .def("remove_variable"         , &BPM::remove_variable, "v"_a)
-   .def("remove_variables_from"   , &BPM::remove_variables_from, "variables"_a)
-   .def("add_interaction"         , py::overload_cast<std::vector<IndexType>&, const FloatType&, const Vartype>(&BPM::add_interaction), "key"_a, "value"_a, "vartype"_a = Vartype::NONE)
-   .def("add_interactions_from"   , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&, const Vartype>(&BPM::add_interactions_from), "keys"_a, "values"_a, "vartype"_a = Vartype::NONE)
-   .def("add_interactions_from"   , py::overload_cast<const Polynomial<IndexType, FloatType>&, const Vartype>(&BPM::add_interactions_from), "polynomial"_a, "vartype"_a = Vartype::NONE)
-   .def("add_offset"              , &BPM::add_offset, "offset"_a)
-   .def("energy"                  , py::overload_cast<const Sample<IndexType>&, bool>(&BPM::energy, py::const_), "sample"_a, "omp_flag"_a = true)
-   .def("energy"                  , py::overload_cast<const std::vector<int32_t>&, bool>(&BPM::energy), "sample"_a, "omp_flag"_a = true)
-   .def("energies"                , py::overload_cast<const std::vector<Sample<IndexType>>&>(&BPM::energies, py::const_), "samples"_a)
-   .def("energies"                , py::overload_cast<const std::vector<std::vector<int32_t>>&>(&BPM::energies), "samples"_a)
-   .def("scale"                   , &BPM::scale, "scalar"_a, "ignored_interactions"_a = PolynomialKeyList<IndexType>{}, "ignored_offset"_a = false)
+   .def("get_polynomial"           , py::overload_cast<std::vector<IndexType>&>(&BPM::GetPolynomial, py::const_), "key"_a)
+   .def("get_variables_to_integers",py::overload_cast<>(&BPM::GetVariablesToIntegers))
+   .def("get_variables_to_integers",py::overload_cast<const IndexType&>(&BPM::GetVariablesToIntegers), "v"_a)
+   .def("get_key_list"            , &BPM::GetKeyList)
+   .def("get_value_list"          , &BPM::GetValueList)
+   .def("get_variables"           , py::overload_cast<>(&BPM::GetSortedVariables))
+   .def("indices"                 , py::overload_cast<>(&BPM::GetSortedVariables))//This will be depricated
+   .def("get_degree"              , &BPM::GetDegree)
+   .def("get_offset"              , &BPM::GetOffset)
+   .def("get_vartype"             , &BPM::GetVartype)
+   .def("get_num_interactions"    , &BPM::GetNumInteractions)
+   .def("get_num_variables"       , &BPM::GetNumVariables)
+   .def("empty"                   , &BPM::Empty, "vartype"_a)
+   .def("clear"                   , &BPM::Clear)
+   .def("remove_interaction"      , py::overload_cast<std::vector<IndexType>&>(&BPM::RemoveInteraction), "key"_a)
+   .def("remove_interactions_from", py::overload_cast<PolynomialKeyList<IndexType>&>(&BPM::RemoveInteractionsFrom), "keys"_a)
+   .def("remove_offset"           , &BPM::RemoveOffset)
+   .def("remove_variable"         , &BPM::RemoveVariable, "v"_a)
+   .def("remove_variables_from"   , &BPM::RemoveVariablesFrom, "variables"_a)
+   .def("add_interaction"         , py::overload_cast<std::vector<IndexType>&, const FloatType&, const Vartype>(&BPM::AddInteraction), "key"_a, "value"_a, "vartype"_a = Vartype::NONE)
+   .def("add_interactions_from"   , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&, const Vartype>(&BPM::AddInteractionsFrom), "keys"_a, "values"_a, "vartype"_a = Vartype::NONE)
+   .def("add_interactions_from"   , py::overload_cast<const Polynomial<IndexType, FloatType>&, const Vartype>(&BPM::AddInteractionsFrom), "polynomial"_a, "vartype"_a = Vartype::NONE)
+   .def("add_offset"              , &BPM::AddOffset, "offset"_a)
+   .def("energy"                  , py::overload_cast<const Sample<IndexType>&, bool>(&BPM::Energy, py::const_), "sample"_a, "omp_flag"_a = true)
+   .def("energy"                  , py::overload_cast<const std::vector<int32_t>&, bool>(&BPM::Energy), "sample"_a, "omp_flag"_a = true)
+   .def("energies"                , py::overload_cast<const std::vector<Sample<IndexType>>&>(&BPM::Energies, py::const_), "samples"_a)
+   .def("energies"                , py::overload_cast<const std::vector<std::vector<int32_t>>&>(&BPM::Energies), "samples"_a)
+   .def("scale"                   , &BPM::Scale, "scalar"_a, "ignored_interactions"_a = PolynomialKeyList<IndexType>{}, "ignored_offset"_a = false)
    .def("normalize"               , &BPM::normalize, "range"_a = std::pair<FloatType, FloatType>{1.0, 1.0}, "ignored_interactions"_a = PolynomialKeyList<IndexType>{}, "ignored_offset"_a = false)
-   .def("change_vartype"          , py::overload_cast<const Vartype, const bool>(&BPM::change_vartype), "vartype"_a, "inplace"_a)
-   .def("change_vartype"          , py::overload_cast<const Vartype>(&BPM::change_vartype), "vartype"_a)
-   .def("has_variable"            , &BPM::has_variable, "v"_a)
+   .def("change_vartype"          , py::overload_cast<const Vartype, const bool>(&BPM::ChangeVartype), "vartype"_a, "inplace"_a)
+   .def("change_vartype"          , py::overload_cast<const Vartype>(&BPM::ChangeVartype), "vartype"_a)
+   .def("has_variable"            , &BPM::HasVariable, "v"_a)
    .def("to_hubo"                 , [](const BPM& self){
       py::dict py_polynomial;
-      for (const auto &it: self.to_hubo()) {
+      for (const auto &it: self.ToHubo()) {
          py::tuple tuple;
          for (const auto &index: it.first) {
             tuple = tuple + py::make_tuple(index);
@@ -167,7 +167,7 @@ inline void declare_BPM(py::module& m, const std::string& name){
    })
    .def("to_hising"               , [](const BPM& self) {
       py::dict py_polynomial;
-      for (const auto &it: self.to_hising()) {
+      for (const auto &it: self.ToHising()) {
          py::tuple tuple;
          for (const auto &index: it.first) {
             tuple = tuple + py::make_tuple(index);
@@ -176,15 +176,15 @@ inline void declare_BPM(py::module& m, const std::string& name){
       }
       return py_polynomial;
    })
-   .def("to_serializable"         , [](const BPM& self){return static_cast<py::object>(self.to_serializable());})
-   .def_static("from_serializable", [](const py::object& input){return BPM::from_serializable(static_cast<nlohmann::json>(input));}, "input"_a)
-   .def_static("from_hubo"        , py::overload_cast<const Polynomial<IndexType, FloatType>&>(&BPM::from_hubo), "polynomial"_a)
-   .def_static("from_hubo"        , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&>(&BPM::from_hubo), "keys"_a, "value"_a)
-   .def_static("from_hising"      , py::overload_cast<const Polynomial<IndexType, FloatType>&>(&BPM::from_hising), "polynomial"_a)
-   .def_static("from_hising"      , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&>(&BPM::from_hising), "keys"_a, "value"_a)
+   .def("to_serializable"         , [](const BPM& self){return static_cast<py::object>(self.ToSerializable());})
+   .def_static("from_serializable", [](const py::object& input){return BPM::FromSerializable(static_cast<nlohmann::json>(input));}, "input"_a)
+   .def_static("from_hubo"        , py::overload_cast<const Polynomial<IndexType, FloatType>&>(&BPM::FromHubo), "polynomial"_a)
+   .def_static("from_hubo"        , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&>(&BPM::FromHubo), "keys"_a, "value"_a)
+   .def_static("from_hising"      , py::overload_cast<const Polynomial<IndexType, FloatType>&>(&BPM::FromHising), "polynomial"_a)
+   .def_static("from_hising"      , py::overload_cast<PolynomialKeyList<IndexType>&, const PolynomialValueList<FloatType>&>(&BPM::FromHising), "keys"_a, "value"_a)
    .def("__repr__", [](const BPM& self) {
-      const auto &poly_key_list   = self._get_keys();
-      const auto &poly_value_list = self._get_values();
+      const auto &poly_key_list   = self.GetKeyList();
+      const auto &poly_value_list = self.GetValueList();
       std::ostringstream out;
       out << "cxxcimod.BinaryPolynomialModel({";
       for (std::size_t i = 0; i < poly_key_list.size(); ++i) {
@@ -201,10 +201,10 @@ inline void declare_BPM(py::module& m, const std::string& name){
          }
       }
       out << "}, ";
-      if (self.get_vartype() == Vartype::SPIN) {
+      if (self.GetVartype() == Vartype::SPIN) {
          out << "Vartype.SPIN" << ")";
       }
-      else if (self.get_vartype() == Vartype::BINARY){
+      else if (self.GetVartype() == Vartype::BINARY){
          out << "Vartype.BINARY" << ")";
       }
       else {
