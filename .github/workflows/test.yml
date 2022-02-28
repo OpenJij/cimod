@@ -18,7 +18,7 @@ jobs:
          - os: macos-latest  
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3.0.0
         name: Install Python
         with:
           python-version: ${{env.Python_Version}}
