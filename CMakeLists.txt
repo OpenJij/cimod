@@ -118,7 +118,7 @@ else()
   endif()
 endif()
 
-
+set(CMAKE_CXX_FLAGS_RELEASE "-Ofast")
 
 if (APPLE)
     find_package(BLAS)
