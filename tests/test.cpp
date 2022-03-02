@@ -3,6 +3,7 @@
 #include "../src/binary_quadratic_model.hpp"
 #include "../src/binary_polynomial_model.hpp"
 #include "../src/binary_quadratic_model_dict.hpp"
+#include "../src/binary_polynomial_model_variant.hpp"
 
 #include "test_bqm.hpp"
 
@@ -1529,6 +1530,10 @@ TEST(VartypeBPM, ChangeVartypeBinarySPINBinary) {
    
 }
 
+TEST(BPMV, Basic) {
+   BinaryPolynomialModelVariant<double> bpm(Vartype::SPIN);
+   bpm.AddInteraction({1, "a"}, 2.0);
+}
 
 
 }

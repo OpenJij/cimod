@@ -25,6 +25,7 @@
 #include <binary_quadratic_model.hpp>
 #include <binary_quadratic_model_dict.hpp>
 #include <binary_polynomial_model.hpp>
+#include <binary_polynomial_model_variant.hpp>
 
 #include <sstream>
 
@@ -213,5 +214,18 @@ inline void declare_BPM(py::module& m, const std::string& name){
       return out.str();
    });
    
+   
+}
+
+
+template<typename FloatType>
+inline void declare_BPM_variant(py::module& m, const std::string& name) {
+   
+   using BPM = BinaryPolynomialModelVariant<FloatType>;
+   using IndexType = typename BPM::IndexType;
+   auto py_c = py::class_<BPM>(m, name.c_str());
+   
+   py_c.def(py::init<const Vartype>(), "vartype"_a);
+   py_c.def("add_interaction", py::overload_cast<std::vector<IndexType>&, const FloatType>(&BPM::AddInteraction), "key"_a, "value"_a);
    
 }

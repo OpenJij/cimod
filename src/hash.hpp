@@ -30,6 +30,7 @@
 #include <cstdint>
 #include <iostream>
 #include <vector>
+#include <variant>
 
 template<typename T>
     inline void hash_combine(std::size_t& seed, const T& val)
@@ -98,6 +99,75 @@ struct vector_hash {
       }
       return hash;
    }
+};
+
+struct VariantHash {
+   
+   using VariantVecType = std::vector<std::variant<std::int64_t, std::string>>;
+   
+   template<class... Types>
+   std::size_t operator() (const std::variant<Types...> &v) const {
+      if (std::holds_alternative<std::int64_t>(v)) {
+         return std::hash<std::int64_t>()(std::get<std::int64_t>(v));
+      }
+      else if (std::holds_alternative<std::string>(v)) {
+         return std::hash<std::string>()(std::get<std::string>(v));
+      }
+      else if (std::holds_alternative<VariantVecType>(v)) {
+         const auto &variant_vec = std::get<VariantVecType>(v);
+         std::size_t hash = variant_vec.size();
+         for (const auto &i : variant_vec) {
+            if (std::holds_alternative<std::int64_t>(i)) {
+               hash ^= std::hash<std::int64_t>()(std::get<std::int64_t>(i)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+            }
+            else if (std::holds_alternative<std::string>(i)) {
+               hash ^= std::hash<std::string>()(std::get<std::string>(i)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+            }
+            else {
+               throw std::runtime_error("Invalid template parameters");
+            }
+         }
+         return hash;
+      }
+      else {
+         throw std::runtime_error("Invalid template parameters");
+      }
+   }
+};
+
+struct VariantVectorHash {
+   using VariantType = std::variant<std::int64_t, std::string, std::vector<std::variant<std::int64_t, std::string>>>;
+   
+   std::size_t operator() (const std::vector<VariantType> &variant_vector) const {
+      std::size_t hash = variant_vector.size();
+      for (const auto &variant_value: variant_vector) {
+         if (std::holds_alternative<std::int64_t>(variant_value)) {
+            hash ^= std::hash<std::int64_t>()(std::get<std::int64_t>(variant_value)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+         }
+         else if (std::holds_alternative<std::string>(variant_value)) {
+            hash ^= std::hash<std::string>()(std::get<std::string>(variant_value)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+         }
+         else if (std::holds_alternative<std::vector<std::variant<std::int64_t, std::string>>>(variant_value)) {
+            for (const auto &v: std::get<std::vector<std::variant<std::int64_t, std::string>>>(variant_value)) {
+               if (std::holds_alternative<std::int64_t>(v)) {
+                  hash ^= std::hash<std::int64_t>()(std::get<std::int64_t>(v)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+               }
+               else if (std::holds_alternative<std::string>(v)) {
+                  hash ^= std::hash<std::string>()(std::get<std::string>(v)) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+               }
+               else {
+                  throw std::runtime_error("Invalid template parameters");
+               }
+            }
+         }
+         else {
+            throw std::runtime_error("Invalid template parameters");
+         }
+      }
+      return hash;
+   }
+   
+
 };
 
 }
