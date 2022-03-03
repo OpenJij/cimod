@@ -1,4 +1,4 @@
-//    Copyright 2021 Jij Inc.
+//    Copyright 2022 Jij Inc.
 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -227,5 +227,8 @@ inline void declare_BPM_variant(py::module& m, const std::string& name) {
    
    py_c.def(py::init<const Vartype>(), "vartype"_a);
    py_c.def("add_interaction", py::overload_cast<std::vector<IndexType>&, const FloatType>(&BPM::AddInteraction), "key"_a, "value"_a);
-   
+   py_c.def("add_interactions_from", py::overload_cast<std::vector<std::vector<IndexType>> &, const std::vector<FloatType> &>(&BPM::AddInteractionsFrom), "keys"_a, "values"_a);
+   py_c.def("add_interactions_from", py::overload_cast<std::vector<std::pair<std::vector<IndexType>, FloatType>> &>(&BPM::AddInteractionsFrom), "pair"_a);
+   py_c.def("add_interactions_from", py::overload_cast<const std::unordered_map<std::vector<IndexType>, FloatType, VariantVectorHash> &>(&BPM::AddInteractionsFrom), "poly"_a);
+
 }
