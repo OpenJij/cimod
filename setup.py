@@ -186,8 +186,8 @@ setup(
     ],
     install_requires=[
         "typing-extensions; python_version < '3.8'",
-        'numpy >= 1.18.4, !=1.21.0, !=1.21.1', 
-        'dimod >= 0.9.1, <0.11.0', 
+        'numpy >= 1.21.2', 
+        'dimod >= 0.9.1, <0.12.0', 
         'scipy'
     ],
     tests_require = [
