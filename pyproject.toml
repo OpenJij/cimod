@@ -15,23 +15,19 @@ build-verbosity = 1
 
 [tool.cibuildwheel.linux]
 build-frontend = "build"
-manylinux-x86_64-image = "quay.io/pypa/manylinux_2_24_x86_64:latest"
-manylinux-aarch64-image = "quay.io/pypa/manylinux_2_24_aarch64:latest"
-before-all = [ 
-   "git config --global --add safe.directory /project", 
-   "git status", 
-    ]
 before-build = [ 
+    "source scl_source enable devtoolset-10",
+    "python -m pip install cmake", 
     "python -m pip install ninja", 
 ]
 
 [tool.cibuildwheel.macos]
 build-frontend = "build"
 before-build = [ 
-    "python -m pip install ninja", 
+    "python -m pip install cmake ninja", 
 ]
 [tool.cibuildwheel.windows]
 build-frontend = "build"
 before-build = [ 
-    "python -m pip install ninja", 
+    "python -m pip install cmake delvewheel ninja", 
 ]
