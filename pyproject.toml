@@ -17,17 +17,16 @@ build-verbosity = 1
 build-frontend = "build"
 before-build = [ 
     "source scl_source enable devtoolset-10",
-    "python -m pip install cmake", 
-    "python -m pip install ninja", 
+    "pip install cmake", 
+    "pip install ninja", 
 ]
 
 [tool.cibuildwheel.macos]
 build-frontend = "build"
 before-build = [ 
-    "python -m pip install cmake ninja", 
+    "pip install cmake ninja", 
 ]
 [tool.cibuildwheel.windows]
-build-frontend = "build"
 before-build = [ 
-    "python -m pip install cmake delvewheel", 
+    "pip install cmake", 
 ]
