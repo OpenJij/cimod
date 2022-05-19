@@ -29,5 +29,5 @@ before-build = [
 [tool.cibuildwheel.windows]
 build-frontend = "build"
 before-build = [ 
-    "python -m pip install cmake delvewheel ninja", 
+    "python -m pip install cmake delvewheel", 
 ]
