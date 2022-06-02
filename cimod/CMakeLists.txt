@@ -1,7 +1,8 @@
 add_library(cxxcimod MODULE main.cpp)
 
+set(python_module_name cxxcimod)
 
-set_target_properties(cxxcimod PROPERTIES
+set_target_properties(${python_module_name} PROPERTIES
     CXX_VISIBILITY_PRESET "hidden"
     VISIBLITY_INLINES_HIDDEN ON
     POSITION_INDEPENDENT_CODE ON
@@ -12,7 +13,7 @@ set_target_properties(cxxcimod PROPERTIES
 )
 
 
-target_link_libraries(cxxcimod
+target_link_libraries(${python_module_name}
     pybind11::module
     pybind11::thin_lto
     pybind11_json
@@ -23,5 +24,5 @@ target_link_libraries(cxxcimod
 )
 
 add_custom_target(python
-    DEPENDS cxxcimod
+    DEPENDS ${python_module_name}
 )
