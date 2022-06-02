@@ -1,0 +1,19 @@
+setuptools_scm[toml]
+pytest-runner
+cmake 
+pybind11
+scikit-build
+setuptools
+typing-extensions; python_version < '3.8'
+numpy >= 1.21.2
+dimod >= 0.9.1, <0.12.0
+scipy
+pytest
+pytest-mock
+pytest-cov
+pytest-html
+pytest-runner
+pytest-randomly
+pytest-clarity
+pytest-spec
+coverage
