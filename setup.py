@@ -28,5 +28,4 @@ setup(
       'cimod.model.legacy', 
       'cimod.utils',
     ],
-    package_dir={'': 'cimod'},
 )
