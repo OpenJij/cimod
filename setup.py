@@ -29,6 +29,6 @@ setup(
 		'cimod.utils',
         ],
 	package_dir={'': 'cimod'},
-        cmake_install_dir='cimod',
+        #cmake_install_dir='cimod',
 	zip_safe=False,
 )
