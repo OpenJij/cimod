@@ -1,0 +1,25 @@
+codecov:
+  ci:
+  - github.com
+comment:
+  behavior: default
+  layout: reach, diff, flags, files
+  require_base: yes
+  require_changes: true
+  require_head: yes
+coverage:
+  status:
+    patch:
+      default:
+        informational: true
+        only_pulls: false
+        target: auto
+        if_ci_failed: error
+    project:
+      default:
+        informational: true
+        only_pulls: false
+        target: auto
+        if_ci_failed: error
+github_checks:
+  annotations: true
