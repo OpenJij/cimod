@@ -6,7 +6,7 @@ try:
     import typing 
 except ImportError:
     from typing_extensions import * 
-from . import cxxcimod 
+import cimod.cxxcimod 
 import cimod.utils
 import cimod.model 
 import cimod.model.legacy
