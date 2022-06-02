@@ -1,5 +1,10 @@
 import os
+import sys
+import pprint
 
 def test_print_cwd():
   path = os.getcwd()
-  print(path)
+  pprint.pprint(path)
+
+def test_print_path():
+  pprint.pprint(sys.path)
