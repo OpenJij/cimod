@@ -72,10 +72,10 @@ jobs:
     #  shell: bash
     #  run: |
     #    python setup.py test --help-commands
+    # python setup.py --force-cmake --build-type Debug install
     - name: Test 
       shell: bash
       run: |
-        python setup.py --force-cmake --build-type Debug install
         python setup.py --force-cmake --build-type Debug test 
     - name: du
       if: always()
