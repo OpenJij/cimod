@@ -1,6 +1,5 @@
 import sys
 
-from setuptools import find_namespace_packages
 from packaging.version import LegacyVersion
 from skbuild.exceptions import SKBuildError
 from skbuild.cmaker import get_cmake_version
@@ -30,8 +29,6 @@ try:
 except SKBuildError:
     setup_requires.append('cmake')  
 
-print(find_namespace_packages(where="cimod"))
-
 setup(
 	setup_requires=setup_requires,
 	packages=[  
@@ -40,7 +37,6 @@ setup(
  		'cimod.model.legacy',
  		'cimod.utils',
          ],
-        cmake_install_dir='cimod',
 	include_package_data=True,
 	zip_safe=False,
 )
