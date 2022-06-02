@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 import cimod
-import cxxcimod
+import cimod.cxxcimod as cxxcimod
 import dimod
 
 def calculate_ising_energy(h, J, spins):
