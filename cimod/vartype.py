@@ -23,7 +23,7 @@ Vartype = dimod.Vartype
 
 def to_cxxcimod(vartype):
     # convert to cxxcimod type
-    if isinstance(vartype, cxxcimod.Vartype):
+    if isinstance(vartype, cimod.cxxcimod.Vartype):
         return vartype
     
     vartype = dimod.as_vartype(vartype)
