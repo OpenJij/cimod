@@ -15,13 +15,9 @@ except ImportError:
     raise
 
 setup_requires=[ 
-	pytest-runner'
-  'pybind11', 
+	'pytest-runner',
+	'pybind11', 
 ]
-
-# Require pytest-runner only when running tests.
-if any(arg in sys.argv for arg in ('pytest', 'test')):
-	setup_requires.append('pytest-runner')
 
 # Add CMake as a build requirement if cmake is not installed or is too low a version.
 try:
