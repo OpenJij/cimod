@@ -5,10 +5,10 @@ include LICENSE
 include README.md
 include pyproject.toml
 
-exclude requirements.txt
-exclude .gitignore 
-exclude Doxyfile
-exclude Doxyfile.bak
+global-exclude requirements.txt
+global-exclude .gitignore 
+global-exclude Doxyfile
+global-exclude Doxyfile.bak
 
 graft cimod 
 graft tests 
@@ -16,7 +16,6 @@ graft src
 graft external
 
 prune docs
-prine example
+prune example
 prune .github
 prune .git
-exclude .gitignore
