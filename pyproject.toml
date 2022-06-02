@@ -68,7 +68,7 @@ explicit_package_bases = true
 pythonVersion = "3.9"
 typeCheckingMode = "basic"
 include = [
-    "openjij", 
+    "cimod", 
     "tests",
   ]
 ignore = [ 
