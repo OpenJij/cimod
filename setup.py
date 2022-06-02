@@ -21,11 +21,13 @@ except SKBuildError:
     setup_requires.append('cmake')  
 
 setup(
-    setup_requires=setup_requires,
-    packages=[
-      'cimod',
-      'cimod.model',
-      'cimod.model.legacy', 
-      'cimod.utils',
-    ],
+	name='jij_cimod'
+	setup_requires=setup_requires,
+	packages=[  
+		'cimod', 
+		'cimod.model', 
+		'cimod.model.legacy',
+		'cimod.utils',
+        ],
+	zip_safe=False,
 )
