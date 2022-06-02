@@ -43,11 +43,11 @@ jobs:
     - uses: actions/cache@v3
       with:
           path: ${{ matrix.path }}
-          key: ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}-${{ hashFiles('setup.cfg') }}
           restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}
-            ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}
-            ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}
+            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}-${{ hashFiles('setup.cfg') }}
+            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}
+            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}
     - name: Update
       shell: bash
       run: |
@@ -88,7 +88,7 @@ jobs:
       run: |
         set -eux
         python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
-        python setup.py --build-type Debug test 
+ #       python setup.py --build-type Debug test 
     - name: du
       if: always()
       shell: bash
