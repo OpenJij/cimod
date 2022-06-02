@@ -2,11 +2,16 @@ add_library(cxxcimod MODULE main.cpp)
 
 set(python_module_name cxxcimod)
 
+if(NOT MSVC AND NOT ${CMAKE_BUILD_TYPE} MATCHES Debug|RelWithDebInfo)
+    # Strip unnecessary sections of the binary on Linux/macOS
+    pybind11_strip(${python_module_name})
+endif()
+
 set_target_properties(${python_module_name} PROPERTIES
-    CXX_VISIBILITY_PRESET "hidden"
-    VISIBLITY_INLINES_HIDDEN ON
+    INTERPROCEDURAL_OPTIMIZATION ON
+    CXX_VISIBILITY_PRESET ON
+    VISIBILITY_INLINES_HIDDEN ON
     POSITION_INDEPENDENT_CODE ON
-    INTERPROCEDURAL_OPTIMIZATION TRUE
     PREFIX "${PYTHON_MODULE_PREFIX}"
     SUFFIX "${PYTHON_MODULE_EXTENSION}"
     VERSION_INFO "${CIMOD_VERSION_INFO}"
