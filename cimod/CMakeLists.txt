@@ -29,6 +29,6 @@ target_link_libraries(${python_module_name} PRIVATE
     cxxcimod_header_only
 )
 
-add_custom_target(python
-    DEPENDS ${python_module_name}
-)
+target_compile_definitions(${python_module_name} PRIVATE VERSION_INFO=${PROJECT_VERSION})
+
+install(TARGETS ${python_module_name} DESTINATION .)
