@@ -32,4 +32,4 @@ target_link_libraries(${python_module_name} PRIVATE
 target_compile_definitions(${python_module_name} PRIVATE VERSION_INFO=${PROJECT_VERSION})
 
 #install(TARGETS ${python_module_name} DESTINATION .)
-install(TARGETS ${python_module_name} LIBRARY DESTINATION cimod)
+install(TARGETS ${python_module_name} LIBRARY DESTINATION .)
