@@ -76,7 +76,9 @@ jobs:
     - name: Test 
       shell: bash
       run: |
-        python setup.py --force-cmake --build-type Debug test 
+        set -eux
+        python setup.py --force-cmake --build-type Debug install
+        python setup.py --build-type Debug test 
     - name: du
       if: always()
       shell: bash
