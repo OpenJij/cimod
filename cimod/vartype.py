@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cimod.cxxcimod
+import cimod.cxxcimod 
 import dimod
 
 SPIN = dimod.SPIN
@@ -26,6 +26,6 @@ def to_cxxcimod(vartype):
     
     vartype = dimod.as_vartype(vartype)
     if vartype == dimod.SPIN:
-        return cxxcimod.Vartype.SPIN
+        return cimod.cxxcimod.Vartype.SPIN
     if vartype == dimod.BINARY:
-        return cxxcimod.Vartype.BINARY
+        return cimod.cxxcimod.Vartype.BINARY
