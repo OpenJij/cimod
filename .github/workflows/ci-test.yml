@@ -66,4 +66,4 @@ jobs:
     - name: Test 
       shell: bash
       run: |
-        python setup.py test
+        python setup.py --force-cmake test --build-type Debug
