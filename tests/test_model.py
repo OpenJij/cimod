@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 from scipy.sparse.csr import csr_matrix
 import cimod
-import cxxcimod
+import cimod.cxxcimod as cxxcimod
 import dimod
 import random
 
