@@ -15,7 +15,7 @@
 import unittest
 
 import numpy as np
-from scipy.sparse.csr import csr_matrix
+from scipy.sparse import csr_matrix
 import cimod
 import cimod.cxxcimod as cxxcimod
 import dimod
