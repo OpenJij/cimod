@@ -15,6 +15,7 @@ except ImportError:
     raise
 
 setup_requires=[ 
+	pytest-runner'
   'pybind11', 
 ]
 
