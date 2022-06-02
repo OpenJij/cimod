@@ -155,9 +155,14 @@ if(NOT TARGET Eigen3::Eigen)
   include(external/eigen.cmake)
 endif() 
 
-find_package(Python COMPONENTS Interpreter Development)
+include(external/json.cmake)
 
+add_subdirectory(src)
+
+# Build Python Extension 
 if(SKBUILD)
+  find_package(Python COMPONENTS Interpreter Development)
+  
   # Scikit-Build does not add your site-packages to the search path
   # automatically, so we need to add it _or_ the pybind11 specific directory
   # here.
@@ -167,15 +172,14 @@ if(SKBUILD)
     OUTPUT_VARIABLE _tmp_dir
     OUTPUT_STRIP_TRAILING_WHITESPACE COMMAND_ECHO STDOUT)
   list(APPEND CMAKE_PREFIX_PATH "${_tmp_dir}")
+  
+  find_package(pybind11 CONFIG REQUIRED)
+  
+  include(external/pybind11-json.cmake)
+  
+  add_subdirectory(cimod)
 endif()
 
-find_package(pybind11 CONFIG REQUIRED)
-
-include(external/json.cmake)
-include(external/pybind11-json.cmake)
-
-add_subdirectory(src)
-add_subdirectory(cimod)
 if(USE_TEST)
     add_subdirectory(tests)
 endif()
