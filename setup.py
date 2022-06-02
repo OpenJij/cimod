@@ -28,5 +28,7 @@ setup(
 		'cimod.model.legacy',
 		'cimod.utils',
         ],
+	package_dir={'': 'cimod'},
+        cmake_install_dir='cimod',
 	zip_safe=False,
 )
