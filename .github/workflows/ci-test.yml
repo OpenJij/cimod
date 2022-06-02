@@ -63,15 +63,15 @@ jobs:
     #- name: Install Eigen3 on ${{ matrix.os }}
     #  if: ${{ matrix.os == 'macos-latest'}}
     #  run: brew install libomp eigen
+    - name: Show Help
+      shell: bash
+      run: |
+        python setup.py --help-commands
+    - name: Show Help Test
+      shell: bash
+      run: |
+        python setup.py test --help-commands
     - name: Test 
       shell: bash
       run: |
-        python setup.py -h
-    - name: Test 
-      shell: bash
-      run: |
-        python setup.py pytest -h
-    - name: Test 
-      shell: bash
-      run: |
-        python setup.py --force-cmake bdist_wheel --build-type Debug
+        python setup.py --force-cmake test --build-type Debug
