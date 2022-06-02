@@ -29,5 +29,4 @@ setup(
       'cimod.utils',
     ],
     package_dir={'': 'cimod'},
-    zip_safe=False,
 )
