@@ -1,6 +1,8 @@
-add_library(cxxcimod MODULE main.cpp)
-
 set(python_module_name cxxcimod)
+#WITH_SOABI
+Python3_add_library(${python_module_name} MODULE main.cpp)
+
+pybind11_extension(${python_module_name})
 
 if(NOT MSVC AND NOT ${CMAKE_BUILD_TYPE} MATCHES Debug|RelWithDebInfo)
     # Strip unnecessary sections of the binary on Linux/macOS
@@ -12,15 +14,13 @@ set_target_properties(${python_module_name} PROPERTIES
     CXX_VISIBILITY_PRESET ON
     VISIBILITY_INLINES_HIDDEN ON
     POSITION_INDEPENDENT_CODE ON
-    PREFIX "${PYTHON_MODULE_PREFIX}"
-    SUFFIX "${PYTHON_MODULE_EXTENSION}"
-    VERSION_INFO "${CIMOD_VERSION_INFO}"
 )
 
 
 target_link_libraries(${python_module_name}
     pybind11::module
     pybind11::thin_lto
+    pybind11::windows_extras
     pybind11_json
     nlohmann_json::nlohmann_json
     $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,cimod-eigen_lib>
