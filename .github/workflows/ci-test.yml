@@ -67,11 +67,11 @@ jobs:
       shell: bash
       run: |
         python setup.py --help-commands
-    - name: Show Help Test
-      shell: bash
-      run: |
-        python setup.py test --help-commands
+    #- name: Show Help Test
+    #  shell: bash
+    #  run: |
+    #    python setup.py test --help-commands
     - name: Test 
       shell: bash
       run: |
-        python setup.py --force-cmake test --build-type Debug
+        python setup.py --force-cmake --build-type Debug test 
