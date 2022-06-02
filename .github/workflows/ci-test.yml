@@ -68,9 +68,7 @@ jobs:
           restore-keys: |
                ${{ matrix.os }}-sccache-${{ hashFiles('python_version.txt') }}-${{ hashFiles('**/CMakeLists.txt') }}-${{ env.RAND }}
                ${{ matrix.os }}-sccace-${{ hashFiles('python_version.txt') }}-${{ hashFiles('**/CMakeLists.txt') }}
-               ${{ matrix.os }}-sccace-${{ hashFiles('python_version.txt') }}
-               ${{ matrix.os }}-${{ hashFiles('python_version.txt') }}-${{ hashFiles('**/CMakeLists.txt') }}
-               ${{ matrix.os }}-${{ hashFiles('python_version.txt') }}         
+               ${{ matrix.os }}-sccace-${{ hashFiles('python_version.txt') }}      
     - name: Install Eigen3 on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
       run: sudo apt-get install -y libeigen3-dev
