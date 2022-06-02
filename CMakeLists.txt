@@ -161,6 +161,7 @@ add_subdirectory(src)
 
 # Build Python Extension 
 if(SKBUILD)
+  message(STATUS "Build Python Extension.")
   find_package(Python COMPONENTS Interpreter Development)
   
   # Scikit-Build does not add your site-packages to the search path
