@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cimod.cxxcimod as cxxcimod
+from .cxxcimod import Vartype as cxxcimod.Vartype
 import dimod
 
 SPIN = dimod.SPIN
