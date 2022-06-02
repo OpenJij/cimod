@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-import cxxcimod
+import cimod.cxxcimod as cxxcimod
 import cimod
 import dimod
 import numpy as np
