@@ -66,7 +66,7 @@ jobs:
           max-size: 1G
           key: ${{ matrix.os }}-${{ hashFiles('python_version.txt') }}-${{ env.RAND }}
           restore-keys: |
-               ${{ matrix.os }}-${{ hashFiles('python_version.txt') }}-
+               ${{ matrix.os }}-${{ hashFiles('python_version.txt') }}
     - name: Install Eigen3 on ${{ matrix.os }}
       if: ${{ matrix.os == 'ubuntu-latest'}}
       run: sudo apt-get install -y libeigen3-dev
@@ -87,7 +87,7 @@ jobs:
       run: |
         set -eux
         python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
-        python setup.py --build-type Debug test 
+#        python setup.py --build-type Debug test 
     - name: du
       if: always()
       shell: bash
