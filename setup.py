@@ -34,6 +34,7 @@ setup(
  		'cimod.model.legacy',
  		'cimod.utils',
          ],
+	cmake_install_dir="cimod",
 	include_package_data=True,
 	zip_safe=False,
 )
