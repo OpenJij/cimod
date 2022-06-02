@@ -90,6 +90,20 @@ jobs:
         set -eux
         python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         python setup.py --build-type Debug test 
+    - name: Generate
+      shell: bash
+      run: |
+          set -eux
+          python -m coverage xml
+          python -m coverage json
+          python -m coverage lcov
+    - uses: codecov/codecov-action@v3.1.0
+      with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          name: "Cimod"
+          files: coverage.xml, coverage.json, coverage.lcov
+          fail_ci_if_error: false
+          verbose: true
     - name: du
       if: always()
       shell: bash
