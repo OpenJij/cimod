@@ -30,9 +30,16 @@ try:
 except SKBuildError:
     setup_requires.append('cmake')  
 
+print(find_packages(where="cimod"))
+
 setup(
 	setup_requires=setup_requires,
-	packages=find_packages(where="cimod"),
+	packages=[  
+ 		'cimod', 
+ 		'cimod.model', 
+ 		'cimod.model.legacy',
+ 		'cimod.utils',
+         ],
         cmake_install_dir='cimod',
 	include_package_data=True,
 	zip_safe=False,
