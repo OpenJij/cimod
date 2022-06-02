@@ -1,7 +1,8 @@
-from typing import Tuple
+from __future__ import annotations
+
 import cimod
 
-def get_state_and_energy(model, result_state, offset=0, model_variables=[]) -> Tuple[dict, float]:
+def get_state_and_energy(model, result_state, offset=0, model_variables=[]) -> tuple[dict, float]:
     """get converted state and energy.
     This function receives raw array of spins or binaries.
     If vartype of model and the vartype of the raw array are different, the raw array is automatically converted to the vartype of model with any offset shift.
@@ -13,7 +14,7 @@ def get_state_and_energy(model, result_state, offset=0, model_variables=[]) -> T
         model_variables (Optional[list]): list of variables
 
     Returns:
-        Tuple[dict, float]: labeled states and corresponding energy
+        tuple[dict, float]: labeled states and corresponding energy
 
     Examples:
         
