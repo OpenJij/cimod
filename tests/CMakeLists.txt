@@ -14,7 +14,7 @@
 
 #include(GoogleTest)
 
-add_executable(cimod_test EXCLUDE_FROM_ALL
+add_executable(cimod_test
     test.cpp
 )
 
