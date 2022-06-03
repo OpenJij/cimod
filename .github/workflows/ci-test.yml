@@ -24,18 +24,17 @@ jobs:
       if: ${{ matrix.os == 'ubuntu-latest'}}
       shell: bash
       run: |
-        sudo apt-get install -y libeigen3-dev googletest
         pip install ninja
+#        sudo apt-get install -y libeigen3-dev googletest
     - name: Install Dep on macos
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
       run: |
-        brew install eigen googletest 
         pip install ninja
+#        brew install eigen googletest 
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
-        vcpkg install eigen3
         vcpkg install gtest
     - name: Install CMake 
       run: |
