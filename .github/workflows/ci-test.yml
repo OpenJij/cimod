@@ -78,6 +78,7 @@ jobs:
         --schedule-random
     - name: du -a 
       shell: bash
+      if: always()
       run: |
         cd build 
         du -a
