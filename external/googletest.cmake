@@ -1,5 +1,7 @@
 include(FetchContent)
 
+set(CMAKE_CXX_STANDARD 17)
+
 #### Google test ####
 FetchContent_Declare(
     googletest
