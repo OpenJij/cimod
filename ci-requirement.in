@@ -13,6 +13,5 @@ pytest-cov
 pytest-html
 pytest-runner
 pytest-randomly
-pytest-clarity
 pytest-spec
 coverage
