@@ -18,6 +18,9 @@ add_executable(cimod_test
     test.cpp
 )
 
+target_compile_options(cimod_test PRIVATE --coverage) 
+target_link_options(cimod_test PRIVATE --coverage) 
+
 target_include_directories(cimod_test PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
