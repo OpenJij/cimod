@@ -13,6 +13,8 @@ set(EIGEN_MPL2_ONLY ON)
 set_target_properties(eigen PROPERTIES
      EIGEN_MPL2_ONLY ON
      BUILD_TESTING OFF
+     EIGEN_BUILD_TESTING OFF
+     EIGEN_BUILD_TEST OFF
 ) 
 
 #add_library(cimod-eigen_lib INTERFACE)
