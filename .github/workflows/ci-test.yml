@@ -78,7 +78,9 @@ jobs:
     - name: Show Help
       shell: bash
       run: |
+        set -eux
         python setup.py --help-commands
+        python -m pip install --help
     #- name: Show Help Test
     #  shell: bash
     #  run: |
@@ -86,9 +88,18 @@ jobs:
     # python setup.py --force-cmake --build-type Debug install
     - name: Build & Install
       shell: bash
-      run: |
-        set -eux
-        python -m pip install --no-clean --global-option="--force-cmake" --global-option="--build-type Debug" --global-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" --editable .
+      run: >
+        set -eux;
+        python -m 
+        pip 
+        install 
+        -vvv
+        --no-clean 
+        --global-option="--force-cmake" 
+        --global-option="--build-type Debug" 
+        --global-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" 
+        --editable 
+        .
  #       python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         
     - name: Test 
