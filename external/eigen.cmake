@@ -13,6 +13,7 @@ set(EIGEN_MPL2_ONLY ON)
 set(BUILD_TESTING OFF) 
 set(EIGEN_LEAVE_TEST_IN_ALL_TARGET OFF) 
 set(EIGEN_BUILD_PKGCONFIG OFF) 
+set(EIGEN_BUILD_BTL OFF)
 set(EIGEN_TEST_NOQT OFF)
 
 FetchContent_MakeAvailable(Eigen)
@@ -31,6 +32,7 @@ set_target_properties(cimod-eigen_lib PROPERTIES
     EIGEN_LEAVE_TEST_IN_ALL_TARGET OFF
     EIGEN_BUILD_PKGCONFIG OFF
     EIGEN_TEST_NOQT OFF
+    EIGEN_BUILD_BTL OFF
 )
 target_include_directories(cimod-eigen_lib INTERFACE ${eigen_SOURCE_DIR})
 #target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_MPL2_ONLY)
