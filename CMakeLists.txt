@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.20)
 project(cimod)
 
-enable_language(CXX)
+enable_language(C CXX)
 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
