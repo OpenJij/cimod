@@ -9,13 +9,15 @@ FetchContent_Declare(
     )
     
 set(EIGEN_MPL2_ONLY ON)
-
-set_target_properties(eigen PROPERTIES
-     EIGEN_MPL2_ONLY ON
-     BUILD_TESTING OFF
-     EIGEN_BUILD_TESTING OFF
-     EIGEN_BUILD_TEST OFF
-) 
+set(BUILD_TESTING OFF) 
+set(EIGEN_BUILD_TESTING OFF) 
+set(EIGEN_BUILD_TEST OFF)
+#set_target_properties(eigen PROPERTIES
+#     EIGEN_MPL2_ONLY ON
+#     BUILD_TESTING OFF
+#     EIGEN_BUILD_TESTING OFF
+#     EIGEN_BUILD_TEST OFF
+#) 
 
 #add_library(cimod-eigen_lib INTERFACE)
 #set_target_properties(cimod-eigen_lib PROPERTIES
@@ -25,8 +27,8 @@ set_target_properties(eigen PROPERTIES
 #target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_MPL2_ONLY)
 if (APPLE)
     if(BLAS_FOUND AND LAPACK_FOUND) 
-      set_target_properties(eigen PROPERTIES EIGEN_USE_BLAS=ON)
-      set_target_properties(eigen PROPERTIES EIGEN_USE_LAPACKE=ON)
+      set(EIGEN_USE_BLAS ON)
+      set(EIGEN_USE_LAPACKE ON)
     endif()
 endif()
 
