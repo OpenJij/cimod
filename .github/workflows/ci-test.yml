@@ -37,10 +37,10 @@ jobs:
       run: |
         vcpkg install eigen3
         vcpkg install gtest
-#    - name: Install CMake 
-#      run: |
-#        pip install cmake
-#        cmake --version
+    - name: Install CMake 
+      run: |
+        pip install cmake
+        cmake --version
     - name: sccache
       uses: hendrikmuhs/ccache-action@v1.2
       with:
@@ -70,7 +70,7 @@ jobs:
         cmake  
         --build build
         --parallel
-    - name: CTese Help
+    - name: CTest Help
       shell: bash
       working-directory: build
       run: |
