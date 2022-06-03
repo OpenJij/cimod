@@ -23,16 +23,15 @@ jobs:
     - name: Install Dep on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
       shell: bash
-      run: sudo apt-get install -y libeigen3-dev ninja-build googletest
+      run: |
+        sudo apt-get install -y libeigen3-dev googletest
+        pip install ninja
     - name: Install Dep on macos
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
-      run: brew install eigen ninja googletest 
-    - name: Install Dep on windows
-      if: ${{ matrix.os == 'windows-latest'}}
-      shell: bash
       run: |
-        choco install eigen
+        brew install eigen googletest 
+        pip install ninja
     - name: Install CMake 
       run: |
         pip install cmake
@@ -48,6 +47,9 @@ jobs:
                ${{ matrix.os }}-cpp-sccache-${{ hashFiles('**/CMakeLists.txt') }}-${{ env.RAND }}
                ${{ matrix.os }}-cpp-sccache-${{ hashFiles('**/CMakeLists.txt') }}
                ${{ matrix.os }}-cpp-sccache
+    - name: Prepare 
+      shell: bash
+      run: mkdir build
     - name: CMake Configure
       shell: bash
       run: >
@@ -57,17 +59,19 @@ jobs:
         -DCMAKE_C_COMPILER_LAUNCHER=sccache 
         -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         -S .
+        -B build
     - name: CMake Build
       shell: bash
       run: >
         set -eux;
         cmake  
-        --build .
+        --build build
         --parallel
     - name: CMake Test
       shell: bash
       run: >
         set -eux;
+        cd build;
         ctest
         --extra-verbose
         --parallel
@@ -140,11 +144,6 @@ jobs:
     - name: Install Eigen3 on macos
       if: ${{ matrix.os == 'macos-latest'}}
       run: brew install eigen ninja
-    - name: Install Dep on windows
-      if: ${{ matrix.os == 'windows-latest'}}
-      shell: bash
-      run: |
-        choco install eigen
     - name: Show Help
       shell: bash
       run: |
