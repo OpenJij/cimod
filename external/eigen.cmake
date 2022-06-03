@@ -25,13 +25,10 @@ set_target_properties(eigen PROPERTIES
 #target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_MPL2_ONLY)
 if (APPLE)
     if(BLAS_FOUND AND LAPACK_FOUND) 
-      target_compile_definitions(eigen INTERFACE EIGEN_USE_BLAS=ON)
-      target_compile_definitions(eigen INTERFACE EIGEN_USE_LAPACKE=ON)
+      set_target_properties(eigen PROPERTIES EIGEN_USE_BLAS=ON)
+      set_target_properties(eigen PROPERTIES EIGEN_USE_LAPACKE=ON)
     endif()
 endif()
 
-if(OpenMP_FOUND)
-  target_link_libraries(eigen INTERFACE OpenMP::OpenMP_CXX)
-endif()
 
 FetchContent_MakeAvailable(eigen)
