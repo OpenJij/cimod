@@ -27,8 +27,6 @@ target_include_directories(cimod_test PRIVATE
 
 target_link_libraries(cimod_test PRIVATE
     cxxcimod_header_only
-    $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,cimod-eigen_lib>
-    $<$<TARGET_EXISTS:OpenMP::OpenMP_CXX>:OpenMP::OpenMP_CXX>
     nlohmann_json::nlohmann_json
     $<IF:$<TARGET_EXISTS:GTest::gtest>,GTest::gtest,gtest>
     $<IF:$<TARGET_EXISTS:GTest::gtest_main>,GTest::gtest_main,gtest_main>
