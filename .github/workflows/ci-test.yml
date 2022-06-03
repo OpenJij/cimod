@@ -84,11 +84,17 @@ jobs:
     #  run: |
     #    python setup.py test --help-commands
     # python setup.py --force-cmake --build-type Debug install
+    - name: Build & Install
+      shell: bash
+      run: |
+        set -eux
+        python -m pip install --no-clean --global-option="--force-cmake" --global-option="--build-type Debug" --build-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" --editable .
+ #       python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+        
     - name: Test 
       shell: bash
       run: |
         set -eux
-        python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         python setup.py --build-type Debug test 
     - name: Generate
       shell: bash
