@@ -51,9 +51,7 @@ jobs:
       shell: bash
       run: mkdir build
     - name: CMake Configure
-      shell: bash
       run: >
-        set -eux;
         cmake 
         -DCMAKE_BUILD_TYPE=Debug 
         -DCMAKE_C_COMPILER_LAUNCHER=sccache 
@@ -61,24 +59,18 @@ jobs:
         -S .
         -B build
     - name: CMake Build
-      shell: bash
       run: >
-        set -eux;
         cmake  
         --build build
         --parallel
     - name: CTese Help
-      shell: bash
+      working-directory: build
       run: |
-        set -eux
-        cd build
         ctest --help 
-        ctest --gtest_list_tests
+#        ctest --gtest_list_tests
     - name: CMake Test
-      shell: bash
+      working-directory: build
       run: >
-        set -eux;
-        cd build;
         ctest
         --extra-verbose
         --parallel
