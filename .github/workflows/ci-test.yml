@@ -80,7 +80,7 @@ jobs:
       run: |
         set -eux
         python setup.py --help-commands
-        python -m pip install --help
+        pip install --help
     #- name: Show Help Test
     #  shell: bash
     #  run: |
@@ -89,12 +89,12 @@ jobs:
     - name: Build & Install
       shell: bash
       run: >
-        set -eux;
-        python -m 
+        set -eux; 
         pip 
         install 
         -vvv
         --no-clean 
+        --no-deps
         --global-option="--force-cmake" 
         --global-option="--build-type Debug" 
         --global-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" 
