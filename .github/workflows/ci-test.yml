@@ -16,14 +16,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
+    - name: Install CMake 
+      run: pip install cmake
     - name: Install Dep on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
       shell: bash
-      run: sudo apt-get install -y libeigen3-dev googletest cmake ninja-build
+      run: sudo apt-get install -y libeigen3-dev googletest ninja-build
     - name: Install Dep on macos
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
-      run: brew install eigen googletest cmake ninja 
+      run: brew install eigen googletest ninja 
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash
