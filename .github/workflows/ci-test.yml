@@ -67,6 +67,13 @@ jobs:
         cmake  
         --build build
         --parallel
+    - name: CTese Help
+      shell: bash
+      run: |
+        set -eux
+        cd build
+        ctest --help 
+        ctest --gtest_list_tests
     - name: CMake Test
       shell: bash
       run: >
