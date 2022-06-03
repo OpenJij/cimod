@@ -84,7 +84,7 @@ jobs:
     - uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 
-        working-directory: tests/CMakeFiles/cimod_test.dir
+        working-directory: build/tests/CMakeFiles/cimod_test.dir
         name: cxxcimod
         fail_ci_if_error: false
         verbose: true
