@@ -76,6 +76,11 @@ jobs:
         --extra-verbose
         --parallel
         --schedule-random
+    - name: du -a 
+      shell: bash
+      run: |
+        cd build 
+        du -a
   Python:
     strategy:
       max-parallel: 1
