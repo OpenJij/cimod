@@ -28,7 +28,6 @@ jobs:
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash
       run: |
-        choco install cmake
         choco install eigen
     - name: Install CMake 
       run: |
@@ -141,7 +140,6 @@ jobs:
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash
       run: |
-        choco install cmake
         choco install eigen
     - name: Show Help
       shell: bash
