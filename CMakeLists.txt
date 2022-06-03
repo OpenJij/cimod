@@ -146,10 +146,11 @@ list(APPEND CMAKE_MODULE_PATH external)
 
 find_package(Eigen3 3.3 NO_MODULE)
 
-if(NOT EIGEN3_FOUND)
-  include(external/eigen.cmake)
+if(EIGEN3_FOUND)
+  message(STATUS "Found eigen3")
 else() 
-  message(STATUS "Skip downloding eigen3")
+  message(STATUS "Downlod eigen3")
+  include(external/eigen.cmake)
 endif() 
 
 include(external/json.cmake)
@@ -177,16 +178,18 @@ if(SKBUILD)
   
   add_subdirectory(cimod)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
-  enable_testing()
   
-  message(STATUS "Googletest")
-  
+  message(STATUS "Use Googletest")
   find_package(GTest)
   
-  if(NOT GTest_FOUND)
-    include(external/googletest.cmake)
+  if(GTest_FOUND)
+    message(STATUS "Found googletest")
   else() 
-    message(STATUS "Skip downloding googletest")
+    message(STATUS "Downlod googletest")
+    include(external/googletest.cmake)
   endif() 
+  
+  enable_testing()
+  
   add_subdirectory(tests)
 endif()
