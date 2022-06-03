@@ -129,10 +129,16 @@ jobs:
                ${{ matrix.os }}-sccache-${{ hashFiles('python_version.txt') }}      
     - name: Install Eigen3 on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
-      run: sudo apt-get install -y libeigen3-dev
+      run: sudo apt-get install -y libeigen3-dev ninja-build
     - name: Install Eigen3 on macos
       if: ${{ matrix.os == 'macos-latest'}}
-      run: brew install eigen
+      run: brew install eigen ninja
+    - name: Install Dep on windows
+      if: ${{ matrix.os == 'windows-latest'}}
+      shell: bash
+      run: |
+        choco install cmake
+        choco install eigen
     - name: Show Help
       shell: bash
       run: |
