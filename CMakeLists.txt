@@ -176,8 +176,7 @@ if(SKBUILD)
   include(external/pybind11-json.cmake)
   
   add_subdirectory(cimod)
-  
-else() 
+elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
   enable_testing()
   
   message(STATUS "Googletest")
