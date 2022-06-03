@@ -16,6 +16,13 @@ set(EIGEN_MPL2_ONLY ON)
 FetchContent_MakeAvailable(eigen)
 
 add_library(cimod-eigen_lib INTERFACE)
+set_target_properties(cimod-eigen_lib PROPERTIES
+    EIGEN_BUILD_DOC OFF
+    BUILD_TESTING OFF
+    EIGEN_BUILD_PKGCONFIG OFF
+    EIGEN_CPP_STANDARD 11
+    EIGEN_MPL2_ONLY ON
+)
 target_include_directories(cimod-eigen_lib INTERFACE ${eigen_SOURCE_DIR})
 target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_MPL2_ONLY)
 if (APPLE)
