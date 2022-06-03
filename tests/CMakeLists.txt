@@ -18,10 +18,10 @@ add_executable(cimod_test
     test.cpp
 )
 
-set_target_properties(cimod_test 
-    PROPERTIES 
-    EXCLUDE_FROM_DEFAULT_BUILD TRUE
-)
+#set_target_properties(cimod_test 
+#    PROPERTIES 
+#    EXCLUDE_FROM_DEFAULT_BUILD TRUE
+#)
 
 target_compile_options(cimod_test PRIVATE --coverage) 
 target_link_options(cimod_test PRIVATE --coverage) 
