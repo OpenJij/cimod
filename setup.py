@@ -48,8 +48,6 @@ setup(
  		'cimod.model.legacy',
  		'cimod.utils',
          ],
-	package_dir={"":""},
 	cmake_install_dir="cimod",
-	include_package_data=True,
 	zip_safe=False,
 )
