@@ -67,13 +67,14 @@ message(STATUS "USE_OMP = ${USE_OMP}")
 
 list(APPEND CMAKE_MODULE_PATH external)
 
-find_package(Eigen3 3.3 NO_MODULE)
+find_package(Eigen3 NO_MODULE)
 
 if(EIGEN3_FOUND)
   message(STATUS "Found eigen3")
 else() 
   message(STATUS "Downlod eigen3")
   include(external/eigen.cmake)
+  find_package(Eigen3 NO_MODULE)
 endif() 
 
 include(external/json.cmake)
