@@ -81,6 +81,13 @@ jobs:
       run: |
         cd build 
         du -a
+    - uses: codecov/codecov-action@v2
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }} 
+        working-directory: tests/CMakeFiles/cimod_test.dir
+        name: cxxcimod
+        fail_ci_if_error: false
+        verbose: true
   Python:
     strategy:
       max-parallel: 1
