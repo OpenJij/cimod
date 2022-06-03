@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include(GoogleTest)
+
 add_executable(cimod_test
-    EXCLUDE_FROM_ALL
     test.cpp
 )
 
-set_target_properties(cimod_test PROPERTIES
-    CXX_VISIBILITY_PRESET "hidden"
-    INTERPROCEDURAL_OPTIMIZATION TRUE
+target_include_directories(cimod_test PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 target_link_libraries(cimod_test PRIVATE
@@ -27,9 +27,10 @@ target_link_libraries(cimod_test PRIVATE
     $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,cimod-eigen_lib>
     $<$<TARGET_EXISTS:OpenMP::OpenMP_CXX>:OpenMP::OpenMP_CXX>
     nlohmann_json::nlohmann_json
-    gmock_main
-    gmock
-    gtest_main
-    gtest
-    pthread
+    $<IF:$<TARGET_EXISTS:GTest::gtest>,GTest::gtest,cimod-gtest>
+    $<IF:$<TARGET_EXISTS:GTest::gtest_main>,GTest::gtest_main,cimod-gtest_main>
+    $<IF:$<TARGET_EXISTS:GTest::gmock_main>,GTest::gmock_main,cimod-gmock_main>
+    $<IF:$<TARGET_EXISTS:GTest::gmock>,GTest::gmock,cimod-gmock>
 )
+
+gtest_discover_tests(cimod_test)
