@@ -27,10 +27,10 @@ target_link_libraries(cimod_test PRIVATE
     $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,cimod-eigen_lib>
     $<$<TARGET_EXISTS:OpenMP::OpenMP_CXX>:OpenMP::OpenMP_CXX>
     nlohmann_json::nlohmann_json
-    $<IF:$<TARGET_EXISTS:GTest::gtest>,GTest::gtest,cimod-gtest>
-    $<IF:$<TARGET_EXISTS:GTest::gtest_main>,GTest::gtest_main,cimod-gtest_main>
-    $<IF:$<TARGET_EXISTS:GTest::gmock_main>,GTest::gmock_main,cimod-gmock_main>
-    $<IF:$<TARGET_EXISTS:GTest::gmock>,GTest::gmock,cimod-gmock>
+    $<IF:$<TARGET_EXISTS:GTest::gtest>,GTest::gtest,gtest>
+    $<IF:$<TARGET_EXISTS:GTest::gtest_main>,GTest::gtest_main,gtest_main>
+    $<IF:$<TARGET_EXISTS:GTest::gmock>,GTest::gmock,gmock>
+    $<IF:$<TARGET_EXISTS:GTest::gmock_main>,GTest::gmock_main,gmock_main>
 )
 
 gtest_discover_tests(cimod_test)
