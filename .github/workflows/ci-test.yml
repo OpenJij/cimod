@@ -86,21 +86,30 @@ jobs:
     #  run: |
     #    python setup.py test --help-commands
     # python setup.py --force-cmake --build-type Debug install
-    - name: Build & Install
+    #- name: Build & Install
+    #  shell: bash
+    #  run: >
+    #    set -eux; 
+    #    pip 
+    #    install 
+    #    -vvv
+    #    --no-clean 
+    #    --no-deps
+    #    --install-option="--force-cmake" 
+    #    --install-option="--build-type Debug" 
+    #    --install-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" 
+    #    --editable .
+ #       python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+    - name: Build & Install    
       shell: bash
       run: >
         set -eux; 
-        pip 
+        python setup.py
+        --force-cmake  
+        --build-type Debug
         install 
-        -vvv
-        --no-clean 
-        --no-deps
-        --install-option="--force-cmake" 
-        --install-option="--build-type Debug" 
-        --install-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" 
-        --editable .
- #       python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
-        
+        -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+    
     - name: Test 
       shell: bash
       run: |
