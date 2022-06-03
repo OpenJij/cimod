@@ -29,7 +29,7 @@ build-backend = "setuptools.build_meta"
 write_to = "_version.py"
 
 [tool.pytest.ini_options]
-addopts = "-vv -s --doctest-modules --diff-symbols --color=yes --code-highlight=yes --cov-context=test --cov --cov-append --cov-report term --randomly-seed=last -v --capture=no"
+addopts = "--doctest-modules --color=yes --code-highlight=yes --cov-context=test --cov --cov-append --cov-report term --randomly-seed=last -v --capture=no"
 testpaths = [
     "tests",
 ]
