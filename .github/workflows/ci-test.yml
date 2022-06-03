@@ -95,12 +95,10 @@ jobs:
         -vvv
         --no-clean 
         --no-deps
-        --global-option="build_ext"
-        --global-option="--force-cmake" 
-        --global-option="--build-type Debug" 
-        --global-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" 
-        --editable 
-        .
+        --install-option="--force-cmake" 
+        --install-option="--build-type Debug" 
+        --install-option="-- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache" 
+        --editable .
  #       python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         
     - name: Test 
