@@ -146,7 +146,7 @@ list(APPEND CMAKE_MODULE_PATH external)
 
 find_package(Eigen3 3.3 NO_MODULE)
 
-if(NOT TARGET Eigen3::Eigen)
+if(NOT EIGEN3_FOUND)
   include(external/eigen.cmake)
 else() 
   message(STATUS "Skip downloding eigen3")
@@ -184,7 +184,7 @@ else()
   
   find_package(GTest)
   
-  if(NOT TARGET GTest::GTest)
+  if(NOT GTest_FOUND)
     include(external/googletest.cmake)
   else() 
     message(STATUS "Skip downloding googletest")
