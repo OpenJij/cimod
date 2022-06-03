@@ -35,6 +35,7 @@ jobs:
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
+        vcpkg install cmake
         vcpkg install eigen3
         vcpkg install gtest
 #    - name: Install CMake 
