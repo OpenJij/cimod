@@ -143,16 +143,13 @@ message(STATUS "USE_OMP = ${USE_OMP}")
 message(STATUS "USE_TEST = ${USE_TEST}")
 
 list(APPEND CMAKE_MODULE_PATH external)
-if(USE_TEST)
-    include(external/googletest.cmake)
-else()
-	message(STATUS "Skip downloding googletest")
-endif()
 
 find_package(Eigen3 3.3 NO_MODULE)
 
 if(NOT TARGET Eigen3::Eigen)
   include(external/eigen.cmake)
+else() 
+  message(STATUS "Skip downloding eigen3")
 endif() 
 
 include(external/json.cmake)
@@ -179,8 +176,18 @@ if(SKBUILD)
   include(external/pybind11-json.cmake)
   
   add_subdirectory(cimod)
-endif()
-
-if(USE_TEST)
-    add_subdirectory(tests)
+  
+else() 
+  enable_testing()
+  
+  message(STATUS "Googletest")
+  
+  find_package(GTest)
+  
+  if(NOT TARGET GTest::GTest)
+    include(external/googletest.cmake)
+  else() 
+    message(STATUS "Skip downloding googletest")
+  endif() 
+  add_subdirectory(tests)
 endif()
