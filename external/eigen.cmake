@@ -7,7 +7,10 @@ FetchContent_Declare(
     GIT_TAG         3.3.9
     CMAKE_ARGS -DEIGEN_MPL2_ONLY
     )
-
+    
+set(EIGEN_BUILD_DOC OFF)
+set(BUILD_TESTING OFF)
+set(EIGEN_BUILD_PKGCONFIG OFF)
 set(EIGEN_CPP_STANDARD 11)
 set(EIGEN_MPL2_ONLY ON)
 FetchContent_MakeAvailable(eigen)
