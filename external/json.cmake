@@ -15,7 +15,7 @@
 ## endif()
 
 # Since the git repository of nlohmann/json is huge, we store only a single-include file json.hpp in our project.
-
+set(BUILD_TESTING OFF)
 add_library(nlohmann_json INTERFACE)
 add_library(nlohmann_json::nlohmann_json ALIAS nlohmann_json)
 target_include_directories(nlohmann_json INTERFACE ${CMAKE_SOURCE_DIR}/external/nlohmann_json)
