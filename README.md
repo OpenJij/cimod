@@ -1,4 +1,5 @@
 # cimod : C++ header-only library for a binary quadratic model 
+[![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
 
 * [Documents](https://openjij.github.io/cimod/html/index.html)
 
