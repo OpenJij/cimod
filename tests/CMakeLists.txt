@@ -14,8 +14,18 @@
 
 #include(GoogleTest)
 
-add_executable(cimod_test
+add_executable(cimod_test EXCLUDE_FROM_ALL
     test.cpp
+)
+
+set_target_properties(cimod_test 
+    PROPERTIES 
+    EXCLUDE_FROM_DEFAULT_BUILD TRUE
+    EIGEN_BUILD_DOC OFF
+    BUILD_TESTING OFF
+    EIGEN_BUILD_PKGCONFIG OFF
+    EIGEN_CPP_STANDARD 11
+    EIGEN_MPL2_ONLY ON
 )
 
 target_compile_options(cimod_test PRIVATE --coverage) 
