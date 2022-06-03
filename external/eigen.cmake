@@ -2,7 +2,7 @@ include(FetchContent)
 
 #### Eigen ####
 FetchContent_Declare(
-    Eigen
+    eigen
     GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
     GIT_TAG          3.4.0
     GIT_SHALLOW TRUE
@@ -16,7 +16,7 @@ set(EIGEN_BUILD_PKGCONFIG OFF)
 set(EIGEN_BUILD_BTL OFF)
 set(EIGEN_TEST_NOQT OFF)
 
-FetchContent_MakeAvailable(Eigen)
+FetchContent_MakeAvailable(eigen)
 
 #set_target_properties(eigen PROPERTIES
 #     EIGEN_MPL2_ONLY ON
