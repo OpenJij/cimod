@@ -13,7 +13,7 @@
 //    limitations under the License.
 //
 
-#include "../../src/disable_eigen_warning.hpp"
+#include <disable_eigen_warning.hpp>
 
 #include <pybind11_json/pybind11_json.hpp>
 #include <nlohmann/json.hpp>
