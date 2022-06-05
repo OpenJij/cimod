@@ -75,12 +75,13 @@ jobs:
       run: |
         ctest --help 
 #        ctest --gtest_list_tests
-    - name: CMake Test Windows
-      if: ${{ matrix.os == 'windows-latest'}}
+    - name: Run cimod_test
+      if: ${{ matrix.os != 'windows-latest'}}
       shell: bash
       working-directory: build
       run: 
-        tests/Debug/cimod_test.exe
+        ./tests/cimod_test -h 
+        ./tests/cimod_test
     - name: CMake Test
       shell: bash
       working-directory: build
