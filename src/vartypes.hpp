@@ -23,8 +23,7 @@
  * 
  */
 
-#ifndef VARTYPES_HPP__
-#define VARTYPES_HPP__
+#pragma once
 
 #include <iostream>
 
@@ -86,4 +85,4 @@ inline bool check_vartype
     }
 }
 }
-#endif
+
