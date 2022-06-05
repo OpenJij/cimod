@@ -13,6 +13,8 @@
 //    limitations under the License.
 //
 
+#pragma once
+
 #include <disable_eigen_warning.hpp>
 
 #include <pybind11_json/pybind11_json.hpp>
