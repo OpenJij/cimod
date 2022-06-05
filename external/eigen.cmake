@@ -57,4 +57,3 @@ find_package(Eigen3)
 
 message(STATUS "eigen_SOURCE_DIR = ${eigen_SOURCE_DIR}")
 
-target_link_libraries(cxxcimod_header_only PRIVATE Eigen3::Eigen)
