@@ -21,6 +21,12 @@ set(EIGEN_SPLIT_LARGE_TESTS OFF)
 set(EIGEN_NO_ASSERTION_CHECKING OFF)
 
 FetchContent_MakeAvailable(eigen)
+FetchContent_GetProperties(eigen)
+
+find_package(eigen3)
+find_package(Eigen3)
+
+message(STATUS "eigen_SOURCE_DIR = ${eigen_SOURCE_DIR}")
 
 #set_target_properties(eigen PROPERTIES
 #     EIGEN_MPL2_ONLY ON
