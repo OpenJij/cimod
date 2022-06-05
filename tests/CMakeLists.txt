@@ -31,7 +31,7 @@ target_include_directories(cimod_test PRIVATE
 )
 
 target_link_libraries(cimod_test PRIVATE
-    cxxcimod_header_only_static
+    cxxcimod_header_only
     nlohmann_json::nlohmann_json
     $<IF:$<TARGET_EXISTS:GTest::gtest>,GTest::gtest,gtest>
     $<IF:$<TARGET_EXISTS:GTest::gtest_main>,GTest::gtest_main,gtest_main>
