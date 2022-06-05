@@ -12,11 +12,11 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include "../src/binary_quadratic_model.hpp"
-#include "../src/binary_polynomial_model.hpp"
-#include "../src/binary_quadratic_model_dict.hpp"
+#include <binary_quadratic_model.hpp>
+#include <binary_polynomial_model.hpp>
+#include <binary_quadratic_model_dict.hpp>
 
 #include "test_bqm.hpp"
 
