@@ -83,8 +83,7 @@
  * 
  */
 
-#ifndef BINARY_QUADRATIC_MODEL_HPP__
-#define BINARY_QUADRATIC_MODEL_HPP__
+#pragma once
 
 #include "disable_eigen_warning.hpp"
 
@@ -2274,4 +2273,3 @@ namespace cimod
     };
 }
 
-#endif
