@@ -23,8 +23,3 @@ target_link_libraries(cxxcimod_header_only INTERFACE
     $<IF:$<TARGET_EXISTS:Eigen3::Eigen>,Eigen3::Eigen,cimod-eigen_lib>
     $<$<TARGET_EXISTS:OpenMP::OpenMP_CXX>:OpenMP::OpenMP_CXX>
 )
-
-if(${CMAKE_BUILD_TYPE} MATCHES Debug) 
-  add_library(cxxcimod_header_only_static STATIC)
-  target_link_libraries(cxxcimod_header_only_static STATIC cxxcimod_header_only)
-endif()
