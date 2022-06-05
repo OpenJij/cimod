@@ -113,8 +113,7 @@
 
 
 
-#ifndef binary_polynomial_model_hpp
-#define binary_polynomial_model_hpp
+#pragma once
 
 #include "vartypes.hpp"
 #include "hash.hpp"
@@ -1127,5 +1126,3 @@ protected:
 
 }
 
-
-#endif /* binary_polynomial_model_hpp */
