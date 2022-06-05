@@ -12,8 +12,7 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-#ifndef UTILITIES_HPP__
-#define UTILITIES_HPP__
+#pragma once
 
 #include "vartypes.hpp"
 
@@ -150,4 +149,3 @@ void CheckVartypeNotNONE(const Vartype &vartype) {
 
 }
 
-#endif
