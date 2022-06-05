@@ -25,7 +25,7 @@ jobs:
       shell: bash
       run: |
         pip install ninja
-#        sudo apt-get install -y libeigen3-dev googletest
+        sudo apt-get install -y libeigen3-dev googletest
     - name: Install Dep on macos
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
