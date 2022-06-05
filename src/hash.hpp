@@ -23,8 +23,7 @@
  * 
  */
 
-#ifndef HASH_HPP__
-#define HASH_HPP__
+#pragma once
 
 #include <utility>
 #include <cstdint>
@@ -101,4 +100,3 @@ struct vector_hash {
 };
 
 }
-#endif
