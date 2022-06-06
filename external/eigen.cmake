@@ -1,9 +1,19 @@
 include(FetchContent)
 
+message(CHECK_START "Fetching Eigen3")
+list(APPEND CMAKE_MESSAGE_INDENT "  ")
+
 set(CMAKE_CXX_STANDARD 11)
 set(FETCHCONTENT_QUIET OFF)
-set(EIGEN_MPL2_ONLY ON)
+
 set(BUILD_TESTING OFF)
+
+set(EIGEN_BUILD_PKGCONFIG OFF)
+set(EIGEN_BUILD_DOC OFF)
+set(EIGEN_BUILD_TESTING OFF)
+
+set(EIGEN_MPL2_ONLY ON)
+
 #set(EIGEN_BUILD_TESTING OFF CACHE BOOL "" FORCE)
 #set(EIGEN_LEAVE_TEST_IN_ALL_TARGET OFF) 
 #set(EIGEN_BUILD_PKGCONFIG OFF) 
@@ -26,6 +36,7 @@ FetchContent_Declare(
     Eigen
     GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
     GIT_TAG          3.4.0
+    PATCH_COMMAND git apply --ignore-whitespace "${CMAKE_CURRENT_LIST_DIR}/../../patches/eigen3-3.4.0.patch"
     GIT_SHALLOW TRUE
 )
 
@@ -40,3 +51,5 @@ endif()
 
 message(STATUS "eigen_SOURCE_DIR = ${eigen_SOURCE_DIR}")
 
+list(POP_BACK CMAKE_MESSAGE_INDENT)
+message(CHECK_PASS "fetched")
