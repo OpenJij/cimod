@@ -52,8 +52,11 @@ endif()
 FetchContent_MakeAvailable(Eigen)
 FetchContent_GetProperties(Eigen)
 
-find_package(eigen3)
 find_package(Eigen3)
+
+if(Eigen3_FOUND)
+    message(STATUS "Found Eigen3")
+endif()
 
 message(STATUS "eigen_SOURCE_DIR = ${eigen_SOURCE_DIR}")
 
