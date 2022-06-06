@@ -44,3 +44,5 @@ target_link_libraries(cimod_test PRIVATE
 )
 
 gtest_discover_tests(cimod_test)
+
+coverage_evaluate()
