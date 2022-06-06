@@ -28,7 +28,7 @@ endif()
 set(CMAKE_CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
- 
+option(ENABLE_CCACHE        "Enable to add Ccache."                 ON) 
 
 ##### Set default behavior #####
 set(DEFAULT_USE_OMP Yes)
