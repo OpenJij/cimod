@@ -21,5 +21,7 @@ coverage:
         only_pulls: false
         target: auto
         if_ci_failed: error
+ignore:
+  - "external/nlohmann_json/nlohmann/json.hpp"
 github_checks:
   annotations: true
