@@ -97,22 +97,16 @@ add_subdirectory(src)
 if(SKBUILD)
   message(STATUS "Build Python Extension.")
   find_package(Python COMPONENTS Interpreter Development)
-  if(NOT WIN32)
-    # Scikit-Build does not add your site-packages to the search path
-    # automatically, so we need to add it _or_ the pybind11 specific directory
-    # here.
-    execute_process(
+  # Scikit-Build does not add your site-packages to the search path
+  # automatically, so we need to add it _or_ the pybind11 specific directory
+  # here.
+  execute_process(
       COMMAND "${PYTHON_EXECUTABLE}" -c
               "import pybind11; print(pybind11.get_cmake_dir())"
       OUTPUT_VARIABLE _tmp_dir
       OUTPUT_STRIP_TRAILING_WHITESPACE COMMAND_ECHO STDOUT)
-    list(APPEND CMAKE_PREFIX_PATH "${_tmp_dir}")
-    find_package(pybind11 CONFIG REQUIRED)
-  else() 
-    include(external/pybind11.cmake)
-    find_package(pybind11 CONFIG)
-  endif()
-  
+  list(APPEND CMAKE_PREFIX_PATH "${_tmp_dir}")
+  find_package(pybind11 CONFIG REQUIRED)
   include(external/pybind11-json.cmake)
   find_package(pybind11_json)
   add_subdirectory(cimod)
