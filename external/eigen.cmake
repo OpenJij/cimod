@@ -5,6 +5,7 @@ list(APPEND CMAKE_MESSAGE_INDENT "  ")
 
 set(BUILD_TESTING OFF)
 
+set(EIGEN_Fortran_COMPILER_WORKS OFF)
 set(EIGEN_INSTALL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/eigen-install/")
 
 #### Eigen ####
