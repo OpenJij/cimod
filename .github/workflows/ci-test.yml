@@ -91,13 +91,12 @@ jobs:
         --extra-verbose
         --parallel
         --schedule-random
- #   - name: Run cimod_test
- #     if: ${{ matrix.os != 'windows-latest'}}
- #     shell: bash
- #     working-directory: build
- #     run: |
-#        ./tests/Debug/cimod_test.exe
-#        #gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir
+    - name: Run cimod_test
+      if: ${{ matrix.os != 'windows-latest'}}
+      shell: bash
+      working-directory: build
+      run: |
+        gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir
     - name: du -a 
       shell: bash
       if: always()
