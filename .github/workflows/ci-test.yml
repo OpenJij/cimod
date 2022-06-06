@@ -48,8 +48,8 @@ jobs:
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
-        vcpkg --triplet x64-windows-static install eigen
-        vcpkg --triplet x64-windows-static install openblad
+        vcpkg --triplet x64-windows-static install eigen3
+        vcpkg --triplet x64-windows-static install openblas
         vcpkg integrate install
     - name: Install CMake 
       run: |
