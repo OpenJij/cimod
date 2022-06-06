@@ -1,6 +1,7 @@
 pytest-runner
 cmake 
-ninja; sys_platform != 'win32'
+ninja
+#sys_platform != 'win32'
 pybind11
 scikit-build
 setuptools
