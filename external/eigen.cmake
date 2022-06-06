@@ -1,14 +1,6 @@
 include(FetchContent)
 
-#### Eigen ####
-FetchContent_Declare(
-    Eigen
-    GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
-    GIT_TAG          3.4.0
-    GIT_SHALLOW TRUE
-    GIT_PROGRESS TRUE
-)
- 
+set(FETCHCONTENT_QUIET OFF)
 set(EIGEN_MPL2_ONLY ON)
 set(BUILD_TESTING OFF)
 set(EIGEN_BUILD_TESTING OFF CACHE BOOL "" FORCE)
@@ -20,6 +12,15 @@ set(EIGEN_TEST_NOQT OFF)
 set(EIGEN_SPLIT_LARGE_TESTS OFF)
 set(EIGEN_NO_ASSERTION_CHECKING OFF)
 set( OFF)
+
+#### Eigen ####
+FetchContent_Declare(
+    Eigen
+    GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
+    GIT_TAG          3.4.0
+    GIT_SHALLOW TRUE
+    GIT_PROGRESS TRUE
+)
 
 #set_target_properties(eigen PROPERTIES
 #     EIGEN_MPL2_ONLY ON
