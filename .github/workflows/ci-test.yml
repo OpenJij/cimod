@@ -77,6 +77,7 @@ jobs:
         -DCMAKE_C_COMPILER_LAUNCHER=sccache 
         -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         -DENABLE_COVERAGE=On
+        -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
         -S .
         -B build
     - name: CMake Build
@@ -252,7 +253,7 @@ jobs:
         python setup.py
         --build-type Debug
         install 
-        -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+        -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
     
     - name: Test 
       shell: bash
