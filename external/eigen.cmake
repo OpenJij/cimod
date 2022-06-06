@@ -23,6 +23,7 @@ ExternalProject_Add(
     -DEIGEN_BUILD_PKGCONFIG=OFF 
     -DEIGEN_BUILD_DOC=OFF 
     -DEIGEN_BUILD_TESTING=OFF
+    -DEIGEN_Fortran_COMPILER_WORKS=OFF
 )
 
 file(MAKE_DIRECTORY ${EIGEN_INSTALL_DIR}/include)  # avoid race condition
@@ -37,13 +38,16 @@ set_target_properties(eigenlib PROPERTIES
   EIGEN_BUILD_PKGCONFIG OFF 
   EIGEN_BUILD_DOC OFF 
   EIGEN_BUILD_TESTING OFF
+  EIGEN_Fortran_COMPILER_WORKS OFF
 )
 
 if(BLAS_FOUND AND LAPACK_FOUND) 
-  set_target_properties(eigenlib PROPERTIES 
-    EIGEN_USE_BLAS ON
-    EIGEN_USE_LAPACKE ON
-  )
+  if(NOT WIN32)
+    set_target_properties(eigenlib PROPERTIES 
+      EIGEN_USE_BLAS ON
+      EIGEN_USE_LAPACKE ON
+    )
+  endif()
 endif()
 
 list(POP_BACK CMAKE_MESSAGE_INDENT)
