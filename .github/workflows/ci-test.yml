@@ -33,10 +33,24 @@ jobs:
       run: |
         pip install ninja
         brew install eigen googletest 
-#    - name: Install Dep on windows
-#      if: ${{ matrix.os == 'windows-latest'}}
-#      run: |
-#        vcpkg install gtest
+    - name: Add msbuild to PATH
+      if: ${{ matrix.os == 'windows-latest'}}
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Cache vcpkg
+      uses: actions/cache@v3
+      if: ${{ matrix.os == 'windows-latest'}}
+      with:
+        path: vcpkg/
+        key: vcpkg-${{ env.RAND }}
+        restore-keys: |
+          vcpkg-${{ env.RAND }}
+          vcpkg
+    - name: Install Dep on windows
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+        vcpkg --triplet x64-windows-static install eigen
+        vcpkg --triplet x64-windows-static install openblad
+        vcpkg integrate install
     - name: Install CMake 
       run: |
         pip install cmake
