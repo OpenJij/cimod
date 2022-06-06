@@ -23,5 +23,6 @@ coverage:
         if_ci_failed: error
 ignore:
   - "external/nlohmann_json/nlohmann/json.hpp"
+  - "test"
 github_checks:
   annotations: true
