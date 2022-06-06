@@ -21,3 +21,6 @@ endif()
 
 message(STATUS "gtest_SOURCE_DIR = ${gtest_SOURCE_DIR}")
 message(STATUS "gmock_SOURCE_DIR = ${gmock_SOURCE_DIR}")
+
+enable_testing()
+include(GoogleTest)
