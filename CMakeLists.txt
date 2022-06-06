@@ -100,7 +100,7 @@ if(SKBUILD)
   find_package(pybind11 CONFIG REQUIRED)
   
   include(external/pybind11-json.cmake)
-  
+  find_package(pybind11_json)
   add_subdirectory(cimod)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
   
