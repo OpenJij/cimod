@@ -96,7 +96,7 @@ jobs:
       shell: bash
       working-directory: build
       run: |
-        gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir
+        gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir -p -l 
         rm json.hpp.gcov
     - name: du -a 
       shell: bash
@@ -108,9 +108,6 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 
         working-directory: build
-        gcov: tests/CMakeFiles/cimod_test.dir/test.cpp.gcda
-        gcov_args: -o tests/CMakeFiles/cimod_test.dir
-        gcov_include: ../external/nlohmann_json/nlohmann
         name: cxxcimod
         fail_ci_if_error: false
         verbose: true
