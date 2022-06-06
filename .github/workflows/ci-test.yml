@@ -82,7 +82,6 @@ jobs:
       working-directory: build
       run: |
         ./tests/Debug/cimod_test.exe -h 
-        ./tests/Debug/cimod_test.exe
     - name: CMake Test
       shell: bash
       working-directory: build
@@ -97,7 +96,8 @@ jobs:
       shell: bash
       working-directory: build
       run: |
-        gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir
+        ./tests/Debug/cimod_test.exe
+        #gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir
     - name: du -a 
       shell: bash
       if: always()
@@ -110,6 +110,7 @@ jobs:
         working-directory: build
         gcov: tests/CMakeFiles/cimod_test.dir/test.cpp.gcda
         gcov_args: -o tests/CMakeFiles/cimod_test.dir
+        gcov_include: ../external/nlohmann_json/nlohmann
         name: cxxcimod
         fail_ci_if_error: false
         verbose: true
