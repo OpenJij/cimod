@@ -41,10 +41,10 @@ jobs:
       if: ${{ matrix.os == 'windows-latest'}}
       with:
         path: C:/vcpkg
-        key: vcpkg-${{ env.RAND }}
+        key: ${{ matrix.os }}-vcpkg-${{ env.RAND }}
         restore-keys: |
-          vcpkg-${{ env.RAND }}
-          vcpkg
+          ${{ matrix.os }}-vcpkg-${{ env.RAND }}
+          ${{ matrix.os }}-vcpkg
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
@@ -223,10 +223,10 @@ jobs:
       if: ${{ matrix.os == 'windows-latest'}}
       with:
         path: C:/vcpkg
-        key: vcpkg-${{ env.RAND }}
+        key: ${{ matrix.os }}-vcpkg-${{ env.RAND }}
         restore-keys: |
-          vcpkg-${{ env.RAND }}
-          vcpkg
+          ${{ matrix.os }}-vcpkg-${{ env.RAND }}
+          ${{ matrix.os }}-vcpkg
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
