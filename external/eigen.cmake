@@ -5,21 +5,6 @@ list(APPEND CMAKE_MESSAGE_INDENT "  ")
 
 set(FETCHCONTENT_QUIET OFF)
 
-#set(BUILD_TESTING OFF)
-
-set(EIGEN_BUILD_PKGCONFIG OFF)
-set(EIGEN_BUILD_DOC OFF)
-set(EIGEN_BUILD_TESTING OFF)
-
-set(EIGEN_MPL2_ONLY ON)
-
-#set( OFF)
-
-if(BLAS_FOUND AND LAPACK_FOUND) 
-  set(EIGEN_USE_BLAS ON)
-  set(EIGEN_USE_LAPACKE ON)
-endif()
-
 #### Eigen ####
 FetchContent_Declare(
     Eigen
@@ -27,6 +12,21 @@ FetchContent_Declare(
     GIT_TAG          3.4.0
     GIT_SHALLOW TRUE
 )
+
+set(BUILD_TESTING OFF)
+
+set(EIGEN_BUILD_PKGCONFIG OFF)
+set(EIGEN_BUILD_DOC OFF)
+set(EIGEN_BUILD_TESTING OFF)
+
+set(EIGEN_MPL2_ONLY ON)
+
+set( OFF)
+
+if(BLAS_FOUND AND LAPACK_FOUND) 
+  set(EIGEN_USE_BLAS ON)
+  set(EIGEN_USE_LAPACKE ON)
+endif()
 
 FetchContent_MakeAvailable(Eigen)
 #FetchContent_GetProperties(Eigen)
