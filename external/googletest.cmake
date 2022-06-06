@@ -1,5 +1,8 @@
 include(FetchContent)
 
+message(CHECK_START "Fetching GoogleTest")
+list(APPEND CMAKE_MESSAGE_INDENT "  ")
+
 set(CMAKE_CXX_STANDARD 17)
 set(FETCHCONTENT_QUIET OFF)
 
@@ -23,3 +26,5 @@ message(STATUS "gtest_SOURCE_DIR = ${gtest_SOURCE_DIR}")
 message(STATUS "gmock_SOURCE_DIR = ${gmock_SOURCE_DIR}")
 
 
+list(POP_BACK CMAKE_MESSAGE_INDENT)
+message(CHECK_PASS "fetched")
