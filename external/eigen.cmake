@@ -26,7 +26,7 @@ add_library(cimod-eigen_lib INTERFACE)
 target_include_directories(cimod-eigen_lib INTERFACE ${eigen_SOURCE_DIR})
 target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_MPL2_ONLY)
 if(BLAS_FOUND AND LAPACK_FOUND) 
-    set(INTERFACE EIGEN_USE_BLAS ON)
+    set(EIGEN_USE_BLAS ON)
     set(EIGEN_USE_LAPACKE ON)
 endif()
 
