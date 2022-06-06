@@ -19,7 +19,7 @@ include(CheckLanguage)
 
 check_language(C)
 check_language(CXX)
-check_language(Fortran)
+#check_language(Fortran)
 
 if(CMAKE_C_COMPILER)
   enable_language(C)
@@ -27,9 +27,9 @@ endif()
 if(CMAKE_CXX_COMPILER)
   enable_language(CXX)
 endif() 
-if(CMAKE_FORTRAN_COMPILER)
-  enable_language(Fortran)
-endif() 
+#if(CMAKE_FORTRAN_COMPILER)
+#  enable_language(Fortran)
+#endif() 
 
 # detect operating system and host processor
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
