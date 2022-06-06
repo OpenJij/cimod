@@ -128,7 +128,7 @@ jobs:
         uses: actions/cache@v3
         if: ${{ matrix.os == 'windows-latest'}}
         with:
-          path: vcpkg/
+          path: C:/vcpkg
           key: vcpkg-${{ env.RAND }}
           restore-keys: |
             vcpkg-${{ env.RAND }}
