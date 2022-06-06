@@ -108,9 +108,8 @@ elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
   if(GTest_FOUND)
     message(STATUS "Found googletest")
   else()
-    message(STATUS "Downlod Googletest")
-    include(external/googletest.cmake)
-  endif()
+  message(STATUS "Downlod Googletest")
+  include(external/googletest.cmake)
   
   enable_testing()
   
