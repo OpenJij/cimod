@@ -97,7 +97,6 @@ jobs:
       working-directory: build
       run: |
         gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir -p -l 
-        rm json.hpp.gcov
     - name: du -a 
       shell: bash
       if: always()
