@@ -104,10 +104,6 @@ if(SKBUILD)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
   
   message(STATUS "Use Googletest")
-  find_package(GTest)
-  if(GTest_FOUND)
-    message(STATUS "Found googletest")
-  else()
   message(STATUS "Downlod Googletest")
   include(external/googletest.cmake)
   
