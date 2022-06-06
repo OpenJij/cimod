@@ -114,6 +114,7 @@ if(SKBUILD)
   find_package(pybind11_json)
   add_subdirectory(cimod)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
+  enable_testing()
   
   message(STATUS "Use Googletest")
   message(STATUS "Downlod Googletest")
