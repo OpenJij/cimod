@@ -95,8 +95,14 @@ jobs:
       if: ${{ matrix.os != 'windows-latest'}}
       shell: bash
       working-directory: build
-      run: |
-        gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir -p -l 
+      run: >
+        gcov 
+        tests/CMakeFiles/cimod_test.dir/test.cpp.gcda 
+        -o tests/CMakeFiles/cimod_test.dir 
+        -p 
+        -l 
+        -b
+        -r
     - name: du -a 
       shell: bash
       if: always()
