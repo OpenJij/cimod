@@ -142,22 +142,6 @@ jobs:
           CIBW_PROJECT_REQUIRES_PYTHON: ">=3.7"
           #CIBW_BUILD_VERBOSITY: 3
           
-          CIBW_BEFORE_ALL: "" 
-          CIBW_BEFORE_ALL_LINUX: "yum install -y epel-release centos-release-scl && yum install -y devtoolset-10"
-          CIBW_BEFORE_ALL_MACOS: ""
-          CIBW_BEFORE_ALL_WINDOWS: ""
-         
-          
-          CIBW_MANYLINUX_X86_64_IMAGE: quay.io/pypa/manylinux2014_x86_64:latest
-          CIBW_MANYLINUX_AARCH64_IMAGE: quay.io/pypa/manylinux2014_aarch64:latest
-          
-          CIBW_ENVIRONMENT:
-              CFLAGS="-flto -O3 -pipe "
-              CXXFLAGS="-flto -O3 -pipe "
-          CIBW_ENVIRONMENT_MACOS:
-              CFLAGS="-flto -O3 -pipe -lcblas -lclapack -framework Accelerate -framework OpenCL"
-              CXXFLAGS="-flto -O3 -pipe -lcblas -lclapack -framework Accelerate -framework OpenCL"
-
       - uses: actions/upload-artifact@v3
         with:
           name: WHEEL
