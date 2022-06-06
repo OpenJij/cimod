@@ -109,7 +109,8 @@ jobs:
     - uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 
-        files: buid/tests/CMakeFiles/cimod_test.dir/test.cpp.gcda, build/lcov/data/init/cimod_test.info
+        directory: build/tests/CMakeFiles/cimod_test.dir
+        files: test.cpp.gcda
         name: cxxcimod
         fail_ci_if_error: false
         verbose: true
