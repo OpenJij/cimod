@@ -107,7 +107,5 @@ elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
   message(STATUS "Downlod Googletest")
   include(external/googletest.cmake)
   
-  enable_testing()
-  
   add_subdirectory(tests)
 endif()
