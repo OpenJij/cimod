@@ -27,8 +27,8 @@ add_coverage(cimod_test)
 #    EXCLUDE_FROM_DEFAULT_BUILD TRUE
 #)
 
-target_compile_options(cimod_test PRIVATE --coverage) 
-target_link_options(cimod_test PRIVATE --coverage) 
+#target_compile_options(cimod_test PRIVATE --coverage) 
+#target_link_options(cimod_test PRIVATE --coverage) 
 
 target_include_directories(cimod_test PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
