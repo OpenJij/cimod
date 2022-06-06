@@ -78,7 +78,6 @@ if(NOT WIN32)
 endif()
 
 list(APPEND CMAKE_MODULE_PATH external)
-list(APPEND CMAKE_MODULE_PATH cmake)
 
 find_package(Eigen3)
 
@@ -117,6 +116,7 @@ elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
   message(STATUS "Downlod Googletest")
   include(external/googletest.cmake)
   
+  list(APPEND CMAKE_MODULE_PATH cmake)
   message(STATUS "Use Codecov")
   find_package(codecov)
   
