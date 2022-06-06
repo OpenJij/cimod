@@ -14,9 +14,23 @@
 
 cmake_minimum_required(VERSION 3.20)
 project(cimod)
-enable_language(C CXX)
+include(CheckLanguage)
 
-message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
+check_language(C)
+check_language(CXX)
+check_language(Fortran)
+
+if(CMAKE_C_COMPILER)
+  enable_language(C)
+endif() 
+if(CMAKE_CXX_COMPILER)
+  enable_language(CXX)
+endif() 
+if(CMAKE_FORTRAN_COMPILER)
+  enable_language(Fortran)
+endif() 
+
+message(STATUS "Started CMake for ${PROJECT_NAME} \n")
 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
