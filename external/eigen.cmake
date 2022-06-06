@@ -30,7 +30,7 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(Eigen)
-FetchContent_GetProperties(Eigen)
+#FetchContent_GetProperties(Eigen)
 
 find_package(Eigen3)
 
