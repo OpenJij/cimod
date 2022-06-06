@@ -21,5 +21,7 @@ target_include_directories(cxxcimod_header_only INTERFACE
 target_link_libraries(cxxcimod_header_only INTERFACE 
     nlohmann_json::nlohmann_json
     $<$<TARGET_EXISTS:Eigen3::Eigen>:Eigen3::Eigen>
+    $<$<TARGET_EXISTS:BLAS::BLAS>:BLAS::BLAS>
+    $<$<TARGET_EXISTS:LAPACK::LAPACK>:LAPACK::LAPACK>
     $<$<TARGET_EXISTS:OpenMP::OpenMP_CXX>:OpenMP::OpenMP_CXX>
 )
