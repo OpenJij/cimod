@@ -79,6 +79,27 @@ $ python -m pip install .
 $ pip install jij-cimod 
 ```
 
+## Test 
+
+### Python 
+```sh
+$ python -m venv .venv
+$ pip install pip-tools 
+$ pip-compile ci-requirement.in
+$ pip-sync ci-requirement.txt
+$ source .venv/bin/activate
+$ python setup.py --build-type Debug install 
+$ python setup.py --build-type Debug test
+```
+
+### C++ 
+```sh
+$ mkdir build 
+$ cd build
+$ cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On -S . -B build
+$ ./tests/cimod_test
+```
+
 ## Benchmark
 
 ### Benchmark code
