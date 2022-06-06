@@ -66,6 +66,7 @@ endif()
 message(STATUS "USE_OMP = ${USE_OMP}")
 
 list(APPEND CMAKE_MODULE_PATH external)
+lis(APPEND CMAKE_MODULE_PATH cmake)
 
 find_package(Eigen3)
 
