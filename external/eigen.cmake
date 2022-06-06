@@ -18,7 +18,7 @@ set(EIGEN_MPL2_ONLY ON)
 
 if(BLAS_FOUND AND LAPACK_FOUND) 
   set(EIGEN_USE_BLAS ON)
-  set(EIGEN_USE_LAPACKE O)
+  set(EIGEN_USE_LAPACKE ON)
 endif()
 
 #### Eigen ####
