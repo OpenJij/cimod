@@ -118,7 +118,7 @@ before-build = [
 repair-wheel-command = "auditwheel repair --lib-sdir . -w {dest_dir} {wheel}"
 
 [tool.cibuildwheel.macos]
-archs = ["x86_64", "universal2", "arm64"]
+archs = ["x86_64", "arm64"]
 build-frontend = "build"
 before-all = [ 
     "brew install eigen",
