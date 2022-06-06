@@ -66,17 +66,18 @@ if(USE_OMP)
   set(CMAKE_INSTALL_OPENMP_LIBRARIES ON)
   find_package(OpenMP REQUIRED)
   message(STATUS "OMP_FOUND = YES")
+  message(STATUS "USE_OMP = ${USE_OMP}")
 endif()
 
-set(BLA_STATIC ON) 
+if(NOT APPLE)
+  set(BLA_STATIC ON) 
+endif() 
+
 find_package(BLAS)
 find_package(LAPACK)
 
-message(STATUS "USE_OMP = ${USE_OMP}")
-
 list(APPEND CMAKE_MODULE_PATH external)
 list(APPEND CMAKE_MODULE_PATH cmake)
-
 
 find_package(Eigen3)
 
