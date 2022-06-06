@@ -13,5 +13,10 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 FetchContent_GetProperties(googletest)
 
+find_package(GTest)
+if(GTest_FOUND)
+    message(STATUS "Found googletest")
+else()
+
 message(STATUS "gtest_SOURCE_DIR = ${gtest_SOURCE_DIR}")
 message(STATUS "gmock_SOURCE_DIR = ${gmock_SOURCE_DIR}")
