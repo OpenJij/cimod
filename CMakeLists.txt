@@ -32,8 +32,6 @@ endif()
 
 message(STATUS "Started CMake for ${PROJECT_NAME} \n")
 
-set(CMAKE_VERBOSE_MAKEFILE TRUE)
-
 if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-command-line-argument")
@@ -64,14 +62,6 @@ if(USE_OMP)
   find_package(OpenMP REQUIRED)
   message(STATUS "OMP_FOUND = YES")
 endif()
-
-#message(STATUS "Apple Native Build")
-#set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp") 
-#set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp")
-#find_package(OpenMP REQUIRED)
-#message(STATUS "OMP_FOUND = YES")
-#add_definitions(-DUSE_OMP)
-
 
 if (APPLE)
     find_package(BLAS)
