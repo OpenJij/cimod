@@ -1,6 +1,7 @@
 include(FetchContent)
 
 set(CMAKE_CXX_STANDARD 17)
+set(FETCHCONTENT_QUIET OFF)
 
 #### Google test ####
 FetchContent_Declare(
