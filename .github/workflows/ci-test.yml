@@ -220,7 +220,6 @@ jobs:
       run: >
         set -eux; 
         python setup.py
-        --force-cmake  
         --build-type Debug
         install 
         -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
