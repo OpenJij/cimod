@@ -16,6 +16,10 @@ set(python_module_name cxxcimod)
 
 add_library(${python_module_name} MODULE main.cpp)
 
+target_include_directories(${python_module_name} PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
 pybind11_extension(${python_module_name})
 
 if(NOT MSVC AND NOT ${CMAKE_BUILD_TYPE} MATCHES Debug|RelWithDebInfo)
