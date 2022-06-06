@@ -36,7 +36,6 @@ FetchContent_Declare(
     Eigen
     GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
     GIT_TAG          3.4.0
-    PATCH_COMMAND git apply --ignore-whitespace "${CMAKE_CURRENT_LIST_DIR}/../../patches/eigen3-3.4.0.patch"
     GIT_SHALLOW TRUE
 )
 
