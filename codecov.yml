@@ -1,12 +1,15 @@
 codecov:
   ci:
-  - github.com
+    - github.com
+  require_ci_to_pass: false
+  notify:
+    wait_for_ci: false
 comment:
   behavior: default
-  layout: reach, diff, flags, files
-  require_base: yes
-  require_changes: true
-  require_head: yes
+  layout: "reach, diff, flags, files"
+  require_base: no
+  require_changes: false
+  require_head: no
 coverage:
   status:
     patch:
@@ -15,14 +18,31 @@ coverage:
         only_pulls: false
         target: auto
         if_ci_failed: error
+        paths: 
+          - "src" 
+          - "cimod"
     project:
       default:
         informational: true
         only_pulls: false
         target: auto
         if_ci_failed: error
+      cxxcimod:
+        paths:
+          - src
+      cimod:
+        paths:
+          - cimod
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: yes
+      macro: yes
 ignore:
   - "external/nlohmann_json/nlohmann/json.hpp"
   - "test"
+ 
 github_checks:
   annotations: true
