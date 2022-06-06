@@ -13,12 +13,19 @@
 # limitations under the License.
 
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
-project(cimod CXX C)
+project(cimod)
 
 include(CheckLanguage)
 
 check_language(C)
 check_language(CXX)
+
+if(CMAKE_C_COMPILER)
+  enable_language(C)
+endif() 
+if(CMAKE_CXX_COMPILER)
+  enable_language(CXX)
+endif() 
 
 # detect operating system and host processor
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
