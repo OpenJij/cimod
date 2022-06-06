@@ -123,4 +123,5 @@ elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
   find_package(codecov)
   
   add_subdirectory(tests)
+  coverage_evaluate()
 endif()
