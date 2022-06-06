@@ -107,5 +107,8 @@ elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
   message(STATUS "Downlod Googletest")
   include(external/googletest.cmake)
   
+  message(STATUS "Use Codecov")
+  find_package(codecov)
+  
   add_subdirectory(tests)
 endif()
