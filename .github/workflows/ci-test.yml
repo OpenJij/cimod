@@ -202,10 +202,24 @@ jobs:
       if: ${{ matrix.os == 'macos-latest'}}
       run: |
         brew install eigen 
-    #- name: Install Dep on windows
-    #  if: ${{ matrix.os == 'windows-latest'}}
-    #  run: |
-    #    vcpkg install eigen3
+    - name: Add msbuild to PATH
+      if: ${{ matrix.os == 'windows-latest'}}
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Cache vcpkg
+      uses: actions/cache@v3
+      if: ${{ matrix.os == 'windows-latest'}}
+      with:
+        path: vcpkg/
+        key: vcpkg-${{ env.RAND }}
+        restore-keys: |
+          vcpkg-${{ env.RAND }}
+          vcpkg
+    - name: Install Dep on windows
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+        vcpkg --triplet x64-windows-static install eigen3
+        vcpkg --triplet x64-windows-static install openblas
+        vcpkg integrate install
     - name: Show Help
       shell: bash
       run: |
