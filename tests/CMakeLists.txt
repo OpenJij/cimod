@@ -14,8 +14,6 @@
 
 #include(GoogleTest)
 
-enable_testing()
-
 add_executable(cimod_test
     test.cpp
 )
