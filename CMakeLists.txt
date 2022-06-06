@@ -71,11 +71,10 @@ list(APPEND CMAKE_MODULE_PATH cmake)
 find_package(Eigen3)
 
 if(EIGEN3_FOUND)
-  message(STATUS "Found eigen3")
+  message(STATUS "Skip Download eigen3")
 else() 
   message(STATUS "Downlod eigen3")
   include(external/eigen.cmake)
-  find_package(Eigen3)
 endif() 
 
 include(external/json.cmake)
@@ -105,8 +104,13 @@ if(SKBUILD)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
   
   message(STATUS "Use Googletest")
-  message(STATUS "Downlod googletest")
-  include(external/googletest.cmake)
+  find_package(GTest)
+  if(GTest_FOUND)
+    message(STATUS "Skip Downlod Googletest")
+  else() 
+    message(STATUS "Downlod Googletest")
+    include(external/googletest.cmake)
+  endif() 
   
   enable_testing()
   
