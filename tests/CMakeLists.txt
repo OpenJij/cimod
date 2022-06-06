@@ -20,6 +20,8 @@ add_executable(cimod_test
     test.cpp
 )
 
+add_coverage(cimod_test) 
+
 #set_target_properties(cimod_test 
 #    PROPERTIES 
 #    EXCLUDE_FROM_DEFAULT_BUILD TRUE
