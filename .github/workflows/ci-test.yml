@@ -102,7 +102,7 @@ jobs:
         -p 
         -l 
         -b
-        -r
+        -s ../external/nlohmann_json/nlohmann/json.hpp
     - name: du -a 
       shell: bash
       if: always()
