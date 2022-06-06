@@ -14,8 +14,9 @@
 
 cmake_minimum_required(VERSION 3.20)
 project(cimod)
-
 enable_language(C CXX)
+
+message(STATUS "Started CMake for ${PROJECT_NAME} v${PROJECT_VERSION}...\n")
 
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
@@ -67,6 +68,7 @@ message(STATUS "USE_OMP = ${USE_OMP}")
 
 list(APPEND CMAKE_MODULE_PATH external)
 list(APPEND CMAKE_MODULE_PATH cmake)
+
 
 find_package(Eigen3)
 
