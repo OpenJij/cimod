@@ -4,12 +4,14 @@ codecov:
   require_ci_to_pass: false
   notify:
     wait_for_ci: false
+   
 comment:
   behavior: default
   layout: "reach, diff, flags, files"
   require_base: no
   require_changes: false
   require_head: no
+  
 coverage:
   status:
     patch:
@@ -18,9 +20,6 @@ coverage:
         only_pulls: false
         target: auto
         if_ci_failed: error
-        paths: 
-          - "src" 
-          - "cimod"
     project:
       default:
         informational: true
@@ -28,10 +27,18 @@ coverage:
         target: auto
         if_ci_failed: error
       cxxcimod:
-        paths:
-          - src
+        informational: true
+        only_pulls: false
+        target: auto
+        if_ci_failed: error
+        flags:
+          - cxxcimod
       cimod:
-        paths:
+        informational: true
+        only_pulls: false
+        target: auto
+        if_ci_failed: error
+        flags:
           - cimod
 parsers:
   gcov:
@@ -40,6 +47,20 @@ parsers:
       loop: yes
       method: yes
       macro: yes
+      
+flag_management:
+  default_rules: 
+    carryforward: true
+flags:
+  cxxcimod:
+    paths: 
+      - src
+    carryforward: true
+  cimod:
+    paths: 
+      - cimod
+    carryforward: true
+
 ignore:
   - "external/nlohmann_json/nlohmann/json.hpp"
   - "test"
