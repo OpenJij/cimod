@@ -139,6 +139,7 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }} 
         working-directory: build
         name: cxxcimod
+        flags: cxxcimod
         fail_ci_if_error: false
         verbose: true
   Python:
@@ -291,8 +292,10 @@ jobs:
     - uses: codecov/codecov-action@v3.1.0
       with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          env_vars: OS,PYTHON
           name: "Cimod"
           files: coverage.xml, coverage.json, coverage.lcov
+          flags: cimod
           fail_ci_if_error: false
           verbose: true
     - name: du
