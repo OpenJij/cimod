@@ -76,14 +76,6 @@ jobs:
       working-directory: build
       run: |
         ctest --help 
-#        ctest --gtest_list_tests
-    - name: Run cimod_test
-      if: ${{ matrix.os != 'windows-latest'}}
-      shell: bash
-      working-directory: build
-      run: |
-        ./tests/cimod_test -h 
-        ./tests/cimod_test
     - name: Run cimod_test
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash
@@ -100,6 +92,12 @@ jobs:
         --extra-verbose
         --parallel
         --schedule-random
+    - name: Run cimod_test
+      if: ${{ matrix.os != 'windows-latest'}}
+      shell: bash
+      working-directory: build
+      run: |
+        gcov tests/CMakeFiles/cimod_test.dir/test.cpp.gcda -o tests/CMakeFiles/cimod_test.dir
     - name: du -a 
       shell: bash
       if: always()
@@ -109,8 +107,7 @@ jobs:
     - uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 
-        working-directory: ./build
-        directory: ./build/tests/CMakeFiles/cimod_test.dir
+        directory: build/tests/CMakeFiles/cimod_test.dir
         files: test.cpp.gcda
         name: cxxcimod
         fail_ci_if_error: false
