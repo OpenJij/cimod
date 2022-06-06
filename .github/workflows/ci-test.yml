@@ -108,6 +108,7 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 
         directory: build/tests/CMakeFiles/cimod_test.dir
+        files: test.cpp.gcda
         name: cxxcimod
         fail_ci_if_error: false
         verbose: true
