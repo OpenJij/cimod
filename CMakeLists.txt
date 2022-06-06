@@ -68,10 +68,9 @@ if(USE_OMP)
   message(STATUS "OMP_FOUND = YES")
 endif()
 
-if (APPLE)
-    find_package(BLAS)
-    find_package(LAPACK)
-endif()
+set(BLA_STATIC ON) 
+find_package(BLAS)
+find_package(LAPACK)
 
 message(STATUS "USE_OMP = ${USE_OMP}")
 
