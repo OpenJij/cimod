@@ -10,7 +10,7 @@ on:
 jobs:
   CPP:
     strategy:
-      max-parallel: 1
+      max-parallel: 3
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         #os: [windows-latest]
@@ -33,7 +33,7 @@ jobs:
       shell: bash
       run: |
         pip install ninja
-        brew install eigen nlohmann-json
+        brew install eigen nlohmann-json lcov
     - name: Add msbuild to PATH
       if: ${{ matrix.os == 'windows-latest'}}
       uses: microsoft/setup-msbuild@v1.0.2
