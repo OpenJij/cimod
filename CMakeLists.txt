@@ -131,15 +131,21 @@ if(SKBUILD)
   
   add_subdirectory(cimod)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
-  enable_testing()
   
   message(STATUS "Use Googletest")
-  message(STATUS "Downlod Googletest")
-  include(external/googletest.cmake)
   
+  find_package(GTest)
+  if(GTest_FOUND)
+    message(STATUS "Found googletest")
+  else()
+    message(STATUS "Downlod Googletest")
+    include(external/googletest.cmake)
+  endif()
   list(APPEND CMAKE_MODULE_PATH cmake)
   message(STATUS "Use Codecov")
   find_package(codecov)
+  
+  enable_testing()
   
   add_subdirectory(tests)
   coverage_evaluate()
