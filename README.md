@@ -100,7 +100,7 @@ $ cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On -S . -B build
 $ ./tests/cimod_test
 ```
 
-Needs: CMake
+Needs: CMake > 3.20, C++17
 
 ## Benchmark
 
