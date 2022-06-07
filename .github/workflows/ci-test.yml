@@ -50,19 +50,21 @@ jobs:
       with:
          path: |
            C:/Users/runneradmin/AppData/Local/vcpkg/archives
-           C:/vcpkg/installed
-         key: ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}-${{ env.RAND }}
+         key: ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
          restore-keys: |
-           ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}-${{ env.RAND }}
            ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
+           ${{ matrix.os }}-vcpkg
+           # C:/vcpkg/installed
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       shell: powershell
       run: |
          vcpkg --triplet x64-windows-static install eigen3
+         vcpkg -h
          vcpkg integrate install
     #    vcpkg --triplet x64-windows-static install openblas
     - name: Install CMake 
+      if: ${{ matrix.os != 'windows-latest'}}
       run: |
         pip install cmake
         cmake --version
