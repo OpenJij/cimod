@@ -95,7 +95,7 @@ reportUnusedVariable =  'warning'
 reportDuplicateImport = 'warning'
 
 [tool.cibuildwheel]
-skip = ["cp36*", "pp*"]
+skip = ["cp36*", "*musllinux_x86_64", "*musllinux_aarch64", "pp*"]
 build-verbosity = 1
 dependency-versions = "latest"
 
@@ -137,8 +137,8 @@ before-all = [
     "vcpkg update",
     "vcpkg --triplet x64-windows install eigen3", 
     "vcpkg --triplet x64-windows-static install eigen3 --recurse",
-    "vcpkg --triplet x64-windows-static install openblas --recurse", 
-    "vcpkg --triplet x64-windows-static install clapack --recurse", 
+    "vcpkg --triplet x64-windows-static install blas --recurse", 
+    "vcpkg --triplet x64-windows-static install lapack-reference --recurse", 
     "vcpkg integrate install",
 ]
 before-build = [ 
