@@ -138,7 +138,6 @@ elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
   include(external/googletest.cmake)
   
   list(APPEND CMAKE_MODULE_PATH cmake)
-  list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/external/*'")
   message(STATUS "Use Codecov")
   find_package(codecov)
   
