@@ -133,12 +133,13 @@ archs = ["auto64"]
 #build-frontend = "build"
 environment = "CFLAGS='-O3 -pipe' CXXFLAGS='-O3 -pipe' CMAKE_TOOLCHAIN_FILE='C:/vcpkg/scripts/buildsystems/vcpkg.cmake'" 
 before-all = [ 
-    "vcpkg --triplet x64-windows-static install eigen3",
+    
     "vcpkg --triplet x64-windows install eigen3", 
-    "vcpkg --triplet x64-windows-static install openblas[threads]", 
-    "vcpkg --triplet x64-windows install openblas[threads]", 
-    "vcpkg --triplet x64-windows-static install clapack", 
+    "vcpkg --triplet x64-windows install openblas[*]", 
     "vcpkg --triplet x64-windows install clapack", 
+    "vcpkg --triplet x64-windows-static install eigen3 --recurse",
+    "vcpkg --triplet x64-windows-static install openblas[*] --recurse", 
+    "vcpkg --triplet x64-windows-static install clapack --recurse", 
     "vcpkg integrate install",
 ]
 before-build = [ 
