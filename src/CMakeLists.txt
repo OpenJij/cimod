@@ -14,9 +14,10 @@
 
 add_library(cxxcimod_header_only INTERFACE)
 
+file(GLOB_RECURSE cimod_headers *.hpp)
+
 target_precompile_headers(cxxcimod_header_only INTERFACE 
-   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-   $<INSTALL_INTERFACE:include>
+   ${CMAKE_CURRENT_SOURCE_DIR}
 ) 
 
 #target_include_directories(cxxcimod_header_only INTERFACE 
