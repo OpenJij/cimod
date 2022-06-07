@@ -70,18 +70,6 @@ jobs:
       shell: bash
       run: mkdir build
     - name: CMake Configure
-      if: ${{ matrix.os != 'windows-latest'}}
-      shell: bash
-      run: >
-        cmake 
-        -DCMAKE_BUILD_TYPE=Debug 
-        -DCMAKE_C_COMPILER_LAUNCHER=sccache 
-        -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
-        -DENABLE_COVERAGE=On
-        -S .
-        -B build
-    - name: CMake Configure
-      if: ${{ matrix.os == 'windows-latest'}}
       shell: bash
       run: >
         cmake 
@@ -107,7 +95,7 @@ jobs:
       shell: bash
       working-directory: build
       run: |
-        ./tests/Debug/cimod_test.exe -h 
+        ./tests/Debug/cimod_test.exe 
     - name: CMake Test
       shell: bash
       working-directory: build
@@ -117,7 +105,7 @@ jobs:
         --extra-verbose
         --parallel
         --schedule-random
-    - name: Run cimod_test
+    - name: Run gcov
       if: ${{ matrix.os != 'windows-latest'}}
       shell: bash
       working-directory: build
@@ -176,14 +164,13 @@ jobs:
       shell: bash
       run: |
           python -m pip install pip-tools 
-          pip-compile ci-requirement.in
+          pip-compile dev-requirement.in
     - uses: actions/cache@v3
       with:
           path: ${{ matrix.path }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}-${{ hashFiles('setup.cfg') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('dev-requirement.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}-${{ hashFiles('setup.cfg') }}
-            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('ci-requirement.txt') }}
+            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('dev-requirement.txt') }}
             ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}
     - name: Update
       shell: bash
@@ -194,7 +181,7 @@ jobs:
       shell: bash
       run: |
           set -eux
-          pip-sync ci-requirement.txt
+          pip-sync dev-requirement.txt
     - name: sccache
       uses: hendrikmuhs/ccache-action@v1.2
       with:
@@ -259,7 +246,6 @@ jobs:
     #    --editable .
  #       python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
     - name: Build & Install    
-      if: ${{ matrix.os != 'windows-latest'}}
       shell: bash
       run: >
         set -eux; 
@@ -267,16 +253,6 @@ jobs:
         --build-type Debug
         install 
         -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
-    - name: Build & Install    
-      if: ${{ matrix.os == 'windows-latest'}}
-      shell: bash
-      run: >
-        set -eux; 
-        python setup.py
-        --build-type Debug
-        install 
-        -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache 
-    
     - name: Test 
       shell: bash
       run: |
