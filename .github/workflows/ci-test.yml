@@ -293,7 +293,6 @@ jobs:
       if: ${{ matrix.os == 'windows-latest'}}
       shell: powershell
       run: >
-        set -eux; 
         python setup.py
         --build-type Debug
         install 
