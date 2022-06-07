@@ -15,14 +15,8 @@
 add_library(cxxcimod_header_only INTERFACE)
 
 target_precompile_headers(cxxcimod_header_only INTERFACE
-    binary_polynomial_model.hpp
-    binary_quadratic_model.hpp
-    binary_quadratic_model_dict.hpp
-    disable_eigen_warning.hpp
-    hash.hpp
-    json.hpp
-    utilities.hpp
-    vartypes.hpp
+  json.hpp
+  disable_eigen_warning.hpp
 ) 
 
 target_include_directories(cxxcimod_header_only INTERFACE 
