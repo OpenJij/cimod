@@ -59,6 +59,7 @@ jobs:
       if: ${{ matrix.os == 'windows-latest'}}
       shell: powershell
       run: |
+         vcpkg help triplet
          vcpkg --triplet x64-windows-static install eigen3
          vcpkg --triplet x64-windows install eigen3
          vcpkg integrate install
