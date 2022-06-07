@@ -90,8 +90,8 @@ jobs:
         uses: docker/setup-buildx-action@v2
         with:
             install: true
-      - name: Build wheels 
-        uses: pypa/cibuildwheel@2.6.0
+      - name: Build wheels on ${{ matrix.CIBW_PLATFORM }} ${{matrix.arch}}
+        uses: pypa/cibuildwheel@2.6.1
         env:
           CIBW_PLATFORM:  ${{ matrix.CIBW_PLATFORM }}
           CIBW_BUILD: ${{matrix.CIBW_BUILD}}
