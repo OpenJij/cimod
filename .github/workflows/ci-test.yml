@@ -276,7 +276,7 @@ jobs:
         export CMAKE_C_COMPILER_LAUNCHER=sccache
         export CMAKE_CXX_COMPILER_LAUNCHER=sccache
         export CMAKE_BUILD_TYPE=Debug
-        pip install -e .
+        pip install -vvv -e .
     - name: Build & Install    
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash 
@@ -284,7 +284,7 @@ jobs:
         set -eux
         export CMAKE_BUILD_TYPE=Debug
         export CMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        pip install -e .
+        pip install -vvv -e .
     - name: Test 
       shell: bash
       run: |
