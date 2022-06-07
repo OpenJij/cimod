@@ -11,6 +11,13 @@ set(EIGEN_BUILD_PKGCONFIG OFF)
 set(EIGEN_BUILD_DOC OFF) 
 set(EIGEN_BUILD_TESTING OFF)
 set(EIGEN_Fortran_COMPILER_WORKS OFF)
+if(BLAS_FOUND) 
+  set(EIGEN_USE_BLAS ON) 
+endif()
+
+if(LAPACK_FOUND) 
+  set(EIGEN_USE_LAPACKE ON)
+endif()
 
 #### Eigen ####
 FetchContent_Declare(
