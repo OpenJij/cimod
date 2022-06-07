@@ -88,7 +88,8 @@ $ pip install pip-tools
 $ pip-compile ci-requirement.in
 $ pip-sync ci-requirement.txt
 $ source .venv/bin/activate
-$ python setup.py --build-type Debug install 
+$ export CMAKE_BUILD_TYPE=Debug
+$ python setup.py --force-cmake install --build-type Debug -G Ninja
 $ python setup.py --build-type Debug test
 ```
 
@@ -96,7 +97,7 @@ $ python setup.py --build-type Debug test
 ```sh
 $ mkdir build 
 $ cd build
-$ cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On -S . -B build
+$ cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
 $ ./tests/cimod_test
 ```
 
