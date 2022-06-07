@@ -60,7 +60,7 @@ jobs:
       shell: powershell
       run: |
          vcpkg --triplet x64-windows-static install eigen3
-         vcpkg -h
+         vcpkg --triplet x64-windows install eigen3
          vcpkg integrate install
     #    vcpkg --triplet x64-windows-static install openblas
     - name: Install CMake 
