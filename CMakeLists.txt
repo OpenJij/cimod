@@ -94,7 +94,14 @@ else()
   include(external/eigen.cmake)
 endif() 
 
-include(external/json.cmake)
+find_package(nlohmann_json)
+if(TARGET nlohmann_json::nlohmann_json)
+  message(STATUS "Skip Download nlohmann_json")
+else()
+  message(STATUS "Downlod nlohmann_json")
+  set(JSON_BuildTests OFF CACHE INTERNAL "")
+  include(external/json.cmake)
+endif()
 
 add_subdirectory(src)
 
