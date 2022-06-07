@@ -12,7 +12,8 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        #os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
@@ -36,19 +37,19 @@ jobs:
     - name: Add msbuild to PATH
       if: ${{ matrix.os == 'windows-latest'}}
       uses: microsoft/setup-msbuild@v1.0.2
-    #- name: Cache vcpkg
-    #  uses: actions/cache@v3
-    #  if: ${{ matrix.os == 'windows-latest'}}
-    #  with:
-    #    path: C:/vcpkg
-    #    key: ${{ matrix.os }}-vcpkg-${{ env.RAND }}
-    #    restore-keys: |
-    #      ${{ matrix.os }}-vcpkg-${{ env.RAND }}
-    #      ${{ matrix.os }}-vcpkg
-    #- name: Install Dep on windows
-    #  if: ${{ matrix.os == 'windows-latest'}}
-    #  run: |
-    #    vcpkg --triplet x64-windows-static install eigen3
+    - name: Cache vcpkg
+      uses: actions/cache@v3
+      if: ${{ matrix.os == 'windows-latest'}}
+      with:
+         path: C:/vcpkg
+         key: ${{ matrix.os }}-vcpkg-${{ env.RAND }}
+         restore-keys: |
+           ${{ matrix.os }}-vcpkg-${{ env.RAND }}
+           ${{ matrix.os }}-vcpkg
+    - name: Install Dep on windows
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+         vcpkg --triplet x64-windows-static install eigen3
     #    vcpkg --triplet x64-windows-static install openblas
     #    vcpkg integrate install
     - name: Install CMake 
@@ -70,6 +71,18 @@ jobs:
       shell: bash
       run: mkdir build
     - name: CMake Configure
+      if: ${{ matrix.os != 'windows-latest'}}
+      shell: bash
+      run: >
+        cmake 
+        -DCMAKE_BUILD_TYPE=Debug 
+        -DCMAKE_C_COMPILER_LAUNCHER=sccache 
+        -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+        -DENABLE_COVERAGE=On
+        -S .
+        -B build
+    - name: CMake Configure
+      if: ${{ matrix.os == 'windows-latest'}}
       shell: bash
       run: >
         cmake 
@@ -147,7 +160,7 @@ jobs:
           path: ~\AppData\Local\pip\Cache
 
     runs-on: ${{ matrix.os }}
-#    if: ${{github.event_name == 'workflow_dispatch'}}
+    if: ${{github.event_name == 'workflow_dispatch'}}
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
