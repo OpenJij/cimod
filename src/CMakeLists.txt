@@ -14,6 +14,10 @@
 
 add_library(cxxcimod_header_only INTERFACE)
 
+if(ENABLE_COVERAGE)
+  add_coverage(cxxcimod_header_only)
+endif()  
+  
 #target_precompile_headers(cxxcimod_header_only INTERFACE
 #  json.hpp
 #  disable_eigen_warning.hpp
