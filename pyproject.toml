@@ -124,7 +124,7 @@ build-frontend = "build"
 before-all = [ 
     "brew install eigen",
 ]
-environment = "CFLAGS='-O3 -pipe' CXXFLAGS='-O3 -pipe' MACOSX_DEPLOYMENT_TARGET='11'" 
+environment = "CFLAGS='-O3 -pipe' CXXFLAGS='-O3 -pipe'" 
 before-build = [ 
     "pip install pybind11 cmake ninja", 
 ]
