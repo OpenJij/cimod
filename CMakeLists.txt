@@ -71,8 +71,14 @@ endif()
 if(NOT APPLE)
   set(BLA_STATIC ON) 
 endif() 
+
 find_package(BLAS)
 find_package(LAPACK)
+
+if(BLAS_FOUND AND LAPACK_FOUND) 
+  set(EIGEN_USE_BLAS ON) 
+  set(EIGEN_USE_LAPACKE ON)
+endif()
 
 list(APPEND CMAKE_MODULE_PATH external)
 
