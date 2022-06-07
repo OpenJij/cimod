@@ -95,7 +95,7 @@ reportUnusedVariable =  'warning'
 reportDuplicateImport = 'warning'
 
 [tool.cibuildwheel]
-skip = ["cp36*", "*musllinux*", "pp*"]
+skip = ["cp36*", "pp*"]
 build-verbosity = 1
 dependency-versions = "latest"
 
