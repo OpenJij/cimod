@@ -1,29 +1,60 @@
-cmake_minimum_required(VERSION 3.17)
+# Copyright 2022 Jij Inc.
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 project(cimod)
 
-enable_language(CXX)
+include(CheckLanguage)
 
-set(CMAKE_VERBOSE_MAKEFILE TRUE)
+check_language(C)
+check_language(CXX)
+
+if(CMAKE_C_COMPILER)
+  enable_language(C)
+endif() 
+if(CMAKE_CXX_COMPILER)
+  enable_language(CXX)
+endif() 
+
+if(UNIX AND NOT APPLE)
+  check_language(Fortran)
+  if(CMAKE_Fortran_COMPILER)
+      enable_language(Fortran)
+  endif()
+endif()
+
+# detect operating system and host processor
+message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
+message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+message(STATUS "CMAKE_GENERATOR = ${CMAKE_GENERATOR}")
+
+message(STATUS "Started CMake for ${PROJECT_NAME} \n")
 
 if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-command-line-argument")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-unused-command-line-argument")
+    add_compile_options(-Wno-unused-command-line-argument)
+elseif (MSVC)
+    add_compile_options(/bigobj)
+    set(CMAKE_Fortran_COMPILER OFF CACHE BOOL "" FORCE)
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
- 
 
 ##### Set default behavior #####
 set(DEFAULT_USE_OMP Yes)
-set(DEFAULT_USE_TEST No)
-option(USE_TEST "Use test code" No)
-
-
-# Use OpenMP as default behavior
-message(STATUS "FORCE_USE_OMP = ${FORCE_USE_OMP}")
 
 if(NOT APPLE) 
   if(NOT DEFINED USE_OMP) 
@@ -32,123 +63,102 @@ if(NOT APPLE)
 else() 
   if(FORCE_USE_OMP) 
     set(USE_OMP ${DEFAULT_USE_OMP})
+    option(FORCE_USE_OMP "Enable Use OMP FORCE." OFF)
     message(STATUS "APPLE_FORCE_USE_OMP = ${FORCE_USE_OMP}")
   endif()
 endif()
 
-if(NOT DEFINED USE_TEST)
-    set(USE_TEST ${DEFAULT_USE_TEST})
-endif()
-
 if(USE_OMP)
-    set(CMAKE_INSTALL_OPENMP_LIBRARIES ON)
-    if(APPLE) 
-      if(NOT CMAKE_OSX_ARCHITECTURES)
-        message(STATUS "Apple Native Build")
-	set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp")
-	set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp")
-        find_package(OpenMP REQUIRED)
-	if(OpenMP_FOUND)
-           message(STATUS "OMP_FOUND = YES")
-           add_definitions(-DUSE_OMP)
-	endif()
-      elseif(${CMAKE_OSX_ARCHITECTURES} STREQUAL "arm64")
-        message(STATUS "APPLE SILICON")
-	set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp")
-	set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp")
-        find_package(OpenMP REQUIRED)
-	if(OpenMP_FOUND)
-           message(STATUS "OMP_FOUND = YES")
-           add_definitions(-DUSE_OMP)
-        else() 
-          message(STATUS "OMP_FOUND = NO") 
-	endif()
-      else()
-        message(STATUS "APPLE X86-64")
-        find_package(OpenMP REQUIRED)
-	if(OpenMP_FOUND)
-           message(STATUS "OMP_FOUND = YES")
-           add_definitions(-DUSE_OMP)
-	endif()
-      endif()
-    else()
-      find_package(OpenMP REQUIRED)
-      if(OpenMP_FOUND)
-        message(STATUS "OMP_FOUND = YES")
-        add_definitions(-DUSE_OMP)
-      endif()
-    endif()
-else() 
-  if(APPLE) 
-      if(NOT CMAKE_OSX_ARCHITECTURES)
-        message(STATUS "APPLE Native Build")
-	set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp")
-	set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp")
-        find_package(OpenMP)
-	if(OpenMP_FOUND)
-           set(USE_OMP ${DEFAULT_USE_OMP})
-           message(STATUS "OMP_FOUND = YES")
-           add_definitions(-DUSE_OMP)
-	else() 
-          message(STATUS "OMP_FOUND = NO") 
-	endif()
-      elseif(${CMAKE_OSX_ARCHITECTURES} STREQUAL "arm64")
-        message(STATUS "APPLE SILICON")
-	set(OpenMP_C_FLAGS "-Xpreprocessor -fopenmp")
-	set(OpenMP_CXX_FLAGS "-Xpreprocessor -fopenmp")
-        find_package(OpenMP)
-	if(OpenMP_FOUND)
-           set(USE_OMP ${DEFAULT_USE_OMP})
-           message(STATUS "OMP_FOUND = YES")
-           add_definitions(-DUSE_OMP)
-        else() 
-          message(STATUS "OMP_FOUND = NO") 
-	endif()
-      else()
-        message(STATUS "APPLE X86-64")
-        find_package(OpenMP)
-	if(OpenMP_FOUND)
-           set(USE_OMP ${DEFAULT_USE_OMP})
-           message(STATUS "OMP_FOUND = YES")
-           add_definitions(-DUSE_OMP)
-	else() 
-          message(STATUS "OMP_FOUND = NO") 
-	endif()
-      endif()
-  endif()
+  set(CMAKE_INSTALL_OPENMP_LIBRARIES ON)
+  find_package(OpenMP REQUIRED)
+  message(STATUS "OMP_FOUND = YES")
+  message(STATUS "USE_OMP = ${USE_OMP}")
 endif()
 
+if(NOT APPLE)
+  set(BLA_STATIC ON) 
+endif() 
 
+find_package(BLAS)
+find_package(LAPACK)
 
-if (APPLE)
-    find_package(BLAS)
-    find_package(LAPACK)
+if(BLAS_FOUND) 
+  set(EIGEN_USE_BLAS ON) 
 endif()
 
-message(STATUS "USE_OMP = ${USE_OMP}")
-message(STATUS "USE_TEST = ${USE_TEST}")
+if(LAPACK_FOUND) 
+  set(EIGEN_USE_LAPACKE ON)
+endif() 
 
 list(APPEND CMAKE_MODULE_PATH external)
-if(USE_TEST)
-    include(external/googletest.cmake)
-else()
-	message(STATUS "Skip downloding googletest")
-endif()
 
-find_package(Eigen3 3.3 NO_MODULE)
+find_package(Eigen3 CONFIG)
 
-if(NOT TARGET Eigen3::Eigen)
+if(EIGEN3_FOUND)
+  message(STATUS "Skip Download eigen3")
+else() 
+  message(STATUS "Downlod eigen3")
   include(external/eigen.cmake)
 endif() 
 
-include(external/pybind11.cmake)
-include(external/json.cmake)
-include(external/pybind11-json.cmake)
+find_package(nlohmann_json)
+if(TARGET nlohmann_json::nlohmann_json)
+  message(STATUS "Skip Download nlohmann_json")
+else()
+  message(STATUS "Downlod nlohmann_json")
+  set(JSON_BuildTests OFF CACHE INTERNAL "")
+  include(external/json.cmake)
+endif()
 
-find_package(Python COMPONENTS Development.Module)
+if(ENABLE_COVERAGE)
+  list(APPEND CMAKE_MODULE_PATH cmake)
+  message(STATUS "Use Codecov")
+  find_package(codecov)
+endif()
 
 add_subdirectory(src)
-add_subdirectory(cimod)
-if(USE_TEST)
-    add_subdirectory(tests)
+
+# Build Python Extension 
+if(SKBUILD)
+  message(STATUS "Build Python Extension.")
+  find_package(Python COMPONENTS Interpreter Development)
+  # Scikit-Build does not add your site-packages to the search path
+  # automatically, so we need to add it _or_ the pybind11 specific directory
+  # here.
+  execute_process(
+      COMMAND "${PYTHON_EXECUTABLE}" -c
+              "import pybind11; print(pybind11.get_cmake_dir())"
+      OUTPUT_VARIABLE _tmp_dir
+      OUTPUT_STRIP_TRAILING_WHITESPACE COMMAND_ECHO STDOUT)
+  list(APPEND CMAKE_PREFIX_PATH "${_tmp_dir}")
+  find_package(pybind11 CONFIG REQUIRED)
+  
+  find_package(pybind11_json) 
+  if(TARGET pybind11_json)
+    message(STATUS "Skip Download pybind11_json")
+  else()
+    message(STATUS "Downlod pybind11_json")
+    include(external/pybind11-json.cmake)
+  endif()
+  
+  add_subdirectory(cimod)
+elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
+  
+  message(STATUS "Use Googletest")
+  
+  find_package(GTest)
+  if(GTest_FOUND)
+    message(STATUS "Found googletest")
+  else()
+    message(STATUS "Downlod Googletest")
+    include(external/googletest.cmake)
+  endif()
+  
+  enable_testing()
+  
+  add_subdirectory(tests)
+endif()
+
+if(ENABLE_COVERAGE)
+  coverage_evaluate()
 endif()

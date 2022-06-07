@@ -1,27 +1,53 @@
 include(FetchContent)
 
+message(CHECK_START "Fetching Eigen3")
+list(APPEND CMAKE_MESSAGE_INDENT "  ")
+
+set(FETCHCONTENT_QUIET OFF)
+
+set(BUILD_TESTING OFF) 
+set(TEST_LIB OFF)
+
+set(EIGEN_MPL2_ONLY ON CACHE BOOL "" FORCE)
+set(EIGEN_BUILD_PKGCONFIG OFF CACHE BOOL "" FORCE)
+set(EIGEN_BUILD_DOC OFF CACHE BOOL "" FORCE)
+set(EIGEN_DOC_USE_MATHJAX OFF CACHE BOOL "" FORCE)
+set(EIGEN_BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(EIGEN_TEST_NOQT OFF CACHE BOOL "" FORCE)
+set(EIGEN_LEAVE_TEST_IN_ALL_TARGET OFF CACHE BOOL "" FORCE)
+set(EIGEN_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+
+if(MSVC)
+  set(EIGEN_Fortran_COMPILER_WORKS OFF CACHE BOOL "" FORCE)
+endif()
+
+if(BLAS_FOUND) 
+  set(EIGEN_USE_BLAS ON) 
+endif()
+
+if(LAPACK_FOUND) 
+  set(EIGEN_USE_LAPACKE ON)
+endif()
+
 #### Eigen ####
 FetchContent_Declare(
     eigen
     GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
-    GIT_TAG         3.3.9
-    CMAKE_ARGS -DEIGEN_MPL2_ONLY
+    GIT_TAG         3.4.0
+    GIT_SHALLOW     TRUE
+    CMAKE_ARGS 
+    -DEIGEN_MPL2_ONLY=ON 
+    -DEIGEN_BUILD_PKGCONFIG=OFF
+    -DEIGEN_BUILD_DOC=OFF
+    -DEIGEN_BUILD_TESTING=OFF
+    -DEIGEN_Fortran_COMPILER_WORKS=OFF
     )
 
-set(EIGEN_CPP_STANDARD 11)
-set(EIGEN_MPL2_ONLY ON)
 FetchContent_MakeAvailable(eigen)
 
 add_library(cimod-eigen_lib INTERFACE)
 target_include_directories(cimod-eigen_lib INTERFACE ${eigen_SOURCE_DIR})
 target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_MPL2_ONLY)
-if (APPLE)
-    if(BLAS_FOUND AND LAPACK_FOUND) 
-      target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_USE_BLAS=ON)
-      target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_USE_LAPACKE=ON)
-    endif()
-endif()
 
-if(OpenMP_FOUND)
-  target_link_libraries(cimod-eigen_lib INTERFACE OpenMP::OpenMP_CXX)
-endif()
+list(POP_BACK CMAKE_MESSAGE_INDENT)
+message(CHECK_PASS "fetched")
