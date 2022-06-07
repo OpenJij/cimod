@@ -110,6 +110,12 @@ else()
   include(external/json.cmake)
 endif()
 
+if(ENABLE_COVERAGE)
+  list(APPEND CMAKE_MODULE_PATH cmake)
+  message(STATUS "Use Codecov")
+  find_package(codecov)
+endif()
+
 add_subdirectory(src)
 
 # Build Python Extension 
@@ -147,12 +153,12 @@ elseif(${CMAKE_BUILD_TYPE} MATCHES Debug)
     message(STATUS "Downlod Googletest")
     include(external/googletest.cmake)
   endif()
-  list(APPEND CMAKE_MODULE_PATH cmake)
-  message(STATUS "Use Codecov")
-  find_package(codecov)
   
   enable_testing()
   
   add_subdirectory(tests)
+endif()
+
+if(ENABLE_COVERAGE)
   coverage_evaluate()
 endif()
