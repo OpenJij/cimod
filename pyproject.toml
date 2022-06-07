@@ -102,7 +102,7 @@ dependency-versions = "latest"
 [tool.cibuildwheel.linux]
 archs = ["x86_64", "aarch64"]
 build-frontend = "build"
-#environment = "CFLAGS='-O3 -pipe' CXXFLAGS='-O3 -pipe'"
+environment = "BLA_STATIC='ON'"
 manylinux-x86_64-image ="quay.io/pypa/manylinux_2_28_x86_64:latest"
 manylinux-aarch64-image = "quay.io/pypa/manylinux_2_28_aarch64:latest"
 before-all = [ 
@@ -132,7 +132,7 @@ before-build = [
 [tool.cibuildwheel.windows]
 archs = ["AMD64"]
 #build-frontend = "build"
-environment = "CMAKE_TOOLCHAIN_FILE='C:/vcpkg/scripts/buildsystems/vcpkg.cmake'" 
+environment = "BLA_STATIC='ON' CMAKE_TOOLCHAIN_FILE='C:/vcpkg/scripts/buildsystems/vcpkg.cmake'" 
 before-all = [ 
     "vcpkg update",
     "vcpkg --triplet x64-windows install eigen3 --recurse", 
