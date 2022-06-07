@@ -26,14 +26,14 @@ jobs:
       shell: bash
       run: |
         pip install ninja
-        sudo apt-get install -y libeigen3-dev libgtest-dev googletest
+        sudo apt-get install -y libeigen3-dev 
         sudo apt-get install -y libopenblas-dev lcov
     - name: Install Dep on macos
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
       run: |
         pip install ninja
-        brew install eigen googletest 
+        brew install eigen nlohmann-json
     - name: Add msbuild to PATH
       if: ${{ matrix.os == 'windows-latest'}}
       uses: microsoft/setup-msbuild@v1.0.2
@@ -68,6 +68,8 @@ jobs:
          vcpkg search lapack-reference
          vcpkg --triplet x64-windows-static install eigen3
          vcpkg --triplet x64-windows install eigen3
+         vcpkg --triplet x64-windows-static install nlohmann-json
+         vcpkg --triplet x64-windows install nlohmann-json
          vcpkg integrate install
     #    vcpkg --triplet x64-windows-static install openblas
     - name: Install CMake 
@@ -233,7 +235,7 @@ jobs:
     - name: Install Eigen3 on macos
       if: ${{ matrix.os == 'macos-latest'}}
       run: |
-        brew install eigen 
+        brew install eigen nlohmann-json
     - name: Add msbuild to PATH
       if: ${{ matrix.os == 'windows-latest'}}
       uses: microsoft/setup-msbuild@v1.0.2
@@ -261,6 +263,8 @@ jobs:
       run: |
         vcpkg --triplet x64-windows-static install eigen3
         vcpkg --triplet x64-windows install eigen3
+        vcpkg --triplet x64-windows-static install nlohmann-json
+        vcpkg --triplet x64-windows install nlohmann-json
         vcpkg integrate install
     - name: Show Help
       shell: bash
