@@ -37,15 +37,22 @@ jobs:
     - name: Add msbuild to PATH
       if: ${{ matrix.os == 'windows-latest'}}
       uses: microsoft/setup-msbuild@v1.0.2
+    - name: Prepare Cache 
+      shell: bash 
+      run: |
+        set -eux
+        du -a C:/vcpkg
+        msbuild -version > msbuild_version.txt
+        cat msbuild_version.txt
     - name: Cache vcpkg
       uses: actions/cache@v3
       if: ${{ matrix.os == 'windows-latest'}}
       with:
          path: C:/vcpkg
-         key: ${{ matrix.os }}-vcpkg-${{ env.RAND }}
+         key: ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}-${{ env.RAND }}
          restore-keys: |
-           ${{ matrix.os }}-vcpkg-${{ env.RAND }}
-           ${{ matrix.os }}-vcpkg
+           ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}-${{ env.RAND }}
+           ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       run: |
