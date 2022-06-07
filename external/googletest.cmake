@@ -19,6 +19,9 @@ if(WIN32)
 endif()
 
 FetchContent_MakeAvailable(googletest)
+
+find_package(GTest)
+
 #FetchContent_GetProperties(googletest)
 
 #message(STATUS "gtest_SOURCE_DIR = ${gtest_SOURCE_DIR}")
