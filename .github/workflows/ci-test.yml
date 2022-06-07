@@ -65,7 +65,6 @@ jobs:
          vcpkg integrate install
     #    vcpkg --triplet x64-windows-static install openblas
     - name: Install CMake 
-      if: ${{ matrix.os != 'windows-latest'}}
       run: |
         pip install cmake
         cmake --version
@@ -117,12 +116,12 @@ jobs:
       working-directory: build
       run: |
         ctest --help 
-    - name: Run cimod_test
-      if: ${{ matrix.os == 'windows-latest'}}
-      shell: bash
-      working-directory: build
-      run: |
-        ./tests/Debug/cimod_test.exe 
+    #- name: Run cimod_test
+    #  if: ${{ matrix.os == 'windows-latest'}}
+    #  shell: bash
+    #  working-directory: build
+    #  run: |
+    #    ./tests/Debug/cimod_test.exe 
     - name: CMake Test
       shell: bash
       working-directory: build
@@ -232,21 +231,29 @@ jobs:
     - name: Add msbuild to PATH
       if: ${{ matrix.os == 'windows-latest'}}
       uses: microsoft/setup-msbuild@v1.0.2
-    #- name: Cache vcpkg
-    #  uses: actions/cache@v3
-    #  if: ${{ matrix.os == 'windows-latest'}}
-    #  with:
-    #    path: C:/vcpkg
-    #    key: ${{ matrix.os }}-vcpkg-${{ env.RAND }}
-    #    restore-keys: |
-    #      ${{ matrix.os }}-vcpkg-${{ env.RAND }}
-    #      ${{ matrix.os }}-vcpkg
-    #- name: Install Dep on windows
-    #  if: ${{ matrix.os == 'windows-latest'}}
-    #  run: |
-    #    vcpkg --triplet x64-windows-static install eigen3
-    #    vcpkg --triplet x64-windows-static install openblas
-    #    vcpkg integrate install
+    - name: Prepare Cache 
+      shell: bash 
+      run: |
+        set -eux
+        ls  C:/vcpkg
+        MSBuild.exe -version > msbuild_version.txt
+        cat msbuild_version.txt
+    - name: Cache vcpkg
+      uses: actions/cache@v3
+      if: ${{ matrix.os == 'windows-latest'}}
+      with:
+         path: |
+           C:/Users/runneradmin/AppData/Local/vcpkg/archives
+         key: ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
+         restore-keys: |
+           ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
+           ${{ matrix.os }}-vcpkg
+    - name: Install Dep on windows
+      if: ${{ matrix.os == 'windows-latest'}}
+      run: |
+        vcpkg --triplet x64-windows-static install eigen3
+        vcpkg --triplet x64-windows install eigen3
+        vcpkg integrate install
     - name: Show Help
       shell: bash
       run: |
@@ -273,6 +280,7 @@ jobs:
     #    --editable .
  #       python setup.py --force-cmake --build-type Debug install -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
     - name: Build & Install    
+      if: ${{ matrix.os != 'windows-latest'}}
       shell: bash
       run: >
         set -eux; 
@@ -280,6 +288,15 @@ jobs:
         --build-type Debug
         install 
         -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
+    - name: Build & Install    
+      if: ${{ matrix.os == 'windows-latest'}}
+      shell: powershell
+      run: >
+        set -eux; 
+        python setup.py
+        --build-type Debug
+        install 
+        -- -DCMAKE_C_COMPILER_LAUNCHER=sccache -DCMAKE_CXX_COMPILER_LAUNCHER=sccache -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
     - name: Test 
       shell: bash
       run: |
