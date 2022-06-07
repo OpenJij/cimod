@@ -24,6 +24,7 @@ FetchContent_Declare(
     eigen
     GIT_REPOSITORY  https://gitlab.com/libeigen/eigen
     GIT_TAG         3.4.0
+    GIT_SHALLOW     TRUE
     CMAKE_ARGS 
     -DEIGEN_MPL2_ONLY=ON 
     -DEIGEN_BUILD_PKGCONFIG=OFF
@@ -37,13 +38,6 @@ FetchContent_MakeAvailable(eigen)
 add_library(cimod-eigen_lib INTERFACE)
 target_include_directories(cimod-eigen_lib INTERFACE ${eigen_SOURCE_DIR})
 target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_MPL2_ONLY)
-if(BLAS_FOUND AND LAPACK_FOUND) 
-    target_compile_definitions(cimod-eigen_lib INTERFACE EIGEN_USE_BLAS EIGEN_USE_LAPACKE)
-    set_target_properties(cimod-eigen_lib INTERFACE
-      EIGEN_USE_BLAS ON
-      EIGEN_USE_LAPACKE ON
-    )
-endif()
 
 list(POP_BACK CMAKE_MESSAGE_INDENT)
 message(CHECK_PASS "fetched")
