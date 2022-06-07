@@ -38,8 +38,9 @@ message(STATUS "Started CMake for ${PROJECT_NAME} \n")
 
 if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-command-line-argument")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wno-unused-command-line-argument")
+    add_compile_options(-Wno-unused-command-line-argument)
+elseif (MSVC)
+    add_compile_options(/bigobj)
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
