@@ -18,7 +18,9 @@ add_executable(cimod_test
     test.cpp
 )
 
-add_coverage(cimod_test)
+if(ENABLE_COVERAGE)
+  add_coverage(cimod_test)
+endif()
 
 #set_target_properties(cimod_test 
 #    PROPERTIES 
