@@ -138,7 +138,7 @@ before-all = [
     "vcpkg --triplet x64-windows install eigen3", 
     "vcpkg --triplet x64-windows-static install eigen3 --recurse",
     "vcpkg --triplet x64-windows-static install openblas[threads] --recurse", 
-    "vcpkg --triplet x64-windows-static install lapack-reference[blas-select] --recurse", 
+    "vcpkg --triplet x64-windows-static install clapack --recurse", 
     "vcpkg integrate install",
 ]
 before-build = [ 
