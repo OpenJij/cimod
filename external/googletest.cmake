@@ -19,10 +19,10 @@ if(WIN32)
 endif()
 
 FetchContent_MakeAvailable(googletest)
-FetchContent_GetProperties(googletest)
+#FetchContent_GetProperties(googletest)
 
-message(STATUS "gtest_SOURCE_DIR = ${gtest_SOURCE_DIR}")
-message(STATUS "gmock_SOURCE_DIR = ${gmock_SOURCE_DIR}")
+#message(STATUS "gtest_SOURCE_DIR = ${gtest_SOURCE_DIR}")
+#message(STATUS "gmock_SOURCE_DIR = ${gmock_SOURCE_DIR}")
 
 
 list(POP_BACK CMAKE_MESSAGE_INDENT)
