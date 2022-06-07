@@ -60,8 +60,8 @@ jobs:
       shell: powershell
       run: |
          vcpkg --triplet x64-windows-static install eigen3
+         vcpkg integrate install
     #    vcpkg --triplet x64-windows-static install openblas
-    #    vcpkg integrate install
     - name: Install CMake 
       run: |
         pip install cmake
@@ -100,6 +100,7 @@ jobs:
         -DCMAKE_C_COMPILER_LAUNCHER=sccache 
         -DCMAKE_CXX_COMPILER_LAUNCHER=sccache
         -DENABLE_COVERAGE=On
+        -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
         -S .
         -B build
     - name: CMake Build
