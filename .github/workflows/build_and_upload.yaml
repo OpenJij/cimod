@@ -32,7 +32,7 @@ jobs:
           path: dist/*.tar.gz
           retention-days: 30
   build_wheels:
-    name: Build wheels ${{ matrix.CIBW_BUILD }} 
+    name: Build wheels ${{ matrix.os }} 
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false 
