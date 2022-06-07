@@ -14,10 +14,15 @@
 
 add_library(cxxcimod_header_only INTERFACE)
 
-target_include_directories(cxxcimod_header_only INTERFACE 
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-  $<INSTALL_INTERFACE:include>
-)
+target_precompile_headers(cxxcimod_header_only INTERFACE 
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+   $<INSTALL_INTERFACE:include>
+) 
+
+#target_include_directories(cxxcimod_header_only INTERFACE 
+#  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+#  $<INSTALL_INTERFACE:include>
+#)
 
 target_link_libraries(cxxcimod_header_only INTERFACE 
     nlohmann_json::nlohmann_json
