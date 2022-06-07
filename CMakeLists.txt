@@ -75,10 +75,6 @@ if(USE_OMP)
   message(STATUS "USE_OMP = ${USE_OMP}")
 endif()
 
-if(NOT APPLE)
-  set(BLA_STATIC ON) 
-endif() 
-
 find_package(BLAS)
 find_package(LAPACK)
 
