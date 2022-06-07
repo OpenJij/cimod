@@ -61,6 +61,11 @@ jobs:
       shell: powershell
       run: |
          vcpkg help triplet
+         vcpkg search eigen3
+         vcpkg search openblas
+         vcpkg search blas
+         vcpkg search clpack
+         vcpkg search lapack-reference
          vcpkg --triplet x64-windows-static install eigen3
          vcpkg --triplet x64-windows install eigen3
          vcpkg integrate install
