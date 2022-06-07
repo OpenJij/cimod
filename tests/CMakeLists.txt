@@ -19,7 +19,6 @@ add_executable(cimod_test
 )
 
 add_coverage(cxxcimod_header_only)
-add_coverage(cimod_test) 
 
 #set_target_properties(cimod_test 
 #    PROPERTIES 
