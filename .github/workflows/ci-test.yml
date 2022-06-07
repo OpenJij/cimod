@@ -41,20 +41,23 @@ jobs:
       shell: bash 
       run: |
         set -eux
-        du -a C:/vcpkg
-        msbuild -version > msbuild_version.txt
+        ls  C:/vcpkg
+        MSBuild.exe -version > msbuild_version.txt
         cat msbuild_version.txt
     - name: Cache vcpkg
       uses: actions/cache@v3
       if: ${{ matrix.os == 'windows-latest'}}
       with:
-         path: C:/vcpkg
+         path: |
+           C:/Users/runneradmin/AppData/Local/vcpkg/archives
+           C:/vcpkg/installed
          key: ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}-${{ env.RAND }}
          restore-keys: |
            ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}-${{ env.RAND }}
            ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
+      shell: powershell
       run: |
          vcpkg --triplet x64-windows-static install eigen3
     #    vcpkg --triplet x64-windows-static install openblas
@@ -90,7 +93,7 @@ jobs:
         -B build
     - name: CMake Configure
       if: ${{ matrix.os == 'windows-latest'}}
-      shell: bash
+      shell: powershell
       run: >
         cmake 
         -DCMAKE_BUILD_TYPE=Debug 
