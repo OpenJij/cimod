@@ -76,7 +76,7 @@ find_package(LAPACK)
 
 list(APPEND CMAKE_MODULE_PATH external)
 
-find_package(Eigen3)
+find_package(Eigen3 CONFIG)
 
 if(EIGEN3_FOUND)
   message(STATUS "Skip Download eigen3")
