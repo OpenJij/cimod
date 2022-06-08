@@ -109,11 +109,13 @@ before-all = [
     "dnf config-manager --set-enabled powertools",
     "dnf makecache --refresh",
     "dnf -y --enablerepo=powertools install openblas-static",
+    "dnf --enablerepo=powertools install lapack-static",
     "dnf -y install gcc-toolset-11", 
     "dnf -y --enablerepo=powertools install eigen3-devel",
 ]
 before-build = [ 
     "source scl_source enable gcc-toolset-11",
+    "export CIMOD_BLA_STATIC=ON",
     "pip install pybind11 cmake ninja", 
 ]
 repair-wheel-command = "auditwheel repair --lib-sdir . -w {dest_dir} {wheel}"
@@ -144,6 +146,7 @@ before-all = [
     "vcpkg integrate install",
 ]
 before-build = [ 
+    "set CIMOD_BLA_STATIC=ON",
     "pip install cmake pybind11 delvewheel", 
 ]
 repair-wheel-command = "delvewheel repair -w {dest_dir} {wheel}"
