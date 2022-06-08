@@ -77,6 +77,12 @@ if(USE_OMP)
   message(STATUS "USE_OMP = ${USE_OMP}")
 endif()
 
+message(STATUS "BLA_STATIC = ${BLA_STATIC}")
+if(BLA_STATIC)
+  message(STATUS "ENABLE BLAS STATIC")
+  set(BLA_STATIC ON CACHE BOOL "" FORCE)
+endif()
+
 find_package(BLAS)
 find_package(LAPACK)
 
