@@ -109,7 +109,7 @@ before-all = [
     "dnf config-manager --set-enabled powertools",
     "dnf makecache --refresh",
     "dnf -y --enablerepo=powertools install openblas-static",
-    "dnf --enablerepo=powertools install lapack-static",
+    "dnf -y --enablerepo=powertools install lapack-static",
     "dnf -y install gcc-toolset-11", 
     "dnf -y --enablerepo=powertools install eigen3-devel",
 ]
