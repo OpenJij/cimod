@@ -41,6 +41,9 @@ message(STATUS "CMAKE_GENERATOR = ${CMAKE_GENERATOR}")
 message(STATUS "CIBUILDWHEEL = $ENV{CIBUILDWHEEL}")
 message(STATUS "Started CMake for ${PROJECT_NAME} \n")
 
+list(APPEND CMAKE_MODULE_PATH external)
+list(APPEND CMAKE_MODULE_PATH cmake)
+
 if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
     include(cmake/PythonAutoDetectOSX.cmake)
@@ -92,8 +95,6 @@ endif()
 find_package(BLAS)
 find_package(LAPACK)
 
-list(APPEND CMAKE_MODULE_PATH external)
-
 find_package(Eigen3 CONFIG)
 
 if(EIGEN3_FOUND)
@@ -143,7 +144,6 @@ if(SKBUILD)
   add_subdirectory(cimod)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
   if(ENABLE_COVERAGE AND (NOT MSVC))
-    list(APPEND CMAKE_MODULE_PATH cmake)
     message(STATUS "Use Codecov")
     find_package(codecov)
   endif()
