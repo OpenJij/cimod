@@ -81,13 +81,13 @@ if(USE_OMP)
   endif()
 endif()
 
-if($ENV{CIBUILDWHEEL})
+if(NOT APPLE AND $ENV{CIBUILDWHEEL})
   message(STATUS "ENABLE BLAS STATIC")
   set(BLA_STATIC ON CACHE BOOL "" FORCE)
 endif()
 
-find_package(BLAS CONFIG)
-find_package(LAPACK CONFIG)
+find_package(BLAS)
+find_package(LAPACK)
 
 if(BLAS_FOUND) 
   set(EIGEN_USE_BLAS ON) 
