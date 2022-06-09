@@ -124,7 +124,6 @@ if(SKBUILD)
   # Scikit-Build does not add your site-packages to the search path
   # automatically, so we need to add it _or_ the pybind11 specific directory
   # here.
-  set(PYBIND11_FINDPYTHON ON)
   execute_process(
       COMMAND "${PYTHON_EXECUTABLE}" -c
               "import pybind11; print(pybind11.get_cmake_dir())"
