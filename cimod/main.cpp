@@ -58,32 +58,3 @@ PYBIND11_MODULE(cxxcimod, m){
     declare_BPM<std::tuple<int64_t, int64_t, int64_t, int64_t>, double>(m, "BinaryPolynomialModel_tuple4");
    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
