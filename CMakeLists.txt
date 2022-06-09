@@ -92,14 +92,6 @@ endif()
 find_package(BLAS)
 find_package(LAPACK)
 
-if(BLAS_FOUND) 
-  set(EIGEN_USE_BLAS ON) 
-endif()
-
-if(LAPACK_FOUND) 
-  set(EIGEN_USE_LAPACKE ON)
-endif() 
-
 list(APPEND CMAKE_MODULE_PATH external)
 
 find_package(Eigen3 CONFIG)
