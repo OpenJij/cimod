@@ -18,8 +18,6 @@ requires = [
    'setuptools',
    'wheel',
    'build',
-   'cmake',
-   'pytest-runner',
    'numpy',
    'pybind11',
    'scikit-build',
