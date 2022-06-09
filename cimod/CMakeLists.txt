@@ -44,7 +44,11 @@ target_link_libraries(${python_module_name} PRIVATE
     nlohmann_json::nlohmann_json
     cxxcimod_header_only
 )
-
+if(${CMAKE_BUILD_TYPE} MATCHES Debug) 
+  target_compile_definitions(${python_module_name} PRIVATE 
+      PYBIND11_DETAILED_ERROR_MESSAGES
+  )
+endif()
 target_compile_definitions(${python_module_name} PRIVATE 
     PYTHON_VERSION_INFO=${PYTHON_VERSION_STRING}
 )
