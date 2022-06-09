@@ -130,6 +130,7 @@ add_subdirectory(src)
 # Build Python Extension 
 if(SKBUILD)
   message(STATUS "Build Python Extension.")
+  option(WITH_THREAD "Compile in rudimentary thread support" ON)
   find_package(Python COMPONENTS Interpreter Development)
   # Scikit-Build does not add your site-packages to the search path
   # automatically, so we need to add it _or_ the pybind11 specific directory
