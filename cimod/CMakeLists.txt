@@ -50,7 +50,7 @@ if(${CMAKE_BUILD_TYPE} MATCHES Debug)
   )
 endif()
 target_compile_definitions(${python_module_name} PRIVATE 
-    PYTHON_VERSION_INFO=${PYTHON_VERSION_STRING}
+    "PYTHON_VERSION_INFO=${PYTHON_VERSION_STRING}"
 )
 
 install(TARGETS ${python_module_name} LIBRARY DESTINATION .)
