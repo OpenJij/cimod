@@ -1,0 +1,17 @@
+runner:
+  flake8:
+    cmd: flake8 --ignore=W391,E501,W291,E203,E211,W503,W293,E302 --exclude=./example
+    level: warning
+    format: flake8
+  isort-diff:
+    cmd: isort ./cimod --diff
+    level: warning
+    format: diff
+  isort:
+    cmd: isort ./cimod --verbose --show-files --check
+    level: info
+    format: isort
+  mypy:
+    cmd: mypy ./cimod
+    level: warning
+    format: mypy
