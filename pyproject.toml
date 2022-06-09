@@ -26,7 +26,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
-write_to = "_version.py"
+write_to = "cimod/_version.py"
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules --color=yes --code-highlight=yes --cov-context=test --cov --cov-append --cov-report term --randomly-seed=last -v --capture=no"
