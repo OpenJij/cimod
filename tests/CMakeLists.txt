@@ -18,7 +18,7 @@ add_executable(cimod_test
     test.cpp
 )
 
-if(ENABLE_COVERAGE)
+if(ENABLE_COVERAGE AND (NOT MSVC))
   add_coverage(cimod_test)
 endif()
 
