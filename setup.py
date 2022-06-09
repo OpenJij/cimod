@@ -13,13 +13,12 @@
 # limitations under the License.
 
 import sys
-
 from packaging.version import LegacyVersion
-from skbuild.exceptions import SKBuildError
-from skbuild.cmaker import get_cmake_version
 
 try:
     from skbuild import setup
+    from skbuild.exceptions import SKBuildError
+    from skbuild.cmaker import get_cmake_version
 except ImportError:
     print(
         "Please update pip, you need pip 10 or greater,\n"
@@ -29,10 +28,12 @@ except ImportError:
     raise
 
 setup_requires=[ 
-	'pytest-runner',
 	'numpy',
 	'pybind11', 
 ]
+
+if any(arg in sys.argv for arg in ('pytest', 'test')):
+	setup_requires.append('pytest-runner')
 
 # Add CMake as a build requirement if cmake is not installed or is too low a version.
 try:
