@@ -45,6 +45,8 @@ target_link_libraries(${python_module_name} PRIVATE
     cxxcimod_header_only
 )
 
-target_compile_definitions(${python_module_name} PRIVATE VERSION_INFO=${PROJECT_VERSION})
+target_compile_definitions(${python_module_name} PRIVATE 
+    PYTHON_VERSION_INFO=${PYTHON_VERSION_STRING}
+)
 
 install(TARGETS ${python_module_name} LIBRARY DESTINATION .)
