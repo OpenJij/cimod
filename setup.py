@@ -30,6 +30,7 @@ except ImportError:
 
 setup_requires=[ 
 	'pytest-runner',
+	'numpy',
 	'pybind11', 
 ]
 
