@@ -20,6 +20,7 @@ requires = [
    'build',
    'cmake',
    'pytest-runner',
+   'numpy',
    'pybind11',
    'scikit-build',
    ]
