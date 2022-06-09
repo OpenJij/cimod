@@ -139,10 +139,10 @@ before-all = [
     "vcpkg --triplet x64-windows install nlohmann-json --recurse",
     "vcpkg --triplet x64-windows-static install eigen3 --recurse",
     "vcpkg --triplet x64-windows-static install nlohmann-json --recurse",  
-    "vcpkg --triplet x64-windows-static install openblas[threads] --recurse", 
-    "vcpkg --triplet x64-windows-static install clapack --recurse", 
     "vcpkg integrate install",
 ]
+#"vcpkg --triplet x64-windows-static install openblas[threads] --recurse", 
+#"vcpkg --triplet x64-windows-static install clapack --recurse", 
 before-build = [ 
     "pip install cmake pybind11 delvewheel", 
 ]
