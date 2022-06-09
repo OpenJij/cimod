@@ -13,7 +13,10 @@
 # limitations under the License.
 
 cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
-project(cimod)
+project(cimod
+    DESCRIPTION "C++ library for a binary (and polynomial) quadratic model."
+    HOMEPAGE_URL "https://www.openjij.org"
+)
 
 include(CheckLanguage)
 
