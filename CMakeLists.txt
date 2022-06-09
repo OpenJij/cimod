@@ -112,11 +112,6 @@ else()
   include(external/json.cmake)
 endif()
 
-if(ENABLE_COVERAGE)
-  list(APPEND CMAKE_MODULE_PATH cmake)
-  message(STATUS "Use Codecov")
-  find_package(codecov)
-endif()
 
 add_subdirectory(src)
 
@@ -147,22 +142,21 @@ if(SKBUILD)
   
   add_subdirectory(cimod)
 elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
-  
-  message(STATUS "Use Googletest")
-  
-  find_package(GTest)
-  if(GTest_FOUND)
-    message(STATUS "Found googletest")
-  else()
-    message(STATUS "Downlod Googletest")
-    include(external/googletest.cmake)
+  if(ENABLE_COVERAGE AND (NOT MSVC))
+    list(APPEND CMAKE_MODULE_PATH cmake)
+    message(STATUS "Use Codecov")
+    find_package(codecov)
   endif()
+  
+  message(STATUS "Use Googletest") 
+  message(STATUS "Downlod Googletest")
+  include(external/googletest.cmake)
   
   enable_testing()
   
   add_subdirectory(tests)
 endif()
 
-if(ENABLE_COVERAGE)
+if(ENABLE_COVERAGE AND (NOT MSVC))
   coverage_evaluate()
 endif()
