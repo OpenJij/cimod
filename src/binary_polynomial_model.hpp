@@ -1,4 +1,4 @@
-//    Copyright 2021 Jij Inc.
+//    Copyright 2022 Jij Inc.
 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -113,8 +113,7 @@
 
 
 
-#ifndef binary_polynomial_model_hpp
-#define binary_polynomial_model_hpp
+#pragma once
 
 #include "vartypes.hpp"
 #include "hash.hpp"
@@ -1127,5 +1126,3 @@ protected:
 
 }
 
-
-#endif /* binary_polynomial_model_hpp */

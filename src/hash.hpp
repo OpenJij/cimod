@@ -1,4 +1,4 @@
-//    Copyright 2021 Jij Inc.
+//    Copyright 2022 Jij Inc.
 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,8 +23,7 @@
  * 
  */
 
-#ifndef HASH_HPP__
-#define HASH_HPP__
+#pragma once
 
 #include <utility>
 #include <cstdint>
@@ -101,4 +100,3 @@ struct vector_hash {
 };
 
 }
-#endif
