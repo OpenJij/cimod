@@ -45,7 +45,7 @@ if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
     add_compile_options(-Wno-unused-command-line-argument)
 elseif (MSVC)
-    add_compile_options(/bigobj)
+    add_compile_options(/bigobj /EHsc)
     set(CMAKE_Fortran_COMPILER OFF CACHE BOOL "" FORCE)
 endif()
 
