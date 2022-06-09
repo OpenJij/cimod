@@ -22,16 +22,13 @@ if(ENABLE_COVERAGE)
   add_coverage(cimod_test)
 endif()
 
-#set_target_properties(cimod_test 
-#    PROPERTIES 
-#    EXCLUDE_FROM_DEFAULT_BUILD TRUE
-#)
-
-#target_compile_options(cimod_test PRIVATE --coverage) 
-#target_link_options(cimod_test PRIVATE --coverage) 
 
 target_include_directories(cimod_test PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_compile_definitions(cimod_test PRIVATE
+    BUILD_TESTING=OFF
 )
 
 target_link_libraries(cimod_test PRIVATE
