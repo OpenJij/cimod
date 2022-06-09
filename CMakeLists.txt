@@ -43,6 +43,7 @@ message(STATUS "Started CMake for ${PROJECT_NAME} \n")
 
 if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
+    include(cmake/PythonAutoDetectOSX.cmake)
     add_compile_options(-Wno-unused-command-line-argument)
 elseif (MSVC)
     add_compile_options(/bigobj /EHsc)
