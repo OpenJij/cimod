@@ -1,4 +1,4 @@
-//    Copyright 2021 Jij Inc.
+//    Copyright 2022 Jij Inc.
 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -13,7 +13,9 @@
 //    limitations under the License.
 //
 
-#include "../../src/disable_eigen_warning.hpp"
+#pragma once
+
+#include <disable_eigen_warning.hpp>
 
 #include <pybind11_json/pybind11_json.hpp>
 #include <nlohmann/json.hpp>
