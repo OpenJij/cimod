@@ -60,7 +60,7 @@ if (DOXYGEN_FOUND)
                          ALL
                          COMMENT "Generate documentation with Doxygen")
         install(DIRECTORY ${PROJECT_BINARY_DIR}/docs/html
-                DESTINATION ${CMAKE_INSTALL_DOCDIR}) 
+                DESTINATION ${PROJECT_SOURCE_DIR}/docs) 
 else() 
         message(SEND_ERROR "building documentation (-DBUILD_DOCS=ON) is enabled, but doxygen not found")
 endif()
