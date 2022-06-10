@@ -44,6 +44,9 @@ message(STATUS "CMAKE_GENERATOR = ${CMAKE_GENERATOR}")
 message(STATUS "CIBUILDWHEEL = $ENV{CIBUILDWHEEL}")
 message(STATUS "Started CMake for ${PROJECT_NAME} \n")
 
+option(BUILD_TESTING "Enable CTest support." OFF)
+option(BUILD_DOCS "Enable Doxygen support." OFF)
+
 list(APPEND CMAKE_MODULE_PATH external)
 list(APPEND CMAKE_MODULE_PATH cmake)
 
@@ -144,7 +147,8 @@ if(SKBUILD)
   endif()
   
   add_subdirectory(cimod)
-elseif(${CMAKE_BUILD_TYPE} MATCHES Debug) 
+elseif((${CMAKE_BUILD_TYPE} MATCHES Debug) OR BUILD_TESTING) 
+  include(CTest)
   if(ENABLE_COVERAGE AND (NOT MSVC))
     message(STATUS "Use Codecov")
     find_package(codecov)
@@ -162,3 +166,7 @@ endif()
 if(ENABLE_COVERAGE AND (NOT MSVC))
   coverage_evaluate()
 endif()
+
+if (BUILD_DOCS)
+    include(cmake/GenerateDocs.cmake)
+endif (BUILD_DOCS)
