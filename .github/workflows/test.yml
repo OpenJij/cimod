@@ -53,20 +53,21 @@ jobs:
           -DENABLE_COVERAGE=On
           -S .
           -B build
+          --target cxxcimod_header_only_docs
       - name: CMake Build
         shell: bash
         run: >
           cmake  
           --build build
           --parallel
-      - name: CMake Test
-        shell: bash
-        working-directory: build
-        run: >
-          ctest
-          --extra-verbose
-          --parallel
-          --schedule-random
+      #- name: CMake Test
+      #  shell: bash
+      #  working-directory: build
+      #  run: >
+      #    ctest
+      #    --extra-verbose
+      #    --parallel
+      #    --schedule-random
       - name: du -a 
         shell: bash
         if: always()
