@@ -78,7 +78,7 @@ jobs:
       - name: Move 
         shell: bash
         run: |
-          mkdir public
+          set -eux
           cp -r docs/html/* public
       - name: Prepare tag
         id: prepare_tag
