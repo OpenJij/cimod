@@ -40,7 +40,7 @@ jobs:
          pip install --upgrade pip wheel setuptools build cmake ninja
       - name: Install Dep
         run: | 
-         sudo apt-get install -y libeigen3-dev lcov doxygen graphviz
+         sudo apt-get install -y libeigen3-dev lcov doxygen graphviz mscgen dia
       - name: Prepare 
         shell: bash
         run: mkdir build
