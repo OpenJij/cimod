@@ -1,0 +1,5 @@
+<map id="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::interaction_matrix" name="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::interaction_matrix">
+<area shape="rect" id="node1" title="generate interaction matrix with given list of indices The generated matrix will be the following sym..." alt="" coords="5,31,220,87"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a05ea443b1d01c688a260e0ab025261ce" title="get the number of variables" alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a73113b630ab609a1d65bb8d01b578ba4" title="Get variables." alt="" coords="268,71,483,112"/>
+</map>

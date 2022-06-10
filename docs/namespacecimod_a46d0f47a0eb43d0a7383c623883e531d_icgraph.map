@@ -1,0 +1,9 @@
+<map id="cimod::insert_or_assign" name="cimod::insert_or_assign">
+<area shape="rect" id="node1" title="Insert or assign a element of unordered_map (for C++14 or C++11)" alt="" coords="268,220,444,247"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a0635ea156a2ffe9f7b95944a49afca1f" title="Add an interaction and/or quadratic bias to a binary quadratic model." alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#aa3b8710221d08380ed2c7d4807a5f069" title="Add variable v and/or its bias to a binary quadratic model." alt="" coords="5,85,220,141"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a84d231b2c0c34abdcdc9600dcd09a4ae" title="Convert linear, quadratic and offset from binary to spin." alt="" coords="5,165,220,221"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a36c973c84f1ca18ec795ba3e2c81040b" title="Create a BinaryQuadraticModel instance from a serializable object." alt="" coords="5,245,220,301"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a48d260effa3dfb73690f96ce8ca400fa" title="Convert linear, quadratic, and offset from spin to binary." alt="" coords="5,325,220,381"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a5e8a459dcc20e73bf57993ab14244a09" title="Convert a binary quadratic model to QUBO format." alt="" coords="5,405,220,461"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="cimod::BinaryQuadraticModel::_initialize_quadmat" name="cimod::BinaryQuadraticModel::_initialize_quadmat">
+<area shape="rect" id="node1" title="initialize matrix with matrix and labels the form of matrix is assumed to be the following two forms:" alt="" coords="5,71,220,112"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#afe8af61b407b122a6d6c866987522ad4" title="add non&#45;diagonal elements to upper triangular components for dense matrix" alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43" title="access elements for dense matrix" alt="" coords="268,71,483,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f" title="set _label_to_idx from _idx_to_label" alt="" coords="268,136,483,177"/>
+</map>

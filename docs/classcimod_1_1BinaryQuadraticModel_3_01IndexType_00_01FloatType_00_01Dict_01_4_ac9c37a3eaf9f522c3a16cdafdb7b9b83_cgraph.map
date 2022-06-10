@@ -1,0 +1,18 @@
+<map id="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::fix_variables" name="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::fix_variables">
+<area shape="rect" id="node1" title="Fix the value of the variables and remove it from a binary quadratic model." alt="" coords="5,145,220,201"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#adf16eb4751be5220e5999fa40e665d94" title="Fix the value of a variable and remove it from a binary quadratic model." alt="" coords="268,152,483,193"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a1d3615e29779af572a746de9f40faacc" title="get reference of _quadmat(i,j)" alt="" coords="1056,71,1271,112"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#aae144b2825cdfbc177790efe4e6192f8" title="Add specified value to the offset of a binary quadratic model." alt="" coords="531,299,745,340"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel.html#ab48f8f193c42d017070cd5ed17c4381c" title="Add variable v and/or its bias to a binary quadratic model." alt="" coords="793,123,1008,164"/>
+<area shape="rect" id="node10" href="$classcimod_1_1BinaryQuadraticModel.html#a2fbdac0cc51ad732759260686a4c3c34" title="Get uadratic object." alt="" coords="531,5,745,47"/>
+<area shape="rect" id="node12" href="$classcimod_1_1BinaryQuadraticModel.html#adeb50dcd20816c1c3066b61dd1924ecb" title="Remove all specified interactions from the binary quadratic model." alt="" coords="531,181,745,223"/>
+<area shape="rect" id="node16" href="$classcimod_1_1BinaryQuadraticModel.html#adebabffc9a4564eb762de7033fdcc9d1" title="Remove variable v and all its interactions from a binary quadratic model." alt="" coords="793,253,1008,295"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43" title="access elements for dense matrix" alt="" coords="1319,5,1533,47"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryQuadraticModel.html#ade3afe91bf6a9c554856b5bf7c27f629" title="add new label if label_i already exists, this process is skipped." alt="" coords="1056,136,1271,177"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryQuadraticModel.html#aad097cb5d176001157ca634cab039eff" title="insert row and column that corresponds to added label into _quadmat for dense matrix" alt="" coords="1319,96,1533,137"/>
+<area shape="rect" id="node9" href="$classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f" title="set _label_to_idx from _idx_to_label" alt="" coords="1319,161,1533,203"/>
+<area shape="rect" id="node11" href="$classcimod_1_1BinaryQuadraticModel.html#ad5cd2d5417d7bfc25451f243cc3a3f7c" title=" " alt="" coords="1056,5,1271,47"/>
+<area shape="rect" id="node13" href="$classcimod_1_1BinaryQuadraticModel.html#a917714dd2e903c71c43544800f8bd2db" title="Remove interaction of variables u, v from a binary quadratic model." alt="" coords="793,188,1008,229"/>
+<area shape="rect" id="node14" href="$classcimod_1_1BinaryQuadraticModel.html#a72a5f90f2952fefff3e21bec03360e4b" title="delete label if label_i does not exist, this process is skipped." alt="" coords="1056,227,1271,268"/>
+<area shape="rect" id="node15" href="$classcimod_1_1BinaryQuadraticModel.html#acd5ed3741d9c9c1244ee4bd0a979e36c" title="delete row and column that corresponds to existing label from _quadmat for dense matrix" alt="" coords="1319,227,1533,268"/>
+</map>

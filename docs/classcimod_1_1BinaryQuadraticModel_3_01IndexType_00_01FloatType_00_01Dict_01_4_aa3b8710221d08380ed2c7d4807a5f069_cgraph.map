@@ -1,0 +1,5 @@
+<map id="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::add_variable" name="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::add_variable">
+<area shape="rect" id="node1" title="Add variable v and/or its bias to a binary quadratic model." alt="" coords="5,27,220,83"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a64849908376beca3681b417b1eb975cb" title="Get the vartype object." alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node3" href="$namespacecimod.html#a46d0f47a0eb43d0a7383c623883e531d" title="Insert or assign a element of unordered_map (for C++14 or C++11)" alt="" coords="287,71,463,98"/>
+</map>

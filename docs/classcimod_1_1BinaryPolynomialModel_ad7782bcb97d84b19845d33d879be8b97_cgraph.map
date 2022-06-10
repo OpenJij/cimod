@@ -1,0 +1,7 @@
+<map id="cimod::BinaryPolynomialModel::ToHubo" name="cimod::BinaryPolynomialModel::ToHubo">
+<area shape="rect" id="node1" title="Generate the polynomial interactions corresponding to the vartype being BINARY from the BinaryPolynom..." alt="" coords="5,104,231,145"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a9b96dc7658a02d9c99dca899a7509365" title="Generate the num_of_key&#45;th the key when the vartype is changed." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#ac5d23c8c5d7525ede49e08d2e411d50f" title="Return the number of the interactions." alt="" coords="279,71,504,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#adc8eb3eb781f5c5b2650b9b1ffd38ea1" title="Get the Polynomial object." alt="" coords="279,136,504,177"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#a2abb34f442d51120b1996dc42fe12344" title="Caluculate the base to the power of exponent (std::pow(base, exponent) is too slow)." alt="" coords="279,201,504,243"/>
+</map>

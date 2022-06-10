@@ -1,0 +1,5 @@
+<map id="cimod::BinaryPolynomialModel::ToHising" name="cimod::BinaryPolynomialModel::ToHising">
+<area shape="rect" id="node1" title="Generate the polynomial interactions corresponding to the vartype being SPIN from the BinaryPolynomia..." alt="" coords="552,5,777,47"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#aa3c41f812d024b2d70182611e28a5e6b" title="Generate BinaryPolynomialModel with the vartype being SPIN." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a9a00b6234ca3cb3c9746001e90342137" title="Create a BinaryPolynomialModel with the specified vartype." alt="" coords="5,5,231,47"/>
+</map>

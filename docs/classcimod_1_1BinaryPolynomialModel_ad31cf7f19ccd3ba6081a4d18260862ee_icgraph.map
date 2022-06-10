@@ -1,0 +1,4 @@
+<map id="cimod::BinaryPolynomialModel::RemoveVariable" name="cimod::BinaryPolynomialModel::RemoveVariable">
+<area shape="rect" id="node1" title="Remove a variable from the BinaryPolynomialModel." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a325cee0095797c00d645974715966203" title="Remove the specified variables from the BinaryPolynomialModel." alt="" coords="5,5,231,47"/>
+</map>

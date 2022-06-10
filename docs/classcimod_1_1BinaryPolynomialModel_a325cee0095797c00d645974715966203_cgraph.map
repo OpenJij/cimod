@@ -1,0 +1,6 @@
+<map id="cimod::BinaryPolynomialModel::RemoveVariablesFrom" name="cimod::BinaryPolynomialModel::RemoveVariablesFrom">
+<area shape="rect" id="node1" title="Remove the specified variables from the BinaryPolynomialModel." alt="" coords="5,5,231,47"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#ad31cf7f19ccd3ba6081a4d18260862ee" title="Remove a variable from the BinaryPolynomialModel." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#ae624c6ec0e3f021c25965a38d29c8124" title="Remove the specified interaction from the BinaryPolynomialModel." alt="" coords="552,5,777,47"/>
+<area shape="rect" id="node4" href="$namespacecimod.html#a978eef1a73beadb78c207c070eed3baf" title="Format the input key: for example, {2,1,1}&#45;&#45;&gt;{1,2} for BINARY variable and {2,1,1}&#45;&#45;&gt;{2} for SPIN var..." alt="" coords="825,13,1039,39"/>
+</map>

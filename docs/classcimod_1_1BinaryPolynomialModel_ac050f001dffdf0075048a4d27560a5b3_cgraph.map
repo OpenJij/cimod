@@ -1,0 +1,5 @@
+<map id="cimod::BinaryPolynomialModel::Energy" name="cimod::BinaryPolynomialModel::Energy">
+<area shape="rect" id="node1" title="Determine the energy of the specified sample of the BinaryPolynomialModel." alt="" coords="5,39,231,80"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#ac5d23c8c5d7525ede49e08d2e411d50f" title="Return the number of the interactions." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a71cc21d6b4d98d8ca90f684766a0ba47" title="Return the number of variables." alt="" coords="279,71,504,112"/>
+</map>

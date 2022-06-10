@@ -1,0 +1,6 @@
+<map id="cimod::BinaryQuadraticModel::change_vartype" name="cimod::BinaryQuadraticModel::change_vartype">
+<area shape="rect" id="node1" title="Create a binary quadratic model with the specified vartype." alt="" coords="5,39,220,80"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#af4152510bff1ec20c037e763cb4314fd" title="‍**" alt="" coords="268,39,483,80"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a30d0230182a2c8c3b9f72553797fe3a6" title="change internal variable from QUBO to Ising ones for dense matrix The following conversion is applied..." alt="" coords="531,5,745,47"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#a4d2edff5e679f8ec536f65d8c41ee2e9" title="change internal variable from Ising to QUBO ones for dense matrix The following conversion is applied..." alt="" coords="531,71,745,112"/>
+</map>

@@ -1,0 +1,10 @@
+<map id="cimod::BinaryPolynomialModel::GetPolynomial" name="cimod::BinaryPolynomialModel::GetPolynomial">
+<area shape="rect" id="node1" title="Get the Polynomial object." alt="" coords="825,104,1051,145"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a58d0316f6ca258613ab9f7b23b2e389d" title="Return the offset." alt="" coords="552,5,777,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#aeb45c9ae8190f8415af102a03ef8c6dc" title="Get the specific value of the interaction according to the key representing the indices of the polyno..." alt="" coords="552,71,777,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#abf58031daeccbafa5b606f4e6aeb7d1f" title="Generate the polynomial interactions corresponding to the vartype being SPIN from the BinaryPolynomia..." alt="" coords="552,136,777,177"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryPolynomialModel.html#ad7782bcb97d84b19845d33d879be8b97" title="Generate the polynomial interactions corresponding to the vartype being BINARY from the BinaryPolynom..." alt="" coords="552,201,777,243"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#aa3c41f812d024b2d70182611e28a5e6b" title="Generate BinaryPolynomialModel with the vartype being SPIN." alt="" coords="279,136,504,177"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryPolynomialModel.html#a9a00b6234ca3cb3c9746001e90342137" title="Create a BinaryPolynomialModel with the specified vartype." alt="" coords="5,169,231,211"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryPolynomialModel.html#a8d319a0a89e250e3e450bd7b054f376f" title="Generate BinaryPolynomialModel with the vartype being BINARY." alt="" coords="279,201,504,243"/>
+</map>

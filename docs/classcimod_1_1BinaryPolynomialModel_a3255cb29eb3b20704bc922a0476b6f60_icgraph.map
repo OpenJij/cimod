@@ -1,0 +1,17 @@
+<map id="cimod::BinaryPolynomialModel::GenerateSortedVariables" name="cimod::BinaryPolynomialModel::GenerateSortedVariables">
+<area shape="rect" id="node1" title="Generate sorted variables." alt="" coords="1099,71,1324,112"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a5171233413be90f2f1b7295fa209ff08" title="Generate variables_to_integers." alt="" coords="825,5,1051,47"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#ad3053bff2dd4ff192888cc5f0f56faee" title="Return the sorted variables as std::vector." alt="" coords="825,71,1051,112"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#a79f37716ea17317a9cc609b71b5079fa" title="Update sorted_variables_ and variables_to_integers_." alt="" coords="825,136,1051,177"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a0b557e88c14857585d9242279467880b" title="Get variables_to_integers object." alt="" coords="552,5,777,47"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryPolynomialModel.html#adee1ecc09d521a3663c69cae286515e8" title="BinaryPolynomialModel constructor." alt="" coords="552,71,777,112"/>
+<area shape="rect" id="node11" href="$classcimod_1_1BinaryPolynomialModel.html#a137c52dc5b23b123c5ea088c70daa60c" title="Determine the energy of the specified sample_vec (as std::vector) of the BinaryPolynomialModel." alt="" coords="552,136,777,177"/>
+<area shape="rect" id="node12" href="$classcimod_1_1BinaryPolynomialModel.html#aad5b50bd2cf6c692b76d58399dbf4ca8" title="Return the sorted variables as std::vector." alt="" coords="552,201,777,243"/>
+<area shape="rect" id="node15" href="$classcimod_1_1BinaryPolynomialModel.html#a87db820cf951afc85fce54665e7221f0" title="Get variables_to_integers object." alt="" coords="552,267,777,308"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryPolynomialModel.html#a75e5a5dcb2d344991433db0933875d3e" title="Create an empty BinaryPolynomialModel." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryPolynomialModel.html#a8d319a0a89e250e3e450bd7b054f376f" title="Generate BinaryPolynomialModel with the vartype being BINARY." alt="" coords="279,71,504,112"/>
+<area shape="rect" id="node10" href="$classcimod_1_1BinaryPolynomialModel.html#aa3c41f812d024b2d70182611e28a5e6b" title="Generate BinaryPolynomialModel with the vartype being SPIN." alt="" coords="279,136,504,177"/>
+<area shape="rect" id="node9" href="$classcimod_1_1BinaryPolynomialModel.html#a9a00b6234ca3cb3c9746001e90342137" title="Create a BinaryPolynomialModel with the specified vartype." alt="" coords="5,104,231,145"/>
+<area shape="rect" id="node13" href="$classcimod_1_1BinaryPolynomialModel.html#a56aeb16ad506bd134331c64040060110" title="Get the specific integer number corresponding to the input variable (index)." alt="" coords="279,201,504,243"/>
+<area shape="rect" id="node14" href="$classcimod_1_1BinaryPolynomialModel.html#a95fe13ce6e2dd9c0cfedb53aa862c82b" title="Convert the BinaryPolynomialModel to a serializable object." alt="" coords="279,267,504,308"/>
+</map>

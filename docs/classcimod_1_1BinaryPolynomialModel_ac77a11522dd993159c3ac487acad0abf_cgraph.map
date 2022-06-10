@@ -1,0 +1,9 @@
+<map id="cimod::BinaryPolynomialModel::AddOffset" name="cimod::BinaryPolynomialModel::AddOffset">
+<area shape="rect" id="node1" title="Add specified value to the offset of the BinaryPolynomialModel." alt="" coords="5,66,231,108"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a486b88bab15cdc0d5d82326dd0c460ad" title="Add an interaction to the BinaryPolynomialModel." alt="" coords="279,66,504,108"/>
+<area shape="rect" id="node3" href="$namespacecimod.html#a978eef1a73beadb78c207c070eed3baf" title="Format the input key: for example, {2,1,1}&#45;&#45;&gt;{1,2} for BINARY variable and {2,1,1}&#45;&#45;&gt;{2} for SPIN var..." alt="" coords="1099,76,1312,103"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#a9b96dc7658a02d9c99dca899a7509365" title="Generate the num_of_key&#45;th the key when the vartype is changed." alt="" coords="552,33,777,74"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#a2abb34f442d51120b1996dc42fe12344" title="Caluculate the base to the power of exponent (std::pow(base, exponent) is too slow)." alt="" coords="552,98,777,140"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryPolynomialModel.html#a7427fb3d2bc707a31b7de468e2438ca9" title="Set key and value." alt="" coords="552,164,777,205"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryPolynomialModel.html#ae624c6ec0e3f021c25965a38d29c8124" title="Remove the specified interaction from the BinaryPolynomialModel." alt="" coords="825,98,1051,140"/>
+</map>

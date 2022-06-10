@@ -1,0 +1,12 @@
+<map id="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::BinaryQuadraticModel" name="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::BinaryQuadraticModel">
+<area shape="rect" id="node1" title="BinaryQuadraticModel constructor." alt="" coords="5,97,225,153"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#af35e188d73eb83f8f80670dc647ca3ac" title="Add interactions and/or quadratic biases to a binary quadratic model." alt="" coords="273,71,488,112"/>
+<area shape="rect" id="node9" href="$classcimod_1_1BinaryQuadraticModel.html#a07f9f8f3d5b16172634ba0be5511ea3b" title="Add variables and/or linear biases to a binary quadratic model." alt="" coords="273,136,488,177"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a2301dcef84dace2d6e6b74070c766d55" title="Add an interaction and/or quadratic bias to a binary quadratic model." alt="" coords="536,71,751,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#ade3afe91bf6a9c554856b5bf7c27f629" title="add new label if label_i already exists, this process is skipped." alt="" coords="799,71,1013,112"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryQuadraticModel.html#a1d3615e29779af572a746de9f40faacc" title="get reference of _quadmat(i,j)" alt="" coords="799,136,1013,177"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#aad097cb5d176001157ca634cab039eff" title="insert row and column that corresponds to added label into _quadmat for dense matrix" alt="" coords="1061,71,1276,112"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f" title="set _label_to_idx from _idx_to_label" alt="" coords="1061,5,1276,47"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43" title="access elements for dense matrix" alt="" coords="1061,136,1276,177"/>
+<area shape="rect" id="node10" href="$classcimod_1_1BinaryQuadraticModel.html#ab48f8f193c42d017070cd5ed17c4381c" title="Add variable v and/or its bias to a binary quadratic model." alt="" coords="536,136,751,177"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::change_vartype" name="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::change_vartype">
+<area shape="rect" id="node1" title="Create a binary quadratic model with the specified vartype." alt="" coords="5,97,220,153"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#ab3a08b5f2d599d611b0f632cf749990f" title="Get the element of linear object." alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#accbff477c7bf3db2e6fb438b6f4981f7" title="Get the offset." alt="" coords="268,71,483,112"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel.html#aff9c0693b2b3703102c4cf4bd269e5d0" title="Get the element of quadratic object." alt="" coords="268,136,483,177"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryQuadraticModel.html#a64849908376beca3681b417b1eb975cb" title="Get the vartype object." alt="" coords="268,201,483,243"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a1d3615e29779af572a746de9f40faacc" title="get reference of _quadmat(i,j)" alt="" coords="531,71,745,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43" title="access elements for dense matrix" alt="" coords="793,71,1008,112"/>
+</map>

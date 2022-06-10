@@ -1,0 +1,8 @@
+<map id="cimod::BinaryQuadraticModel::get_offset" name="cimod::BinaryQuadraticModel::get_offset">
+<area shape="rect" id="node1" title="Get the offset." alt="" coords="268,166,483,207"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#af99ad364b080b94a3cab3f73cc4a7de9" title="Create a binary quadratic model with the specified vartype." alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a4de41718feec93fe9047db7913b828cf" title="Convert a binary quadratic model to Ising format." alt="" coords="5,85,220,141"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#a062ced2e8a9a3546a119c18c1be01145" title="Convert a binary quadratic model to Ising format." alt="" coords="5,166,220,207"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a5e8a459dcc20e73bf57993ab14244a09" title="Convert a binary quadratic model to QUBO format." alt="" coords="5,232,220,288"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel.html#a4035b19133675e4d3181573f1f0aea9e" title="Convert a binary quadratic model to QUBO format." alt="" coords="5,313,220,354"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="cimod::BinaryQuadraticModel::add_interaction" name="cimod::BinaryQuadraticModel::add_interaction">
+<area shape="rect" id="node1" title="Add an interaction and/or quadratic bias to a binary quadratic model." alt="" coords="543,86,757,127"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#abd86aeed91444321298015b66f6e9722" title="Add interactions and/or quadratic biases to a binary quadratic model." alt="" coords="273,5,495,61"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#af35e188d73eb83f8f80670dc647ca3ac" title="Add interactions and/or quadratic biases to a binary quadratic model." alt="" coords="277,86,491,127"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#aeb1444e0f14edb2bbd401954020e5196" title="Enforce u, v being the same variable in a binary quadratic model." alt="" coords="277,152,491,208"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a0755612298a75bf00f8ce24116eef343" title="BinaryQuadraticModel constructor." alt="" coords="5,79,225,135"/>
+</map>

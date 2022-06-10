@@ -1,0 +1,12 @@
+<map id="cimod::BinaryPolynomialModel::BinaryPolynomialModel" name="cimod::BinaryPolynomialModel::BinaryPolynomialModel">
+<area shape="rect" id="node1" title="BinaryPolynomialModel constructor." alt="" coords="5,100,231,141"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#affc0a3426d5a2ab628299508adc2077b" title="Add interactions to the BinaryPolynomialModel." alt="" coords="279,66,504,108"/>
+<area shape="rect" id="node9" href="$classcimod_1_1BinaryPolynomialModel.html#a79f37716ea17317a9cc609b71b5079fa" title="Update sorted_variables_ and variables_to_integers_." alt="" coords="279,132,504,173"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a486b88bab15cdc0d5d82326dd0c460ad" title="Add an interaction to the BinaryPolynomialModel." alt="" coords="552,66,777,108"/>
+<area shape="rect" id="node4" href="$namespacecimod.html#a978eef1a73beadb78c207c070eed3baf" title="Format the input key: for example, {2,1,1}&#45;&#45;&gt;{1,2} for BINARY variable and {2,1,1}&#45;&#45;&gt;{2} for SPIN var..." alt="" coords="1372,76,1585,103"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#a9b96dc7658a02d9c99dca899a7509365" title="Generate the num_of_key&#45;th the key when the vartype is changed." alt="" coords="825,33,1051,74"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryPolynomialModel.html#a2abb34f442d51120b1996dc42fe12344" title="Caluculate the base to the power of exponent (std::pow(base, exponent) is too slow)." alt="" coords="825,98,1051,140"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryPolynomialModel.html#a7427fb3d2bc707a31b7de468e2438ca9" title="Set key and value." alt="" coords="825,164,1051,205"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryPolynomialModel.html#ae624c6ec0e3f021c25965a38d29c8124" title="Remove the specified interaction from the BinaryPolynomialModel." alt="" coords="1099,98,1324,140"/>
+<area shape="rect" id="node10" href="$classcimod_1_1BinaryPolynomialModel.html#a3255cb29eb3b20704bc922a0476b6f60" title="Generate sorted variables." alt="" coords="552,132,777,173"/>
+</map>

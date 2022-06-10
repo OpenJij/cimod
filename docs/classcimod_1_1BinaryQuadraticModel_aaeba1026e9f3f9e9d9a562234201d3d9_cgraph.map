@@ -1,0 +1,7 @@
+<map id="cimod::BinaryQuadraticModel::BinaryQuadraticModel" name="cimod::BinaryQuadraticModel::BinaryQuadraticModel">
+<area shape="rect" id="node1" title="BinaryQuadraticModel constructor (with sparse matrix); this constructor is for developers." alt="" coords="5,64,220,105"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a4036aabd952475bed7dfbe4adf2493da" title="initialize matrix with linear and quadratic dicts (for dense matrix)" alt="" coords="268,64,483,105"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a1d3615e29779af572a746de9f40faacc" title="get reference of _quadmat(i,j)" alt="" coords="531,5,745,47"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43" title="access elements for dense matrix" alt="" coords="793,35,1008,76"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f" title="set _label_to_idx from _idx_to_label" alt="" coords="531,123,745,164"/>
+</map>

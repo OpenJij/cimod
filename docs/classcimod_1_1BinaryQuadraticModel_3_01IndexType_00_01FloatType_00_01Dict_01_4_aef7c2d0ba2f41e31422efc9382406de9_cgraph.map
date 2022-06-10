@@ -1,0 +1,9 @@
+<map id="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::add_variables_from" name="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::add_variables_from">
+<area shape="rect" id="node1" title="Add variables and/or linear biases to a binary quadratic model." alt="" coords="5,97,220,153"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#ab48f8f193c42d017070cd5ed17c4381c" title="Add variable v and/or its bias to a binary quadratic model." alt="" coords="268,104,483,145"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#ade3afe91bf6a9c554856b5bf7c27f629" title="add new label if label_i already exists, this process is skipped." alt="" coords="531,71,745,112"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel.html#a1d3615e29779af572a746de9f40faacc" title="get reference of _quadmat(i,j)" alt="" coords="531,136,745,177"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#aad097cb5d176001157ca634cab039eff" title="insert row and column that corresponds to added label into _quadmat for dense matrix" alt="" coords="793,5,1008,47"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f" title="set _label_to_idx from _idx_to_label" alt="" coords="793,71,1008,112"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43" title="access elements for dense matrix" alt="" coords="793,136,1008,177"/>
+</map>
