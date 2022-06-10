@@ -17,16 +17,30 @@ if (DOXYGEN_FOUND)
         set(DOXYGEN_OUTPUT_LANGUAGE "Japanese-en")
         set(DOXYGEN_DOXYFILE_ENCODING "UTF-8")
         set(DOXYGEN_OUTPUT_TEXT_DIRECTION "ltr")
-        set(DOXYGEN_OUTPUT_BRIEF_MEMBER_DESC YES)
+        set(DOXYGEN_BRIEF_MEMBER_DESC YES)
         set(DOXYGEN_REPEAT_BRIEF YES)
-        set(DOXYGEN_OUTPUT_
-        set(DOXYGEN_OUTPUT_
-        set(DOXYGEN_OUTPUT_
-        set(DOXYGEN_OUTPUT_
-        set(DOXYGEN_OUTPUT_
-        set(DOXYGEN_OUTPUT_
-        set(DOXYGEN_OPTIMIZE_OUTPUT_FOR_C YES)
-        set(DOXYGEN_OPTIMIZE_OUTPUT_FOR_C YES)
+        set(DOXYGEN_ALWAYS_DETAILED_SEC YES)
+        set(DOXYGEN_FULL_PATH_NAMES YES)
+        set(DOXYGEN_SHORT_NAMES NO)
+        set(DOXYGEN_MULTILINE_CPP_IS_BRIEF NO)
+        set(DOXYGEN_INHERIT_DOCS YES)
+        set(DOXYGEN_SEPARATE_MEMBER_PAGES YES)
+        set(DOXYGEN_TAB_SIZE 4)
+        set(DOXYGEN_MARKDOWN_SUPPORT YES)
+        set(DOXYGEN_AUTOLINK_SUPPORT YES)
+        set(DOXYGEN_BUILTIN_STL_SUPPORT NO)
+        set(DOXYGEN_CPP_CLI_SUPPORT NO)
+        set(DOXYGEN_IDL_PROPERTY_SUPPORT NO)
+        set(DOXYGEN_SUBGROUPING YES)
+        set(DOXYGEN_EXTRACT_ALL YES)
+        set(DOXYGEN_EXTRACT_PRIVATE YES)
+        set(DOXYGEN_EXTRACT_PRIV_VIRTUAL YES)
+        set(DOXYGEN_EXTRACT_STATIC YES)
+        set(DOXYGEN_EXTRACT_LOCAL_CLASSES YES)
+        set(DOXYGEN_
+        set(DOXYGEN_
+        set(DOXYGEN_
+        set(DOXYGEN_
         doxygen_add_docs(cxxcimod_header_only_docs
                          ${PROJECT_SOURCE_DIR}/src
                          ALL
