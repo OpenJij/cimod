@@ -45,7 +45,6 @@ jobs:
         shell: bash
         run: mkdir build
       - name: CMake Configure
-        if: ${{ matrix.os != 'windows-latest'}}
         shell: bash
         run: >
           cmake 
