@@ -48,9 +48,7 @@ jobs:
         shell: bash
         run: >
           cmake 
-          -DCMAKE_BUILD_TYPE=Debug 
           -DBUILD_DOCS=ON
-          -DENABLE_COVERAGE=On
           -G Ninja
           -S .
           -B build
