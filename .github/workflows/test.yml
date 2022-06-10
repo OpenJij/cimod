@@ -51,15 +51,17 @@ jobs:
           -DCMAKE_BUILD_TYPE=Debug 
           -DBUILD_DOCS=ON
           -DENABLE_COVERAGE=On
+          -G Ninja
           -S .
           -B build
-          --target cxxcimod_header_only_docs
       - name: CMake Build
         shell: bash
         run: >
           cmake  
           --build build
           --parallel
+          --verbose
+          --target cxxcimod_header_only_docs
       #- name: CMake Test
       #  shell: bash
       #  working-directory: build
