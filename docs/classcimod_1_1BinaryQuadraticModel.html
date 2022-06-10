@@ -110,13 +110,13 @@ $(document).ready(function(){initNavTree('classcimod_1_1BinaryQuadraticModel.htm
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a51a362cd4e6818cb5fa773c9b5652040"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a> = Eigen::Matrix&lt; FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor &gt;</td></tr>
-<tr class="memdesc:a51a362cd4e6818cb5fa773c9b5652040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eigen Matrix if DataType is <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> , Matrix is equal to Eigen::Matrix if DataType is <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a>, Matrix is equal to Eigen::SparseMatrix.  <a href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">More...</a><br /></td></tr>
+<tr class="memdesc:a51a362cd4e6818cb5fa773c9b5652040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Eigen Matrix if DataType is <a class="el" href="structcimod_1_1Dense.html">Dense</a> , Matrix is equal to Eigen::Matrix if DataType is <a class="el" href="structcimod_1_1Sparse.html">Sparse</a>, Matrix is equal to Eigen::SparseMatrix.  <a href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">More...</a><br /></td></tr>
 <tr class="separator:a51a362cd4e6818cb5fa773c9b5652040"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa2c90602f22aff133c0e27bdd20e2525"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa2c90602f22aff133c0e27bdd20e2525">SparseMatrix</a> = Eigen::SparseMatrix&lt; FloatType, Eigen::RowMajor &gt;</td></tr>
 <tr class="separator:aa2c90602f22aff133c0e27bdd20e2525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad50d8e61df5f0e319c8171aa78310599"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ad50d8e61df5f0e319c8171aa78310599">SpIter</a> = typename SparseMatrix::InnerIterator</td></tr>
 <tr class="separator:ad50d8e61df5f0e319c8171aa78310599"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e4d5a84e55ec6b74e7191ddca2a1dc4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a8e4d5a84e55ec6b74e7191ddca2a1dc4">Matrix</a> = std::conditional_t&lt; std::is_same_v&lt; DataType, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a>, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa2c90602f22aff133c0e27bdd20e2525">SparseMatrix</a> &gt;</td></tr>
+<tr class="memitem:a8e4d5a84e55ec6b74e7191ddca2a1dc4"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a8e4d5a84e55ec6b74e7191ddca2a1dc4">Matrix</a> = std::conditional_t&lt; std::is_same_v&lt; DataType, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a>, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa2c90602f22aff133c0e27bdd20e2525">SparseMatrix</a> &gt;</td></tr>
 <tr class="separator:a8e4d5a84e55ec6b74e7191ddca2a1dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a97692189aef7068a47be851e4609919c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a97692189aef7068a47be851e4609919c">Vector</a> = Eigen::Matrix&lt; FloatType, Eigen::Dynamic, 1 &gt;</td></tr>
 <tr class="separator:a97692189aef7068a47be851e4609919c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,14 +242,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a062ced2e8a9a3546a119c18c1be01145"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert a binary quadratic model to Ising format.  <a href="classcimod_1_1BinaryQuadraticModel.html#a062ced2e8a9a3546a119c18c1be01145">More...</a><br /></td></tr>
 <tr class="separator:a062ced2e8a9a3546a119c18c1be01145"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53f1b09b5cf646d30eba8afbbeb10803"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a8e4d5a84e55ec6b74e7191ddca2a1dc4">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a53f1b09b5cf646d30eba8afbbeb10803">interaction_matrix</a> () const</td></tr>
-<tr class="memdesc:a53f1b09b5cf646d30eba8afbbeb10803"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate (<a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> or <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a>) interaction matrix with given list of indices The generated matrix will be the following triangular matrix:  <a href="classcimod_1_1BinaryQuadraticModel.html#a53f1b09b5cf646d30eba8afbbeb10803">More...</a><br /></td></tr>
+<tr class="memdesc:a53f1b09b5cf646d30eba8afbbeb10803"><td class="mdescLeft">&#160;</td><td class="mdescRight">generate (<a class="el" href="structcimod_1_1Dense.html">Dense</a> or <a class="el" href="structcimod_1_1Sparse.html">Sparse</a>) interaction matrix with given list of indices The generated matrix will be the following triangular matrix:  <a href="classcimod_1_1BinaryQuadraticModel.html#a53f1b09b5cf646d30eba8afbbeb10803">More...</a><br /></td></tr>
 <tr class="separator:a53f1b09b5cf646d30eba8afbbeb10803"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72af6018a48545a76876b46695908fa3"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a72af6018a48545a76876b46695908fa3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a72af6018a48545a76876b46695908fa3">to_serializable</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a72af6018a48545a76876b46695908fa3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a72af6018a48545a76876b46695908fa3">to_serializable</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a72af6018a48545a76876b46695908fa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the binary quadratic model to a dense-version serializable object.  <a href="classcimod_1_1BinaryQuadraticModel.html#a72af6018a48545a76876b46695908fa3">More...</a><br /></td></tr>
 <tr class="separator:a72af6018a48545a76876b46695908fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb3e2981f610c9976bf9ebdf823860a3"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:acb3e2981f610c9976bf9ebdf823860a3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#acb3e2981f610c9976bf9ebdf823860a3">to_serializable</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:acb3e2981f610c9976bf9ebdf823860a3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#acb3e2981f610c9976bf9ebdf823860a3">to_serializable</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:acb3e2981f610c9976bf9ebdf823860a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert the binary quadratic model to a serializable object.  <a href="classcimod_1_1BinaryQuadraticModel.html#acb3e2981f610c9976bf9ebdf823860a3">More...</a><br /></td></tr>
 <tr class="separator:acb3e2981f610c9976bf9ebdf823860a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -262,11 +262,11 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a8abcacd960a6042b00aa8ec0f2885819"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a binary quadratic model from an Ising problem.  <a href="classcimod_1_1BinaryQuadraticModel.html#a8abcacd960a6042b00aa8ec0f2885819">More...</a><br /></td></tr>
 <tr class="separator:a8abcacd960a6042b00aa8ec0f2885819"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a64b52b40b4efd41fdef5d8efd8450eab"><td class="memTemplParams" colspan="2">template&lt;typename IndexType_serial  = IndexType, typename FloatType_serial  = FloatType, typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a64b52b40b4efd41fdef5d8efd8450eab"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">BinaryQuadraticModel</a>&lt; IndexType_serial, FloatType_serial, DataType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a64b52b40b4efd41fdef5d8efd8450eab">from_serializable</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a> &amp;input, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a64b52b40b4efd41fdef5d8efd8450eab"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">BinaryQuadraticModel</a>&lt; IndexType_serial, FloatType_serial, DataType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a64b52b40b4efd41fdef5d8efd8450eab">from_serializable</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a> &amp;input, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a64b52b40b4efd41fdef5d8efd8450eab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classcimod_1_1BinaryQuadraticModel.html" title="Class for dense binary quadratic model.">BinaryQuadraticModel</a> instance from a serializable object.  <a href="classcimod_1_1BinaryQuadraticModel.html#a64b52b40b4efd41fdef5d8efd8450eab">More...</a><br /></td></tr>
 <tr class="separator:a64b52b40b4efd41fdef5d8efd8450eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed733d63ca51219a5545c3d46c933ce8"><td class="memTemplParams" colspan="2">template&lt;typename IndexType_serial  = IndexType, typename FloatType_serial  = FloatType, typename T  = DataType&gt; </td></tr>
-<tr class="memitem:aed733d63ca51219a5545c3d46c933ce8"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">BinaryQuadraticModel</a>&lt; IndexType_serial, FloatType_serial, DataType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aed733d63ca51219a5545c3d46c933ce8">from_serializable</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a> &amp;input, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:aed733d63ca51219a5545c3d46c933ce8"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">BinaryQuadraticModel</a>&lt; IndexType_serial, FloatType_serial, DataType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aed733d63ca51219a5545c3d46c933ce8">from_serializable</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a> &amp;input, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:aed733d63ca51219a5545c3d46c933ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a <a class="el" href="classcimod_1_1BinaryQuadraticModel.html" title="Class for dense binary quadratic model.">BinaryQuadraticModel</a> instance from a serializable object.  <a href="classcimod_1_1BinaryQuadraticModel.html#aed733d63ca51219a5545c3d46c933ce8">More...</a><br /></td></tr>
 <tr class="separator:aed733d63ca51219a5545c3d46c933ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -276,19 +276,19 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a2c057f7261dfc4fdde0c34ee073f0c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">set _label_to_idx from _idx_to_label  <a href="classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f">More...</a><br /></td></tr>
 <tr class="separator:a2c057f7261dfc4fdde0c34ee073f0c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac926cb7561cdbe3bcf1d09b0bd961b43"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:ac926cb7561cdbe3bcf1d09b0bd961b43"><td class="memTemplItemLeft" align="right" valign="top">FloatType &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:ac926cb7561cdbe3bcf1d09b0bd961b43"><td class="memTemplItemLeft" align="right" valign="top">FloatType &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:ac926cb7561cdbe3bcf1d09b0bd961b43"><td class="mdescLeft">&#160;</td><td class="mdescRight">access elements for dense matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43">More...</a><br /></td></tr>
 <tr class="separator:ac926cb7561cdbe3bcf1d09b0bd961b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cd028844d5872747cec73ab317c442e"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a3cd028844d5872747cec73ab317c442e"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a3cd028844d5872747cec73ab317c442e">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a3cd028844d5872747cec73ab317c442e"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a3cd028844d5872747cec73ab317c442e">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a3cd028844d5872747cec73ab317c442e"><td class="mdescLeft">&#160;</td><td class="mdescRight">access elements for dense matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#a3cd028844d5872747cec73ab317c442e">More...</a><br /></td></tr>
 <tr class="separator:a3cd028844d5872747cec73ab317c442e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60ca0708af56926abae273793f95c723"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a60ca0708af56926abae273793f95c723"><td class="memTemplItemLeft" align="right" valign="top">FloatType &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a60ca0708af56926abae273793f95c723">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a60ca0708af56926abae273793f95c723"><td class="memTemplItemLeft" align="right" valign="top">FloatType &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a60ca0708af56926abae273793f95c723">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a60ca0708af56926abae273793f95c723"><td class="mdescLeft">&#160;</td><td class="mdescRight">access elements for sparse matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#a60ca0708af56926abae273793f95c723">More...</a><br /></td></tr>
 <tr class="separator:a60ca0708af56926abae273793f95c723"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1aa137940118c751aca5bb6762b3e57"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:ac1aa137940118c751aca5bb6762b3e57"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ac1aa137940118c751aca5bb6762b3e57">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:ac1aa137940118c751aca5bb6762b3e57"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ac1aa137940118c751aca5bb6762b3e57">_quadmat_get</a> (size_t i, size_t j, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:ac1aa137940118c751aca5bb6762b3e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">access elements for sparse matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#ac1aa137940118c751aca5bb6762b3e57">More...</a><br /></td></tr>
 <tr class="separator:ac1aa137940118c751aca5bb6762b3e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d3615e29779af572a746de9f40faacc"><td class="memItemLeft" align="right" valign="top">FloatType &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a1d3615e29779af572a746de9f40faacc">_mat</a> (IndexType label_i, IndexType label_j)</td></tr>
@@ -304,51 +304,51 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a885ecd208beccd1f41f79363983a5cf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get reference of _quadmat(i,i)  <a href="classcimod_1_1BinaryQuadraticModel.html#a885ecd208beccd1f41f79363983a5cf1">More...</a><br /></td></tr>
 <tr class="separator:a885ecd208beccd1f41f79363983a5cf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e3e15962d85ec8a5f41a72a9ac95d0f"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a6e3e15962d85ec8a5f41a72a9ac95d0f"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a6e3e15962d85ec8a5f41a72a9ac95d0f">_max_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a6e3e15962d85ec8a5f41a72a9ac95d0f"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a6e3e15962d85ec8a5f41a72a9ac95d0f">_max_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a6e3e15962d85ec8a5f41a72a9ac95d0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate maximum element in linear term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#a6e3e15962d85ec8a5f41a72a9ac95d0f">More...</a><br /></td></tr>
 <tr class="separator:a6e3e15962d85ec8a5f41a72a9ac95d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fe5a68c38117e05f1f83fa0c33c01f6"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a9fe5a68c38117e05f1f83fa0c33c01f6"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a9fe5a68c38117e05f1f83fa0c33c01f6">_max_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a9fe5a68c38117e05f1f83fa0c33c01f6"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a9fe5a68c38117e05f1f83fa0c33c01f6">_max_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a9fe5a68c38117e05f1f83fa0c33c01f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate maximum element in quadratic term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#a9fe5a68c38117e05f1f83fa0c33c01f6">More...</a><br /></td></tr>
 <tr class="separator:a9fe5a68c38117e05f1f83fa0c33c01f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f708c32aca8a7de7117bb672a997105"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a4f708c32aca8a7de7117bb672a997105"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4f708c32aca8a7de7117bb672a997105">_min_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a4f708c32aca8a7de7117bb672a997105"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4f708c32aca8a7de7117bb672a997105">_min_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a4f708c32aca8a7de7117bb672a997105"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate minimum element in linear term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#a4f708c32aca8a7de7117bb672a997105">More...</a><br /></td></tr>
 <tr class="separator:a4f708c32aca8a7de7117bb672a997105"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f3149fdcd80d14a45ecef8e50168e78"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a4f3149fdcd80d14a45ecef8e50168e78"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4f3149fdcd80d14a45ecef8e50168e78">_min_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a4f3149fdcd80d14a45ecef8e50168e78"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4f3149fdcd80d14a45ecef8e50168e78">_min_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a4f3149fdcd80d14a45ecef8e50168e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate minimum element in quadratic term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#a4f3149fdcd80d14a45ecef8e50168e78">More...</a><br /></td></tr>
 <tr class="separator:a4f3149fdcd80d14a45ecef8e50168e78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5f95d6b0fab1f0d5e007150c18e1bf6"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:ad5f95d6b0fab1f0d5e007150c18e1bf6"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ad5f95d6b0fab1f0d5e007150c18e1bf6">_max_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:ad5f95d6b0fab1f0d5e007150c18e1bf6"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ad5f95d6b0fab1f0d5e007150c18e1bf6">_max_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:ad5f95d6b0fab1f0d5e007150c18e1bf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate maximum element in linear term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#ad5f95d6b0fab1f0d5e007150c18e1bf6">More...</a><br /></td></tr>
 <tr class="separator:ad5f95d6b0fab1f0d5e007150c18e1bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0159de25cf276b3e3c41ea25565e4d6e"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a0159de25cf276b3e3c41ea25565e4d6e"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a0159de25cf276b3e3c41ea25565e4d6e">_max_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a0159de25cf276b3e3c41ea25565e4d6e"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a0159de25cf276b3e3c41ea25565e4d6e">_max_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a0159de25cf276b3e3c41ea25565e4d6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate maximum element in quadratic term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#a0159de25cf276b3e3c41ea25565e4d6e">More...</a><br /></td></tr>
 <tr class="separator:a0159de25cf276b3e3c41ea25565e4d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b0a5a383cbd9954934b023a68223b05"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a5b0a5a383cbd9954934b023a68223b05"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a5b0a5a383cbd9954934b023a68223b05">_min_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a5b0a5a383cbd9954934b023a68223b05"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a5b0a5a383cbd9954934b023a68223b05">_min_linear</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a5b0a5a383cbd9954934b023a68223b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate minimum element in linear term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#a5b0a5a383cbd9954934b023a68223b05">More...</a><br /></td></tr>
 <tr class="separator:a5b0a5a383cbd9954934b023a68223b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ed84766d3b0044c2aebe3b96d9dd34a"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a3ed84766d3b0044c2aebe3b96d9dd34a"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a3ed84766d3b0044c2aebe3b96d9dd34a">_min_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a3ed84766d3b0044c2aebe3b96d9dd34a"><td class="memTemplItemLeft" align="right" valign="top">FloatType&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a3ed84766d3b0044c2aebe3b96d9dd34a">_min_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr) const</td></tr>
 <tr class="memdesc:a3ed84766d3b0044c2aebe3b96d9dd34a"><td class="mdescLeft">&#160;</td><td class="mdescRight">calculate minimum element in quadratic term for dense graph  <a href="classcimod_1_1BinaryQuadraticModel.html#a3ed84766d3b0044c2aebe3b96d9dd34a">More...</a><br /></td></tr>
 <tr class="separator:a3ed84766d3b0044c2aebe3b96d9dd34a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad097cb5d176001157ca634cab039eff"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:aad097cb5d176001157ca634cab039eff"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aad097cb5d176001157ca634cab039eff">_insert_label_into_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:aad097cb5d176001157ca634cab039eff"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aad097cb5d176001157ca634cab039eff">_insert_label_into_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:aad097cb5d176001157ca634cab039eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">insert row and column that corresponds to added label into _quadmat for dense matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#aad097cb5d176001157ca634cab039eff">More...</a><br /></td></tr>
 <tr class="separator:aad097cb5d176001157ca634cab039eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad499c10b55f01fc77d0f3483f7e0111b"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:ad499c10b55f01fc77d0f3483f7e0111b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ad499c10b55f01fc77d0f3483f7e0111b">_insert_label_into_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:ad499c10b55f01fc77d0f3483f7e0111b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ad499c10b55f01fc77d0f3483f7e0111b">_insert_label_into_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:ad499c10b55f01fc77d0f3483f7e0111b"><td class="mdescLeft">&#160;</td><td class="mdescRight">insert row and column that corresponds to added label into _quadmat for sparse matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#ad499c10b55f01fc77d0f3483f7e0111b">More...</a><br /></td></tr>
 <tr class="separator:ad499c10b55f01fc77d0f3483f7e0111b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acd5ed3741d9c9c1244ee4bd0a979e36c"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:acd5ed3741d9c9c1244ee4bd0a979e36c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#acd5ed3741d9c9c1244ee4bd0a979e36c">_delete_label_from_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:acd5ed3741d9c9c1244ee4bd0a979e36c"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#acd5ed3741d9c9c1244ee4bd0a979e36c">_delete_label_from_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:acd5ed3741d9c9c1244ee4bd0a979e36c"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete row and column that corresponds to existing label from _quadmat for dense matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#acd5ed3741d9c9c1244ee4bd0a979e36c">More...</a><br /></td></tr>
 <tr class="separator:acd5ed3741d9c9c1244ee4bd0a979e36c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d8bc6cab609bb41c05fc381c64a0bda"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a4d8bc6cab609bb41c05fc381c64a0bda"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4d8bc6cab609bb41c05fc381c64a0bda">_delete_label_from_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a4d8bc6cab609bb41c05fc381c64a0bda"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4d8bc6cab609bb41c05fc381c64a0bda">_delete_label_from_mat</a> (IndexType label_i, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a4d8bc6cab609bb41c05fc381c64a0bda"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete row and column that corresponds to existing label from _quadmat for sparse matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#a4d8bc6cab609bb41c05fc381c64a0bda">More...</a><br /></td></tr>
 <tr class="separator:a4d8bc6cab609bb41c05fc381c64a0bda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade3afe91bf6a9c554856b5bf7c27f629"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ade3afe91bf6a9c554856b5bf7c27f629">_add_new_label</a> (IndexType label_i)</td></tr>
@@ -358,19 +358,19 @@ Protected Member Functions</h2></td></tr>
 <tr class="memdesc:a72a5f90f2952fefff3e21bec03360e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete label if label_i does not exist, this process is skipped.  <a href="classcimod_1_1BinaryQuadraticModel.html#a72a5f90f2952fefff3e21bec03360e4b">More...</a><br /></td></tr>
 <tr class="separator:a72a5f90f2952fefff3e21bec03360e4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4036aabd952475bed7dfbe4adf2493da"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a4036aabd952475bed7dfbe4adf2493da"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4036aabd952475bed7dfbe4adf2493da">_initialize_quadmat</a> (const <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt; &amp;linear, const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;quadratic, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a4036aabd952475bed7dfbe4adf2493da"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4036aabd952475bed7dfbe4adf2493da">_initialize_quadmat</a> (const <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt; &amp;linear, const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;quadratic, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a4036aabd952475bed7dfbe4adf2493da"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize matrix with linear and quadratic dicts (for dense matrix)  <a href="classcimod_1_1BinaryQuadraticModel.html#a4036aabd952475bed7dfbe4adf2493da">More...</a><br /></td></tr>
 <tr class="separator:a4036aabd952475bed7dfbe4adf2493da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6c13add8a9c11d1c4af72c2d48aba0a"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:ac6c13add8a9c11d1c4af72c2d48aba0a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ac6c13add8a9c11d1c4af72c2d48aba0a">_initialize_quadmat</a> (const <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt; &amp;linear, const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;quadratic, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:ac6c13add8a9c11d1c4af72c2d48aba0a"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ac6c13add8a9c11d1c4af72c2d48aba0a">_initialize_quadmat</a> (const <a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt; &amp;linear, const <a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt; &amp;quadratic, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:ac6c13add8a9c11d1c4af72c2d48aba0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize matrix with linear and quadratic dicts (for sparse matrix)  <a href="classcimod_1_1BinaryQuadraticModel.html#ac6c13add8a9c11d1c4af72c2d48aba0a">More...</a><br /></td></tr>
 <tr class="separator:ac6c13add8a9c11d1c4af72c2d48aba0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe8af61b407b122a6d6c866987522ad4"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:afe8af61b407b122a6d6c866987522ad4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#afe8af61b407b122a6d6c866987522ad4">_add_triangular_elements</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a> &amp;mat, bool fix_format, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:afe8af61b407b122a6d6c866987522ad4"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#afe8af61b407b122a6d6c866987522ad4">_add_triangular_elements</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a> &amp;mat, bool fix_format, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:afe8af61b407b122a6d6c866987522ad4"><td class="mdescLeft">&#160;</td><td class="mdescRight">add non-diagonal elements to upper triangular components for dense matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#afe8af61b407b122a6d6c866987522ad4">More...</a><br /></td></tr>
 <tr class="separator:afe8af61b407b122a6d6c866987522ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af2bbbf2d478350917813bbbe2a580042"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:af2bbbf2d478350917813bbbe2a580042"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#af2bbbf2d478350917813bbbe2a580042">_add_triangular_elements</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a> &amp;mat, bool fix_format, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:af2bbbf2d478350917813bbbe2a580042"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#af2bbbf2d478350917813bbbe2a580042">_add_triangular_elements</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a> &amp;mat, bool fix_format, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:af2bbbf2d478350917813bbbe2a580042"><td class="mdescLeft">&#160;</td><td class="mdescRight">add non-diagonal elements to upper triangular components for sparse matrix  <a href="classcimod_1_1BinaryQuadraticModel.html#af2bbbf2d478350917813bbbe2a580042">More...</a><br /></td></tr>
 <tr class="separator:af2bbbf2d478350917813bbbe2a580042"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50b9e71b4bd17e49f31c9d4d488d7a32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a50b9e71b4bd17e49f31c9d4d488d7a32">_initialize_quadmat</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a> &amp;mat, const std::vector&lt; IndexType &gt; &amp;labels_vec, bool fix_format)</td></tr>
@@ -379,28 +379,28 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a9b10b052dd04faf5c64280bc34bf6b3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacecimod.html#a8a8de407e52855d095598f6e85e539b2">Linear</a>&lt; IndexType, FloatType &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a9b10b052dd04faf5c64280bc34bf6b3f">_generate_linear</a> () const</td></tr>
 <tr class="separator:a9b10b052dd04faf5c64280bc34bf6b3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5cd2d5417d7bfc25451f243cc3a3f7c"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:ad5cd2d5417d7bfc25451f243cc3a3f7c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ad5cd2d5417d7bfc25451f243cc3a3f7c">_generate_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:ad5cd2d5417d7bfc25451f243cc3a3f7c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#ad5cd2d5417d7bfc25451f243cc3a3f7c">_generate_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr) const</td></tr>
 <tr class="separator:ad5cd2d5417d7bfc25451f243cc3a3f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a065e177d2abe11bd14f6a40fff2c286c"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a065e177d2abe11bd14f6a40fff2c286c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a065e177d2abe11bd14f6a40fff2c286c">_generate_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr) const</td></tr>
+<tr class="memitem:a065e177d2abe11bd14f6a40fff2c286c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt; IndexType, FloatType &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a065e177d2abe11bd14f6a40fff2c286c">_generate_quadratic</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr) const</td></tr>
 <tr class="separator:a065e177d2abe11bd14f6a40fff2c286c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adefb9aa0425d0757cf66bdf3247aad4d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#adefb9aa0425d0757cf66bdf3247aad4d">_initialize_quadmat</a> (const <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa2c90602f22aff133c0e27bdd20e2525">SparseMatrix</a> &amp;mat, const std::vector&lt; IndexType &gt; &amp;labels_vec)</td></tr>
 <tr class="memdesc:adefb9aa0425d0757cf66bdf3247aad4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize matrix with matrix and labels the form of matrix is assumed to be the following form:  <a href="classcimod_1_1BinaryQuadraticModel.html#adefb9aa0425d0757cf66bdf3247aad4d">More...</a><br /></td></tr>
 <tr class="separator:adefb9aa0425d0757cf66bdf3247aad4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d2edff5e679f8ec536f65d8c41ee2e9"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a4d2edff5e679f8ec536f65d8c41ee2e9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4d2edff5e679f8ec536f65d8c41ee2e9">_spin_to_binary</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a4d2edff5e679f8ec536f65d8c41ee2e9"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a4d2edff5e679f8ec536f65d8c41ee2e9">_spin_to_binary</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a4d2edff5e679f8ec536f65d8c41ee2e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">change internal variable from Ising to QUBO ones for dense matrix The following conversion is applied:  <a href="classcimod_1_1BinaryQuadraticModel.html#a4d2edff5e679f8ec536f65d8c41ee2e9">More...</a><br /></td></tr>
 <tr class="separator:a4d2edff5e679f8ec536f65d8c41ee2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60794edad9ab1511cc0d24b201c2aaff"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a60794edad9ab1511cc0d24b201c2aaff"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a60794edad9ab1511cc0d24b201c2aaff">_spin_to_binary</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a60794edad9ab1511cc0d24b201c2aaff"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a60794edad9ab1511cc0d24b201c2aaff">_spin_to_binary</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a60794edad9ab1511cc0d24b201c2aaff"><td class="mdescLeft">&#160;</td><td class="mdescRight">change internal variable from Ising to QUBO ones for sparse matrix The following conversion is applied:  <a href="classcimod_1_1BinaryQuadraticModel.html#a60794edad9ab1511cc0d24b201c2aaff">More...</a><br /></td></tr>
 <tr class="separator:a60794edad9ab1511cc0d24b201c2aaff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30d0230182a2c8c3b9f72553797fe3a6"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a30d0230182a2c8c3b9f72553797fe3a6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a30d0230182a2c8c3b9f72553797fe3a6">_binary_to_spin</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a30d0230182a2c8c3b9f72553797fe3a6"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a30d0230182a2c8c3b9f72553797fe3a6">_binary_to_spin</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a30d0230182a2c8c3b9f72553797fe3a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">change internal variable from QUBO to Ising ones for dense matrix The following conversion is applied:  <a href="classcimod_1_1BinaryQuadraticModel.html#a30d0230182a2c8c3b9f72553797fe3a6">More...</a><br /></td></tr>
 <tr class="separator:a30d0230182a2c8c3b9f72553797fe3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ec8c698d786af88ca42a1a9df049341"><td class="memTemplParams" colspan="2">template&lt;typename T  = DataType&gt; </td></tr>
-<tr class="memitem:a5ec8c698d786af88ca42a1a9df049341"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a5ec8c698d786af88ca42a1a9df049341">_binary_to_spin</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;=nullptr)</td></tr>
+<tr class="memitem:a5ec8c698d786af88ca42a1a9df049341"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a5ec8c698d786af88ca42a1a9df049341">_binary_to_spin</a> (<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;=nullptr)</td></tr>
 <tr class="memdesc:a5ec8c698d786af88ca42a1a9df049341"><td class="mdescLeft">&#160;</td><td class="mdescRight">change internal variable from QUBO to Ising ones for sparse matrix The following conversion is applied:  <a href="classcimod_1_1BinaryQuadraticModel.html#a5ec8c698d786af88ca42a1a9df049341">More...</a><br /></td></tr>
 <tr class="separator:a5ec8c698d786af88ca42a1a9df049341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -457,7 +457,7 @@ template&lt;typename IndexType , typename FloatType , typename DataType &gt; </d
       </table>
 </div><div class="memdoc">
 
-<p>Eigen Matrix if DataType is <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> , Matrix is equal to Eigen::Matrix if DataType is <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a>, Matrix is equal to Eigen::SparseMatrix. </p>
+<p>Eigen Matrix if DataType is <a class="el" href="structcimod_1_1Dense.html">Dense</a> , Matrix is equal to Eigen::Matrix if DataType is <a class="el" href="structcimod_1_1Sparse.html">Sparse</a>, Matrix is equal to Eigen::SparseMatrix. </p>
 
 </div>
 </div>
@@ -521,7 +521,7 @@ template&lt;typename IndexType , typename FloatType , typename DataType &gt; </d
 template&lt;typename IndexType , typename FloatType , typename DataType &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a8e4d5a84e55ec6b74e7191ddca2a1dc4">Matrix</a> =  std::conditional_t&lt; std::is_same_v&lt;DataType, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a>&gt;, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a>, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa2c90602f22aff133c0e27bdd20e2525">SparseMatrix</a> &gt;</td>
+          <td class="memname">using <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::<a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a8e4d5a84e55ec6b74e7191ddca2a1dc4">Matrix</a> =  std::conditional_t&lt; std::is_same_v&lt;DataType, <a class="el" href="structcimod_1_1Dense.html">Dense</a>&gt;, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a51a362cd4e6818cb5fa773c9b5652040">DenseMatrix</a>, <a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa2c90602f22aff133c0e27bdd20e2525">SparseMatrix</a> &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1114,7 +1114,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -1190,7 +1190,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -1241,7 +1241,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_binary_to_spin </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td></td>
         </tr>
@@ -1303,7 +1303,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_binary_to_spin </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td></td>
         </tr>
@@ -1438,7 +1438,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -1514,7 +1514,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -1611,7 +1611,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt;IndexType, FloatType&gt; <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_generate_quadratic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -1670,7 +1670,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="namespacecimod.html#a8c82ce99a64b927f37aa68ca36a3f5b3">Quadratic</a>&lt;IndexType, FloatType&gt; <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_generate_quadratic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -1804,7 +1804,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -1887,7 +1887,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -2012,7 +2012,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -2088,7 +2088,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -2392,7 +2392,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_max_linear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2427,7 +2427,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_max_linear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2462,7 +2462,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_max_quadratic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2497,7 +2497,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_max_quadratic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2532,7 +2532,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_min_linear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2567,7 +2567,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_min_linear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2602,7 +2602,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_min_quadratic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2637,7 +2637,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">FloatType <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_min_quadratic </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -2684,7 +2684,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -2792,7 +2792,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -2857,7 +2857,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -2922,7 +2922,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -3043,7 +3043,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_spin_to_binary </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td></td>
         </tr>
@@ -3105,7 +3105,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::_spin_to_binary </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td></td>
         </tr>
@@ -4133,7 +4133,7 @@ template&lt;typename IndexType_serial  = IndexType, typename FloatType_serial  =
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -4191,7 +4191,7 @@ template&lt;typename IndexType_serial  = IndexType, typename FloatType_serial  =
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code>&#160;</td>
         </tr>
         <tr>
@@ -4680,7 +4680,7 @@ template&lt;typename IndexType , typename FloatType , typename DataType &gt; </d
 </table>
 </div><div class="memdoc">
 
-<p>generate (<a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> or <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a>) interaction matrix with given list of indices The generated matrix will be the following triangular matrix: </p>
+<p>generate (<a class="el" href="structcimod_1_1Dense.html">Dense</a> or <a class="el" href="structcimod_1_1Sparse.html">Sparse</a>) interaction matrix with given list of indices The generated matrix will be the following triangular matrix: </p>
 <p class="formulaDsp">
 \[ \begin{pmatrix} J_{0,0} &amp; J_{0,1} &amp; \cdots &amp; J_{0,N-1} &amp; h_{0}\\ 0 &amp; J_{1,1} &amp; \cdots &amp; J_{1,N-1} &amp; h_{1}\\ \vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots \\ 0 &amp; 0 &amp; \cdots &amp; J_{N-1,N-1} &amp; h_{N-1}\\ 0 &amp; 0 &amp; \cdots &amp; 0 &amp; 1 \\ \end{pmatrix} \]
 </p>
@@ -5313,7 +5313,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a> <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::to_serializable </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Dense">Dense</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Dense.html">Dense</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -5360,7 +5360,7 @@ template&lt;typename T  = DataType&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#a641c6e2ae38d3c24f4e0d98f25d63dc7">json</a> <a class="el" href="classcimod_1_1BinaryQuadraticModel.html">cimod::BinaryQuadraticModel</a>&lt; IndexType, FloatType, DataType &gt;::to_serializable </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="namespacecimod.html#structcimod_1_1Sparse">Sparse</a> &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html#aa8801804a2bfa699b9c3768ea5ea80e3">dispatch_t</a>&lt; T, <a class="el" href="structcimod_1_1Sparse.html">Sparse</a> &gt;&#160;</td>
           <td class="paramname"> = <code>nullptr</code></td><td>)</td>
           <td> const</td>
         </tr>
@@ -5544,7 +5544,7 @@ template&lt;typename IndexType , typename FloatType , typename DataType &gt; </d
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacecimod.html">cimod</a></li><li class="navelem"><a class="el" href="classcimod_1_1BinaryQuadraticModel.html">BinaryQuadraticModel</a></li>
-    <li class="footer">Generated on Fri Jun 10 2022 03:39:16 for cimod by
+    <li class="footer">Generated on Fri Jun 10 2022 04:11:49 for cimod by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.17 </li>
   </ul>
