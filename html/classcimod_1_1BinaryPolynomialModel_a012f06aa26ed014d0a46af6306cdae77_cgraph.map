@@ -1,0 +1,5 @@
+<map id="cimod::BinaryPolynomialModel::RemoveOffset" name="cimod::BinaryPolynomialModel::RemoveOffset">
+<area shape="rect" id="node1" title="Set the offset of the BinaryPolynomialModel to zero." alt="" coords="5,5,231,47"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#ae624c6ec0e3f021c25965a38d29c8124" title="Remove the specified interaction from the BinaryPolynomialModel." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$namespacecimod.html#a978eef1a73beadb78c207c070eed3baf" title="Format the input key: for example, {2,1,1}&#45;&#45;&gt;{1,2} for BINARY variable and {2,1,1}&#45;&#45;&gt;{2} for SPIN var..." alt="" coords="552,13,765,39"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="cimod::BinaryQuadraticModel::to_qubo" name="cimod::BinaryQuadraticModel::to_qubo">
+<area shape="rect" id="node1" title="Convert a binary quadratic model to QUBO format." alt="" coords="5,136,220,177"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#af4152510bff1ec20c037e763cb4314fd" title="‍**" alt="" coords="268,37,483,79"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#ab3a08b5f2d599d611b0f632cf749990f" title="Get the element of linear object." alt="" coords="268,103,483,144"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryQuadraticModel.html#accbff477c7bf3db2e6fb438b6f4981f7" title="Get the offset." alt="" coords="268,168,483,209"/>
+<area shape="rect" id="node9" href="$classcimod_1_1BinaryQuadraticModel.html#aff9c0693b2b3703102c4cf4bd269e5d0" title="Get the element of quadratic object." alt="" coords="268,233,483,275"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a30d0230182a2c8c3b9f72553797fe3a6" title="change internal variable from QUBO to Ising ones for dense matrix The following conversion is applied..." alt="" coords="531,5,745,47"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#a4d2edff5e679f8ec536f65d8c41ee2e9" title="change internal variable from Ising to QUBO ones for dense matrix The following conversion is applied..." alt="" coords="531,71,745,112"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel.html#a1d3615e29779af572a746de9f40faacc" title="get reference of _quadmat(i,j)" alt="" coords="531,168,745,209"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryQuadraticModel.html#ac926cb7561cdbe3bcf1d09b0bd961b43" title="access elements for dense matrix" alt="" coords="793,168,1008,209"/>
+</map>

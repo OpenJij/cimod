@@ -1,0 +1,4 @@
+<map id="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::remove_offset" name="cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::remove_offset">
+<area shape="rect" id="node1" title="Set the binary quadratic model&#39;s offset to zero." alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#aae144b2825cdfbc177790efe4e6192f8" title="Add specified value to the offset of a binary quadratic model." alt="" coords="268,13,483,54"/>
+</map>

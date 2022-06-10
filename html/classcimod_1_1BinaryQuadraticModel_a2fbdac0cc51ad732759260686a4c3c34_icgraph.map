@@ -1,0 +1,6 @@
+<map id="cimod::BinaryQuadraticModel::get_quadratic" name="cimod::BinaryQuadraticModel::get_quadratic">
+<area shape="rect" id="node1" title="Get uadratic object." alt="" coords="531,50,745,91"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#adf16eb4751be5220e5999fa40e665d94" title="Fix the value of a variable and remove it from a binary quadratic model." alt="" coords="268,50,483,91"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#ac9c37a3eaf9f522c3a16cdafdb7b9b83" title="Fix the value of the variables and remove it from a binary quadratic model." alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel.html#ac986c8b640564ebc7fbd586bc70ab248" title="Fix the value of the variables and remove it from a binary quadratic model." alt="" coords="5,86,220,127"/>
+</map>

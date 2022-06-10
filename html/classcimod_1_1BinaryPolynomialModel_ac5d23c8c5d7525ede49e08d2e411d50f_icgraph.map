@@ -1,0 +1,11 @@
+<map id="cimod::BinaryPolynomialModel::GetNumInteractions" name="cimod::BinaryPolynomialModel::GetNumInteractions">
+<area shape="rect" id="node1" title="Return the number of the interactions." alt="" coords="825,104,1051,145"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#ac050f001dffdf0075048a4d27560a5b3" title="Determine the energy of the specified sample of the BinaryPolynomialModel." alt="" coords="552,5,777,47"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#abf58031daeccbafa5b606f4e6aeb7d1f" title="Generate the polynomial interactions corresponding to the vartype being SPIN from the BinaryPolynomia..." alt="" coords="552,71,777,112"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryPolynomialModel.html#ad7782bcb97d84b19845d33d879be8b97" title="Generate the polynomial interactions corresponding to the vartype being BINARY from the BinaryPolynom..." alt="" coords="552,136,777,177"/>
+<area shape="rect" id="node9" href="$classcimod_1_1BinaryPolynomialModel.html#a95fe13ce6e2dd9c0cfedb53aa862c82b" title="Convert the BinaryPolynomialModel to a serializable object." alt="" coords="552,201,777,243"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a61cf0535f9f01cea4d975cec1e685c56" title="Determine the energies of the given samples." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#aa3c41f812d024b2d70182611e28a5e6b" title="Generate BinaryPolynomialModel with the vartype being SPIN." alt="" coords="279,71,504,112"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryPolynomialModel.html#a9a00b6234ca3cb3c9746001e90342137" title="Create a BinaryPolynomialModel with the specified vartype." alt="" coords="5,104,231,145"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryPolynomialModel.html#a8d319a0a89e250e3e450bd7b054f376f" title="Generate BinaryPolynomialModel with the vartype being BINARY." alt="" coords="279,136,504,177"/>
+</map>

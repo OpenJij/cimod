@@ -1,0 +1,11 @@
+<map id="cimod::BinaryPolynomialModel::AddInteraction" name="cimod::BinaryPolynomialModel::AddInteraction">
+<area shape="rect" id="node1" title="Add an interaction to the BinaryPolynomialModel." alt="" coords="1099,71,1324,112"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a899fb2ead089c0e7a937a34536c86289" title="Add an interaction to the BinaryPolynomialModel." alt="" coords="825,5,1051,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#affc0a3426d5a2ab628299508adc2077b" title="Add interactions to the BinaryPolynomialModel." alt="" coords="825,71,1051,112"/>
+<area shape="rect" id="node9" href="$classcimod_1_1BinaryPolynomialModel.html#ac77a11522dd993159c3ac487acad0abf" title="Add specified value to the offset of the BinaryPolynomialModel." alt="" coords="825,136,1051,177"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#adee1ecc09d521a3663c69cae286515e8" title="BinaryPolynomialModel constructor." alt="" coords="552,71,777,112"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#a75e5a5dcb2d344991433db0933875d3e" title="Create an empty BinaryPolynomialModel." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryPolynomialModel.html#a8d319a0a89e250e3e450bd7b054f376f" title="Generate BinaryPolynomialModel with the vartype being BINARY." alt="" coords="279,71,504,112"/>
+<area shape="rect" id="node8" href="$classcimod_1_1BinaryPolynomialModel.html#aa3c41f812d024b2d70182611e28a5e6b" title="Generate BinaryPolynomialModel with the vartype being SPIN." alt="" coords="279,136,504,177"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryPolynomialModel.html#a9a00b6234ca3cb3c9746001e90342137" title="Create a BinaryPolynomialModel with the specified vartype." alt="" coords="5,104,231,145"/>
+</map>

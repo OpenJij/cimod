@@ -1,0 +1,4 @@
+<map id="cimod::BinaryQuadraticModel::_initialize_quadmat" name="cimod::BinaryQuadraticModel::_initialize_quadmat">
+<area shape="rect" id="node1" title="initialize matrix with matrix and labels the form of matrix is assumed to be the following form:" alt="" coords="5,5,220,47"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f" title="set _label_to_idx from _idx_to_label" alt="" coords="268,5,483,47"/>
+</map>

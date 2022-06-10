@@ -1,0 +1,5 @@
+<map id="cimod::BinaryPolynomialModel::GetVariablesToIntegers" name="cimod::BinaryPolynomialModel::GetVariablesToIntegers">
+<area shape="rect" id="node1" title="Get the specific integer number corresponding to the input variable (index)." alt="" coords="5,5,231,47"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a79f37716ea17317a9cc609b71b5079fa" title="Update sorted_variables_ and variables_to_integers_." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a3255cb29eb3b20704bc922a0476b6f60" title="Generate sorted variables." alt="" coords="552,5,777,47"/>
+</map>

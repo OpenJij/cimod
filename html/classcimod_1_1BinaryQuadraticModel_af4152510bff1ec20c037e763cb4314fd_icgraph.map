@@ -1,0 +1,9 @@
+<map id="cimod::BinaryQuadraticModel::change_vartype" name="cimod::BinaryQuadraticModel::change_vartype">
+<area shape="rect" id="node1" title="‍**" alt="" coords="268,181,483,223"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a2e307977e808b425f20ec4c0d62112cc" title="Create a binary quadratic model with the specified vartype." alt="" coords="5,5,220,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#ae14d4302cfe5d5196aa608cc1d971a10" title="Flip variable v in a binary quadratic model." alt="" coords="5,71,220,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a4de41718feec93fe9047db7913b828cf" title="Convert a binary quadratic model to Ising format." alt="" coords="5,137,220,193"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#a062ced2e8a9a3546a119c18c1be01145" title="Convert a binary quadratic model to Ising format." alt="" coords="5,217,220,259"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a5e8a459dcc20e73bf57993ab14244a09" title="Convert a binary quadratic model to QUBO format." alt="" coords="5,283,220,339"/>
+<area shape="rect" id="node7" href="$classcimod_1_1BinaryQuadraticModel.html#a4035b19133675e4d3181573f1f0aea9e" title="Convert a binary quadratic model to QUBO format." alt="" coords="5,364,220,405"/>
+</map>

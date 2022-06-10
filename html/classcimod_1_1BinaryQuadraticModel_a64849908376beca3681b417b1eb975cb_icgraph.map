@@ -1,0 +1,6 @@
+<map id="cimod::BinaryQuadraticModel::get_vartype" name="cimod::BinaryQuadraticModel::get_vartype">
+<area shape="rect" id="node1" title="Get the vartype object." alt="" coords="268,93,483,134"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a0635ea156a2ffe9f7b95944a49afca1f" title="Add an interaction and/or quadratic bias to a binary quadratic model." alt="" coords="5,5,220,61"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#aa3b8710221d08380ed2c7d4807a5f069" title="Add variable v and/or its bias to a binary quadratic model." alt="" coords="5,85,220,141"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#af99ad364b080b94a3cab3f73cc4a7de9" title="Create a binary quadratic model with the specified vartype." alt="" coords="5,165,220,221"/>
+</map>

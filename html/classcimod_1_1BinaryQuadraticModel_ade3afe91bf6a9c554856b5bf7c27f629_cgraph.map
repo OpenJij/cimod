@@ -1,0 +1,5 @@
+<map id="cimod::BinaryQuadraticModel::_add_new_label" name="cimod::BinaryQuadraticModel::_add_new_label">
+<area shape="rect" id="node1" title="add new label if label_i already exists, this process is skipped." alt="" coords="5,39,220,80"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#aad097cb5d176001157ca634cab039eff" title="insert row and column that corresponds to added label into _quadmat for dense matrix" alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a2c057f7261dfc4fdde0c34ee073f0c9f" title="set _label_to_idx from _idx_to_label" alt="" coords="268,71,483,112"/>
+</map>

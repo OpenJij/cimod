@@ -1,0 +1,5 @@
+<map id="cimod::BinaryQuadraticModel::to_serializable" name="cimod::BinaryQuadraticModel::to_serializable">
+<area shape="rect" id="node1" title="Convert the binary quadratic model to a serializable object." alt="" coords="5,39,220,80"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a05ea443b1d01c688a260e0ab025261ce" title="get the number of variables" alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel.html#a73113b630ab609a1d65bb8d01b578ba4" title="Get variables." alt="" coords="268,71,483,112"/>
+</map>

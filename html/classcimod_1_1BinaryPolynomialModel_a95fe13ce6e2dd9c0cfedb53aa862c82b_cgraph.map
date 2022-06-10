@@ -1,0 +1,7 @@
+<map id="cimod::BinaryPolynomialModel::ToSerializable" name="cimod::BinaryPolynomialModel::ToSerializable">
+<area shape="rect" id="node1" title="Convert the BinaryPolynomialModel to a serializable object." alt="" coords="5,39,231,80"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#ac5d23c8c5d7525ede49e08d2e411d50f" title="Return the number of the interactions." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#aad5b50bd2cf6c692b76d58399dbf4ca8" title="Return the sorted variables as std::vector." alt="" coords="279,71,504,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#a79f37716ea17317a9cc609b71b5079fa" title="Update sorted_variables_ and variables_to_integers_." alt="" coords="552,71,777,112"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#a3255cb29eb3b20704bc922a0476b6f60" title="Generate sorted variables." alt="" coords="825,71,1051,112"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="cimod::BinaryPolynomialModel::GetSortedVariables" name="cimod::BinaryPolynomialModel::GetSortedVariables">
+<area shape="rect" id="node1" title="Return the sorted variables as std::vector." alt="" coords="279,39,504,80"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#a56aeb16ad506bd134331c64040060110" title="Get the specific integer number corresponding to the input variable (index)." alt="" coords="5,5,231,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a95fe13ce6e2dd9c0cfedb53aa862c82b" title="Convert the BinaryPolynomialModel to a serializable object." alt="" coords="5,71,231,112"/>
+</map>

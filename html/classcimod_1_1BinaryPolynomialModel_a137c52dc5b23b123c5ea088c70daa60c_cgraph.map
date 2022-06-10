@@ -1,0 +1,7 @@
+<map id="cimod::BinaryPolynomialModel::Energy" name="cimod::BinaryPolynomialModel::Energy">
+<area shape="rect" id="node1" title="Determine the energy of the specified sample_vec (as std::vector) of the BinaryPolynomialModel." alt="" coords="5,71,231,112"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryPolynomialModel.html#ac5d23c8c5d7525ede49e08d2e411d50f" title="Return the number of the interactions." alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryPolynomialModel.html#a71cc21d6b4d98d8ca90f684766a0ba47" title="Return the number of variables." alt="" coords="279,71,504,112"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryPolynomialModel.html#a79f37716ea17317a9cc609b71b5079fa" title="Update sorted_variables_ and variables_to_integers_." alt="" coords="279,136,504,177"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryPolynomialModel.html#a3255cb29eb3b20704bc922a0476b6f60" title="Generate sorted variables." alt="" coords="552,136,777,177"/>
+</map>

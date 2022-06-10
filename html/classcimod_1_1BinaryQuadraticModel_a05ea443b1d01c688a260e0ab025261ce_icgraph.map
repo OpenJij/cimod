@@ -1,0 +1,8 @@
+<map id="cimod::BinaryQuadraticModel::get_num_variables" name="cimod::BinaryQuadraticModel::get_num_variables">
+<area shape="rect" id="node1" title="get the number of variables" alt="" coords="268,159,483,200"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a065e177d2abe11bd14f6a40fff2c286c" title=" " alt="" coords="5,5,220,47"/>
+<area shape="rect" id="node3" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a79be4e9c568ff4956f5fbf0850a84f6c" title="generate interaction matrix with given list of indices The generated matrix will be the following sym..." alt="" coords="5,71,220,127"/>
+<area shape="rect" id="node4" href="$classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a5ab9bb635e339c3d27eaacf7754124e2" title="Return the number of variables." alt="" coords="5,151,220,207"/>
+<area shape="rect" id="node5" href="$classcimod_1_1BinaryQuadraticModel.html#a6e7052f5201dd579f8fc0c4e1df88913" title="Return the number of variables." alt="" coords="5,232,220,273"/>
+<area shape="rect" id="node6" href="$classcimod_1_1BinaryQuadraticModel.html#a72af6018a48545a76876b46695908fa3" title="Convert the binary quadratic model to a dense&#45;version serializable object." alt="" coords="5,297,220,339"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="cimod::BinaryQuadraticModel::_add_triangular_elements" name="cimod::BinaryQuadraticModel::_add_triangular_elements">
+<area shape="rect" id="node1" title="add non&#45;diagonal elements to upper triangular components for dense matrix" alt="" coords="268,5,483,47"/>
+<area shape="rect" id="node2" href="$classcimod_1_1BinaryQuadraticModel.html#a50b9e71b4bd17e49f31c9d4d488d7a32" title="initialize matrix with matrix and labels the form of matrix is assumed to be the following two forms:" alt="" coords="5,5,220,47"/>
+</map>
