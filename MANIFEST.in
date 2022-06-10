@@ -18,6 +18,9 @@ global-exclude requirements.txt
 global-exclude .gitignore 
 global-exclude Doxyfile
 global-exclude Doxyfile.bak
+global-exclude pybind11_jsonConfig.cmake
+global-exclude pybind11_jsonConfigVersion.cmake
+global-exclude pybind11_jsonTargets.cmake
 
 graft cimod 
 graft tests 
