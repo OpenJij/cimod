@@ -1,5 +1,9 @@
 # cimod : C++ header-only library for a binary quadratic model 
-[![PyPI version](https://badge.fury.io/py/jij-cimod.svg)](https://badge.fury.io/py/jij-cimod)
+[![PyPI version shields.io](https://img.shields.io/pypi/v/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
+[![PyPI implementation](https://img.shields.io/pypi/implementation/jij-cimod.svg)](https://pypi.python.org/pypi/ji-cimod/)
+[![PyPI format](https://img.shields.io/pypi/format/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
+[![PyPI license](https://img.shields.io/pypi/l/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 [![PyPI download month](https://img.shields.io/pypi/dm/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 
 [![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
