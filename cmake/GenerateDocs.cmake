@@ -69,7 +69,7 @@ if (DOXYGEN_FOUND)
                          ${PROJECT_SOURCE_DIR}/src
                          ALL
                          COMMENT "Generate documentation with Doxygen")
-        install(DIRECTORY ${PROJECT_BINARY_DIR}/docs/html
+        install(DIRECTORY ${PROJECT_BINARY_DIR}/html
                 DESTINATION ${PROJECT_SOURCE_DIR}/docs) 
 else() 
         message(SEND_ERROR "building documentation (-DBUILD_DOCS=ON) is enabled, but doxygen not found")
