@@ -1,4 +1,4 @@
-//    Copyright 2021 Jij Inc.
+//    Copyright 2022 Jij Inc.
 
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,8 +23,7 @@
  * 
  */
 
-#ifndef VARTYPES_HPP__
-#define VARTYPES_HPP__
+#pragma once
 
 #include <iostream>
 
@@ -86,4 +85,4 @@ inline bool check_vartype
     }
 }
 }
-#endif
+

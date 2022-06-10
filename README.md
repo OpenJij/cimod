@@ -1,4 +1,5 @@
 # cimod : C++ header-only library for a binary quadratic model 
+[![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
 
 * [Documents](https://openjij.github.io/cimod/html/index.html)
 
@@ -78,6 +79,30 @@ $ python -m pip install .
 $ pip install jij-cimod 
 ```
 
+## Test 
+
+### Python 
+```sh
+$ python -m venv .venv
+$ pip install pip-tools 
+$ pip-compile ci-requirement.in
+$ pip-sync ci-requirement.txt
+$ source .venv/bin/activate
+$ export CMAKE_BUILD_TYPE=Debug
+$ python setup.py --force-cmake install --build-type Debug -G Ninja
+$ python setup.py --build-type Debug test
+```
+
+### C++ 
+```sh
+$ mkdir build 
+$ cd build
+$ cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
+$ ./tests/cimod_test
+```
+
+Needs: CMake > 3.20, C++17
+
 ## Benchmark
 
 ### Benchmark code
@@ -145,4 +170,17 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
 ![benchmark](https://github.com/OpenJij/cimod/blob/image_store/figure.png)
 
 
+### Licences 
+Copyright 2022 Jij Inc.  
 
+Licensed under the Apache License, Version 2.0 (the "License");  
+you may not use this file except in compliance with the License.  
+You may obtain a copy of the License at  
+
+     http://www.apache.org/licenses/LICENSE-2.0  
+
+Unless required by applicable law or agreed to in writing, software  
+distributed under the License is distributed on an "AS IS" BASIS,  
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
+See the License for the specific language governing permissions and  
+limitations under the License.  

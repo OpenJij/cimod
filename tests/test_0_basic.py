@@ -12,20 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
+import os
+import sys
+import pprint
 
-from functools import singledispatch, update_wrapper
+def test_print_cwd():
+  path = os.getcwd()
+  pprint.pprint(path)
 
-def disabled(func):
-    def wrapper(*args, **kwargs):
-        raise NotImplementedError("The function {} is disabled.".format(func.__name__))
+def test_print_path():
+  pprint.pprint(sys.path)
 
-    return wrapper
-
-def recalc(func):
-    def wrapper(self, *args, **kwargs):
-        self._re_calculate = True
-        self._re_calculate_indices = True
-        return func(self, *args, **kwargs)
-
-    return wrapper
+def test_import():
+    print("import cimod")
+    import cimod
+    pprint.pprint(dir(cimod), compact=True)

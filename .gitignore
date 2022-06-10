@@ -43,7 +43,14 @@ Pipfile.lock
 __pycache__/
 *.py[cod]
 *$py.class
-
+*.pyc
+.pytest_cache/
+jij_cimod.egg-info/
+_skbuild/
+dist/
+.sccache/
+python_version.txt
+*requirement.txt
 # C extensions
 *.so
 

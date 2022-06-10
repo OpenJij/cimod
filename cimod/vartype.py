@@ -1,4 +1,4 @@
-# Copyright 2021 Jij Inc.
+# Copyright 2022 Jij Inc.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import cxxcimod
+from __future__ import annotations
+
+import cimod.cxxcimod
 import dimod
 
 SPIN = dimod.SPIN
@@ -21,11 +23,11 @@ Vartype = dimod.Vartype
 
 def to_cxxcimod(vartype):
     # convert to cxxcimod type
-    if isinstance(vartype, cxxcimod.Vartype):
+    if isinstance(vartype, cimod.cxxcimod.Vartype):
         return vartype
     
     vartype = dimod.as_vartype(vartype)
     if vartype == dimod.SPIN:
-        return cxxcimod.Vartype.SPIN
+        return cimod.cxxcimod.Vartype.SPIN
     if vartype == dimod.BINARY:
-        return cxxcimod.Vartype.BINARY
+        return cimod.cxxcimod.Vartype.BINARY
