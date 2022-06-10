@@ -1,3 +1,4 @@
+message(STATUS "Build Documentation")
 find_package(Doxygen
                  REQUIRED dot
                  OPTIONAL_COMPONENTS mscgen dia)
