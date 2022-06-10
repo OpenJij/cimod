@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['dense_160',['Dense',['../structcimod_1_1Dense.html',1,'cimod']]],
-  ['dict_161',['Dict',['../structcimod_1_1Dict.html',1,'cimod']]]
+  ['dense_160',['Dense',['../namespacecimod.html#structcimod_1_1Dense',1,'cimod']]],
+  ['dict_161',['Dict',['../namespacecimod.html#structcimod_1_1Dict',1,'cimod']]]
 ];
