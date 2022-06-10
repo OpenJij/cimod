@@ -53,8 +53,19 @@ jobs:
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
     - name: Autobuild
+      if: ${{ matrix.language == 'python'}}
       uses: github/codeql-action/autobuild@v2
-
+      
+    - name: Manual Build
+      if: ${{ matrix.language == 'cpp'}}
+      run: |
+         set -eux 
+         sudo apt-get install -y libeigen3-dev lcov 
+         mkdir build
+         cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_COVERAGE=On -S . -B build
+         cd build 
+         make
+         
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
 
