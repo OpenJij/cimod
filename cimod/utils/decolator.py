@@ -14,13 +14,13 @@
 
 from __future__ import annotations
 
-from functools import singledispatch, update_wrapper
 
 def disabled(func):
     def wrapper(*args, **kwargs):
         raise NotImplementedError("The function {} is disabled.".format(func.__name__))
 
     return wrapper
+
 
 def recalc(func):
     def wrapper(self, *args, **kwargs):

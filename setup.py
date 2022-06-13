@@ -13,12 +13,13 @@
 # limitations under the License.
 
 import sys
+
 from packaging.version import LegacyVersion
 
 try:
     from skbuild import setup
-    from skbuild.exceptions import SKBuildError
     from skbuild.cmaker import get_cmake_version
+    from skbuild.exceptions import SKBuildError
 except ImportError:
     print(
         "Please update pip, you need pip 10 or greater,\n"
@@ -27,29 +28,29 @@ except ImportError:
     )
     raise
 
-setup_requires=[ 
-	'numpy',
-	'pybind11', 
+setup_requires = [
+    "numpy",
+    "pybind11",
 ]
 
-if any(arg in sys.argv for arg in ('pytest', 'test')):
-	setup_requires.append('pytest-runner')
+if any(arg in sys.argv for arg in ("pytest", "test")):
+    setup_requires.append("pytest-runner")
 
 # Add CMake as a build requirement if cmake is not installed or is too low a version.
 try:
-    if LegacyVersion(get_cmake_version()) < LegacyVersion('3.20'):
-        setup_requires.append('cmake')
+    if LegacyVersion(get_cmake_version()) < LegacyVersion("3.20"):
+        setup_requires.append("cmake")
 except SKBuildError:
-    setup_requires.append('cmake')  
+    setup_requires.append("cmake")
 
 setup(
-	setup_requires=setup_requires,
-	packages=[  
- 		'cimod', 
- 		'cimod.model', 
- 		'cimod.model.legacy',
- 		'cimod.utils',
-         ],
-	cmake_install_dir="cimod",
-	zip_safe=False,
+    setup_requires=setup_requires,
+    packages=[
+        "cimod",
+        "cimod.model",
+        "cimod.model.legacy",
+        "cimod.utils",
+    ],
+    cmake_install_dir="cimod",
+    zip_safe=False,
 )
