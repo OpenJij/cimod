@@ -8,6 +8,8 @@ updates:
   allow:
       # Allow both direct and indirect updates for all packages
       - dependency-type: "all"
+  open-pull-requests-limit: 10   
+      
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
@@ -15,7 +17,8 @@ updates:
   allow:
       # Allow both direct and indirect updates for all packages
       - dependency-type: "all"
-      
+  open-pull-requests-limit: 10
+  
 - package-ecosystem: pip 
   directory: "/" 
   insecure-external-code-execution: allow
@@ -25,3 +28,4 @@ updates:
   allow:
       # Allow both direct and indirect updates for all packages
       - dependency-type: "all"
+  open-pull-requests-limit: 10
