@@ -79,11 +79,6 @@ jobs:
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
-      - name: Test
-        shell: bash
-        run: |
-          set -eux
-          python setup.py test
       - name: Git
         run: |
           set -eux
