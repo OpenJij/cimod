@@ -29,7 +29,7 @@ body:
   - type: dropdown
     id: Python-Version
     attributes:
-      label: Version
+      label: Python Version
       description: What python version of our software are you running?
       options:
         - 3.7
@@ -47,6 +47,9 @@ body:
         - Linux
         - MacOS
         - Windows
+    validations:
+      required: true
+      
   - type: dropdown
     id: arch
     attributes:
@@ -56,6 +59,9 @@ body:
         - x86_64
         - aarch64
         - x86
+    validations:
+      required: true
+      
   - type: textarea
     id: logs
     attributes:
