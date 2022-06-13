@@ -18,8 +18,8 @@ __path__ = extend_path(__path__, __name__)
 
 from cimod.utils.decolator import disabled
 from cimod.utils.response import get_state_and_energy
- 
-__all__ = [ 
-  "disabled", 
-  "get_state_and_energy",
+
+__all__ = [
+    "disabled",
+    "get_state_and_energy",
 ]

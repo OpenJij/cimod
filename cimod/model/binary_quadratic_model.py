@@ -14,11 +14,12 @@
 
 from __future__ import annotations
 
-import cimod.cxxcimod as cxxcimod
 import cimod
-from cimod.vartype import to_cxxcimod
+import cimod.cxxcimod as cxxcimod
 import dimod
 import numpy as np
+
+from cimod.vartype import to_cxxcimod
 
 
 def get_cxxcimod_class(linear, quadratic, sparse):
@@ -78,7 +79,8 @@ def extract_offset_and_vartype(*args, **kwargs):
     if kwargs == {}:
         if len(args) == 0:
             raise TypeError(
-                f"Offset or vartype is configured incorrectly. Vartype must be set.")
+                f"Offset or vartype is configured incorrectly. Vartype must be set."
+            )
         elif len(args) == 1:
             offset = 0.0
             [vartype] = args
@@ -86,35 +88,39 @@ def extract_offset_and_vartype(*args, **kwargs):
             [offset, vartype] = args
         else:
             raise TypeError(
-                f"Offset or vartype is configured incorrectly. Vartype must be set.")
+                f"Offset or vartype is configured incorrectly. Vartype must be set."
+            )
     else:
-        if 'offset' in kwargs and 'vartype' in kwargs:
-            offset = kwargs['offset']
-            vartype = kwargs['vartype']
-        elif 'offset' in kwargs:
+        if "offset" in kwargs and "vartype" in kwargs:
+            offset = kwargs["offset"]
+            vartype = kwargs["vartype"]
+        elif "offset" in kwargs:
             if len(args) != 1:
                 raise TypeError(
-                    f"Offset or vartype is configured incorrectly. Vartype must be set.")
-            offset = kwargs['offset']
+                    f"Offset or vartype is configured incorrectly. Vartype must be set."
+                )
+            offset = kwargs["offset"]
             [vartype] = args
-        elif 'vartype' in kwargs:
+        elif "vartype" in kwargs:
             if len(args) >= 2:
                 raise TypeError(
-                    f"Offset or vartype is configured incorrectly. Vartype must be set.")
+                    f"Offset or vartype is configured incorrectly. Vartype must be set."
+                )
             elif len(args) == 0:
                 offset = 0.0
             elif len(args) == 1:
                 [offset] = args
-            vartype = kwargs['vartype']
+            vartype = kwargs["vartype"]
         else:
             raise TypeError(
-                f"Offset or vartype is configured incorrectly. Vartype must be set.")
+                f"Offset or vartype is configured incorrectly. Vartype must be set."
+            )
 
     return offset, vartype
 
 
 def make_BinaryQuadraticModel(linear, quadratic, sparse):
-    """BinaryQuadraticModel factory. 
+    """BinaryQuadraticModel factory.
        Generate BinaryQuadraticModel class with the base class specified by the arguments linear and quadratic
     Args:
         linear (dict): linear bias
@@ -128,8 +134,8 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
     # now define class
     class BinaryQuadraticModel(Base):
-        """Represents Binary quadratic model. 
-           Note that the indices are converted to the integers internally. 
+        """Represents Binary quadratic model.
+           Note that the indices are converted to the integers internally.
            The dictionaries between indices and integers are self.ind_to_num (indices -> integers) and self.num_to_ind (integers -> indices).
            Indices are listed in self._indices.
         Attributes:
@@ -143,22 +149,39 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
         def __init__(self, *args, **kwargs):
             # replace vartype with cxxcimod type
-            vartypes = [dimod.SPIN, dimod.BINARY,
-                        cimod.SPIN, cimod.BINARY, 'SPIN', 'BINARY']
-            args = [to_cxxcimod(elem) if type(elem) != np.ndarray and vartypes.count(
-                elem) != 0 else elem for elem in args]
-            kwargs = {k: to_cxxcimod(v) if type(elem) != np.ndarray and vartypes.count(
-                v) != 0 else v for k, v in kwargs.items()}
-            self.model_type = 'cimod.BinaryQuadraticModel'
+            vartypes = [
+                dimod.SPIN,
+                dimod.BINARY,
+                cimod.SPIN,
+                cimod.BINARY,
+                "SPIN",
+                "BINARY",
+            ]
+            args = [
+                to_cxxcimod(elem)
+                if not isinstance(elem, np.ndarray) and vartypes.count(elem) != 0
+                else elem
+                for elem in args
+            ]
+            kwargs = {
+                k: to_cxxcimod(v)
+                if not isinstance(elem, np.ndarray) and vartypes.count(v) != 0
+                else v
+                for k, v in kwargs.items()
+            }
+            self.model_type = "cimod.BinaryQuadraticModel"
             # if linear and quadratic are given and mode is dense
-            if len(args) >= 2 and type(args[0]) == dict and type(args[1]) == dict and sparse is False:
+            if (
+                len(args) >= 2
+                and isinstance(args[0], dict)
+                and isinstance(args[1], dict)
+                and sparse is False
+            ):
                 linear = args[0]
                 quadratic = args[1]
-                offset, vartype = extract_offset_and_vartype(
-                    *args[2:], **kwargs)
+                offset, vartype = extract_offset_and_vartype(*args[2:], **kwargs)
 
-                mat, idx_to_label = self._generate_mat(
-                    linear, quadratic, False)
+                mat, idx_to_label = self._generate_mat(linear, quadratic, False)
 
                 super().__init__(mat, idx_to_label, offset, vartype, fix_format=False)
 
@@ -185,10 +208,10 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             mat_size = len(idx_to_label) + 1
 
             mat = np.zeros(shape=(mat_size, mat_size))
-            mat[mat_size-1, mat_size-1] = 1
+            mat[mat_size - 1, mat_size - 1] = 1
 
             for i, val in linear.items():
-                mat[label_to_idx[i], mat_size-1] += val
+                mat[label_to_idx[i], mat_size - 1] += val
 
             for (i, j), val in quadratic.items():
                 idx_i = label_to_idx[i]
@@ -196,7 +219,7 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 if idx_i != idx_j:
                     mat[min(idx_i, idx_j), max(idx_i, idx_j)] += val
                 else:
-                    mat[idx_i, mat_size-1] += val
+                    mat[idx_i, mat_size - 1] += val
 
             return mat, idx_to_label
 
@@ -240,7 +263,9 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             if inplace is None:
                 super().change_vartype(to_cxxcimod(vartype))
             else:
-                return self.__class__(super().change_vartype(to_cxxcimod(vartype), inplace))
+                return self.__class__(
+                    super().change_vartype(to_cxxcimod(vartype), inplace)
+                )
 
         def __str__(self):
             return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype}, sparse={self.sparse})"
@@ -249,21 +274,30 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             return f"BinaryQuadraticModel({self.linear}, {self.quadratic}, {self.offset}, {self.vartype}, sparse={self.sparse})"
 
         def energy(self, sample):
-            if type(sample) == list:
-                sample = {self.variables[k]: elem for k,
-                          elem in enumerate(sample)}
+            if isinstance(sample, list):
+                sample = {self.variables[k]: elem for k, elem in enumerate(sample)}
 
             return super().energy(sample)
 
         def energies(self, samples_like):
-            if type(samples_like[0]) == list:
-                samples_like = [{self.variables[k]:elem for k, elem in enumerate(
-                    inner_array)} for inner_array in samples_like]
+            if isinstance(samples_like[0], list):
+                samples_like = [
+                    {self.variables[k]: elem for k, elem in enumerate(inner_array)}
+                    for inner_array in samples_like
+                ]
 
             return super().energies(samples_like)
 
         @classmethod
-        def from_numpy_matrix(cls, mat, variables: list, offset=0.0, vartype='BINARY', fix_format=True, **kwargs):
+        def from_numpy_matrix(
+            cls,
+            mat,
+            variables: list,
+            offset=0.0,
+            vartype="BINARY",
+            fix_format=True,
+            **kwargs,
+        ):
             shape = np.shape(mat)
             if not (len(shape) == 2 and shape[0] == shape[1]):
                 raise TypeError("numpy matrix has to be a square matrix")
@@ -272,21 +306,21 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
         @classmethod
         def from_qubo(cls, Q, offset=0.0, **kwargs):
-            #cxxbqm = Base.from_qubo(Q, offset)
+            # cxxbqm = Base.from_qubo(Q, offset)
             # return cls(cxxbqm, **kwargs)
             # separate linear and quadratic
 
             mat, idx_to_label = cls._generate_mat({}, Q, True)
 
-            return cls(mat, idx_to_label, offset, 'BINARY', **kwargs)
+            return cls(mat, idx_to_label, offset, "BINARY", **kwargs)
 
         @classmethod
         def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
-            #cxxbqm = Base.from_ising(linear, quadratic, offset)
+            # cxxbqm = Base.from_ising(linear, quadratic, offset)
             # return cls(cxxbqm, **kwargs)
             mat, idx_to_label = cls._generate_mat(linear, quadratic, False)
 
-            return cls(mat, idx_to_label, offset, 'SPIN', **kwargs)
+            return cls(mat, idx_to_label, offset, "SPIN", **kwargs)
 
         @classmethod
         def from_serializable(cls, obj, **kwargs):
@@ -295,20 +329,21 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
     return BinaryQuadraticModel
 
+
 # for JSON
 
 
 def make_BinaryQuadraticModel_from_JSON(obj):
-    label = obj['variable_labels'][0]
+    label = obj["variable_labels"][0]
     if isinstance(label, list):
         # convert to tuple
         label = tuple(label)
 
     mock_linear = {label: 1.0}
 
-    if obj['version']['bqm_schema'] == '3.0.0-dense':
+    if obj["version"]["bqm_schema"] == "3.0.0-dense":
         sparse = False
-    elif obj['version']['bqm_schema'] == '3.0.0':
+    elif obj["version"]["bqm_schema"] == "3.0.0":
         sparse = True
     else:
         raise TypeError("Invalid bqm_schema")
@@ -317,8 +352,7 @@ def make_BinaryQuadraticModel_from_JSON(obj):
 
 
 def BinaryQuadraticModel(linear, quadratic, *args, **kwargs):
-    Model = make_BinaryQuadraticModel(
-        linear, quadratic, kwargs.pop('sparse', False))
+    Model = make_BinaryQuadraticModel(linear, quadratic, kwargs.pop("sparse", False))
 
     # offset and vartype
     offset, vartype = extract_offset_and_vartype(*args, **kwargs)
@@ -326,25 +360,35 @@ def BinaryQuadraticModel(linear, quadratic, *args, **kwargs):
     return Model(linear, quadratic, offset, vartype)
 
 
-def bqm_from_numpy_matrix(mat, variables: list = None, offset=0.0, vartype='BINARY', **kwargs):
+def bqm_from_numpy_matrix(
+    mat, variables: list = None, offset=0.0, vartype="BINARY", **kwargs
+):
     if variables is None:
         # generate array
         num_variables = mat.shape[0]
         variables = list(range(num_variables))
 
-    return make_BinaryQuadraticModel({variables[0]: 1.0}, {}, kwargs.pop('sparse', False)).from_numpy_matrix(mat, variables, offset, vartype, True, **kwargs)
+    return make_BinaryQuadraticModel(
+        {variables[0]: 1.0}, {}, kwargs.pop("sparse", False)
+    ).from_numpy_matrix(mat, variables, offset, vartype, True, **kwargs)
 
 
 BinaryQuadraticModel.from_numpy_matrix = bqm_from_numpy_matrix
 
-BinaryQuadraticModel.from_qubo = \
+BinaryQuadraticModel.from_qubo = (
     lambda Q, offset=0.0, **kwargs: make_BinaryQuadraticModel(
-        {}, Q, kwargs.pop('sparse', False)).from_qubo(Q, offset, **kwargs)
+        {}, Q, kwargs.pop("sparse", False)
+    ).from_qubo(Q, offset, **kwargs)
+)
 
-BinaryQuadraticModel.from_ising = \
+BinaryQuadraticModel.from_ising = (
     lambda linear, quadratic, offset=0.0, **kwargs: make_BinaryQuadraticModel(
-        linear, quadratic, kwargs.pop('sparse', False)).from_ising(linear, quadratic, offset, **kwargs)
+        linear, quadratic, kwargs.pop("sparse", False)
+    ).from_ising(linear, quadratic, offset, **kwargs)
+)
 
-BinaryQuadraticModel.from_serializable = \
-    lambda obj, **kwargs: make_BinaryQuadraticModel_from_JSON(
-        obj).from_serializable(obj, **kwargs)
+BinaryQuadraticModel.from_serializable = (
+    lambda obj, **kwargs: make_BinaryQuadraticModel_from_JSON(obj).from_serializable(
+        obj, **kwargs
+    )
+)

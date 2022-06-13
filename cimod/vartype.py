@@ -14,18 +14,18 @@
 
 from __future__ import annotations
 
-import cimod.cxxcimod
-import dimod
+import cimod.cxxcimod, dimod
 
 SPIN = dimod.SPIN
 BINARY = dimod.BINARY
 Vartype = dimod.Vartype
 
+
 def to_cxxcimod(vartype):
     # convert to cxxcimod type
     if isinstance(vartype, cimod.cxxcimod.Vartype):
         return vartype
-    
+
     vartype = dimod.as_vartype(vartype)
     if vartype == dimod.SPIN:
         return cimod.cxxcimod.Vartype.SPIN
