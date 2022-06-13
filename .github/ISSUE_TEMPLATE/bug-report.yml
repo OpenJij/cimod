@@ -59,8 +59,7 @@ body:
         - x86_64
         - aarch64
         - x86
-    validations:
-      required: true
+    
       
   - type: textarea
     id: logs
