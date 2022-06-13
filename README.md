@@ -102,7 +102,8 @@ $ pip-sync ci-requirement.txt
 $ source .venv/bin/activate
 $ export CMAKE_BUILD_TYPE=Debug
 $ python setup.py --force-cmake install --build-type Debug -G Ninja
-$ python setup.py --build-type Debug test
+$ python setup.py --build-type Debug test 
+$ python -m coverage html
 ```
 
 ### C++ 
@@ -114,6 +115,28 @@ $ ./tests/cimod_test
 ```
 
 Needs: CMake > 3.20, C++17
+
+- Format 
+``` sh
+$ python -m isort 
+$ python -m black 
+```
+
+- Aggressive Format
+```sh 
+$ python -m isort --force-single-line-imports --verbose ./cimod
+$ python -m autoflake --in-place --recursive --remove-all-unused-imports --ignore-init-module-imports --remove-unused-variables ./cimod
+$ python -m autopep8 --in-place --aggressive --aggressive  --recursive ./cimod
+$ python -m isort ./cimod
+$ python -m black ./cimod
+```
+
+- Lint
+``` sh 
+$ python -m flake8
+$ python -m mypy
+$ python -m pyright
+```
 
 ## Benchmark
 
