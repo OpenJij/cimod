@@ -62,7 +62,6 @@ flags:
     carryforward: true
 
 ignore:
-  - "external/nlohmann_json/nlohmann/json.hpp"
   - "test"
  
 github_checks:
