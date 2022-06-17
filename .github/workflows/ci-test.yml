@@ -170,7 +170,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
         #os: [windows-latest]
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        python-version: ['3.7', '3.8', '3.9', '3.10.4']
         #python-version: ['3.10']
         include:
         - os: ubuntu-latest
@@ -281,7 +281,6 @@ jobs:
       shell: bash
       run: |
         set -eux
-        export CMAKE_OSX_DEPLOYMENT_TARGET='10.16'
         export CMAKE_C_COMPILER_LAUNCHER=sccache
         export CMAKE_CXX_COMPILER_LAUNCHER=sccache
         export CMAKE_BUILD_TYPE=Debug
