@@ -1,3 +1,5 @@
+-c requirement.txt
+
 pytest-runner
 setuptools_scm[toml]
 cmake 
