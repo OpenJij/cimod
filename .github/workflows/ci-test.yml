@@ -281,7 +281,7 @@ jobs:
       shell: bash
       run: |
         set -eux
-        ecport CMAKE_OSX_DEPLOYMENT_TARGET='10.16'
+        export CMAKE_OSX_DEPLOYMENT_TARGET='10.16'
         export CMAKE_C_COMPILER_LAUNCHER=sccache
         export CMAKE_CXX_COMPILER_LAUNCHER=sccache
         export CMAKE_BUILD_TYPE=Debug
