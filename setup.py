@@ -45,6 +45,11 @@ except SKBuildError:
 
 setup(
     setup_requires=setup_requires,
+    install_requires=[ 
+        "numpy >= 1.21.2",
+        "dimod >= 0.9.1, <0.12.0",
+        "scipy",      
+    ],
     packages=[
         "cimod",
         "cimod.model",
