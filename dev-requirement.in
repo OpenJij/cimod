@@ -5,9 +5,7 @@ ninja; sys_platform != 'win32'
 pybind11
 scikit-build
 setuptools
-numpy >= 1.21.2
-dimod >= 0.9.1, <0.12.0
-scipy
+
 pytest
 pytest-mock
 pytest-cov
