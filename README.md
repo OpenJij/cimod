@@ -97,8 +97,9 @@ $ pip install jij-cimod
 ```sh
 $ python -m venv .venv
 $ pip install pip-tools 
-$ pip-compile ci-requirement.in
-$ pip-sync ci-requirement.txt
+$ pip-compile
+$ pip-compile dev-requirement.in
+$ pip-sync requirement.txt dev-requirement.txt
 $ source .venv/bin/activate
 $ export CMAKE_BUILD_TYPE=Debug
 $ python setup.py --force-cmake install --build-type Debug -G Ninja
