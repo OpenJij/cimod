@@ -40,6 +40,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('dev-requirement.txt') }}
             ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}
+            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}
       - name: Update
         shell: bash
         run: |
