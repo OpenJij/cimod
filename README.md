@@ -77,6 +77,16 @@ print(bqm.quadratic)
 
 ```
 
+## For Contributor 
+Use `pre-commit` for auto chech before git commit.
+`.pre-commit-config.yaml`
+``` 
+# pipx install pre-commit 
+# or 
+# pip install pre-commit
+pre-commit install
+```
+
 ## Install 
 
 ### via this directory
