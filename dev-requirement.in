@@ -1,4 +1,4 @@
--c requirement.txt
+-c requirements.txt
 
 pytest-runner
 setuptools_scm[toml]
