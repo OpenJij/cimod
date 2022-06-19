@@ -41,7 +41,7 @@ jobs:
           - os: ubuntu-latest
             arch: x86_64
             CIBW_PLATFORM: linux
-            CIBW_ENVIRONMENT: "-CFLAGS='-march=haswell' -CXXFLAGS='-march=haswell' -FFLAGS='-march=haswell'"
+            CIBW_ENVIRONMENT: "CFLAGS='-march=haswell' CXXFLAGS='-march=haswell' FFLAGS='-march=haswell'"
           - os: ubuntu-latest
             arch: aarch64
             CIBW_PLATFORM: linux 
@@ -50,7 +50,7 @@ jobs:
           - os: macos-latest
             arch: x86_64
             CIBW_PLATFORM: macos  
-            CIBW_ENVIRONMENT: "-CFLAGS='-march=haswell' -CXXFLAGS='-march=haswell'"
+            CIBW_ENVIRONMENT: "CFLAGS='-march=haswell' CXXFLAGS='-march=haswell'"
           - os: macos-latest
             arch: arm64
             CIBW_PLATFORM: macos
@@ -59,7 +59,7 @@ jobs:
           - os: windows-latest
             arch: AMD64
             CIBW_PLATFORM: windows 
-            CIBW_ENVIRONMENT: "-CFLAGS='-march=haswell' -CXXFLAGS='-march=haswell'"
+            CIBW_ENVIRONMENT: "CFLAGS='-march=haswell' CXXFLAGS='-march=haswell' CMAKE_TOOLCHAIN_FILE='C:/vcpkg/scripts/buildsystems/vcpkg.cmake'"
             
     steps:
       - uses: actions/checkout@v3       
