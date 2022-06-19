@@ -55,7 +55,6 @@ setup(
         "cimod.model",
         "cimod.model.legacy",
         "cimod.utils",
-        "cimod.include.pybind11_json",
     ],
     cmake_install_dir="cimod",
     include_package_data=True,
