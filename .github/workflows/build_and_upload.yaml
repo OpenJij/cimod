@@ -41,20 +41,25 @@ jobs:
           - os: ubuntu-latest
             arch: x86_64
             CIBW_PLATFORM: linux
+            CIBW_ENVIRONMENT: "-CFLAGS='-march=haswell' -CXXFLAGS='-march=haswell' -FFLAGS='-march=haswell'"
           - os: ubuntu-latest
             arch: aarch64
             CIBW_PLATFORM: linux 
+            CIBW_ENVIRONMENT: ""
             
           - os: macos-latest
             arch: x86_64
             CIBW_PLATFORM: macos  
+            CIBW_ENVIRONMENT: "-CFLAGS='-march=haswell' -CXXFLAGS='-march=haswell'"
           - os: macos-latest
             arch: arm64
             CIBW_PLATFORM: macos
+            CIBW_ENVIRONMENT: ""
             
           - os: windows-latest
             arch: AMD64
             CIBW_PLATFORM: windows 
+            CIBW_ENVIRONMENT: "-CFLAGS='-march=haswell' -CXXFLAGS='-march=haswell'"
             
     steps:
       - uses: actions/checkout@v3       
@@ -93,6 +98,7 @@ jobs:
       - name: Build wheels on ${{ matrix.CIBW_PLATFORM }} ${{matrix.arch}}
         uses: pypa/cibuildwheel@2.6.1
         env:
+          CIBW_ENVIRONMENT: ${{ matrix.CIBW_ENVIRONMENT }}
           CIBW_PLATFORM:  ${{ matrix.CIBW_PLATFORM }}
           CIBW_BUILD: ${{matrix.CIBW_BUILD}}
           CIBW_ARCHS: ${{matrix.arch}}
