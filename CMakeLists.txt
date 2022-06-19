@@ -18,6 +18,17 @@ project(cimod
     HOMEPAGE_URL "https://www.openjij.org"
 )
 
+set(MAIN_PROJECT OFF)
+if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    set(MAIN_PROJECT ON)
+endif()
+
+option(BUILD_TESTING "Enable CTest support." OFF)
+option(BUILD_DOCS "Enable Doxygen support." OFF)
+
+list(APPEND CMAKE_MODULE_PATH external)
+list(APPEND CMAKE_MODULE_PATH cmake)
+
 include(CheckLanguage)
 
 check_language(C)
@@ -48,13 +59,6 @@ message(STATUS "CMAKE_REQUIRE_FIND_PACKAGE_pybind11 = ${CMAKE_REQUIRE_FIND_PACKA
 message(STATUS "CMAKE_REQUIRE_FIND_PACKAGE_pybind11_json = ${CMAKE_REQUIRE_FIND_PACKAGE_pybind11_json}")
 message(STATUS "CMAKE_REQUIRE_FIND_PACKAGE_GTest = ${CMAKE_REQUIRE_FIND_PACKAGE_GTest}")
 message(STATUS "Started CMake for ${PROJECT_NAME} \n")
-
-
-option(BUILD_TESTING "Enable CTest support." OFF)
-option(BUILD_DOCS "Enable Doxygen support." OFF)
-
-list(APPEND CMAKE_MODULE_PATH external)
-list(APPEND CMAKE_MODULE_PATH cmake)
 
 if (APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
@@ -131,7 +135,7 @@ endif()
 add_subdirectory(src)
 
 # Build Python Extension 
-if(SKBUILD)
+if(SKBUILD AND MAIN_PROJECT)
   message(STATUS "Build Python Extension.")
   option(WITH_THREAD "Compile in rudimentary thread support" ON)
   find_package(Python COMPONENTS Interpreter Development)
@@ -155,7 +159,7 @@ if(SKBUILD)
   endif()
   
   add_subdirectory(cimod)
-elseif((${CMAKE_BUILD_TYPE} MATCHES Debug) OR BUILD_TESTING) 
+elseif(MAIN_PROJECT AND ((${CMAKE_BUILD_TYPE} MATCHES Debug) OR BUILD_TESTING))
   include(CTest)
   if(ENABLE_COVERAGE AND (NOT MSVC))
     message(STATUS "Use Codecov")
