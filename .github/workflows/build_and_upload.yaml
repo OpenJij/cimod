@@ -5,6 +5,8 @@ on:
   release:
     types:
       - released
+      - edited 
+      - published
 
 env:
   Python_Version: '3.10'
