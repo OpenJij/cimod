@@ -31,13 +31,15 @@ jobs:
       - name: Pip-Tools 
         run: |
           python -m pip install pip-tools 
+          pip-compile
           pip-compile dev-requirement.in
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('dev-requirement.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('dev-requirement.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('dev-requirement.txt') }}
+            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('dev-requirement.txt') }}
+            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}
             ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}
       - name: Update
         shell: bash
@@ -48,7 +50,7 @@ jobs:
         shell: bash
         run: |
           set -eux
-          pip-sync dev-requirement.txt
+          pip-sync requirements.txt dev-requirement.txt
           
       - uses: jordemort/action-pyright@v1
         continue-on-error: true

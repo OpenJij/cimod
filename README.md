@@ -77,6 +77,16 @@ print(bqm.quadratic)
 
 ```
 
+## For Contributor 
+Use `pre-commit` for auto chech before git commit.
+`.pre-commit-config.yaml`
+``` 
+# pipx install pre-commit 
+# or 
+# pip install pre-commit
+pre-commit install
+```
+
 ## Install 
 
 ### via this directory
@@ -97,8 +107,9 @@ $ pip install jij-cimod
 ```sh
 $ python -m venv .venv
 $ pip install pip-tools 
-$ pip-compile ci-requirement.in
-$ pip-sync ci-requirement.txt
+$ pip-compile
+$ pip-compile dev-requirement.in
+$ pip-sync requirements.txt dev-requirement.txt
 $ source .venv/bin/activate
 $ export CMAKE_BUILD_TYPE=Debug
 $ python setup.py --force-cmake install --build-type Debug -G Ninja
