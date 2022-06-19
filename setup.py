@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import sys
-
+from setuptools import find_namespace_packages
 from packaging.version import LegacyVersion
 
 try:
@@ -50,12 +50,7 @@ setup(
         "dimod >= 0.9.1, <0.12.0",
         "scipy",      
     ],
-    packages=[
-        "cimod",
-        "cimod.model",
-        "cimod.model.legacy",
-        "cimod.utils",
-    ],
+    packages=find_namespace_packages(where="cimod"),
     cmake_install_dir="cimod",
     include_package_data=True,
     zip_safe=False,
