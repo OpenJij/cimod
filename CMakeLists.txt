@@ -175,10 +175,10 @@ elseif(MAIN_PROJECT AND ((${CMAKE_BUILD_TYPE} MATCHES Debug) OR BUILD_TESTING))
   add_subdirectory(tests)
 endif()
 
-if(ENABLE_COVERAGE AND (NOT MSVC))
+if(MAIN_PROJECT AND ENABLE_COVERAGE AND (NOT MSVC))
   coverage_evaluate()
 endif()
 
-if (BUILD_DOCS)
+if (MAIN_PROJECT AND BUILD_DOCS)
     include(cmake/GenerateDocs.cmake)
-endif (BUILD_DOCS)
+endif()
