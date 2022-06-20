@@ -173,10 +173,10 @@ elseif(MAIN_PROJECT AND ((${CMAKE_BUILD_TYPE} MATCHES Debug) OR BUILD_TESTING))
   enable_testing()
   
   add_subdirectory(tests)
-endif()
-
-if(MAIN_PROJECT AND ENABLE_COVERAGE AND (NOT MSVC))
-  coverage_evaluate()
+  
+  if(ENABLE_COVERAGE AND (NOT MSVC))
+    coverage_evaluate()
+  endif()
 endif()
 
 if (MAIN_PROJECT AND BUILD_DOCS)
