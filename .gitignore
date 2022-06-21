@@ -51,6 +51,7 @@ dist/
 .sccache/
 python_version.txt
 *requirement.txt
+*requirements.txt
 # C extensions
 *.so
 
