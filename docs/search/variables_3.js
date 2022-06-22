@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['poly_5fkey_5finv_5f_287',['poly_key_inv_',['../classcimod_1_1BinaryPolynomialModel.html#a16b3fc3c67e3afd58548442d04c52492',1,'cimod::BinaryPolynomialModel']]],
-  ['poly_5fkey_5flist_5f_288',['poly_key_list_',['../classcimod_1_1BinaryPolynomialModel.html#a9fb6394ecc18f5b051b5d5e99433eee1',1,'cimod::BinaryPolynomialModel']]],
-  ['poly_5fvalue_5flist_5f_289',['poly_value_list_',['../classcimod_1_1BinaryPolynomialModel.html#a901eb248cf0e4b70bad8535411c7bfc9',1,'cimod::BinaryPolynomialModel']]]
+  ['index_5ftype_403',['index_type',['../namespacecimod_1_1model_1_1binary__polynomial__model.html#aae72d9db9c686d6c009a64e6a89d40ed',1,'cimod::model::binary_polynomial_model']]]
 ];

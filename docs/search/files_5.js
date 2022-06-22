@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vartypes_2ehpp_175',['vartypes.hpp',['../vartypes_8hpp.html',1,'']]]
+  ['binary_5fquadratic_5fmodel_2epy_247',['binary_quadratic_model.py',['../legacy_2binary__quadratic__model_8py.html',1,'']]]
 ];

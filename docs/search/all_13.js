@@ -1,12 +1,13 @@
 var searchData=
 [
-  ['to_5fising_139',['to_ising',['../classcimod_1_1BinaryQuadraticModel.html#a062ced2e8a9a3546a119c18c1be01145',1,'cimod::BinaryQuadraticModel::to_ising()'],['../classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a4de41718feec93fe9047db7913b828cf',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::to_ising()']]],
-  ['to_5fqubo_140',['to_qubo',['../classcimod_1_1BinaryQuadraticModel.html#a4035b19133675e4d3181573f1f0aea9e',1,'cimod::BinaryQuadraticModel::to_qubo()'],['../classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a5e8a459dcc20e73bf57993ab14244a09',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::to_qubo()']]],
-  ['to_5fserializable_141',['to_serializable',['../classcimod_1_1BinaryQuadraticModel.html#a72af6018a48545a76876b46695908fa3',1,'cimod::BinaryQuadraticModel::to_serializable(dispatch_t&lt; T, Dense &gt;=nullptr) const'],['../classcimod_1_1BinaryQuadraticModel.html#acb3e2981f610c9976bf9ebdf823860a3',1,'cimod::BinaryQuadraticModel::to_serializable(dispatch_t&lt; T, Sparse &gt;=nullptr) const'],['../classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a9e6be8ab03eb4edb3b9bce086dbbe83b',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::to_serializable()']]],
-  ['tobinary_142',['ToBinary',['../classcimod_1_1BinaryPolynomialModel.html#a8d319a0a89e250e3e450bd7b054f376f',1,'cimod::BinaryPolynomialModel']]],
-  ['tocimodvartype_143',['ToCimodVartype',['../namespacecimod.html#ad7a22a4be6c2887468f90522346f65b9',1,'cimod']]],
-  ['tohising_144',['ToHising',['../classcimod_1_1BinaryPolynomialModel.html#abf58031daeccbafa5b606f4e6aeb7d1f',1,'cimod::BinaryPolynomialModel']]],
-  ['tohubo_145',['ToHubo',['../classcimod_1_1BinaryPolynomialModel.html#ad7782bcb97d84b19845d33d879be8b97',1,'cimod::BinaryPolynomialModel']]],
-  ['toserializable_146',['ToSerializable',['../classcimod_1_1BinaryPolynomialModel.html#a95fe13ce6e2dd9c0cfedb53aa862c82b',1,'cimod::BinaryPolynomialModel']]],
-  ['tospin_147',['ToSpin',['../classcimod_1_1BinaryPolynomialModel.html#aa3c41f812d024b2d70182611e28a5e6b',1,'cimod::BinaryPolynomialModel']]]
+  ['sample_185',['Sample',['../namespacecimod.html#a300c5a25892e0259f843d34e20fd4801',1,'cimod']]],
+  ['scale_186',['Scale',['../classcimod_1_1BinaryPolynomialModel.html#a679563d1c149d34da17d15bd42877184',1,'cimod::BinaryPolynomialModel::Scale()'],['../classcimod_1_1BinaryQuadraticModel.html#ac6c1d336911f6a81389f35a9afafbbc4',1,'cimod::BinaryQuadraticModel::scale()'],['../classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#abefe08d37258b5dd02941c1b5569b89c',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::scale()']]],
+  ['setkeyandvalue_187',['SetKeyAndValue',['../classcimod_1_1BinaryPolynomialModel.html#a7427fb3d2bc707a31b7de468e2438ca9',1,'cimod::BinaryPolynomialModel']]],
+  ['sorted_5fvariables_5f_188',['sorted_variables_',['../classcimod_1_1BinaryPolynomialModel.html#a83904c3fbbf453eb595910d2f157698b',1,'cimod::BinaryPolynomialModel']]],
+  ['sparse_189',['Sparse',['../structcimod_1_1Sparse.html',1,'cimod']]],
+  ['sparsematrix_190',['SparseMatrix',['../classcimod_1_1BinaryQuadraticModel.html#aa2c90602f22aff133c0e27bdd20e2525',1,'cimod::BinaryQuadraticModel::SparseMatrix()'],['../classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#adde248d7699e80eca4c33ae8a2bd0ac1',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;::SparseMatrix()']]],
+  ['spin_191',['SPIN',['../namespacecimod_1_1vartype.html#a5ba44d86429fd1cd61522517981600f5',1,'cimod.vartype.SPIN()'],['../namespacecimod.html#af804dc431446f6af153364fec5c5aaf8a01518642fd172918ac4e6fa78bbb3164',1,'cimod::SPIN()']]],
+  ['spin_5fto_5fbinary_192',['spin_to_binary',['../classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a48d260effa3dfb73690f96ce8ca400fa',1,'cimod::BinaryQuadraticModel&lt; IndexType, FloatType, Dict &gt;']]],
+  ['spiter_193',['SpIter',['../classcimod_1_1BinaryQuadraticModel.html#ad50d8e61df5f0e319c8171aa78310599',1,'cimod::BinaryQuadraticModel']]],
+  ['std_194',['std',['../namespacestd.html',1,'']]]
 ];
