@@ -16,8 +16,6 @@ from pkgutil import extend_path
 
 __path__ = extend_path(__path__, __name__)
 
-import cimod.cxxcimod, cimod.model, cimod.model.legacy, cimod.utils
-
 from cimod.model.binary_polynomial_model import (
     BinaryPolynomialModel,
     make_BinaryPolynomialModel,
