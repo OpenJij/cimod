@@ -48,7 +48,7 @@ setup(
     install_requires=[ 
         "numpy >= 1.21.6, < 1.23.0",
         "dimod >= 0.11.2, < 0.12.0",
-        "scipy >= 1.8.1, < 1.9.0",      
+        "scipy >= 1.7.3, < 1.9.0",      
     ],
     packages=[ 
         "cimod", 
