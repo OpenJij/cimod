@@ -15,7 +15,6 @@
 import sys
 
 from packaging.version import LegacyVersion
-from setuptools import find_namespace_packages
 
 try:
     from skbuild import setup
@@ -51,7 +50,12 @@ setup(
         "dimod >= 0.11.2, < 0.12.0",
         "scipy >= 1.8.1, < 1.9.0",      
     ],
-    packages=find_namespace_packages(where="cimod"),
+    packages=[ 
+        "cimod", 
+        "cimod.utils", 
+        "cimod.model", 
+        "cimod.model.legacy",
+    ],
     cmake_install_dir="cimod",
     include_package_data=True,
     zip_safe=False,
