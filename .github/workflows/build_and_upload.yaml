@@ -52,6 +52,10 @@ jobs:
             CIBW_PLATFORM: macos  
             CIBW_ENVIRONMENT: "MACOSX_DEPLOYMENT_TARGET='11.0'"
           - os: macos-latest
+            arch: x86_64
+            CIBW_PLATFORM: macos  
+            CIBW_ENVIRONMENT: "MACOSX_DEPLOYMENT_TARGET='10.16'"
+          - os: macos-latest
             arch: arm64
             CIBW_PLATFORM: macos
             CIBW_ENVIRONMENT: ""
