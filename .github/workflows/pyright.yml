@@ -1,15 +1,6 @@
 name: Pyright
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    types: 
-      - opened
-      - reopened
-      - synchronize
   workflow_dispatch:
   workflow_call:
   
