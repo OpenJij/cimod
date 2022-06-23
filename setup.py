@@ -29,7 +29,7 @@ except ImportError:
     raise
 
 setup_requires = [
-    "oldest-supported-numpy",
+    "numpy < 1.23.0",
     "pybind11 >= 2.9.2, < 2.10.0",
 ]
 
