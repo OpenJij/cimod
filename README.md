@@ -92,13 +92,16 @@ pre-commit install
 ### via this directory
 
 ```sh
-$ python -m pip install .
+$ python -m pip install -vvv .
 ```
 
 ### via pip
 
 ```sh
-$ pip install jij-cimod 
+# Binary
+$ pip install jij-cimod
+# From Source 
+$ pip install --no-binary=jij-cimod jij-cimod 
 ```
 
 ## Test 
@@ -120,12 +123,15 @@ $ python -m coverage html
 ### C++ 
 ```sh
 $ mkdir build 
-$ cd build
 $ cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
+$ cmake --build build --parallel
+$ cd build
 $ ./tests/cimod_test
+# Alternatively Use CTest 
+$ ctest --extra-verbose --parallel --schedule-random
 ```
 
-Needs: CMake > 3.20, C++17
+Needs: CMake > 3.22, C++17
 
 - Format 
 ``` sh
