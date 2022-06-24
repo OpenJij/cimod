@@ -201,9 +201,12 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
             for i, j in quadratic.keys():
                 if (i == j) and (include_quaddiag == False):
-                    print("quadratic : {0}".pprint.pformat(quadratic))
-                    print("include_quaddiag : {0}".pprint.pformat(include_quaddiag))
-                    print("linear : {0}".pprint.pformat(linear))
+                    pp_quadratic = pprint.pformat(quadratic)
+                    pp_include_quaddiag = pprint.pformat(include_quaddiag)
+                    pp_linear = pprint.pformat(linear)
+                    print("quadratic : {0}".format(pp_quadratic))
+                    print("include_quaddiag : {0}".format(pp_include_quaddiag))
+                    print("linear : {0}".format(pp_linear))
                     raise RuntimeError("No self-loop allowed")
 
                 labels.add(i)
