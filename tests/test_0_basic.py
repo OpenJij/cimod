@@ -30,7 +30,9 @@ def test_import():
     pprint.pprint(dir(cimod), compact=True)
    
 def test_no_self_loop_allowed():
+  import traceback
   import cimod
   with pytest.raises(RuntimeError) as exception:
      cimod.BinaryQuadraticModel({}, {(2,2):5}, "SPIN")
+     pprint(traceback.format_exc(), compact=True)
   pprint.pprint(exception, compact=True)
