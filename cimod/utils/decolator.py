@@ -14,6 +14,7 @@
 
 from __future__ import annotations
 
+__all__ = []
 
 def disabled(func):
     def wrapper(*args, **kwargs):
