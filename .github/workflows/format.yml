@@ -24,9 +24,9 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}-${{ hashFiles('format-requirement.txt') }}
+          key: ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}-${{ hashFiles('format-requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}-${{ hashFiles('format-requirement.txt') }}
+            ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}-${{ hashFiles('format-requirements.txt') }}
             ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}-${{ hashFiles('python_version.txt') }}
             ${{ runner.os }}-${{ hashFiles('setup.cfg') }}-pip-${{ github.base_ref }}
       - name: Update
@@ -38,7 +38,7 @@ jobs:
         shell: bash
         run: |
           set -eux
-          pip-sync format-requirement.txt
+          pip-sync format-requirements.txt
       - name: Git Config
         run: |
           set -eux
