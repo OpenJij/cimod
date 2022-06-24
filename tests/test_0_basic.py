@@ -15,6 +15,7 @@
 import os
 import sys
 import pprint
+import pytest
 
 def test_print_cwd():
   path = os.getcwd()
@@ -27,3 +28,9 @@ def test_import():
     print("import cimod")
     import cimod
     pprint.pprint(dir(cimod), compact=True)
+   
+def test_no_self_loop_allowed()
+  import cimod
+  with pytest.raises(RuntimeError) as exception
+     cimod.BinaryQuadraticModel({}, {(2,2):5}, "SPIN")
+  pprint.pprint(exception, compact=True)
