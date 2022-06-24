@@ -45,16 +45,16 @@ except SKBuildError:
 
 setup(
     setup_requires=setup_requires,
-    install_requires=[ 
+    install_requires=[
         "numpy < 1.23.0",
         'dimod <= 0.10.17; python_version < "3.10"',
         'dimod < 0.12.0; python_version >= "3.10"',
-        "scipy >= 1.7.3, < 1.9.0",      
+        "scipy >= 1.7.3, < 1.9.0",
     ],
-    packages=[ 
-        "cimod", 
-        "cimod.utils", 
-        "cimod.model", 
+    packages=[
+        "cimod",
+        "cimod.utils",
+        "cimod.model",
         "cimod.model.legacy",
     ],
     cmake_install_dir="cimod",

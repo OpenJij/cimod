@@ -18,85 +18,79 @@
  * @brief Hash function for std::pair
  * @version 1.0.0
  * @date 2020-03-13
- * 
+ *
  * @copyright Copyright (c) Jij Inc. 2020
- * 
+ *
  */
 
 #pragma once
 
-#include <utility>
 #include <cstdint>
 #include <iostream>
+#include <utility>
 #include <vector>
 
 template<typename T>
-    inline void hash_combine(std::size_t& seed, const T& val)
-    {
-        std::hash<T> hasher;
-        seed ^= hasher(val) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-    }
-    
-    template<class... TupleArgs>
-    struct std::hash<std::tuple<TupleArgs...>>
-    {
-    private:
-        //  this is a termination condition
-        //  N == sizeof...(TupleTypes)
-        //
-        template<size_t Idx, typename... TupleTypes>
-        inline typename std::enable_if<Idx == sizeof...(TupleTypes), void>::type
-        hash_combine_tup(size_t& /*seed*/, const std::tuple<TupleTypes...>& /*tup*/) const
-        {
-        }
+inline void hash_combine( std::size_t& seed, const T& val ) {
+  std::hash<T> hasher;
+  seed ^= hasher( val ) + 0x9e3779b9 + ( seed << 6 ) + ( seed >> 2 );
+}
 
-        //  this is the computation function
-        //  continues till condition N < sizeof...(TupleTypes) holds
-        //
-        template<size_t Idx, typename... TupleTypes>
-        inline typename std::enable_if <Idx < sizeof...(TupleTypes), void>::type
-        hash_combine_tup(size_t& seed, const std::tuple<TupleTypes...>& tup) const
-        {
-            hash_combine(seed, std::get<Idx>(tup));
+template<class... TupleArgs>
+struct std::hash<std::tuple<TupleArgs...>> {
+private:
+  //  this is a termination condition
+  //  N == sizeof...(TupleTypes)
+  //
+  template<size_t Idx, typename... TupleTypes>
+  inline typename std::enable_if<Idx == sizeof...( TupleTypes ), void>::type
+  hash_combine_tup( size_t& /*seed*/, const std::tuple<TupleTypes...>& /*tup*/ ) const {
+  }
 
-            //  on to next element
-            hash_combine_tup<Idx + 1>(seed, tup);
-        }
+  //  this is the computation function
+  //  continues till condition N < sizeof...(TupleTypes) holds
+  //
+  template<size_t Idx, typename... TupleTypes>
+      inline typename std::enable_if < Idx<sizeof...( TupleTypes ), void>::type
+      hash_combine_tup( size_t& seed, const std::tuple<TupleTypes...>& tup ) const {
+    hash_combine( seed, std::get<Idx>( tup ) );
 
-    public:
-        size_t operator()(const std::tuple<TupleArgs...>& tupleValue) const
-        {
-            size_t seed = 0;
-            //  begin with the first iteration
-            hash_combine_tup<0>(seed, tupleValue);
-            return seed;
-        }
-    };
+    //  on to next element
+    hash_combine_tup<Idx + 1>( seed, tup );
+  }
 
-namespace cimod
-{
-/**
- * @brief Hash function for std::unordered_map
- * 
- */
-struct pair_hash {
-    template <class T1, class T2>
-   std::size_t operator() (const std::pair<T1, T2>& p) const {
-        std::size_t lhs = std::hash<T1>()(p.first), rhs = std::hash<T2>()(p.second);
-        return lhs^(rhs+0x9e3779b9+(lhs<<6)+(lhs>>2));
-    }
+public:
+  size_t operator()( const std::tuple<TupleArgs...>& tupleValue ) const {
+    size_t seed = 0;
+    //  begin with the first iteration
+    hash_combine_tup<0>( seed, tupleValue );
+    return seed;
+  }
 };
 
-struct vector_hash {
-  
-   template <class T>
-   std::size_t operator() (const std::vector<T> &V) const {
+namespace cimod {
+  /**
+   * @brief Hash function for std::unordered_map
+   *
+   */
+  struct pair_hash {
+    template<class T1, class T2>
+    std::size_t operator()( const std::pair<T1, T2>& p ) const {
+      std::size_t lhs = std::hash<T1>()( p.first ), rhs = std::hash<T2>()( p.second );
+      return lhs ^ ( rhs + 0x9e3779b9 + ( lhs << 6 ) + ( lhs >> 2 ) );
+    }
+  };
+
+  struct vector_hash {
+
+    template<class T>
+    std::size_t operator()( const std::vector<T>& V ) const {
       std::size_t hash = V.size();
-      for (auto &i : V) {
-         hash ^= std::hash<T>()(i) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+      for ( auto& i : V ) {
+        hash ^= std::hash<T>()( i ) + 0x9e3779b9 + ( hash << 6 ) + ( hash >> 2 );
       }
       return hash;
-   }
-};
+    }
+  };
 
-}
+} // namespace cimod

@@ -21,6 +21,7 @@ from cimod.vartype import to_cxxcimod
 
 __all__ = []
 
+
 class Polynomial:
     def __init__(self, bpm):
         self.__bpm = bpm
