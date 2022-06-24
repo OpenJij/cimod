@@ -22,6 +22,7 @@ import numpy as np
 from cimod.utils.decolator import recalc
 from cimod.vartype import to_cxxcimod
 
+__all__ = []
 
 def make_BinaryQuadraticModel(linear, quadratic):
     """BinaryQuadraticModel factory.
@@ -357,7 +358,7 @@ def make_BinaryQuadraticModel(linear, quadratic):
             offset = obj["offset"]
 
             # set vartype
-            vartype = cimod.SPIN if obj["variable_type"] == "SPIN" else cimod.BINARY
+            vartype = dimod.SPIN if obj["variable_type"] == "SPIN" else dimod.BINARY
 
             return cls(linear, quadratic, offset, vartype)
 
