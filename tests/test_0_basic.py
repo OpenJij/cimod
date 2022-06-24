@@ -32,8 +32,34 @@ def test_import():
 def test_no_self_loop_allowed():
   import traceback
   import cimod
+  import dimod
   try:
+    print('BinaryQuadraticModel({}, {(2,2):5}, "SPIN")')
     cimod.BinaryQuadraticModel({}, {(2,2):5}, "SPIN")
+  except RuntimeError as runtimeerror:
+    pprint.pprint(runtimeerror)
+    pprint.pprint(traceback.format_exc())
+  else:
+    print('finish (no error)')
+  try:
+    print('BinaryQuadraticModel({}, {(2,2):5}, cimod.SPIN)')
+    cimod.BinaryQuadraticModel({}, {(2,2):5}, cimod.SPIN)
+  except RuntimeError as runtimeerror:
+    pprint.pprint(runtimeerror)
+    pprint.pprint(traceback.format_exc())
+  else:
+    print('finish (no error)')
+  try:
+    print('BinaryQuadraticModel({}, {(2,2):5}, dimod.SPIN)')
+    cimod.BinaryQuadraticModel({}, {(2,2):5}, dimod.SPIN)
+  except RuntimeError as runtimeerror:
+    pprint.pprint(runtimeerror)
+    pprint.pprint(traceback.format_exc())
+  else:
+    print('finish (no error)')
+  try:
+    print('BinaryQuadraticModel({}, {(2,2):5}, cimod.cxxcimod.Vartype.SPIN)')
+    cimod.BinaryQuadraticModel({}, {(2,2):5}, cimod.cxxcimod.Vartype.SPIN)
   except RuntimeError as runtimeerror:
     pprint.pprint(runtimeerror)
     pprint.pprint(traceback.format_exc())
