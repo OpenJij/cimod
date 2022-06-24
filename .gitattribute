@@ -20,6 +20,7 @@
 python_version.txt linguist-vendored
 
 docs/* linguist-documentation
+public/* linguist-vendored
 
 .gitignore export-ignore
 
