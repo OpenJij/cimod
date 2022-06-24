@@ -16,11 +16,15 @@ from __future__ import annotations
 
 import cimod.cxxcimod, dimod
 
+from dimod import SPIN as _SPIN
+from dimod import BINARY as _BINARY
+from dimod import Vartype as _Vartype
+
 __all__ = []
 
-SPIN = dimod.SPIN
-BINARY = dimod.BINARY
-Vartype = dimod.Vartype
+SPIN = _SPIN
+BINARY = _BINARY
+Vartype = _Vartype
 
 
 def to_cxxcimod(vartype):
@@ -29,7 +33,7 @@ def to_cxxcimod(vartype):
         return vartype
 
     vartype = dimod.as_vartype(vartype)
-    if vartype == dimod.SPIN:
+    if vartype == SPIN:
         return cimod.cxxcimod.Vartype.SPIN
-    if vartype == dimod.BINARY:
+    if vartype == BINARY:
         return cimod.cxxcimod.Vartype.BINARY
