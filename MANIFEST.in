@@ -25,6 +25,8 @@ global-exclude codecov.yml
 global-exclude requirements.txt
 global-exclude dev-requirements.in
 global-exclude format-requirements.in
+global-exclude lint-requirements.in
+global-exclude lint-requirements.txt
 global-exclude dev-requirements.txt
 global-exclude format-requirements.txt
 global-exclude .gitignore 
