@@ -34,5 +34,11 @@ def test_no_self_loop_allowed():
   import cimod
   with pytest.raises(RuntimeError) as exception:
      cimod.BinaryQuadraticModel({}, {(2,2):5}, "SPIN")
-     traceback.print_exc()
   pprint.pprint(exception)
+  try:
+    cimod.BinaryQuadraticModel({}, {(2,2):5}, "SPIN")
+  except RuntimeError as runtimeerror:
+    pprint.pprint(runtimeerror)
+    pprint.pprint(traceback.format_exc())
+  else:
+    print('finish (no error)')
