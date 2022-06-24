@@ -20,7 +20,7 @@ jobs:
       - name: Pip-Tools 
         run: |
           python -m pip install pip-tools 
-          pip-compile format-requirement.in
+          pip-compile format-requirements.in
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
