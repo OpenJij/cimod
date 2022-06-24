@@ -14,7 +14,7 @@
 
 from __future__ import annotations
 
-import cimod
+import dimod
 
 
 def get_state_and_energy(
@@ -45,9 +45,9 @@ def get_state_and_energy(
         variables = model.variables
 
     def _convert_data(d):
-        if d == 0 and model.vartype == cimod.SPIN:
+        if d == 0 and model.vartype == dimod.SPIN:
             return -1
-        elif d == -1 and model.vartype == cimod.BINARY:
+        elif d == -1 and model.vartype == dimod.BINARY:
             return 0
         else:
             return d
