@@ -18,6 +18,7 @@ import dimod
 
 __all__ = []
 
+
 def get_state_and_energy(
     model, result_state, offset=0, model_variables=[]
 ) -> tuple[dict, float]:
