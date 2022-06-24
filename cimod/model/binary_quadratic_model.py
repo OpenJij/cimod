@@ -14,6 +14,8 @@
 
 from __future__ import annotations
 
+import pprint
+
 import cimod
 import cimod.cxxcimod as cxxcimod
 import dimod
@@ -199,6 +201,12 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
             for i, j in quadratic.keys():
                 if (i == j) and (include_quaddiag == False):
+                    print("quadratic")
+                    pprint(quadratic) 
+                    print("include_quaddiag")
+                    pprint(include_quaddiag) 
+                    print("linear")
+                    pprint(linear)
                     raise RuntimeError("No self-loop allowed")
 
                 labels.add(i)
