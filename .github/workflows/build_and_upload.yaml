@@ -109,8 +109,11 @@ jobs:
         run: |
           set -eux
           ${{matrix.python}} -m auditwheel -h
+          ${{matrix.python}} -m auditwheel show -h
+          ${{matrix.python}} -m auditwheel repair -h
           du -a ./dist
           cd dist
+          for f in *.whl; do ${{matrix.python}} -m auditwheel show $f; done 
           for f in *.whl; do ${{matrix.python}} -m auditwheel repair -w ../wheelhouse $f; done    
       - uses: actions/upload-artifact@v3
         with:
