@@ -88,7 +88,7 @@ jobs:
         run: |
           set -eux
           touch config.txt
-          /opt/intel/oneapi/setvars.sh  --help
+          source /opt/intel/oneapi/setvars.sh --help
           source /opt/intel/oneapi/setvars.sh --config="config.txt"
           export CIBUILDWHEEL=1
           ${{matrix.python}} -m auditwheel -h
