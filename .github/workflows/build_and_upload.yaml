@@ -51,8 +51,8 @@ jobs:
         shell: bash
         run: |
           set -eux
-          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --user pip-tools 
-          pip-compile
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install pip-tools 
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m piptools compile
       - uses: actions/cache@v3
         with:
           path: |
@@ -68,7 +68,7 @@ jobs:
         shell: bash
         run: |
           set -eux
-          pip-sync requirements.txt 
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m piptools sync requirements.txt 
       - name: Setup Intel oneAPI
         run: |
           set -eux
@@ -83,7 +83,7 @@ jobs:
           set -eux
           dnf config-manager --set-enabled powertools
           dnf -y --enablerepo=powertools install eigen3-devel
-          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --user --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
       - name: Build 
         run: |
           set -eux
