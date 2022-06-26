@@ -89,11 +89,13 @@ jobs:
         run: |
           set -x
           echo "::group::Set Intel oneAPI"
-          dnf erase  gcc-toolset-11
+          dnf -y erase  gcc-toolset-11
+          dnf -y erase  gcc
           touch config.txt
           echo "" >> config.txt
           source /opt/intel/oneapi/compiler/latest/env/vars.sh 
           source /opt/intel/oneapi/mkl/latest/env/vars.sh
+          du -a /opt/intel/oneapi/compiler
           echo "::endgroup::"
           echo "::group::BUILD"
           export CIBUILDWHEEL=1
