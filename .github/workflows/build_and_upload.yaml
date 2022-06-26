@@ -92,6 +92,9 @@ jobs:
           source /opt/intel/oneapi/setvars.sh --help
           source /opt/intel/oneapi/setvars.sh --config="config.txt"
           export CIBUILDWHEEL=1
+          export CFLAGS='-march=haswell' 
+          export CXXFLAGS='-march=haswell' 
+          export FFLAGS='-march=haswell'"
           ${{matrix.python}} -m auditwheel -h
           ${{matrix.python}} -m build --wheel --outdir ./dist
       - name: Show Files 
