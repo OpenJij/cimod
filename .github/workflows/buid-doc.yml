@@ -31,6 +31,12 @@ jobs:
         id: pip-cache
         run: |
           echo "::set-output name=dir::$(pip cache dir)"
+      - name: Pip-Tools 
+        shell: bash
+        run: |
+          python -m pip install pip-tools 
+          pip-compile
+          pip-compile dev-requirements.in
       - name: pip cache
         uses: actions/cache@v3
         with:
@@ -40,10 +46,17 @@ jobs:
               ${{ runner.os }}-pip-
       - name: Update
         run: | 
-         pip install --upgrade pip wheel setuptools build cmake ninja
+         pip install --upgrade pip wheel setuptools build cmake ninja 
+      - name: Install Dependencies
+        shell: bash
+        run: |
+          set -eux
+          pip-sync requirements.txt dev-requirements.txt
       - name: Install Dep
         run: | 
-         sudo apt-get install -y libeigen3-dev lcov doxygen graphviz mscgen dia pdf2svg
+         pip install typing-extensions
+         sudo apt-get install -y libeigen3-dev lcov graphviz mscgen dia pdf2svg astyle
+         sudo apt-get install -y doxygen doxygen-doxyparse fonts-liberation python3-breathe
       - name: Prepare 
         shell: bash
         run: mkdir build
@@ -63,22 +76,16 @@ jobs:
           --parallel
           --verbose
           --target cxxcimod_header_only_docs
-      - name: CMake Install
+      - name: Copy Doc
         shell: bash
-        run: >
-          cmake 
-          --install build
-          --verbose
+        run: |
+          set -eux
+          cp -r ./build/html/* ./public/
       - name: du -a 
         shell: bash
         if: always()
         run: |
           du -a
-      - name: Move 
-        shell: bash
-        run: |
-          set -eux
-          cp -r docs/html/* public
       - name: Prepare tag
         id: prepare_tag
         if: startsWith(github.ref, 'refs/tags/')
@@ -90,11 +97,16 @@ jobs:
         #if: ${{github.event_name == 'release'}}
         uses: peaceiris/actions-gh-pages@v3
         with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
-         publish_dir: public
-         destination_dir: docs
+         personal_token: ${{ secrets.CIMOD_DOC }}
+         keep_files: true
          allow_empty_commit: true
+         publish_dir: ./public
+         publish_branch: main
+         external_repository: OpenJij/Cimod-Documentation
+         destination_dir: www
          user_name: 'github-actions[bot]'
          user_email: 'github-actions[bot]@users.noreply.github.com'
+         commit_message: ${{ github.event.head_commit.message }}
+         full_commit_message: ${{ github.event.head_commit.message }}
          tag_name: ${{ steps.prepare_tag.outputs.deploy_tag_name }}
          tag_message: 'Deployment ${{ steps.prepare_tag.outputs.tag_name }}'
