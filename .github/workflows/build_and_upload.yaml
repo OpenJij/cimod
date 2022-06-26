@@ -89,7 +89,7 @@ jobs:
           export CIBUILDWHEEL=1
           /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m auditwheel -h
           /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m build --wheel --outdir ./dist
-      - name: Show Files ${{matrix.CIBW_BUILD}}
+      - name: Show Files 
         id: wheel
         shell: bash
         run: |
