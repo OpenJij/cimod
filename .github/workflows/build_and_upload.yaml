@@ -32,37 +32,19 @@ jobs:
           
   build_wheels_linux_x86_64:
     name: Build wheels linux x86_64
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false 
       matrix:  
-        include:
-          - os: ubuntu-latest
-            arch: x86_64
-            CIBW_PLATFORM: linux
-            CIBW_ENVIRONMENT: "CFLAGS='-march=haswell' CXXFLAGS='-march=haswell' FFLAGS='-march=haswell'"
-            CIBW_BEFORE_ALL_LINUX: >
-               mv oneAPI.repo /etc/yum.repos.d &&
-               dnf config-manager --set-enabled powertools &&
-               dnf makecache --refresh &&
-               dnf -y install intel-basekit &&
-               dnf -y install intel-hpckit &&
-               dnf -y --enablerepo=powertools install eigen3-devel
-            CIBW_BEFORE_BUILD_LINUX: >
-               . /opt/intel/oneapi/setvars.sh &&
-               pip install pybind11 cmake ninja
+        python-version: ['3.7', '3.8', '3.9', '3.10']
                
     steps:
       - uses: actions/checkout@v3       
-      - name: Build wheels on ${{ matrix.CIBW_PLATFORM }} ${{matrix.arch}}
-        uses: pypa/cibuildwheel@2.7.0
-        env:
-          CIBW_ENVIRONMENT: ${{ matrix.CIBW_ENVIRONMENT }}
-          CIBW_PLATFORM:  ${{ matrix.CIBW_PLATFORM }}
-          CIBW_ARCHS: ${{matrix.arch}}
-          CIBW_BEFORE_ALL_LINUX: ${{ matrix.CIBW_BEFORE_ALL_LINUX }}
-          CIBW_BEFORE_BUILD_LINUX: ${{ matrix.CIBW_BEFORE_BUILD_LINUX }}
-          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.7"
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version : ${{ matrix.python-version }}
+          architecture: 'x64'
       - uses: actions/upload-artifact@v3
         with:
           name: WHEEL
