@@ -95,7 +95,7 @@ jobs:
           export CFLAGS='-march=haswell' 
           export CXXFLAGS='-march=haswell' 
           export FFLAGS='-march=haswell'
-          export SKBUILD_CONFIGURE_OPTIONS="CIBUILDWHEEL=1 -CFLAGS='-march=haswell' -CXXFLAGS='-march=haswell' -FFLAGS='-march=haswell'"
+          export SKBUILD_CONFIGURE_OPTIONS="CIBUILDWHEEL=1 CFLAGS='-march=haswell' CXXFLAGS='-march=haswell' FFLAGS='-march=haswell'"
           ${{matrix.python}} -m auditwheel -h
           ${{matrix.python}} -m build --wheel --outdir ./dist
       - name: Show Files 
