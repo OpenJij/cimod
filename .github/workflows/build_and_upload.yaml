@@ -90,12 +90,22 @@ jobs:
       - name: Install Dependency 
         run: |
           sudo apt-get install -y libeigen3-dev
-          python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build
+          python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
       - name: Build 
         run: |
+          set -eux
           . /opt/intel/oneapi/setvars.sh
           export CIBUILDWHEEL=1
-          #python -m build --wheel
+          python -m auditwheel -h
+          python -m build --wheel --outdir ./dist
+      - name: Show Files ${{matrix.CIBW_BUILD}}
+        id: wheel
+        shell: bash
+        run: |
+          set -eux
+          du -a ./dist
+          cd dist
+          for f in *.whl; do python -m auditwheel repair -w ../wheelhouse $f; done    
       - uses: actions/upload-artifact@v3
         with:
           name: WHEEL
