@@ -90,7 +90,7 @@ jobs:
         #if: ${{github.event_name == 'release'}}
         uses: peaceiris/actions-gh-pages@v3
         with:
-         personal_token: ${{ secrets.OPENJIJ_WEB }}
+         personal_token: ${{ secrets.CIMOD_DOC }}
          keep_files: true
          allow_empty_commit: true
          publish_dir: ./public
