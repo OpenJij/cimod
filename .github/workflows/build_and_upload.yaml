@@ -89,8 +89,7 @@ jobs:
         run: |
           set -eux
           touch config.txt
-          source /opt/intel/oneapi/setvars.sh --help
-          source /opt/intel/oneapi/setvars.sh --config="config.txt"
+          source /opt/intel/oneapi/setvars.sh --force --config="config.txt"
           export CIBUILDWHEEL=1
           export CFLAGS='-march=haswell' 
           export CXXFLAGS='-march=haswell' 
