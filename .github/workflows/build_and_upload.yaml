@@ -104,6 +104,7 @@ jobs:
           export CFLAGS='-march=haswell' 
           export CXXFLAGS='-march=haswell' 
           export FFLAGS='-march=haswell'
+          ${{matrix.python}} -m piptools sync requirements.txt build-requirements.txt 
           ${{matrix.python}} -m build --wheel --outdir ./dist
           echo "::endgroup::"
           #. /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
