@@ -54,6 +54,15 @@ jobs:
       - name: Instal Intel oneAPI    
         run: |
           sudo apt-get install -y intel-basekit intel-hpckit
+      - name: Install Dependency 
+        run: |
+          sudo apt-get install -y libeigen3-dev
+          python -m pip install --upgrade pip cmake ninja wheel build setuptolls scikit-build
+      - name: Build 
+        run: |
+          . /opt/intel/oneapi/setvars.sh
+          export CIBUILDWHEEL=1
+          python -m build --wheel
       - uses: actions/upload-artifact@v3
         with:
           name: WHEEL
