@@ -51,6 +51,7 @@ jobs:
           set -eux
           python --version > python_version.txt
           cat python_version.txt
+          which python
       - name: Pip-Tools 
         shell: bash
         run: |
@@ -85,6 +86,7 @@ jobs:
         run: |
           set -eux
           sudo apt-get install -y intel-basekit intel-hpckit
+          sudo apt-get purge -y intel-oneapi-python
       - name: Install Dependency 
         run: |
           sudo apt-get install -y libeigen3-dev
@@ -93,7 +95,7 @@ jobs:
         run: |
           . /opt/intel/oneapi/setvars.sh
           export CIBUILDWHEEL=1
-          python -m build --wheel
+          #python -m build --wheel
       - uses: actions/upload-artifact@v3
         with:
           name: WHEEL
