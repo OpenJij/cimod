@@ -87,7 +87,7 @@ jobs:
           dnf -y --enablerepo=powertools install eigen3-devel
       - name: Build 
         run: |
-          set -eux
+          set -x
           touch config.txt
           echo "" >> config.txt
           source /opt/intel/oneapi/setvars.sh --force --config="config.txt"
