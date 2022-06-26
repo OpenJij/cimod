@@ -93,6 +93,7 @@ jobs:
           echo "" >> config.txt
           source /opt/intel/oneapi/compiler/latest/env/vars.sh 
           source /opt/intel/oneapi/mkl/latest/env/vars.sh
+          source /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
           du -a /opt/intel/oneapi/compiler/latest/linux/bin
           echo "::endgroup::"
           echo "::group::BUILD"
@@ -106,18 +107,20 @@ jobs:
           ${{matrix.python}} -m build --wheel --outdir ./dist
           echo "::endgroup::"
           #. /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
+          # export FC=ifx
       - name: Show Files 
         id: wheel
         shell: bash
         run: |
-          set -eux
+          set -x 
+          source /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
           ${{matrix.python}} -m auditwheel -h
           ${{matrix.python}} -m auditwheel show -h
           ${{matrix.python}} -m auditwheel repair -h
           du -ah ./dist
           cd dist
           for f in *.whl; do ${{matrix.python}} -m auditwheel show $f; done 
-          for f in *.whl; do ${{matrix.python}} -m auditwheel repair --lib-sdir . -w ../wheelhouse $f; done    
+          for f in *.whl; do ${{matrix.python}} -m auditwheel repair -w ../wheelhouse $f; done    
           cd ../wheelhouse
           du -ah ./
       - uses: actions/upload-artifact@v3
