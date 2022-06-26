@@ -111,7 +111,7 @@ jobs:
           ${{matrix.python}} -m auditwheel -h
           ${{matrix.python}} -m auditwheel show -h
           ${{matrix.python}} -m auditwheel repair -h
-          du -a ./dist
+          du -ah ./dist
           cd dist
           for f in *.whl; do ${{matrix.python}} -m auditwheel show $f; done 
           for f in *.whl; do ${{matrix.python}} -m auditwheel repair -w ../wheelhouse $f; done    
