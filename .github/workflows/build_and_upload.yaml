@@ -77,7 +77,6 @@ jobs:
       - name: Instal Intel oneAPI    
         run: |
           set -eux
-          dnf makecache 
           dnf -y install intel-basekit intel-hpckit
       - name: Install Dependency 
         run: |
