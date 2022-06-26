@@ -22,6 +22,7 @@ include cmake/llvm-cov-wrapper
 global-exclude .clang-format
 global-exclude .pre-commit-config.yaml
 global-exclude codecov.yml
+global-exclude oneAPI.repo
 global-exclude requirements.txt
 global-exclude dev-requirements.in
 global-exclude format-requirements.in
