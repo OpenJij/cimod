@@ -45,6 +45,7 @@ jobs:
         shell: bash
         run: |
           set -eux
+          ls /opt/python
           /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python --version > python_version.txt
           cat python_version.txt
       - name: Pip-Tools 
