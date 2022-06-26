@@ -1,5 +1,5 @@
 [oneAPI]
-name=Intel(R) oneAPI repository
+name=Intel® oneAPI repository
 baseurl=https://yum.repos.intel.com/oneapi
 enabled=1
 gpgcheck=1
