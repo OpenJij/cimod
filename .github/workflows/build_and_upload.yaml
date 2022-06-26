@@ -42,12 +42,14 @@ jobs:
             CIBW_PLATFORM: linux
             CIBW_ENVIRONMENT: "CFLAGS='-march=haswell' CXXFLAGS='-march=haswell' FFLAGS='-march=haswell'"
             CIBW_BEFORE_ALL_LINUX: >
+               mv oneAPI.repo /etc/yum.repos.d
                dnf config-manager --set-enabled powertools &&
                dnf makecache --refresh &&
-               dnf -y --enablerepo=powertools install openblas-static &&
-               dnf -y --enablerepo=powertools install lapack-static &&
-               dnf -y install gcc-toolset-11 &&
+               dnf -y intel-basekit intel-hpckit &&
                dnf -y --enablerepo=powertools install eigen3-devel
+            CIBW_BEFORE_BUILD_LINUX: >
+               . /opt/intel/oneapi/setvars.sh &&
+               pip install pybind11 cmake ninja
                
           - os: ubuntu-latest
             arch: aarch64
@@ -60,7 +62,9 @@ jobs:
                dnf -y --enablerepo=powertools install lapack-static &&
                dnf -y install gcc-toolset-11 &&
                dnf -y --enablerepo=powertools install eigen3-devel
-               
+            CIBW_BEFORE_BUILD_LINUX: >
+               source scl_source enable gcc-toolset-11 &&
+               pip install pybind11 cmake ninja
     steps:
       - uses: actions/checkout@v3       
       - name: Set up QEMU
@@ -81,6 +85,7 @@ jobs:
           CIBW_PLATFORM:  ${{ matrix.CIBW_PLATFORM }}
           CIBW_ARCHS: ${{matrix.arch}}
           CIBW_BEFORE_ALL_LINUX: ${{ matrix.CIBW_BEFORE_ALL_LINUX }}
+          CIBW_BEFORE_BUILD_LINUX: ${{ matrix.CIBW_BEFORE_BUILD_LINUX }}
           CIBW_PROJECT_REQUIRES_PYTHON: ">=3.7"
       - uses: actions/upload-artifact@v3
         with:
