@@ -90,13 +90,14 @@ jobs:
           set -x
           touch config.txt
           echo "" >> config.txt
-          . /opt/intel/oneapi/setvars.sh --force 
+          source /opt/intel/oneapi/compiler/latest/env/vars.sh 
+          source /opt/intel/oneapi/mkl/latest/env/vars.sh
           export CIBUILDWHEEL=1
           export CFLAGS='-march=haswell' 
           export CXXFLAGS='-march=haswell' 
           export FFLAGS='-march=haswell'
           ${{matrix.python}} -m build --wheel --outdir ./dist
-          # --config="config.txt"
+          #. /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
       - name: Show Files 
         id: wheel
         shell: bash
