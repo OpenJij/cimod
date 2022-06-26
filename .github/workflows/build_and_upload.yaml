@@ -33,25 +33,20 @@ jobs:
   build_wheels_linux_x86_64:
     name: Build wheels linux x86_64
     runs-on: ubuntu-latest
+    container: quay.io/pypa/manylinux_2_28_x86_64:latest
     strategy:
       fail-fast: false 
       matrix:  
-        python-version: ['3.7', '3.8', '3.9', '3.10']
+        python-version: ['37', '38', '39', '310']
                
     steps:
       - uses: actions/checkout@v3       
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version : ${{ matrix.python-version }}
-          architecture: 'x64'
       - name: Get Python Version
         shell: bash
         run: |
           set -eux
-          python --version > python_version.txt
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python --version > python_version.txt
           cat python_version.txt
-          which python
       - name: Pip-Tools 
         shell: bash
         run: |
@@ -62,7 +57,7 @@ jobs:
         with:
           path: |
             ~/.cache/pip
-            /var/cache/apt/archives/
+            /var/cache/dnf/
           key: ${{ runner.os }}-intel-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-intel-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ github.sha }}
