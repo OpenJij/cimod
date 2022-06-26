@@ -57,7 +57,7 @@ jobs:
       - name: Install Dependency 
         run: |
           sudo apt-get install -y libeigen3-dev
-          python -m pip install --upgrade pip cmake ninja wheel build setuptolls scikit-build
+          python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build
       - name: Build 
         run: |
           . /opt/intel/oneapi/setvars.sh
