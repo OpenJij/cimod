@@ -88,15 +88,20 @@ jobs:
       - name: Build 
         run: |
           set -x
+          echo "::group::Set Intel oneAPI"
+          dnf erase  gcc-toolset-11
           touch config.txt
           echo "" >> config.txt
           source /opt/intel/oneapi/compiler/latest/env/vars.sh 
           source /opt/intel/oneapi/mkl/latest/env/vars.sh
+          echo "::endgroup::"
+          echo "::group::BUILD"
           export CIBUILDWHEEL=1
           export CFLAGS='-march=haswell' 
           export CXXFLAGS='-march=haswell' 
           export FFLAGS='-march=haswell'
           ${{matrix.python}} -m build --wheel --outdir ./dist
+          echo "::endgroup::"
           #. /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
       - name: Show Files 
         id: wheel
