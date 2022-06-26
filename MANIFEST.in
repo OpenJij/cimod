@@ -34,10 +34,10 @@ global-exclude .gitignore
 global-exclude Doxyfile
 global-exclude Doxyfile.bak
 
-plune benchmark
-plune project_template
-plune public
-plune www
+prune benchmark
+prune project_template
+prune public
+prune www
 prune share
 prune include
 prune docs
