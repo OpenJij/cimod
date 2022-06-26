@@ -45,7 +45,8 @@ jobs:
                mv oneAPI.repo /etc/yum.repos.d &&
                dnf config-manager --set-enabled powertools &&
                dnf makecache --refresh &&
-               dnf -y intel-basekit intel-hpckit &&
+               dnf -y install intel-basekit &&
+               dnf -y install intel-hpckit &&
                dnf -y --enablerepo=powertools install eigen3-devel
             CIBW_BEFORE_BUILD_LINUX: >
                . /opt/intel/oneapi/setvars.sh &&
