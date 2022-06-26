@@ -120,7 +120,7 @@ jobs:
           du -ah ./dist
           cd dist
           for f in *.whl; do ${{matrix.python}} -m auditwheel show $f; done 
-          for f in *.whl; do ${{matrix.python}} -m auditwheel repair -w ../wheelhouse $f; done    
+          for f in *.whl; do ${{matrix.python}} -m auditwheel repair --lib-sdir . -w ../wheelhouse $f; done    
           cd ../wheelhouse
           du -ah ./
       - uses: actions/upload-artifact@v3
