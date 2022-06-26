@@ -90,19 +90,19 @@ jobs:
           set -x
           touch config.txt
           echo "" >> config.txt
-          source /opt/intel/oneapi/setvars.sh --force --config="config.txt"
+          . /opt/intel/oneapi/setvars.sh --force 
           export CIBUILDWHEEL=1
           export CFLAGS='-march=haswell' 
           export CXXFLAGS='-march=haswell' 
           export FFLAGS='-march=haswell'
-          export SKBUILD_CONFIGURE_OPTIONS="CIBUILDWHEEL=1 CFLAGS='-march=haswell' CXXFLAGS='-march=haswell' FFLAGS='-march=haswell'"
-          ${{matrix.python}} -m auditwheel -h
           ${{matrix.python}} -m build --wheel --outdir ./dist
+          # --config="config.txt"
       - name: Show Files 
         id: wheel
         shell: bash
         run: |
           set -eux
+          ${{matrix.python}} -m auditwheel -h
           du -a ./dist
           cd dist
           for f in *.whl; do ${{matrix.python}} -m auditwheel repair -w ../wheelhouse $f; done    
