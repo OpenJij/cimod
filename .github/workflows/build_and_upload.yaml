@@ -50,6 +50,7 @@ jobs:
       - name: Pip-Tools 
         shell: bash
         run: |
+          set -eux
           /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --user pip-tools 
           pip-compile
       - uses: actions/cache@v3
@@ -79,6 +80,7 @@ jobs:
           dnf -y install intel-basekit intel-hpckit
       - name: Install Dependency 
         run: |
+          set -eux
           dnf config-manager --set-enabled powertools
           dnf -y --enablerepo=powertools install eigen3-devel
           /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --user --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
