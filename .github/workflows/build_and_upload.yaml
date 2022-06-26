@@ -42,7 +42,7 @@ jobs:
             CIBW_PLATFORM: linux
             CIBW_ENVIRONMENT: "CFLAGS='-march=haswell' CXXFLAGS='-march=haswell' FFLAGS='-march=haswell'"
             CIBW_BEFORE_ALL_LINUX: >
-               mv oneAPI.repo /etc/yum.repos.d
+               mv oneAPI.repo /etc/yum.repos.d &&
                dnf config-manager --set-enabled powertools &&
                dnf makecache --refresh &&
                dnf -y intel-basekit intel-hpckit &&
