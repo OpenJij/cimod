@@ -50,8 +50,8 @@ jobs:
       - name: Pip-Tools 
         shell: bash
         run: |
-          sudo /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install pip-tools 
-          sudo pip-compile
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --user pip-tools 
+          pip-compile
       - uses: actions/cache@v3
         with:
           path: |
@@ -67,21 +67,21 @@ jobs:
         shell: bash
         run: |
           set -eux
-          sudo pip-sync requirements.txt 
+          pip-sync requirements.txt 
       - name: Setup Intel oneAPI
         run: |
           set -eux
-          sudo mv oneAPI.repo /etc/yum.repos.d/
+          mv oneAPI.repo /etc/yum.repos.d/
       - name: Instal Intel oneAPI    
         run: |
           set -eux
-          sudo dnf makecache 
-          sudo dnf -y install intel-basekit intel-hpckit
+          dnf makecache 
+          dnf -y install intel-basekit intel-hpckit
       - name: Install Dependency 
         run: |
-          sudo dnf config-manager --set-enabled powertools
-          sudo dnf -y --enablerepo=powertools install eigen3-devel
-          sudo /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
+          dnf config-manager --set-enabled powertools
+          dnf -y --enablerepo=powertools install eigen3-devel
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --user --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
       - name: Build 
         run: |
           set -eux
