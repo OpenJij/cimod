@@ -50,9 +50,8 @@ jobs:
       - name: Pip-Tools 
         shell: bash
         run: |
-          python -m pip install pip-tools 
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install pip-tools 
           pip-compile
-          pip-compile dev-requirements.in
       - uses: actions/cache@v3
         with:
           path: |
@@ -68,7 +67,7 @@ jobs:
         shell: bash
         run: |
           set -eux
-          pip-sync requirements.txt dev-requirements.txt
+          pip-sync requirements.txt 
       - name: Setup Intel oneAPI
         run: |
           set -eux
@@ -81,18 +80,17 @@ jobs:
         run: |
           set -eux
           sudo apt-get install -y intel-basekit intel-hpckit
-          sudo apt-get purge -y intel-oneapi-python
       - name: Install Dependency 
         run: |
           sudo apt-get install -y libeigen3-dev
-          python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
       - name: Build 
         run: |
           set -eux
           . /opt/intel/oneapi/setvars.sh
           export CIBUILDWHEEL=1
-          python -m auditwheel -h
-          python -m build --wheel --outdir ./dist
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m auditwheel -h
+          /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m build --wheel --outdir ./dist
       - name: Show Files ${{matrix.CIBW_BUILD}}
         id: wheel
         shell: bash
@@ -100,7 +98,7 @@ jobs:
           set -eux
           du -a ./dist
           cd dist
-          for f in *.whl; do python -m auditwheel repair -w ../wheelhouse $f; done    
+          for f in *.whl; do /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m auditwheel repair -w ../wheelhouse $f; done    
       - uses: actions/upload-artifact@v3
         with:
           name: WHEEL
