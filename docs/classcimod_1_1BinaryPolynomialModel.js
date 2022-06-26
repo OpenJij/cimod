@@ -48,7 +48,7 @@ var classcimod_1_1BinaryPolynomialModel =
     [ "GetVartype", "classcimod_1_1BinaryPolynomialModel.html#a875e95b263c66f0bf8d2e48d495d877e", null ],
     [ "HasVariable", "classcimod_1_1BinaryPolynomialModel.html#a59ae90d4879eec87e7ef9f0f5b33c787", null ],
     [ "IntegerPower", "classcimod_1_1BinaryPolynomialModel.html#a2abb34f442d51120b1996dc42fe12344", null ],
-    [ "normalize", "classcimod_1_1BinaryPolynomialModel.html#a46119cc14234a1e06382a045ebdf5304", null ],
+    [ "normalize", "classcimod_1_1BinaryPolynomialModel.html#aa67e05d575cd6cf355968b9ce9cc2b17", null ],
     [ "RemoveInteraction", "classcimod_1_1BinaryPolynomialModel.html#a4ea0e10d21aeb264d3b17c3814131670", null ],
     [ "RemoveInteraction", "classcimod_1_1BinaryPolynomialModel.html#ae624c6ec0e3f021c25965a38d29c8124", null ],
     [ "RemoveInteractionsFrom", "classcimod_1_1BinaryPolynomialModel.html#a39611c2e17342a9cf637b36cff5bf0a1", null ],

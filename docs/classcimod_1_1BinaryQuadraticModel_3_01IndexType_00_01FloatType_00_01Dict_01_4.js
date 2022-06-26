@@ -43,7 +43,7 @@ var classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01
     [ "interaction_matrix", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a79be4e9c568ff4956f5fbf0850a84f6c", null ],
     [ "interaction_matrix", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a2187d5d95ece05b15011eef8f42dfa9c", null ],
     [ "length", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a5ab9bb635e339c3d27eaacf7754124e2", null ],
-    [ "normalize", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#af9b740ecf406d1e0c6e8ac3e4a52d258", null ],
+    [ "normalize", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a9e3004a31135bd77bd17e3b10734a1bf", null ],
     [ "remove_interaction", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#aa648a32482fa07d5e6c4ee8bf9fa85b7", null ],
     [ "remove_interactions_from", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#a3f94e6526b94a3cc1f73bb01e2bffd86", null ],
     [ "remove_offset", "classcimod_1_1BinaryQuadraticModel_3_01IndexType_00_01FloatType_00_01Dict_01_4.html#ae889cf13b14bb613d713a156db4096b9", null ],
