@@ -121,26 +121,12 @@ repair-wheel-command = "auditwheel repair --lib-sdir . -w {dest_dir} {wheel}"
 [tool.cibuildwheel.macos]
 archs = ["x86_64", "arm64"]
 build-frontend = "build"
-before-all = [ 
-    "brew install eigen nlohmann-json",
-]
-#environment = "CFLAGS='-O3 -pipe' CXXFLAGS='-O3 -pipe'" 
 before-build = [ 
     "pip install pybind11 cmake ninja", 
 ]
 
 [tool.cibuildwheel.windows]
 archs = ["AMD64"]
-#build-frontend = "build"
-#environment = "CMAKE_TOOLCHAIN_FILE='C:/vcpkg/scripts/buildsystems/vcpkg.cmake'" 
-before-all = [ 
-    "vcpkg update",
-    "vcpkg --triplet x64-windows install eigen3 --recurse", 
-    "vcpkg --triplet x64-windows install nlohmann-json --recurse",
-    "vcpkg --triplet x64-windows-static install eigen3 --recurse",
-    "vcpkg --triplet x64-windows-static install nlohmann-json --recurse",  
-    "vcpkg integrate install",
-]
 #"vcpkg --triplet x64-windows-static install openblas[threads] --recurse", 
 #"vcpkg --triplet x64-windows-static install clapack --recurse", 
 before-build = [ 
