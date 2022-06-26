@@ -71,14 +71,16 @@ jobs:
       - name: Setup Intel oneAPI
         run: |
           set -eux
-        
+          sudo mv oneAPI.repo /etc/yum.repos.d/
       - name: Instal Intel oneAPI    
         run: |
           set -eux
-          sudo apt-get install -y intel-basekit intel-hpckit
+          sudo dnf makecache 
+          sudo dnf -y install intel-basekit intel-hpckit
       - name: Install Dependency 
         run: |
-          sudo apt-get install -y libeigen3-dev
+          sudo dnf config-manager --set-enabled powertools
+          sudo dnf -y --enablerepo=powertools install eigen3-devel
           /opt/python/cp${{matrix.python-version}}-cp${{matrix.python-version}}/bin/python -m pip install --upgrade pip cmake ninja wheel setuptools build scikit-build auditwheel
       - name: Build 
         run: |
