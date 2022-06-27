@@ -75,6 +75,16 @@ set(CMAKE_CXX_STANDARD 17)
 set(CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
+if(NOT APPLE)
+  if($ENV{CIBUILDWHEEL})
+    message(STATUS "ENABLE BLAS STATIC")
+    set(BLA_STATIC ON CACHE BOOL "" FORCE)
+  endif()
+endif()
+
+find_package(BLAS)
+find_package(LAPACK)
+
 ##### Set default behavior #####
 set(DEFAULT_USE_OMP ON)
 
@@ -103,16 +113,6 @@ if(USE_OMP)
     set(USE_OMP OFF)
   endif()
 endif()
-
-if(NOT APPLE)
-  if($ENV{CIBUILDWHEEL})
-    message(STATUS "ENABLE BLAS STATIC")
-    set(BLA_STATIC ON CACHE BOOL "" FORCE)
-  endif()
-endif()
-
-find_package(BLAS)
-find_package(LAPACK)
 
 find_package(Eigen3 CONFIG)
 
