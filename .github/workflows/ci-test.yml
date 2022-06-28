@@ -33,6 +33,8 @@ jobs:
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
       run: |
+        set -eux 
+        clang --print-supported-cpus
         pip install ninja
         brew install eigen nlohmann-json lcov libomp
     - name: Add msbuild to PATH
