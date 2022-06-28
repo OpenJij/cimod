@@ -28,7 +28,7 @@ jobs:
         python -m pip install jij-cimod==1.3.5
         cp ../bench.py ./
         python bench.py
-    - name: Bench v1.4.7
+    - name: Bench 
       shell: bash 
       run: |
         set -eux
@@ -36,6 +36,6 @@ jobs:
         cd new
         python -m venv .venv --upgrade-deps
         source .venv/bin/activate
-        python -m pip install jij-cimod==1.4.7
+        python -m pip install jij-cimod
         cp ../bench.py ./
         python bench.py
