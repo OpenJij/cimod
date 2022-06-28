@@ -34,9 +34,9 @@ jobs:
       shell: bash
       run: |
         set -eux 
-        clang --help
         clang --print-target-triple 
         clang --print-targets 
+        clang --target=arm64-apple-darwin20.6.0 --print-supported-cpus
         clang --print-supported-cpus
         pip install ninja
         brew install eigen nlohmann-json lcov libomp
