@@ -34,7 +34,8 @@ jobs:
       shell: bash
       run: |
         set -eux 
-        clang --help
+        clang --print-target-triple 
+        clang --print-targets 
         clang --print-supported-cpus
         pip install ninja
         brew install eigen nlohmann-json lcov libomp
