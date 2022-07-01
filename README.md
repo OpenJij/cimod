@@ -11,6 +11,7 @@
 [![CodeQL](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml)
 [![Build Documentation](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml)
 [![pages-build-deployment](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/55990ff022864098a2413c0cc4ab8299)](https://www.codacy.com/gh/OpenJij/cimod/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=OpenJij/cimod&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
 
 ## Coverage Graph 
