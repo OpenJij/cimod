@@ -329,6 +329,12 @@ jobs:
           flags: cimod
           fail_ci_if_error: false
           verbose: true
+    - name: Run codacy-coverage-reporter
+      uses: codacy/codacy-coverage-reporter-action@v1
+      if: ${{ matrix.os != 'windows-latest'}}
+      with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: coverage.xml
     - name: du
       if: always()
       shell: bash
