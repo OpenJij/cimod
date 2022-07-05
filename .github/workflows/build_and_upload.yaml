@@ -168,7 +168,6 @@ jobs:
         run: |
           set -eux
           ${{matrix.python}} -m piptools sync requirements.txt build-requirements.txt 
-          yum -y install eigen3-devel
       - name: Build 
         run: |
           set -x
