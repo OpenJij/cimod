@@ -92,9 +92,9 @@ jobs:
           export CC=icx
           export CXX=icpx
           export FC=ifx
-          export CFLAGS='-march=haswell -mtune=skylake -fp-model=fast=2' 
-          export CXXFLAGS='-march=haswell -mtune=skylake -fp-model=fast=2' 
-          export FFLAGS='-march=haswell -mtune=skylake'
+          export CFLAGS='-march=haswell -mtune=skylake -fast -march=haswell' 
+          export CXXFLAGS='-march=haswell -mtune=skylake -fast -march=haswell' 
+          export FFLAGS='-march=haswell -mtune=skylake -fast -march=haswell'
           ${{matrix.python}} -m piptools sync requirements.txt build-requirements.txt 
           ${{matrix.python}} -m build --wheel --outdir ./dist
           echo "::endgroup::"
@@ -185,9 +185,9 @@ jobs:
           export CC=icx
           export CXX=icpx
           export FC=ifx
-          export CFLAGS='-march=haswell -mtune=skylake -fp-model=fast=2' 
-          export CXXFLAGS='-march=haswell -mtune=skylake -fp-model=fast=2' 
-          export FFLAGS='-march=haswell -mtune=skylake'
+          export CFLAGS='-march=haswell -mtune=skylake -fast -march=haswell' 
+          export CXXFLAGS='-march=haswell -mtune=skylake -fast -march=haswell' 
+          export FFLAGS='-march=haswell -mtune=skylake -fast -march=haswell'
           ${{matrix.python}} -m piptools sync requirements.txt build-requirements.txt 
           ${{matrix.python}} -m build --wheel --outdir ./dist
           echo "::endgroup::"
