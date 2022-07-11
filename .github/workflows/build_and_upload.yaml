@@ -185,9 +185,9 @@ jobs:
           export CC=icx
           export CXX=icpx
           export FC=ifx
-          export CFLAGS='-march=haswell -mtune=skylake -fast -march=haswell' 
-          export CXXFLAGS='-march=haswell -mtune=skylake -fast -march=haswell' 
-          export FFLAGS='-march=haswell -mtune=skylake -fast -march=haswell'
+          export CFLAGS='-O3 -static -fp-model fast=2 -march=haswell -mtune=skylake' 
+          export CXXFLAGS='-O3 -static -fp-model fast=2 -march=haswell -mtune=skylake' 
+          export FFLAGS='-O3 -static -fp-model fast=2 -march=haswell -mtune=skylake'
           ${{matrix.python}} -m piptools sync requirements.txt build-requirements.txt 
           ${{matrix.python}} -m build --wheel --outdir ./dist
           echo "::endgroup::"
