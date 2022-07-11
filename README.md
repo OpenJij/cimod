@@ -118,7 +118,7 @@ $ pip install --no-binary=jij-cimod jij-cimod
 ```sh
 $ python -m venv .venv
 $ pip install pip-tools 
-$ pip-compile
+$ pip-compile setup.cfg
 $ pip-compile dev-requirements.in
 $ pip-sync requirements.txt dev-requirements.txt
 $ source .venv/bin/activate
@@ -162,7 +162,7 @@ $ python -m black ./cimod
 
 - Lint
 ```sh 
-$ pip-compile
+$ pip-compile setup.cfg
 $ pip-compile dev-requirements.in
 $ pip-compile lint-requirements.in
 $ pip-sync requirements.txt dev-requirements.txt lint-requirements.txt
