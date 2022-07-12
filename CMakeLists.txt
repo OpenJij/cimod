@@ -50,6 +50,14 @@ endif()
 
 option(CMAKE_REQUIRE_FAILE "If CMake could not find dependencies, build will faile." OFF)
 
+if(CMAKE_REQUIRE_FAILE) 
+   set(CMAKE_REQUIRE_FIND_PACKAGE_Eigen3 ON) 
+   set(CMAKE_REQUIRE_FIND_PACKAGE_nlohmann_json ON) 
+   set(CMAKE_REQUIRE_FIND_PACKAGE_pybind11 ON) 
+   set(CMAKE_REQUIRE_FIND_PACKAGE_pybind11_json ON) 
+   set(CMAKE_REQUIRE_FIND_PACKAGE_GTest ON)
+endif()
+
 # detect operating system and host processor
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
