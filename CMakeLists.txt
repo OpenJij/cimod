@@ -48,6 +48,8 @@ if(UNIX AND NOT APPLE)
   endif()
 endif()
 
+option(CMAKE_REQUIRE_FAILE "If CMake could not find dependencies, build will faile." OFF)
+
 # detect operating system and host processor
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
