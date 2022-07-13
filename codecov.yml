@@ -19,25 +19,23 @@ coverage:
         informational: true
         only_pulls: false
         target: auto
-        if_ci_failed: error
+        
     project:
       default:
         informational: true
         only_pulls: false
         target: auto
-        if_ci_failed: error
+        
       cxxcimod:
         informational: true
         only_pulls: false
         target: auto
-        if_ci_failed: error
         flags:
           - cxxcimod
       cimod:
         informational: true
         only_pulls: false
         target: auto
-        if_ci_failed: error
         flags:
           - cimod
 parsers:
