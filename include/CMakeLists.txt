@@ -13,7 +13,9 @@
 # limitations under the License.
 
 add_library(cxxcimod_header_only INTERFACE)
-        
+
+set(CIMOD_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/cimod)
+
 target_include_directories(cxxcimod_header_only INTERFACE 
   $<BUILD_INTERFACE:${CIMOD_INCLUDE_DIR}>
   $<INSTALL_INTERFACE:include>
