@@ -18,11 +18,26 @@ project(cimod
     HOMEPAGE_URL "https://www.openjij.org"
 )
 
+# Standard includes
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+include(CMakeDependentOption)
+include(CheckLanguage)
+
 set(CIMOD_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(MAIN_PROJECT OFF)
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
+        set(lines "You are building in-place.") 
+        message(AUTHOR_WARNING ${lines})
+    endif()
     set(MAIN_PROJECT ON)
+    message(STATUS "CMake ${CMAKE_VERSION}")
+    if(CMAKE_CXX_STANDARD)
+        set(CMAKE_CXX_EXTENSIONS OFF)
+        set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    endif()
 endif()
 
 option(BUILD_TESTING "Enable CTest support." OFF)
@@ -30,8 +45,6 @@ option(BUILD_DOCS "Enable Doxygen support." OFF)
 
 list(APPEND CMAKE_MODULE_PATH external)
 list(APPEND CMAKE_MODULE_PATH cmake)
-
-include(CheckLanguage)
 
 check_language(C)
 check_language(CXX)
