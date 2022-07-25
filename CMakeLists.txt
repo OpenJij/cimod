@@ -18,18 +18,35 @@ project(cimod
     HOMEPAGE_URL "https://www.openjij.org"
 )
 
-set(MAIN_PROJECT OFF)
+# Standard includes
+include(CheckLanguage)
+
+set(CIMOD_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-    set(MAIN_PROJECT ON)
+    if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
+        set(lines "You are building in-place.") 
+        message(AUTHOR_WARNING ${lines})
+    endif()
+    set(CIMOD_MAIN_PROJECT ON)
+    message(STATUS "CMake ${CMAKE_VERSION}")
+    if(CMAKE_CXX_STANDARD)
+        set(CMAKE_CXX_EXTENSIONS OFF)
+        set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    endif()
+else()
+  set(CIMOD_MAIN_PROJECT OFF)
 endif()
 
-option(BUILD_TESTING "Enable CTest support." OFF)
+# Options
+option(CIMOD_INSTALL "Install cimod header files?" ${CIMOD_MAIN_PROJECT})
+option(CIMOD_TEST "Build cimod test suite?" ${CIMOD_MAIN_PROJECT})
+option(CIMOD_DOCS "Build cimod docs?" ${CIMOD_MAIN_PROJECT})
 option(BUILD_DOCS "Enable Doxygen support." OFF)
+option(CMAKE_REQUIRE_FAILE "If CMake could not find dependencies, build will faile." OFF)
 
 list(APPEND CMAKE_MODULE_PATH external)
 list(APPEND CMAKE_MODULE_PATH cmake)
-
-include(CheckLanguage)
 
 check_language(C)
 check_language(CXX)
@@ -47,8 +64,6 @@ if(UNIX AND NOT APPLE)
       enable_language(Fortran)
   endif()
 endif()
-
-option(CMAKE_REQUIRE_FAILE "If CMake could not find dependencies, build will faile." OFF)
 
 if(CMAKE_REQUIRE_FAILE) 
    set(CMAKE_REQUIRE_FIND_PACKAGE_Eigen3 ON) 
@@ -143,12 +158,13 @@ else()
 endif()
 
 
-add_subdirectory(src)
+add_subdirectory(include)
 
 # Build Python Extension 
-if(SKBUILD AND MAIN_PROJECT)
+if(SKBUILD AND CIMOD_MAIN_PROJECT)
   message(STATUS "Build Python Extension.")
   option(WITH_THREAD "Compile in rudimentary thread support" ON)
+  option(BUILD_TESTING "Enable CTest support." OFF)
   find_package(Python COMPONENTS Interpreter Development)
   # Scikit-Build does not add your site-packages to the search path
   # automatically, so we need to add it _or_ the pybind11 specific directory
@@ -170,7 +186,7 @@ if(SKBUILD AND MAIN_PROJECT)
   endif()
   
   add_subdirectory(cimod)
-elseif(MAIN_PROJECT AND ((${CMAKE_BUILD_TYPE} MATCHES Debug) OR BUILD_TESTING))
+elseif(CIMOD_MAIN_PROJECT AND ((${CMAKE_BUILD_TYPE} MATCHES Debug) OR CIMOD_TEST))
   include(CTest)
   if(ENABLE_COVERAGE AND (NOT MSVC))
     message(STATUS "Use Codecov")
@@ -190,6 +206,6 @@ elseif(MAIN_PROJECT AND ((${CMAKE_BUILD_TYPE} MATCHES Debug) OR BUILD_TESTING))
   endif()
 endif()
 
-if (MAIN_PROJECT AND BUILD_DOCS)
+if (CIMOD_MAIN_PROJECT AND CIMOD_DOCS AND BUILD_DOCS)
     include(cmake/GenerateDocs.cmake)
 endif()

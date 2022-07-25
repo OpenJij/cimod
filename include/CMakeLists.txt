@@ -13,14 +13,9 @@
 # limitations under the License.
 
 add_library(cxxcimod_header_only INTERFACE)
-  
-#target_precompile_headers(cxxcimod_header_only INTERFACE
-#  json.hpp
-#  disable_eigen_warning.hpp
-#) 
 
 target_include_directories(cxxcimod_header_only INTERFACE 
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+  $<BUILD_INTERFACE:${CIMOD_INCLUDE_DIR}>
   $<INSTALL_INTERFACE:include>
 )
 

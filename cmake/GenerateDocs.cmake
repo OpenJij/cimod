@@ -107,7 +107,7 @@ if (DOXYGEN_FOUND)
         
         #set(DOXYGEN_UML_LIMIT_NUM_FIELDS 100)
         doxygen_add_docs(cxxcimod_header_only_docs
-                         ${PROJECT_SOURCE_DIR}/src ${PROJECT_SOURCE_DIR}/cimod
+                         ${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/cimod
                          ALL
                          COMMENT "Generate documentation with Doxygen")
         install(DIRECTORY ${PROJECT_BINARY_DIR}/html

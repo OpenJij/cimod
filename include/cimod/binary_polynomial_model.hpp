@@ -116,9 +116,9 @@
 
 #pragma once
 
-#include "hash.hpp"
-#include "utilities.hpp"
-#include "vartypes.hpp"
+#include "cimod/hash.hpp"
+#include "cimod/utilities.hpp"
+#include "cimod/vartypes.hpp"
 
 #include <algorithm>
 #include <bitset>

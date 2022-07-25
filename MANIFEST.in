@@ -9,7 +9,7 @@ graft openjij
 graft tests 
 graft src 
 graft external
-
+graft include 
 prune cmake
 
 include cmake/GenerateDocs.cmake

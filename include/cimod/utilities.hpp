@@ -14,7 +14,7 @@
 
 #pragma once
 
-#include "vartypes.hpp"
+#include "cimod/vartypes.hpp"
 
 #include <unordered_map>
 

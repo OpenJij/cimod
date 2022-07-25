@@ -14,9 +14,9 @@
 
 #include <gtest/gtest.h>
 
-#include <binary_quadratic_model.hpp>
-#include <binary_polynomial_model.hpp>
-#include <binary_quadratic_model_dict.hpp>
+#include <cimod/binary_quadratic_model.hpp>
+#include <cimod/binary_polynomial_model.hpp>
+#include <cimod/binary_quadratic_model_dict.hpp>
 
 #include "test_bqm.hpp"
 

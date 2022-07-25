@@ -15,7 +15,7 @@
 
 #pragma once
 
-#include <disable_eigen_warning.hpp>
+#include <cimod/disable_eigen_warning.hpp>
 
 #include <pybind11_json/pybind11_json.hpp>
 #include <nlohmann/json.hpp>
@@ -24,9 +24,9 @@
 #include <pybind11/eigen.h>
 #include <pybind11/pybind11.h>
 
-#include <binary_quadratic_model.hpp>
-#include <binary_quadratic_model_dict.hpp>
-#include <binary_polynomial_model.hpp>
+#include <cimod/binary_quadratic_model.hpp>
+#include <cimod/binary_quadratic_model_dict.hpp>
+#include <cimod/binary_polynomial_model.hpp>
 
 #include <sstream>
 
