@@ -21,8 +21,6 @@ project(cimod
 # Standard includes
 include(CheckLanguage)
 
-set(CIMOD_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
         set(lines "You are building in-place.") 
@@ -34,11 +32,8 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
         set(CMAKE_CXX_EXTENSIONS OFF)
         set(CMAKE_CXX_STANDARD_REQUIRED ON)
     endif()
-    set(cimod_system "")
-    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 else()
   set(CIMOD_MAIN_PROJECT OFF)
-  set(cimod_system SYSTEM)
 endif()
 
 # Options
