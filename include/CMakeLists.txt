@@ -13,11 +13,6 @@
 # limitations under the License.
 
 add_library(cxxcimod_header_only INTERFACE)
-  
-set_target_properties(${PROJECT_NAME}
-        PROPERTIES
-        PUBLIC_HEADER "${PYBIND11_JSON_HEADERS}"
-)
         
 target_include_directories(cxxcimod_header_only INTERFACE 
   $<BUILD_INTERFACE:${CIMOD_INCLUDE_DIR}>
