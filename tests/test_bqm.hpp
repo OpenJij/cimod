@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 
-#include <binary_quadratic_model.hpp>
+#include <cimod/binary_quadratic_model.hpp>
 
 #include <nlohmann/json.hpp>
 
