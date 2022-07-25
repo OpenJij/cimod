@@ -19,9 +19,6 @@ project(cimod
 )
 
 # Standard includes
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
-include(CMakeDependentOption)
 include(CheckLanguage)
 
 set(CIMOD_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
