@@ -18,6 +18,8 @@ project(cimod
     HOMEPAGE_URL "https://www.openjij.org"
 )
 
+set(CIMOD_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 set(MAIN_PROJECT OFF)
 if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
     set(MAIN_PROJECT ON)
