@@ -25,12 +25,12 @@
 
 #pragma once
 
-#include "binary_quadratic_model.hpp"
-#include "disable_eigen_warning.hpp"
-#include "hash.hpp"
-#include "json.hpp"
-#include "utilities.hpp"
-#include "vartypes.hpp"
+#include "cimod/binary_quadratic_model.hpp"
+#include "cimod/disable_eigen_warning.hpp"
+#include "cimod/hash.hpp"
+#include "cimod/json.hpp"
+#include "cimod/utilities.hpp"
+#include "cimod/vartypes.hpp"
 
 #include <Eigen/Dense>
 #include <algorithm>
