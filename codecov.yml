@@ -52,7 +52,7 @@ flag_management:
 flags:
   cxxcimod:
     paths: 
-      - src
+      - include
     carryforward: true
   cimod:
     paths: 
