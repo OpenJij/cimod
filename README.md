@@ -1,4 +1,5 @@
-# cimod : C++ header-only library for a binary quadratic model 
+# cimod : C++ header-only library for a binary quadratic model
+
 [![PyPI version shields.io](https://img.shields.io/pypi/v/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 [![PyPI pyversions](https://img.shields.io/pypi/pyversions/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 [![PyPI implementation](https://img.shields.io/pypi/implementation/jij-cimod.svg)](https://pypi.python.org/pypi/ji-cimod/)
@@ -11,17 +12,17 @@
 [![CodeQL](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml)
 [![Build Documentation](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml)
 [![pages-build-deployment](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/55990ff022864098a2413c0cc4ab8299)](https://www.codacy.com/gh/OpenJij/cimod/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=OpenJij/cimod&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/55990ff022864098a2413c0cc4ab8299)](https://www.codacy.com/gh/OpenJij/cimod/dashboard?utm_source=github.com&utm_medium=referral&utm_content=OpenJij/cimod&utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/59876c82cc2200ef1dfa/maintainability)](https://codeclimate.com/github/OpenJij/cimod/maintainability)
 [![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
 
-## Coverage Graph 
-|**Sunburst**|**Grid**|**Icicle**|
-| ---- | ---- | ---- |
-|<a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/sunburst.svg?token=BE45W9FJHA" width="100%"/></a>|<a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/tree.svg?token=BE45W9FJHA" width="100%"/></a>|<a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/icicle.svg?token=BE45W9FJHA" width="100%"/></a>|
+## Coverage Graph
 
+| **Sunburst**                                                                                                                                                     | **Grid**                                                                                                                                                     | **Icicle**                                                                                                                                                     |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/sunburst.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/tree.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/icicle.svg?token=BE45W9FJHA" width="100%"/></a> |
 
-* [Documents](https://openjij.github.io/Cimod-Documentation/)
+- [Documents](https://openjij.github.io/Cimod-Documentation/)
 
 # How to use
 
@@ -85,17 +86,19 @@ print(bqm.quadratic)
 
 ```
 
-## For Contributor 
+## For Contributor
+
 Use `pre-commit` for auto chech before git commit.
 `.pre-commit-config.yaml`
-``` 
+
+```
 # pipx install pre-commit 
 # or 
 # pip install pre-commit
 pre-commit install
 ```
 
-## Install 
+## Install
 
 ### via this directory
 
@@ -112,9 +115,10 @@ $ pip install jij-cimod
 $ pip install --no-binary=jij-cimod jij-cimod 
 ```
 
-## Test 
+## Test
 
-### Python 
+### Python
+
 ```sh
 $ python -m venv .venv
 $ pip install pip-tools 
@@ -128,7 +132,8 @@ $ python setup.py --build-type Debug test
 $ python -m coverage html
 ```
 
-### C++ 
+### C++
+
 ```sh
 $ mkdir build 
 $ cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
@@ -141,18 +146,21 @@ $ ctest --extra-verbose --parallel --schedule-random
 
 Needs: CMake > 3.22, C++17
 
-- Format 
+- Format
+
 ```sh
 $ pip-compile format-requirements.in
 $ pip-sync format-requirements.txt
 ```
-``` sh
+
+```sh
 $ python -m isort 
 $ python -m black 
 ```
 
 - Aggressive Format
-```sh 
+
+```sh
 $ python -m isort --force-single-line-imports --verbose ./cimod
 $ python -m autoflake --in-place --recursive --remove-all-unused-imports --ignore-init-module-imports --remove-unused-variables ./cimod
 $ python -m autopep8 --in-place --aggressive --aggressive  --recursive ./cimod
@@ -161,13 +169,15 @@ $ python -m black ./cimod
 ```
 
 - Lint
-```sh 
+
+```sh
 $ pip-compile setup.cfg
 $ pip-compile dev-requirements.in
 $ pip-compile lint-requirements.in
 $ pip-sync requirements.txt dev-requirements.txt lint-requirements.txt
 ```
-``` sh 
+
+```sh
 $ python -m flake8
 $ python -m mypy
 $ python -m pyright
@@ -231,26 +241,29 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
 
 ### Software versions
 
-|       Package        | Version |
-| -------------------- | ------- |
-| [cimod](https://github.com/OpenJij/cimod)     | 1.0.3   |
-| [dimod](https://github.com/dwavesystems/dimod)| 0.9.2   |
+| Package                                        | Version |
+| ---------------------------------------------- | ------- |
+| [cimod](https://github.com/OpenJij/cimod)      | 1.0.3   |
+| [dimod](https://github.com/dwavesystems/dimod) | 0.9.2   |
 
 ### Result
+
 ![benchmark](https://github.com/OpenJij/cimod/blob/image_store/figure.png)
 
+### Licences
 
-### Licences 
-Copyright 2022 Jij Inc.  
+Copyright 2022 Jij Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License");  
-you may not use this file except in compliance with the License.  
-You may obtain a copy of the License at  
+Licensed under the Apache License, Version 2.0 (the "License");\
+you may not use this file except in compliance with the License.\
+You may obtain a copy of the License at
 
-     http://www.apache.org/licenses/LICENSE-2.0  
+```
+ http://www.apache.org/licenses/LICENSE-2.0  
+```
 
-Unless required by applicable law or agreed to in writing, software  
-distributed under the License is distributed on an "AS IS" BASIS,  
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  
-See the License for the specific language governing permissions and  
-limitations under the License.  
+Unless required by applicable law or agreed to in writing, software\
+distributed under the License is distributed on an "AS IS" BASIS,\
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\
+See the License for the specific language governing permissions and\
+limitations under the License.
