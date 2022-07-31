@@ -16,9 +16,7 @@ from __future__ import annotations
 
 import cimod.cxxcimod, dimod
 
-from dimod import SPIN as _SPIN
-from dimod import BINARY as _BINARY
-from dimod import Vartype as _Vartype
+from dimod import BINARY as _BINARY, SPIN as _SPIN, Vartype as _Vartype
 
 __all__ = []
 
