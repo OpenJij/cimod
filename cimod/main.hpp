@@ -15,17 +15,22 @@
 
 #pragma once
 
+
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/functional.h>
+#include <pybind11/eigen.h>
+
+#include <pybind11_json/pybind11_json.hpp>
+
+#include <nlohmann/json.hpp>
+
+#include <sstream>
+
 #include <cimod/binary_polynomial_model.hpp>
 #include <cimod/binary_quadratic_model.hpp>
 #include <cimod/binary_quadratic_model_dict.hpp>
 #include <cimod/disable_eigen_warning.hpp>
-#include <nlohmann/json.hpp>
-#include <pybind11/eigen.h>
-#include <pybind11/functional.h>
-#include <pybind11/pybind11.h>
-#include <pybind11/stl.h>
-#include <pybind11_json/pybind11_json.hpp>
-#include <sstream>
 
 namespace py = pybind11;
 
