@@ -14,12 +14,6 @@
 
 #include <gtest/gtest.h>
 
-#include <cimod/binary_quadratic_model.hpp>
-#include <cimod/binary_polynomial_model.hpp>
-#include <cimod/binary_quadratic_model_dict.hpp>
-
-#include "test_bqm.hpp"
-
 #include <nlohmann/json.hpp>
 
 #include <unordered_map>
@@ -29,6 +23,12 @@
 #include <string>
 #include <iostream>
 #include <tuple>
+
+#include <cimod/binary_quadratic_model.hpp>
+#include <cimod/binary_polynomial_model.hpp>
+#include <cimod/binary_quadratic_model_dict.hpp>
+
+#include "test_bqm.hpp"
 
 using json = nlohmann::json;
 using namespace cimod;
