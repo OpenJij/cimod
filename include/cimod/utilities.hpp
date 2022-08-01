@@ -14,9 +14,10 @@
 
 #pragma once
 
-#include "cimod/vartypes.hpp"
-
 #include <unordered_map>
+#include <unordered_set>
+
+#include "cimod/vartypes.hpp"
 
 namespace cimod {
   /**
