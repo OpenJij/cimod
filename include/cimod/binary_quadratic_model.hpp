@@ -87,14 +87,6 @@
 
 #pragma once
 
-#include "cimod/disable_eigen_warning.hpp"
-#include "cimod/hash.hpp"
-#include "cimod/json.hpp"
-#include "cimod/utilities.hpp"
-#include "cimod/vartypes.hpp"
-
-#include <Eigen/Dense>
-#include <Eigen/Sparse>
 #include <algorithm>
 #include <cassert>
 #include <cstdint>
@@ -110,6 +102,15 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+
+#include <Eigen/Dense>
+#include <Eigen/Sparse>
+
+#include "cimod/disable_eigen_warning.hpp"
+#include "cimod/hash.hpp"
+#include "cimod/json.hpp"
+#include "cimod/utilities.hpp"
+#include "cimod/vartypes.hpp"
 
 namespace cimod {
   /**
