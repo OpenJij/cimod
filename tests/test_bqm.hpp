@@ -16,10 +16,6 @@
 
 #include <gtest/gtest.h>
 
-#include <cimod/binary_quadratic_model.hpp>
-
-#include <nlohmann/json.hpp>
-
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -27,6 +23,10 @@
 #include <string>
 #include <iostream>
 #include <tuple>
+
+#include <nlohmann/json.hpp>
+
+#include <cimod/binary_quadratic_model.hpp>
 
 using json = nlohmann::json;
 using namespace cimod;
