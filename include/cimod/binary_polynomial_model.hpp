@@ -116,22 +116,25 @@
 
 #pragma once
 
-#include "cimod/hash.hpp"
-#include "cimod/utilities.hpp"
-#include "cimod/vartypes.hpp"
-
 #include <algorithm>
 #include <bitset>
 #include <cstdint>
 #include <iostream>
-#include <nlohmann/json.hpp>
 #include <set>
 #include <string>
 #include <tuple>
 #include <typeinfo>
 #include <unordered_map>
+#include <unordered_set>
 #include <utility>
 #include <vector>
+
+#include <nlohmann/json.hpp>
+
+#include "cimod/hash.hpp"
+#include "cimod/utilities.hpp"
+#include "cimod/vartypes.hpp"
+
 
 namespace cimod {
 
