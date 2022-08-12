@@ -220,7 +220,7 @@ jobs:
       shell: bash
       run: |
           set -ux
-          python -m pip install --upgrade pip setuptools wheel build
+          python -m pip install --upgrade pip setuptools wheel build cmake
     - name: Install Dependencies
       shell: bash
       run: |
@@ -300,7 +300,7 @@ jobs:
         export CMAKE_C_COMPILER_LAUNCHER=sccache
         export CMAKE_CXX_COMPILER_LAUNCHER=sccache
         export CMAKE_BUILD_TYPE=Debug
-        python -m pip install -e .
+        pip install -vvv .
     - name: Build & Install    
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash 
