@@ -21,8 +21,6 @@ import numpy as np
 from cimod.utils.decolator import recalc
 from cimod.vartype import to_cxxcimod
 
-__all__ = []
-
 
 def make_BinaryQuadraticModel(linear, quadratic):
     """BinaryQuadraticModel factory.
