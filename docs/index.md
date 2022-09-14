@@ -16,17 +16,6 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/59876c82cc2200ef1dfa/maintainability)](https://codeclimate.com/github/OpenJij/cimod/maintainability)
 [![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
 
-## Coverage Graph
-
-| **
-Sunburst**                                                                                                                                                     | **
-Grid**                                                                                                                                                     | **
-Icicle**                                                                                                                                                     |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/sunburst.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/tree.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/icicle.svg?token=BE45W9FJHA" width="100%"/></a> |
-
-- [Documents](https://openjij.github.io/Cimod-Documentation/)
-
 # How to use
 
 You should only include a header `src/binary_quadratic_model.hpp` in your project.
@@ -241,32 +230,3 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
     print("{} {} {}".format(N, d, c))
     fil.write("{} {} {}\n".format(N, d, c))
 ```
-
-### Software versions
-
-| Package                                        | Version |
-| ---------------------------------------------- | ------- |
-| [cimod](https://github.com/OpenJij/cimod)      | 1.0.3   |
-| [dimod](https://github.com/dwavesystems/dimod) | 0.9.2   |
-
-### Result
-
-![benchmark](https://github.com/OpenJij/cimod/blob/image_store/figure.png)
-
-### Licences
-
-Copyright 2022 Jij Inc.
-
-Licensed under the Apache License, Version 2.0 (the "License");\
-you may not use this file except in compliance with the License.\
-You may obtain a copy of the License at
-
-```
- http://www.apache.org/licenses/LICENSE-2.0  
-```
-
-Unless required by applicable law or agreed to in writing, software\
-distributed under the License is distributed on an "AS IS" BASIS,\
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\
-See the License for the specific language governing permissions and\
-limitations under the License.

@@ -18,9 +18,24 @@
 
 ## Coverage Graph
 
-| **Sunburst**                                                                                                                                                     | **Grid**                                                                                                                                                     | **Icicle**                                                                                                                                                     |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/sunburst.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/tree.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/icicle.svg?token=BE45W9FJHA" width="100%"/></a> |
+| **
+Sunburst**
+| **
+Grid**
+| **
+Icicle**
+|
+|
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+|
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+|
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+|
+| <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/sunburst.svg?token=BE45W9FJHA" width="100%"/></a>
+| <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/tree.svg?token=BE45W9FJHA" width="100%"/></a>
+| <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/icicle.svg?token=BE45W9FJHA" width="100%"/></a>
+|
 
 - [Documents](https://openjij.github.io/Cimod-Documentation/)
 
