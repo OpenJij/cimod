@@ -65,8 +65,6 @@ sphinx:
     autodoc_docstring_signature:      true
     autodoc_typehints:                both
     autodoc_typehints_format:         short
-    napoleon_google_docstring:        true
-    napoleon_include_init_with_doc:   true
     autosectionlabel_prefix_document: true
     autoapi_root:                     reference
     autoapi_keep_files:               true
@@ -126,9 +124,6 @@ sphinx:
         - null
       numpy:
         - "https://numpy.org/doc/stable/"
-        - null
-      cimod:
-        - "https://cimod.openjij.org/"
         - null
       pandas:
         - "https://pandas.pydata.org/pandas-docs/stable/"
