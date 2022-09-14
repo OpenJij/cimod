@@ -12,17 +12,6 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-/**
- * @file hash.hpp
- * @author Fumiya Watanabe
- * @brief Hash function for std::pair
- * @version 1.0.0
- * @date 2020-03-13
- *
- * @copyright Copyright (c) Jij Inc. 2020
- *
- */
-
 #pragma once
 
 #include <cstdint>

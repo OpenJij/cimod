@@ -12,17 +12,6 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-/**
- * @file vartypes.hpp
- * @author Fumiya Watanabe
- * @brief Definition of variable type
- * @version 1.0.0
- * @date 2020-03-17
- *
- * @copyright Copyright (c) Jij Inc. 2020
- *
- */
-
 #pragma once
 
 #include <iostream>

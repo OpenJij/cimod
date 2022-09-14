@@ -23,8 +23,6 @@ import numpy as np
 
 from cimod.vartype import to_cxxcimod
 
-__all__ = []
-
 
 def get_cxxcimod_class(linear, quadratic, sparse):
     # select base class

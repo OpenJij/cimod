@@ -74,17 +74,6 @@
  * @endcode
  */
 
-/**
- * @file binary_quadratic_model.hpp
- * @author Kohji Nishimura
- * @brief Dense BinaryQuadraticModel class
- * @version 1.0.0
- * @date 2020-03-24
- *
- * @copyright Copyright (c) Jij Inc. 2020
- *
- */
-
 #pragma once
 
 #include <algorithm>

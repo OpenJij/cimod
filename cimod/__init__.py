@@ -16,6 +16,8 @@ from pkgutil import extend_path
 
 __path__ = extend_path(__path__, __name__)
 
+from cimod import cxxcimod
+
 from cimod.model.binary_polynomial_model import (
     BinaryPolynomialModel,
     make_BinaryPolynomialModel,
@@ -29,13 +31,14 @@ from cimod.model.binary_quadratic_model import (
 from cimod.vartype import BINARY, SPIN, Vartype
 
 __all__ = [
-    "SPIN",
-    "BINARY",
-    "Vartype",
-    "make_BinaryQuadraticModel",
-    "make_BinaryQuadraticModel_from_JSON",
-    "BinaryQuadraticModel",
-    "make_BinaryPolynomialModel",
-    "make_BinaryPolynomialModel_from_JSON",
-    "BinaryPolynomialModel",
+        "cxxcimod",
+        "SPIN",
+        "BINARY",
+        "Vartype",
+        "make_BinaryQuadraticModel",
+        "make_BinaryQuadraticModel_from_JSON",
+        "BinaryQuadraticModel",
+        "make_BinaryPolynomialModel",
+        "make_BinaryPolynomialModel_from_JSON",
+        "BinaryPolynomialModel",
 ]

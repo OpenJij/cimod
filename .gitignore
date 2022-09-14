@@ -183,3 +183,5 @@ project_template/tutorial
 *.xcodeproj
 *.DS_Store
 *.entitlements
+/cmake-build-debug/
+/docs/reference/

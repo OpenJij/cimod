@@ -12,17 +12,6 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-/**
- * @file binary_quadratic_model.hpp
- * @author Fumiya Watanabe
- * @brief BinaryQuadraticModel class
- * @version 1.0.0
- * @date 2020-03-24
- *
- * @copyright Copyright (c) Jij Inc. 2020
- *
- */
-
 #pragma once
 
 #include <algorithm>

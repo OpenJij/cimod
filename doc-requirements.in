@@ -12,24 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import annotations
+-c requirements.txt
+-c build-requirements.txt
 
-import cimod.cxxcimod, dimod
+matplotlib
 
-from dimod import BINARY as _BINARY, SPIN as _SPIN, Vartype as _Vartype
+breathe
 
-SPIN = _SPIN
-BINARY = _BINARY
-Vartype = _Vartype
-
-
-def to_cxxcimod(vartype):
-    # convert to cxxcimod type
-    if isinstance(vartype, cimod.cxxcimod.Vartype):
-        return vartype
-
-    vartype = dimod.as_vartype(vartype)
-    if vartype == SPIN:
-        return cimod.cxxcimod.Vartype.SPIN
-    if vartype == BINARY:
-        return cimod.cxxcimod.Vartype.BINARY
+jupyter
+jupyter-book
+jupyter-cache
+sphinx
+sphinx_sitemap
+sphinx-jupyterbook-latex
+sphinx-proof
+sphinx-comments
+sphinx-autobuild
+sphinx-inline-tabs
+sphinxcontrib-katex
+sphinx-autoapi
+sphinx-notfound-page
+sphinx-hoverxref
+sphinx-examples

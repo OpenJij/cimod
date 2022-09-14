@@ -14,9 +14,6 @@
 
 from __future__ import annotations
 
-__all__ = []
-
-
 def disabled(func):
     def wrapper(*args, **kwargs):
         raise NotImplementedError("The function {} is disabled.".format(func.__name__))
