@@ -103,7 +103,7 @@ jobs:
         run: python -m pip install -vvv .
       - name: Jupyter Book
         shell: bash
-        run: python -m jupyter-book build docs --all
+        run: jupyter-book build docs --all
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
