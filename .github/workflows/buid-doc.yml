@@ -42,10 +42,10 @@ jobs:
         uses: actions/cache@v3
         with:
            path: ${{ steps.pip-cache.outputs.dir }}
-           key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }-${{ hashFiles('doc-requirements.txt') }}
+           key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }}-${{ hashFiles('doc-requirements.txt') }}
            restore-keys: |
-              ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }-${{ hashFiles('doc-requirements.txt') }}
-              ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }-
+              ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }}-${{ hashFiles('doc-requirements.txt') }}
+              ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }}-
               ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-
               ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-
       - name: Update
