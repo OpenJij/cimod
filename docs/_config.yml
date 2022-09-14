@@ -1,0 +1,172 @@
+# Book settings
+# Learn more at https://jupyterbook.org/customize/config.html
+
+title:     Cimod Book
+author:    Jij Inc.
+copyright: "2022"
+logo:      OpenJij-Logo.webp
+
+# Force re-execution of notebooks on each build.
+# See https://jupyterbook.org/content/execute.html
+execute:
+  execute_notebooks: cache
+  run_in_temp:       true
+  allow_errors:      false
+#  stderr_output: remove
+parse:
+  myst_enable_extensions:
+    - smartquotes
+    - html_image
+    - linkify
+    - substitution
+    - colon_fence
+    - html_admonition
+    - deflist
+    - dollarmath
+    - amsmath
+  myst_url_schemes: [ mailto, http, https ] # URI schemes that will be recognised as external URLs in Markdown links
+  myst_heading_anchors: 3
+  myst_dmath_double_inline: true
+# Information about where the book exists on the web
+repository:
+  url:          https://github.com/OpenJij/cimod  # Online location of your book
+  path_to_book: docs  # Optional path to your book, relative to the repository root
+  branch:       main  # Which branch of the repository should be used when creating links (optional)
+
+# Add GitHub buttons to your book
+# See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
+html:
+  favicon:                favicon.ico
+  use_issues_button:      true
+  use_repository_button:  true
+  use_multitoc_numbering: false
+
+# Launch button settings
+launch_buttons:
+  notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
+  binderhub_url             : https://mybinder.org  # The URL of the BinderHub (e.g., https://mybinder.org)
+sphinx:
+  recursive_update: true
+  config:
+    nb_merge_streams:                 true
+    execution_show_tb:                True
+    katex_css_path:                   https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css
+    katex_js_path:                    katex.min.js
+    katex_autorender_path:            auto-render.min.js
+    katex_prerender:                  true
+    add_module_names:                 true
+    autosummary_generate:             false
+    autosummary_generate_overwrite:   true
+    autosummary_imported_members:     true
+    autosummary_ignore_module_all:    true
+    autoclass_content:                both
+    autodoc_class_signature:          separated
+    autodoc_member_order:             groupwise
+    autodoc_docstring_signature:      true
+    autodoc_typehints:                both
+    autodoc_typehints_format:         short
+    napoleon_google_docstring:        true
+    napoleon_include_init_with_doc:   true
+    autosectionlabel_prefix_document: true
+    autoapi_root:                     reference
+    autoapi_keep_files:               true
+    autoapi_dirs:                     [ ../cimod ]
+    autoapi_ignore:                   [ ../cimod/_version.py, '*/_version.py' ]
+    autoapi_add_toctree_entry:        false
+    autoapi_python_class_content:     both
+    autoapi_member_order:             groupwise
+    autoapi_options: [
+      members,
+      inherited-members,
+      undoc-members,
+      show-inheritance,
+      show-module-summary,
+      show-inheritance-diagram,
+      imported-members,
+    ]
+    breathe_projects :
+      cimod: "../build/xml/"
+      auto: "../build/xml/"
+    breathe_default_project : cimod
+    breathe_projects_source :
+      auto:
+      - "../cimod/"
+      - [
+        "main.cpp",
+        "main.hpp",
+      ]
+      cimod :
+        - "../include/cimod"
+        - [
+          "binary_polynomial_model.hpp",
+          "binary_quadratic_model.hpp",
+          "binary_quadratic_model_dict.hpp",
+          "disable_eigen_warning.hpp",
+          "hash.hpp",
+          "json.hpp",
+          "utilities.hpp",
+          "vartypes.hpp",
+        ]
+    breathe_default_members:
+      members:
+      undoc-members:
+    breathe_show_include: false
+    intersphinx_mapping:
+      python:
+        - "https://docs.python.org/3"
+        - null
+      typing-extensions:
+        - "https://typing.readthedocs.io/en/latest/"
+        - null
+      scipy:
+        - "https://docs.scipy.org/doc/scipy/reference/"
+        - null
+      requests:
+        - "https://requests.readthedocs.io/en/latest/"
+        - null
+      numpy:
+        - "https://numpy.org/doc/stable/"
+        - null
+      cimod:
+        - "https://cimod.openjij.org/"
+        - null
+      pandas:
+        - "https://pandas.pydata.org/pandas-docs/stable/"
+        - null
+      oceandocs:
+        - "https://docs.ocean.dwavesys.com/en/stable/"
+        - null
+      ebp:
+        - "https://executablebooks.org/en/latest/"
+        - null
+      myst-parser:
+        - "https://myst-parser.readthedocs.io/en/latest/"
+        - null
+      myst-nb:
+        - "https://myst-nb.readthedocs.io/en/latest/"
+        - null
+      sphinx:
+        - "https://www.sphinx-doc.org/en/master"
+        - null
+      nbformat:
+        - "https://nbformat.readthedocs.io/en/latest"
+        - null
+      sd:
+        - https://sphinx-design.readthedocs.io/en/latest
+        - null
+  extra_extensions:
+    - breathe
+    - sphinx_proof
+    - sphinx_inline_tabs
+    - sphinx_sitemap
+    - 'autoapi.extension'
+    - 'sphinxcontrib.katex'
+    - 'sphinx.ext.duration'
+    - 'sphinx.ext.doctest'
+    - 'sphinx.ext.autodoc'
+    - 'sphinx.ext.napoleon'
+    - 'sphinx.ext.intersphinx'
+    - 'sphinx.ext.viewcode'
+    - 'sphinx.ext.autosummary'
+    - 'sphinx.ext.autosectionlabel'
+    - 'sphinx.ext.inheritance_diagram'
