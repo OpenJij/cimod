@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v4
         name: Install Python
         with:
-          python-version: '3.10'
+          python-version: '3.11'
       - name: Install dependencies 
         run: |
            pip install --upgrade pip wheel setuptools build 
@@ -41,6 +41,8 @@ jobs:
          - python: /opt/python/cp39-cp39/bin/python
            container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
          - python: /opt/python/cp310-cp310/bin/python
+           container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
+         - python: /opt/python/cp311-cp311/bin/python
            container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
                
     steps:
@@ -231,6 +233,9 @@ jobs:
           - os: ubuntu-latest
             arch: aarch64
             CIBW_BUILD: cp310-manylinux_aarch64
+          - os: ubuntu-latest
+            arch: aarch64
+            CIBW_BUILD: cp311-manylinux_aarch64
     steps:
       - uses: actions/checkout@v3       
       - name: Set up QEME
