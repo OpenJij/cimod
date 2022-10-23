@@ -36,43 +36,43 @@ def get_cxxcimod_class(linear, quadratic, sparse):
         index.add(next(iter(quadratic))[1])
 
     if len(set(type(i) for i in index)) != 1:
-        raise TypeError("invalid types of linear and quadratic")
+        # assume that index type is int
+        ind = int(0)
     else:
-
         ind = next(iter(index))
 
-        if sparse:
-            if isinstance(ind, int):
-                base = cxxcimod.BinaryQuadraticModel_Sparse
-            elif isinstance(ind, str):
-                base = cxxcimod.BinaryQuadraticModel_str_Sparse
-            elif isinstance(ind, tuple):
-                if len(ind) == 2:
-                    base = cxxcimod.BinaryQuadraticModel_tuple2_Sparse
-                elif len(ind) == 3:
-                    base = cxxcimod.BinaryQuadraticModel_tuple3_Sparse
-                elif len(ind) == 4:
-                    base = cxxcimod.BinaryQuadraticModel_tuple4_Sparse
-                else:
-                    raise TypeError("invalid length of tuple")
+    if sparse:
+        if isinstance(ind, int):
+            base = cxxcimod.BinaryQuadraticModel_Sparse
+        elif isinstance(ind, str):
+            base = cxxcimod.BinaryQuadraticModel_str_Sparse
+        elif isinstance(ind, tuple):
+            if len(ind) == 2:
+                base = cxxcimod.BinaryQuadraticModel_tuple2_Sparse
+            elif len(ind) == 3:
+                base = cxxcimod.BinaryQuadraticModel_tuple3_Sparse
+            elif len(ind) == 4:
+                base = cxxcimod.BinaryQuadraticModel_tuple4_Sparse
             else:
-                raise TypeError("invalid types of linear and quadratic")
+                raise TypeError("invalid length of tuple")
         else:
-            if isinstance(ind, int):
-                base = cxxcimod.BinaryQuadraticModel_Dense
-            elif isinstance(ind, str):
-                base = cxxcimod.BinaryQuadraticModel_str_Dense
-            elif isinstance(ind, tuple):
-                if len(ind) == 2:
-                    base = cxxcimod.BinaryQuadraticModel_tuple2_Dense
-                elif len(ind) == 3:
-                    base = cxxcimod.BinaryQuadraticModel_tuple3_Dense
-                elif len(ind) == 4:
-                    base = cxxcimod.BinaryQuadraticModel_tuple4_Dense
-                else:
-                    raise TypeError("invalid length of tuple")
+            raise TypeError("invalid types of linear and quadratic")
+    else:
+        if isinstance(ind, int):
+            base = cxxcimod.BinaryQuadraticModel_Dense
+        elif isinstance(ind, str):
+            base = cxxcimod.BinaryQuadraticModel_str_Dense
+        elif isinstance(ind, tuple):
+            if len(ind) == 2:
+                base = cxxcimod.BinaryQuadraticModel_tuple2_Dense
+            elif len(ind) == 3:
+                base = cxxcimod.BinaryQuadraticModel_tuple3_Dense
+            elif len(ind) == 4:
+                base = cxxcimod.BinaryQuadraticModel_tuple4_Dense
             else:
-                raise TypeError("invalid types of linear and quadratic")
+                raise TypeError("invalid length of tuple")
+        else:
+            raise TypeError("invalid types of linear and quadratic")
 
     return base
 

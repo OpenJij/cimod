@@ -52,7 +52,7 @@ dist/
 python_version.txt
 *requirement.txt
 requirements.txt
-*requirement.txt
+*requirements.txt
 format-requirements.txt
 # C extensions
 *.so

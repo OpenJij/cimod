@@ -133,6 +133,12 @@ class ModelTest(unittest.TestCase):
             self.assertAlmostEqual(bqm.vartype, dimod.SPIN)
             self.assertEqual(type(bqm.interaction_matrix()), mat_type)
 
+            # empty object
+            bqm = cimod.model.BinaryQuadraticModel({}, {}, 'SPIN', sparse=sparse)
+            self.assertAlmostEqual(bqm.offset, 0)
+            self.assertAlmostEqual(bqm.vartype, dimod.SPIN)
+            self.assertEqual(type(bqm.interaction_matrix()), mat_type)
+
     def test_bqm_calc_energy(self):
         # Test to calculate energy
 
