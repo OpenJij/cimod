@@ -1,3 +1,4 @@
+cimod/_version.py
 test/*.out
 
 # Prerequisites
