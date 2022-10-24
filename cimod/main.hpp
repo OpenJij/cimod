@@ -43,6 +43,7 @@ inline void declare_BQM( py::module& m, const std::string& name ) {
   using BQM = BinaryQuadraticModel<IndexType, FloatType, DataType>;
 
   using DenseMatrix = Eigen::Matrix<FloatType, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>;
+  using SparseMatrix = Eigen::SparseMatrix<FloatType, Eigen::RowMajor>;
 
   auto pyclass_BQM = py::class_<BQM>( m, name.c_str() );
 
@@ -70,7 +71,18 @@ inline void declare_BQM( py::module& m, const std::string& name ) {
           "mat"_a,
           "labels_vec"_a,
           "vartype"_a,
-          "fix_format"_a = false )
+          "fix_format"_a = true )
+      .def(
+          py::init<const SparseMatrix&, std::vector<IndexType>, FloatType, Vartype>(),
+          "mat"_a,
+          "labels_vec"_a,
+          "offset"_a,
+          "vartype"_a)
+      .def(
+          py::init<const SparseMatrix&, std::vector<IndexType>, Vartype>(),
+          "mat"_a,
+          "labels_vec"_a,
+          "vartype"_a)
       .def( py::init<const BQM&>(), "bqm"_a )
       .def( "length", &BQM::length )
       .def( "get_num_variables", &BQM::get_num_variables )
