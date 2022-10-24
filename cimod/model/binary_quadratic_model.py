@@ -22,6 +22,9 @@ import dimod
 import numpy as np
 
 from cimod.vartype import to_cxxcimod
+from scipy.sparse import dok_matrix, csr_matrix
+
+from typing import Tuple, Union
 
 
 def get_cxxcimod_class(linear, quadratic, sparse):
@@ -161,37 +164,40 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             ]
             args = [
                 to_cxxcimod(elem)
-                if not isinstance(elem, np.ndarray) and vartypes.count(elem) != 0
+                if not isinstance(elem, (np.ndarray, csr_matrix)) and vartypes.count(elem) != 0
                 else elem
                 for elem in args
             ]
             kwargs = {
                 k: to_cxxcimod(v)
-                if not isinstance(elem, np.ndarray) and vartypes.count(v) != 0
+                if not isinstance(elem, (np.ndarray, csr_matrix)) and vartypes.count(v) != 0
                 else v
                 for k, v in kwargs.items()
             }
+
             self.model_type = "cimod.BinaryQuadraticModel"
-            # if linear and quadratic are given and mode is dense
+            # if linear and quadratic are given. generate matrix and initialize as matrix
             if (
                 len(args) >= 2
                 and isinstance(args[0], dict)
                 and isinstance(args[1], dict)
-                and sparse is False
             ):
                 linear = args[0]
                 quadratic = args[1]
                 offset, vartype = extract_offset_and_vartype(*args[2:], **kwargs)
 
-                mat, idx_to_label = self._generate_mat(linear, quadratic, False)
+                mat, idx_to_label = self._generate_mat(linear, quadratic, False, sparse)
 
-                super().__init__(mat, idx_to_label, offset, vartype, fix_format=False)
+                if sparse is False:
+                    super().__init__(mat, idx_to_label, offset, vartype, fix_format=False)
+                else:
+                    super().__init__(mat, idx_to_label, offset, vartype)
 
             else:
                 super().__init__(*args, **kwargs)
 
         @staticmethod
-        def _generate_mat(linear, quadratic, include_quaddiag):
+        def _generate_mat(linear: dict, quadratic: dict, include_quaddiag: bool, sparse: bool) -> Tuple[Union[np.ndarray, csr_matrix], dict]:
             labels = set()
 
             for i in linear.keys():
@@ -215,7 +221,11 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
             mat_size = len(idx_to_label) + 1
 
+
+            # generate matrix (dense or sparse)
+            #mat = np.zeros(shape=(mat_size, mat_size)) if sparse is False else dok_matrix((mat_size, mat_size))
             mat = np.zeros(shape=(mat_size, mat_size))
+
             mat[mat_size - 1, mat_size - 1] = 1
 
             for i, val in linear.items():
@@ -229,7 +239,9 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 else:
                     mat[idx_i, mat_size - 1] += val
 
+            #return (mat if sparse is False else mat.tocsr()), idx_to_label
             return mat, idx_to_label
+
 
         @property
         def vartype(self):
@@ -318,7 +330,7 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             # return cls(cxxbqm, **kwargs)
             # separate linear and quadratic
 
-            mat, idx_to_label = cls._generate_mat({}, Q, True)
+            mat, idx_to_label = cls._generate_mat({}, Q, True, sparse)
 
             return cls(mat, idx_to_label, offset, "BINARY", **kwargs)
 
@@ -326,7 +338,7 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
         def from_ising(cls, linear, quadratic, offset=0.0, **kwargs):
             # cxxbqm = Base.from_ising(linear, quadratic, offset)
             # return cls(cxxbqm, **kwargs)
-            mat, idx_to_label = cls._generate_mat(linear, quadratic, False)
+            mat, idx_to_label = cls._generate_mat(linear, quadratic, False, sparse)
 
             return cls(mat, idx_to_label, offset, "SPIN", **kwargs)
 
@@ -360,7 +372,8 @@ def make_BinaryQuadraticModel_from_JSON(obj):
 
 
 def BinaryQuadraticModel(linear, quadratic, *args, **kwargs):
-    Model = make_BinaryQuadraticModel(linear, quadratic, kwargs.pop("sparse", False))
+    sparse_option = kwargs.pop("sparse", False)
+    Model = make_BinaryQuadraticModel(linear, quadratic, sparse_option)
 
     # offset and vartype
     offset, vartype = extract_offset_and_vartype(*args, **kwargs)
@@ -376,24 +389,34 @@ def bqm_from_numpy_matrix(
         num_variables = mat.shape[0]
         variables = list(range(num_variables))
 
+    sparse_option = kwargs.pop("sparse", False)
+
     return make_BinaryQuadraticModel(
-        {variables[0]: 1.0}, {}, kwargs.pop("sparse", False)
+        {variables[0]: 1.0}, {}, sparse_option
     ).from_numpy_matrix(mat, variables, offset, vartype, True, **kwargs)
 
 
 BinaryQuadraticModel.from_numpy_matrix = bqm_from_numpy_matrix
 
-BinaryQuadraticModel.from_qubo = (
-    lambda Q, offset=0.0, **kwargs: make_BinaryQuadraticModel(
-        {}, Q, kwargs.pop("sparse", False)
-    ).from_qubo(Q, offset, **kwargs)
-)
+def bqm_from_qubo(Q, offset=0.0, **kwargs):
+    sparse_option = kwargs.pop("sparse", False)
 
-BinaryQuadraticModel.from_ising = (
-    lambda linear, quadratic, offset=0.0, **kwargs: make_BinaryQuadraticModel(
-        linear, quadratic, kwargs.pop("sparse", False)
+    return make_BinaryQuadraticModel(
+        {}, Q, sparse_option
+    ).from_qubo(Q, offset, **kwargs)
+
+BinaryQuadraticModel.from_qubo = bqm_from_qubo
+
+
+def bqm_from_ising(linear, quadratic, offset=0.0, **kwargs):
+    sparse_option = kwargs.pop("sparse", False)
+
+    return make_BinaryQuadraticModel(
+        linear, quadratic, sparse_option
     ).from_ising(linear, quadratic, offset, **kwargs)
-)
+
+BinaryQuadraticModel.from_ising = bqm_from_ising
+
 
 BinaryQuadraticModel.from_serializable = (
     lambda obj, **kwargs: make_BinaryQuadraticModel_from_JSON(obj).from_serializable(
