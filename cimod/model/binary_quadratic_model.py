@@ -25,6 +25,7 @@ from cimod.vartype import to_cxxcimod
 from scipy.sparse import dok_matrix, csr_matrix
 
 from typing import Tuple, Union
+from collections import defaultdict
 
 
 def get_cxxcimod_class(linear, quadratic, sparse):
@@ -226,7 +227,9 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             if sparse is False:
                 mat = np.zeros(shape=(mat_size, mat_size))
             else:
-                mat = dok_matrix((mat_size, mat_size))
+                # first defines dict and use `_update` function to make `dok_matrix`
+                # then convert to `csr_matrix`
+                mat = defaultdict(float)
 
             mat[mat_size - 1, mat_size - 1] = 1
 
@@ -244,7 +247,10 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             if sparse is False:
                 return mat, idx_to_label
             else:
-                csr_mat = mat.tocsr()
+                dok_mat = dok_matrix((mat_size, mat_size))
+                # using `_update` function skips index checking
+                dok_mat._update(mat)
+                csr_mat = dok_mat.tocsr()
                 csr_mat.sort_indices()
                 return csr_mat, idx_to_label
 
