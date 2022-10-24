@@ -913,7 +913,8 @@ namespace cimod {
      */
     inline void _initialize_quadmat( const SparseMatrix &mat, const std::vector<IndexType> &labels_vec ) {
       this->_quadmat = mat;
-      _idx_to_label = std::vector<IndexType>( labels_vec.begin(), labels_vec.end() );
+      std::unordered_set<IndexType> labels( labels_vec.begin(), labels_vec.end() );
+      _idx_to_label = std::vector<IndexType>( labels.begin(), labels.end() );
       std::sort( _idx_to_label.begin(), _idx_to_label.end() );
       _set_label_to_idx();
     }
