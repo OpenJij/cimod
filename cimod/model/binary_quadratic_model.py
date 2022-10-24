@@ -170,7 +170,7 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             ]
             kwargs = {
                 k: to_cxxcimod(v)
-                if not isinstance(elem, (np.ndarray, csr_matrix)) and vartypes.count(v) != 0
+                if not isinstance(v, (np.ndarray, csr_matrix)) and vartypes.count(v) != 0
                 else v
                 for k, v in kwargs.items()
             }
@@ -223,8 +223,10 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
 
 
             # generate matrix (dense or sparse)
-            #mat = np.zeros(shape=(mat_size, mat_size)) if sparse is False else dok_matrix((mat_size, mat_size))
-            mat = np.zeros(shape=(mat_size, mat_size))
+            if sparse is False:
+                mat = np.zeros(shape=(mat_size, mat_size))
+            else:
+                mat = dok_matrix((mat_size, mat_size))
 
             mat[mat_size - 1, mat_size - 1] = 1
 
@@ -239,8 +241,12 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 else:
                     mat[idx_i, mat_size - 1] += val
 
-            #return (mat if sparse is False else mat.tocsr()), idx_to_label
-            return mat, idx_to_label
+            if sparse is False:
+                return mat, idx_to_label
+            else:
+                csr_mat = mat.tocsr()
+                csr_mat.sort_indices()
+                return csr_mat, idx_to_label
 
 
         @property
