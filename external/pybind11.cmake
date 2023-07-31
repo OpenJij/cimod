@@ -8,7 +8,7 @@ SET (FETCHCONTENT_QUIET OFF)
 FETCHCONTENT_DECLARE (
         pybind11
         GIT_REPOSITORY https://github.com/pybind/pybind11
-        GIT_TAG v2.10.3
+        GIT_TAG v2.11.1
         GIT_SHALLOW TRUE
 )
 SET (BUILD_TESTING OFF)
