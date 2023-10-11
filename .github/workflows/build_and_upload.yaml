@@ -42,6 +42,8 @@ jobs:
            container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
          - python: /opt/python/cp311-cp311/bin/python
            container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
+         - python: /opt/python/cp312-cp312/bin/python
+           container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
                
     steps:
       - uses: actions/checkout@v4       
@@ -229,6 +231,9 @@ jobs:
           - os: ubuntu-latest
             arch: aarch64
             CIBW_BUILD: cp311-manylinux_aarch64
+          - os: ubuntu-latest
+            arch: aarch64
+            CIBW_BUILD: cp312-manylinux_aarch64
     steps:
       - uses: actions/checkout@v4       
       - name: Set up QEME
