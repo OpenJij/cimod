@@ -24,7 +24,7 @@ jobs:
           python -m pip install pip-tools 
           pip-compile
           pip-compile dev-requirement.in
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('dev-requirement.txt') }}

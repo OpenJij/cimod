@@ -39,7 +39,7 @@ jobs:
           pip-compile build-requirements.in
           pip-compile doc-requirements.in
       - name: pip cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
            path: ${{ steps.pip-cache.outputs.dir }}
            key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }}-${{ hashFiles('doc-requirements.txt') }}
