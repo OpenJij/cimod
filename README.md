@@ -252,6 +252,9 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
 
 ![benchmark](https://github.com/OpenJij/cimod/blob/image_store/figure.png)
 
+## Notes
+* As explained in https://github.com/OpenJij/cimod/issues/48, specifying self-loop index (e.g. `{(2, 2): 5}`) in the `quadratic` argument in `BinaryQuadraticModel` is not allowed.
+
 ### Licences
 
 Copyright 2022 Jij Inc.
