@@ -186,3 +186,11 @@ project_template/tutorial
 *.entitlements
 /cmake-build-debug/
 /docs/reference/
+
+# Cline Memory Bank
+memory-bank/
+
+# Cline rules and ignore files
+.clinerules/
+.clineignore
+workflows/
