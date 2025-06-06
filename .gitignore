@@ -191,6 +191,7 @@ project_template/tutorial
 memory-bank/
 
 # Cline rules and ignore files
+.clinerule
 .clinerules/
 .clineignore
 workflows/
