@@ -195,3 +195,7 @@ memory-bank/
 .clinerules/
 .clineignore
 workflows/
+
+# External dependencies installed during build
+cimod/share/
+cimod/include/pybind11_json/
