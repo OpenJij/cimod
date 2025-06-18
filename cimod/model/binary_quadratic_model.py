@@ -248,8 +248,15 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 return mat, idx_to_label
             else:
                 dok_mat = dok_matrix((mat_size, mat_size))
-                # using `_update` function skips index checking
-                dok_mat._update(mat)
+                # SciPy dok_matrix update compatibility layer
+                # History: < 1.0 had _update(), 1.0-1.14 broke both, 1.15+ restored update()
+                # See: https://github.com/scipy/scipy/issues/8338
+                try:
+                    # SciPy 1.15+: official update() method
+                    dok_mat.update(mat)
+                except (AttributeError, NotImplementedError):
+                    # SciPy < 1.15: private _update() method (when available)
+                    dok_mat._update(mat)
                 csr_mat = dok_mat.tocsr()
                 csr_mat.sort_indices()
                 return csr_mat, idx_to_label
