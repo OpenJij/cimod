@@ -56,7 +56,18 @@ cimod/_version.py
 
 # CMake and build directories
 build/
+build_*/
 cmake-build-debug/
+
+# CMake generated files (not source .cmake files)
+CMakeCache.txt
+CMakeFiles/
+CTestTestfile.cmake
+DartConfiguration.tcl
+Makefile
+Testing/
+_deps/
+cmake_install.cmake
 
 ## Python Development ##
 # Byte-compiled / optimized / DLL files
@@ -81,6 +92,7 @@ nosetests.xml
 .env
 .python-version
 .venv
+.venv*/
 ENV/
 env/
 env.bak/
@@ -194,7 +206,6 @@ memory-bank/
 .clineignore
 .clinerule
 .clinerules/
-workflows/
 
 # Claude Code
 CLAUDE.md
