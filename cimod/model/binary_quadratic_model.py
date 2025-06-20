@@ -164,15 +164,21 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 "BINARY",
             ]
             args = [
-                to_cxxcimod(elem)
-                if not isinstance(elem, (np.ndarray, csr_matrix)) and vartypes.count(elem) != 0
-                else elem
+                (
+                    to_cxxcimod(elem)
+                    if not isinstance(elem, (np.ndarray, csr_matrix))
+                    and vartypes.count(elem) != 0
+                    else elem
+                )
                 for elem in args
             ]
             kwargs = {
-                k: to_cxxcimod(v)
-                if not isinstance(v, (np.ndarray, csr_matrix)) and vartypes.count(v) != 0
-                else v
+                k: (
+                    to_cxxcimod(v)
+                    if not isinstance(v, (np.ndarray, csr_matrix))
+                    and vartypes.count(v) != 0
+                    else v
+                )
                 for k, v in kwargs.items()
             }
 
@@ -190,7 +196,9 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 mat, idx_to_label = self._generate_mat(linear, quadratic, False, sparse)
 
                 if sparse is False:
-                    super().__init__(mat, idx_to_label, offset, vartype, fix_format=False)
+                    super().__init__(
+                        mat, idx_to_label, offset, vartype, fix_format=False
+                    )
                 else:
                     super().__init__(mat, idx_to_label, offset, vartype)
 
@@ -198,7 +206,9 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
                 super().__init__(*args, **kwargs)
 
         @staticmethod
-        def _generate_mat(linear: dict, quadratic: dict, include_quaddiag: bool, sparse: bool) -> Tuple[Union[np.ndarray, csr_matrix], dict]:
+        def _generate_mat(
+            linear: dict, quadratic: dict, include_quaddiag: bool, sparse: bool
+        ) -> Tuple[Union[np.ndarray, csr_matrix], dict]:
             labels = set()
 
             for i in linear.keys():
@@ -221,7 +231,6 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             label_to_idx = {elem: k for k, elem in enumerate(idx_to_label)}
 
             mat_size = len(idx_to_label) + 1
-
 
             # generate matrix (dense or sparse)
             if sparse is False:
@@ -249,18 +258,22 @@ def make_BinaryQuadraticModel(linear, quadratic, sparse):
             else:
                 dok_mat = dok_matrix((mat_size, mat_size))
                 # SciPy dok_matrix update compatibility layer
-                # History: < 1.0 had _update(), 1.0-1.14 broke both, 1.15+ restored update()
                 # See: https://github.com/scipy/scipy/issues/8338
                 try:
-                    # SciPy 1.15+: official update() method
+                    # Strategy 1: Official update() method (SciPy 1.15+ future-ready)
                     dok_mat.update(mat)
                 except (AttributeError, NotImplementedError):
-                    # SciPy < 1.15: private _update() method (when available)
-                    dok_mat._update(mat)
+                    try:
+                        # Strategy 2: Private _update() method (SciPy < 1.13, high performance)
+                        dok_mat._update(mat)
+                    except (AttributeError, NotImplementedError):
+                        # Strategy 3: Individual assignment (universal compatibility)
+                        # Note: Slower but guaranteed to work across all SciPy versions
+                        for (i, j), value in mat.items():
+                            dok_mat[i, j] = value
                 csr_mat = dok_mat.tocsr()
                 csr_mat.sort_indices()
                 return csr_mat, idx_to_label
-
 
         @property
         def vartype(self):
@@ -417,12 +430,14 @@ def bqm_from_numpy_matrix(
 
 BinaryQuadraticModel.from_numpy_matrix = bqm_from_numpy_matrix
 
+
 def bqm_from_qubo(Q, offset=0.0, **kwargs):
     sparse_option = kwargs.pop("sparse", False)
 
-    return make_BinaryQuadraticModel(
-        {}, Q, sparse_option
-    ).from_qubo(Q, offset, **kwargs)
+    return make_BinaryQuadraticModel({}, Q, sparse_option).from_qubo(
+        Q, offset, **kwargs
+    )
+
 
 BinaryQuadraticModel.from_qubo = bqm_from_qubo
 
@@ -430,9 +445,10 @@ BinaryQuadraticModel.from_qubo = bqm_from_qubo
 def bqm_from_ising(linear, quadratic, offset=0.0, **kwargs):
     sparse_option = kwargs.pop("sparse", False)
 
-    return make_BinaryQuadraticModel(
-        linear, quadratic, sparse_option
-    ).from_ising(linear, quadratic, offset, **kwargs)
+    return make_BinaryQuadraticModel(linear, quadratic, sparse_option).from_ising(
+        linear, quadratic, offset, **kwargs
+    )
+
 
 BinaryQuadraticModel.from_ising = bqm_from_ising
 

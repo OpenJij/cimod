@@ -209,6 +209,8 @@ memory-bank/
 
 # Claude Code
 CLAUDE.md
+CLAUDE.sub.md
+.claude-generated/
 
 # Tutorial files
 project_template/tutorial
