@@ -130,7 +130,7 @@ $ pip-sync requirements.txt dev-requirements.txt
 $ source .venv/bin/activate
 $ export CMAKE_BUILD_TYPE=Debug
 $ python setup.py --force-cmake install --build-type Debug -G Ninja
-$ python setup.py --build-type Debug test 
+$ python -m pytest tests/ -v --cov=cimod --cov-report=html 
 $ python -m coverage html
 ```
 

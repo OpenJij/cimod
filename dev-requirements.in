@@ -15,8 +15,6 @@
 -c requirements.txt
 
 pre-commit
-
-pytest-runner
 setuptools_scm[toml]
 cmake 
 ninja; sys_platform != 'win32'
@@ -27,7 +25,6 @@ setuptools
 pytest
 pytest-mock
 pytest-cov
-pytest-runner
 pytest-randomly
 pytest-spec
 coverage

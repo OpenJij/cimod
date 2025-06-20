@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
-
 try:
     from skbuild import setup
 except ImportError:
@@ -26,8 +24,6 @@ setup_requires = [
     "scikit-build > 0.16.0"
 ]
 
-if any(arg in sys.argv for arg in ("pytest", "test")):
-    setup_requires.append("pytest-runner")
 
 setup(
     setup_requires=setup_requires,

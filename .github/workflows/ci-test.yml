@@ -324,7 +324,7 @@ jobs:
       shell: bash
       run: |
         set -eux
-        python setup.py --build-type Debug test 
+        python -m pytest tests/ -v --cov=cimod 
     - name: Generate
       shell: bash
       run: |
