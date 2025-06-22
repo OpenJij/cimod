@@ -257,7 +257,7 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
 
 ### Licences
 
-Copyright 2022 Jij Inc.
+Copyright 2025 Jij Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");\
 you may not use this file except in compliance with the License.\
