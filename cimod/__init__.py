@@ -31,14 +31,14 @@ from cimod.model.binary_quadratic_model import (
 from cimod.vartype import BINARY, SPIN, Vartype
 
 __all__ = [
-        "cxxcimod",
-        "SPIN",
-        "BINARY",
-        "Vartype",
-        "make_BinaryQuadraticModel",
-        "make_BinaryQuadraticModel_from_JSON",
-        "BinaryQuadraticModel",
-        "make_BinaryPolynomialModel",
-        "make_BinaryPolynomialModel_from_JSON",
-        "BinaryPolynomialModel",
+    "cxxcimod",
+    "SPIN",
+    "BINARY",
+    "Vartype",
+    "make_BinaryQuadraticModel",
+    "make_BinaryQuadraticModel_from_JSON",
+    "BinaryQuadraticModel",
+    "make_BinaryPolynomialModel",
+    "make_BinaryPolynomialModel_from_JSON",
+    "BinaryPolynomialModel",
 ]
