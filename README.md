@@ -148,41 +148,26 @@ $ ctest --extra-verbose --parallel --schedule-random
 
 Needs: CMake > 3.22, C++17
 
-- Format
+- Lint & Format (Unified with Ruff)
 
 ```sh
-$ pip-compile format-requirements.in
-$ pip-sync format-requirements.txt
-```
+# Install ruff (only dependency needed)
+$ pip install ruff
 
-```sh
-$ python -m isort 
-$ python -m black 
-```
+# Check linting issues
+$ ruff check .
 
-- Aggressive Format
+# Auto-fix linting issues  
+$ ruff check . --fix
 
-```sh
-$ python -m isort --force-single-line-imports --verbose ./cimod
-$ python -m autoflake --in-place --recursive --remove-all-unused-imports --ignore-init-module-imports --remove-unused-variables ./cimod
-$ python -m autopep8 --in-place --aggressive --aggressive  --recursive ./cimod
-$ python -m isort ./cimod
-$ python -m black ./cimod
-```
+# Check formatting
+$ ruff format --check .
 
-- Lint
+# Apply formatting
+$ ruff format .
 
-```sh
-$ pip-compile setup.cfg
-$ pip-compile dev-requirements.in
-$ pip-compile lint-requirements.in
-$ pip-sync requirements.txt dev-requirements.txt lint-requirements.txt
-```
-
-```sh
-$ python -m flake8
-$ python -m mypy
-$ python -m pyright
+# All-in-one check (recommended)
+$ ruff check . && ruff format --check .
 ```
 
 ## Benchmark
