@@ -14,7 +14,6 @@
 
 -c requirements.txt
 
-pre-commit
 setuptools_scm[toml]
 cmake 
 ninja; sys_platform != 'win32'

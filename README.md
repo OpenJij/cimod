@@ -90,14 +90,12 @@ print(bqm.quadratic)
 
 ## For Contributor
 
-Use `pre-commit` for auto chech before git commit.
-`.pre-commit-config.yaml`
+Use `ruff` for code formatting and linting.
 
-```
-# pipx install pre-commit 
-# or 
-# pip install pre-commit
-pre-commit install
+```bash
+pip install ruff
+ruff check .
+ruff format .
 ```
 
 ## Install
@@ -123,11 +121,11 @@ $ pip install --no-binary=jij-cimod jij-cimod
 
 ```sh
 $ python -m venv .venv
+$ source .venv/bin/activate
 $ pip install pip-tools 
 $ pip-compile setup.cfg
 $ pip-compile dev-requirements.in
 $ pip-sync requirements.txt dev-requirements.txt
-$ source .venv/bin/activate
 $ export CMAKE_BUILD_TYPE=Debug
 $ python setup.py --force-cmake install --build-type Debug -G Ninja
 $ python -m pytest tests/ -v --cov=cimod --cov-report=html 
