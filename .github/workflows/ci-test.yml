@@ -31,16 +31,14 @@ jobs:
       max-parallel: 3
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        #os: [windows-latest]
     runs-on: ${{ matrix.os }}
     if: ${{ github.actor != 'dependabot[bot]' || !contains(github.head_ref, 'dependabot')}}
-    #if: ${{github.event_name == 'workflow_dispatch'}}
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 
       uses: actions/setup-python@v5
       with:
-        python-version : '3.10'
+        python-version : '3.12'
     - name: Install Dep on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
       shell: bash
@@ -65,17 +63,6 @@ jobs:
         ls  C:/vcpkg
         MSBuild.exe -version > msbuild_version.txt
         cat msbuild_version.txt
-    - name: Cache vcpkg
-      uses: actions/cache@v4
-      if: ${{ matrix.os == 'windows-latest'}}
-      with:
-         path: |
-           C:/Users/runneradmin/AppData/Local/vcpkg/archives
-         key: ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
-         restore-keys: |
-           ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
-           ${{ matrix.os }}-vcpkg
-           # C:/vcpkg/installed
     - name: Install Dep on windows
       if: ${{ matrix.os == 'windows-latest'}}
       shell: powershell
@@ -91,22 +78,10 @@ jobs:
          vcpkg --triplet x64-windows-static install nlohmann-json
          vcpkg --triplet x64-windows install nlohmann-json
          vcpkg integrate install
-    #    vcpkg --triplet x64-windows-static install openblas
     - name: Install CMake 
       run: |
         pip install cmake
         cmake --version
-    - name: sccache
-      uses: hendrikmuhs/ccache-action@v1.2
-      with:
-          verbose: 2
-          variant: sccache
-          max-size: 1G
-          key: ${{ matrix.os }}-cpp-sccache-${{ hashFiles('**/CMakeLists.txt') }}-${{ env.RAND }}
-          restore-keys: |
-               ${{ matrix.os }}-cpp-sccache-${{ hashFiles('**/CMakeLists.txt') }}-${{ env.RAND }}
-               ${{ matrix.os }}-cpp-sccache-${{ hashFiles('**/CMakeLists.txt') }}
-               ${{ matrix.os }}-cpp-sccache
     - name: Prepare 
       shell: bash
       run: mkdir build
@@ -148,17 +123,6 @@ jobs:
         cmake  
         --build build
         --parallel
-    - name: CTest Help
-      shell: bash
-      working-directory: build
-      run: |
-        ctest --help 
-    #- name: Run cimod_test
-    #  if: ${{ matrix.os == 'windows-latest'}}
-    #  shell: bash
-    #  working-directory: build
-    #  run: |
-    #    ./tests/Debug/cimod_test.exe 
     - name: CMake Test
       shell: bash
       working-directory: build
@@ -178,12 +142,6 @@ jobs:
         -p 
         -l 
         -b
-    - name: du -a 
-      shell: bash
-      if: always()
-      run: |
-        cd build 
-        du -a
     - uses: codecov/codecov-action@v5
       if: ${{ matrix.os == 'ubuntu-latest'}}
       continue-on-error: true
@@ -200,16 +158,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        #os: [windows-latest]
         python-version: ['3.9', '3.10', '3.11', '3.12', '3.13']
-        #python-version: ['3.10']
-        include:
-        - os: ubuntu-latest
-          path: ~/.cache/pip
-        - os: macos-latest
-          path: ~/Library/Caches/pip
-        - os: windows-latest
-          path: ~\AppData\Local\pip\Cache
 
     runs-on: ${{ matrix.os }}
     #if: ${{github.event_name == 'workflow_dispatch'}}
@@ -233,14 +182,6 @@ jobs:
           python setup.py -h
           pip-compile setup.cfg
           pip-compile dev-requirements.in
-    - uses: actions/cache@v4
-      with:
-          path: ${{ matrix.path }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('dev-requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('dev-requirements.txt') }}
-            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}
-            ${{ runner.os }}-pip-${{ hashFiles('python_version.txt') }}
     - name: Update
       shell: bash
       run: |
@@ -250,19 +191,7 @@ jobs:
       shell: bash
       run: |
           set -eux
-          pip-sync requirements.txt dev-requirements.txt
-    - name: sccache
-      if: ${{ matrix.os != 'windows-latest'}}
-      uses: hendrikmuhs/ccache-action@v1.2
-      with:
-          verbose: 2
-          variant: sccache
-          max-size: 1G
-          key: ${{ matrix.os }}-sccache-${{ hashFiles('python_version.txt') }}-${{ hashFiles('**/CMakeLists.txt') }}-${{ env.RAND }}
-          restore-keys: |
-               ${{ matrix.os }}-sccache-${{ hashFiles('python_version.txt') }}-${{ hashFiles('**/CMakeLists.txt') }}-${{ env.RAND }}
-               ${{ matrix.os }}-sccache-${{ hashFiles('python_version.txt') }}-${{ hashFiles('**/CMakeLists.txt') }}
-               ${{ matrix.os }}-sccache-${{ hashFiles('python_version.txt') }}      
+          pip-sync requirements.txt dev-requirements.txt  
     - name: Install Eigen3 on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
       run: |
@@ -283,16 +212,6 @@ jobs:
         ls  C:/vcpkg
         MSBuild.exe -version > msbuild_version.txt
         cat msbuild_version.txt
-    - name: Cache vcpkg
-      uses: actions/cache@v4
-      if: ${{ matrix.os == 'windows-latest'}}
-      with:
-         path: |
-           C:/Users/runneradmin/AppData/Local/vcpkg/archives
-         key: ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
-         restore-keys: |
-           ${{ matrix.os }}-vcpkg-${{ hashFiles('msbuild_version.txt') }}
-           ${{ matrix.os }}-vcpkg
     - name: Install Eigen on windows
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash 
@@ -302,12 +221,6 @@ jobs:
         vcpkg --triplet x64-windows-static install nlohmann-json
         vcpkg --triplet x64-windows install nlohmann-json
         vcpkg integrate install
-    - name: Show Help
-      shell: bash
-      run: |
-        set -eux
-        python setup.py --help-commands
-        pip install --help
     - name: Build & Install    
       if: ${{ matrix.os == 'ubuntu-latest'}}
       shell: bash
@@ -356,21 +269,3 @@ jobs:
           flags: cimod
           fail_ci_if_error: false
           verbose: true
-    - name: Run codacy-coverage-reporter
-      uses: codacy/codacy-coverage-reporter-action@v1
-      continue-on-error: true
-      if: ${{ matrix.os != 'windows-latest'}}
-      with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage.xml
-    - name: Test & publish code coverage
-      uses: paambaati/codeclimate-action@v9.0.0
-      continue-on-error: true
-      if: ${{ matrix.os != 'windows-latest'}}
-      env:
-         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-    - name: du
-      if: always()
-      shell: bash
-      run: |
-        du -a
