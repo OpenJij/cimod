@@ -224,6 +224,7 @@ memory-bank/
 # Claude Code
 CLAUDE.md
 CLAUDE.sub.md
+CLAUDE.overview.md
 .claude-generated/
 
 # Tutorial files

@@ -14,18 +14,64 @@
 
 [build-system]
 requires = [
-   'setuptools_scm[toml]', 
-   'setuptools',
-   'wheel',
-   'build',
-   'oldest-supported-numpy',
-   'pybind11',
-   'scikit-build',
-   ]
-build-backend = "setuptools.build_meta"
+    "scikit-build-core>=0.10",
+    "setuptools_scm[toml]",
+    "pybind11",
+    "oldest-supported-numpy",
+]
+build-backend = "scikit_build_core.build"
 
 [tool.setuptools_scm]
 write_to = "cimod/_version.py"
+
+[tool.scikit-build]
+minimum-version = "0.10"
+strict-config = true
+build.verbose = true
+wheel.install-dir = "cimod"
+wheel.packages = ["cimod"]
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+sdist.include = ["cimod/_version.py"]
+
+[project]
+name = "jij-cimod"
+dynamic = ["version"]
+description = "C++ library for a binary (and polynomial) quadratic model."
+requires-python = ">=3.9, <3.14"
+license = {text = "Apache License 2.0"}
+authors = [
+    {name = "Jij Inc.", email = "info@openjij.org"}
+]
+readme = "README.md"
+keywords = ["QUBO", "Ising", "optimization", "binary quadratic model", "BQM", "dimod"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: C++",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://www.openjij.org"
+Source = "https://github.com/OpenJij/cimod"
+Documentation = "http://openjij.github.io/Cimod-Documentation/"
+"Python Documentation" = "https://openjij.github.io/cimod/"
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules --color=yes --code-highlight=yes --cov-context=test --cov --cov-append --cov-report term --randomly-seed=last -v --capture=no"
@@ -39,13 +85,9 @@ console_output_style = "count"
 log_auto_indent = true
 junit_logging = "all"
 
-
 [tool.ruff]
-# 既存設定継承：Python 3.9-3.13対応
 line-length = 88
 target-version = "py39"  # 最小サポート版（python_requires = >=3.9）
-
-# 除外ディレクトリ（既存設定継承）
 exclude = [
     ".bzr",
     ".direnv",
@@ -60,7 +102,6 @@ exclude = [
 ]
 
 [tool.ruff.lint]
-# 完全統合: 全lint機能をruffに集約（mypy/pyright/lizard代替含む）
 select = [
     "E4", "E7", "E9",  # pycodestyle errors
     "F",               # Pyflakes
@@ -98,7 +139,6 @@ fixable = ["ALL"]
 unfixable = []
 
 [tool.ruff.lint.isort]
-# 既存isort設定継承
 combine-as-imports = true
 lines-between-types = 1
 
@@ -109,9 +149,7 @@ indent-style = "space"
 line-ending = "auto"
 
 [tool.ruff.lint.mccabe]
-# lizard代替：循環的複雑度測定
-max-complexity = 10  # 既存flake8設定継承
-
+max-complexity = 10
 
 [tool.cibuildwheel]
 skip = ["cp36*", "cp37*", "cp38*", "*musllinux_x86_64", "*musllinux_aarch64", "pp*"]
@@ -132,8 +170,6 @@ before-build = [
 
 [tool.cibuildwheel.windows]
 archs = ["AMD64"]
-#"vcpkg --triplet x64-windows-static install openblas[threads] --recurse", 
-#"vcpkg --triplet x64-windows-static install clapack --recurse", 
 before-build = [ 
     "pip install --upgrade pip wheel build cmake pybind11 delvewheel", 
 ]
