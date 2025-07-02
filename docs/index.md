@@ -7,15 +7,6 @@
 [![PyPI license](https://img.shields.io/pypi/l/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 [![PyPI download month](https://img.shields.io/pypi/dm/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 
-[![Test](https://github.com/OpenJij/cimod/actions/workflows/ci-test.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/ci-test.yml)
-[![Build&Upload](https://github.com/OpenJij/cimod/actions/workflows/build_and_upload.yaml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/build_and_upload.yaml)
-[![CodeQL](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml)
-[![Build Documentation](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml)
-[![pages-build-deployment](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/55990ff022864098a2413c0cc4ab8299)](https://www.codacy.com/gh/OpenJij/cimod/dashboard?utm_source=github.com&utm_medium=referral&utm_content=OpenJij/cimod&utm_campaign=Badge_Grade)
-[![Maintainability](https://api.codeclimate.com/v1/badges/59876c82cc2200ef1dfa/maintainability)](https://codeclimate.com/github/OpenJij/cimod/maintainability)
-[![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
-
 # How to use
 
 You should only include a header `src/binary_quadratic_model.hpp` in your project.
@@ -78,47 +69,70 @@ print(bqm.quadratic)
 
 ```
 
-## For Contributor
-
-Use `ruff` for code formatting and linting.
-
-```bash
-pip install ruff
-ruff check .
-ruff format .
-```
-
 ## Install
 
-### via this directory
+### For Users
 
 ```sh
-$ python -m pip install -vvv .
-```
-
-### via pip
-
-```sh
-# Binary
+# Binary package (recommended)
 $ pip install jij-cimod
-# From Source 
+
+# From source  
 $ pip install --no-binary=jij-cimod jij-cimod 
+
+# Latest development version
+$ pip install git+https://github.com/OpenJij/cimod.git
 ```
 
-## Test
+### For Developers
+
+```sh
+# Clone repository
+$ git clone https://github.com/OpenJij/cimod.git
+$ cd cimod
+
+# Create virtual environment
+$ python -m venv .venv
+$ source .venv/bin/activate  # Windows: .venv\Scripts\activate
+
+# Install with development dependencies
+$ pip install -e ".[dev]"
+
+# Verify installation
+$ python -c "import cimod; print('cimod installed successfully')"
+$ pytest tests/ -v --tb=short
+```
+
+## Development
+
+### Dependency Groups
+
+The project uses [PEP 621](https://peps.python.org/pep-0621/) optional dependencies in `pyproject.toml`:
+
+| Group | Purpose | Install Command |
+|-------|---------|-----------------|
+| **dev** | Complete development environment | `pip install -e ".[dev]"` |
+| **test** | Testing tools (pytest, coverage) | `pip install -e ".[test]"` |
+| **docs** | Documentation generation | `pip install -e ".[docs]"` |
+| **format** | Code formatting (ruff only) | `pip install -e ".[format]"` |
+
+**Note**: The `dev` group excludes `docs` dependencies for faster installation and C++ build avoidance.  
+For full functionality: `pip install -e ".[dev,docs]"`
+
+### System Requirements
+- **Python**: 3.9-3.13
+- **C++**: C++17 compatible compiler  
+- **CMake**: 3.20+ (for C++ development)
+
+## Testing
 
 ### Python
 
 ```sh
 $ python -m venv .venv
-$ pip install pip-tools 
-$ pip-compile setup.cfg
-$ pip-compile dev-requirements.in
-$ pip-sync requirements.txt dev-requirements.txt
 $ source .venv/bin/activate
-$ export CMAKE_BUILD_TYPE=Debug
-$ pip install -vvv .
-$ python -m pytest tests/ -v --cov=cimod --cov-report=html 
+$ pip install -e ".[test]"
+$ pytest tests/ -v --cov=cimod --cov-report=html 
 $ python -m coverage html
 ```
 
@@ -134,43 +148,23 @@ $ ./tests/cimod_test
 $ ctest --extra-verbose --parallel --schedule-random
 ```
 
-Needs: CMake > 3.22, C++17
+**Requirements**: CMake > 3.22, C++17
 
-- Format
+## Code Quality
 
-```sh
-$ pip-compile format-requirements.in
-$ pip-sync format-requirements.txt
-```
+### Unified Tooling with Ruff
 
 ```sh
-$ python -m isort 
-$ python -m black 
-```
+# Install development dependencies (includes ruff)
+$ pip install -e ".[dev]"
 
-- Aggressive Format
+# Check and fix all issues
+$ ruff check .              # Lint check
+$ ruff format .             # Format code  
+$ ruff check . --fix        # Auto-fix issues
 
-```sh
-$ python -m isort --force-single-line-imports --verbose ./cimod
-$ python -m autoflake --in-place --recursive --remove-all-unused-imports --ignore-init-module-imports --remove-unused-variables ./cimod
-$ python -m autopep8 --in-place --aggressive --aggressive  --recursive ./cimod
-$ python -m isort ./cimod
-$ python -m black ./cimod
-```
-
-- Lint
-
-```sh
-$ pip-compile setup.cfg
-$ pip-compile dev-requirements.in
-$ pip-compile lint-requirements.in
-$ pip-sync requirements.txt dev-requirements.txt lint-requirements.txt
-```
-
-```sh
-$ python -m flake8
-$ python -m mypy
-$ python -m pyright
+# All-in-one check (recommended)
+$ ruff check . && ruff format --check .
 ```
 
 ## Benchmark

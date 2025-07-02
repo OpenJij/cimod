@@ -74,13 +74,52 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+build = [
+    "build>=1.2",
+]
+
 test = [
-    "pytest",
-    "pytest-mock",
+    "pytest>=8.0",
     "pytest-cov",
+    "pytest-mock",
     "pytest-randomly",
     "pytest-spec",
     "coverage",
+]
+
+docs = [
+    "matplotlib",
+    "breathe",
+    "jupyter",
+    "jupyter-book",
+    "jupyter-cache",
+    "sphinx>=7.3",
+    "sphinx_sitemap",
+    "sphinx-jupyterbook-latex",
+    "sphinx-proof",
+    "sphinx-comments",
+    "sphinx-autobuild",
+    "sphinx-inline-tabs",
+    "sphinxcontrib-katex",
+    "sphinx-autoapi>=3.0.0",
+    "sphinx-notfound-page",
+    "sphinx-hoverxref",
+    "sphinx-examples",
+]
+
+format = [
+    "ruff>=0.5",
+]
+
+dev = [
+    "build>=1.2",
+    "pytest>=8.0",
+    "pytest-cov",
+    "pytest-mock",
+    "pytest-randomly",
+    "pytest-spec",
+    "coverage",
+    "ruff>=0.5",
 ]
 
 [project.urls]

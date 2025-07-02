@@ -81,51 +81,75 @@ print(bqm.quadratic)
 
 ```
 
-## For Contributor
-
-Use `ruff` for code formatting and linting.
-
-```bash
-pip install ruff
-ruff check .
-ruff format .
-```
-
 ## Install
 
-### via this directory
+### For Users
 
 ```sh
-$ python -m pip install -vvv .
-```
-
-### via pip
-
-```sh
-# Binary
+# Binary package (recommended)
 $ pip install jij-cimod
-# From Source 
+
+# From source  
 $ pip install --no-binary=jij-cimod jij-cimod 
+
+# Latest development version
+$ pip install git+https://github.com/OpenJij/cimod.git
 ```
 
-## Test
-
-### Python
+### For Developers
 
 ```sh
+# Clone repository
+$ git clone https://github.com/OpenJij/cimod.git
+$ cd cimod
+
+# Create virtual environment
 $ python -m venv .venv
-$ source .venv/bin/activate
-$ pip install pip-tools 
-$ pip-compile setup.cfg
-$ pip-compile dev-requirements.in
-$ pip-sync requirements.txt dev-requirements.txt
-$ export CMAKE_BUILD_TYPE=Debug
-$ pip install -vvv .
-$ python -m pytest tests/ -v --cov=cimod --cov-report=html 
+$ source .venv/bin/activate  # Windows: .venv\Scripts\activate
+
+# Install with development dependencies
+$ pip install -e ".[dev]"
+
+# Verify installation
+$ python -c "import cimod; print('cimod installed successfully')"
+$ pytest tests/ -v --tb=short
+```
+
+## Development
+
+### Dependency Groups
+
+The project uses [PEP 621](https://peps.python.org/pep-0621/) optional dependencies in `pyproject.toml`:
+
+| Group | Purpose | Install Command |
+|-------|---------|-----------------|
+| **dev** | Complete development environment | `pip install -e ".[dev]"` |
+| **test** | Testing tools (pytest, coverage) | `pip install -e ".[test]"` |
+| **docs** | Documentation generation | `pip install -e ".[docs]"` |
+| **format** | Code formatting (ruff only) | `pip install -e ".[format]"` |
+
+**Note**: The `dev` group excludes `docs` dependencies for faster installation and C++ build avoidance.  
+For full functionality: `pip install -e ".[dev,docs]"`
+
+### System Requirements
+- **Python**: 3.9-3.13
+- **C++**: C++17 compatible compiler  
+- **CMake**: 3.20+ (for C++ development)
+
+## Testing
+
+### Python Tests
+
+```sh
+# Basic test run
+$ pytest tests/ -v
+
+# With coverage report
+$ pytest tests/ -v --cov=cimod --cov-report=html
 $ python -m coverage html
 ```
 
-### C++
+### C++ Tests
 
 ```sh
 $ mkdir build 
@@ -137,25 +161,20 @@ $ ./tests/cimod_test
 $ ctest --extra-verbose --parallel --schedule-random
 ```
 
-Needs: CMake > 3.22, C++17
+**Requirements**: CMake > 3.22, C++17
 
-- Lint & Format (Unified with Ruff)
+## Code Quality
+
+### Unified Tooling with Ruff
 
 ```sh
-# Install ruff (only dependency needed)
-$ pip install ruff
+# Install development dependencies (includes ruff)
+$ pip install -e ".[dev]"
 
-# Check linting issues
-$ ruff check .
-
-# Auto-fix linting issues  
-$ ruff check . --fix
-
-# Check formatting
-$ ruff format --check .
-
-# Apply formatting
-$ ruff format .
+# Check and fix all issues
+$ ruff check .              # Lint check
+$ ruff format .             # Format code  
+$ ruff check . --fix        # Auto-fix issues
 
 # All-in-one check (recommended)
 $ ruff check . && ruff format --check .
