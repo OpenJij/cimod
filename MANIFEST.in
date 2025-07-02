@@ -24,8 +24,6 @@ prune .github
 prune .git
 prune cmake
 
-include setup.py
-include setup.cfg
 include CMakeLists.txt
 include LICENSE
 include README.md

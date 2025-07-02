@@ -67,6 +67,22 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+dependencies = [
+    "numpy>=1.19.3,<2.4",
+    "scipy>=1.5.4,<1.16",
+    "dimod>=0.9.11,<0.13",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-mock",
+    "pytest-cov",
+    "pytest-randomly",
+    "pytest-spec",
+    "coverage",
+]
+
 [project.urls]
 Homepage = "https://www.openjij.org"
 Source = "https://github.com/OpenJij/cimod"
