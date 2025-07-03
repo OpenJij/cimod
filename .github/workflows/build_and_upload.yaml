@@ -60,13 +60,12 @@ jobs:
           ls /opt/python
           ${{matrix.python}} --version > python_version.txt
           cat python_version.txt
-      - name: Install uv and Dependencies
+      - name: Install Dependencies
         shell: bash
         run: |
           set -eux
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          export PATH="$HOME/.cargo/bin:$PATH"
-          uv sync --locked --group build --python ${{matrix.python}}
+          ${{matrix.python}} -m pip install --upgrade pip
+          ${{matrix.python}} -m pip install --upgrade build auditwheel
       - name: Build 
         run: |
           set -x
@@ -87,7 +86,7 @@ jobs:
           export CFLAGS='-march=x86-64-v3 -mtune=generic' 
           export CXXFLAGS='-march=x86-64-v3 -mtune=generic' 
           export FFLAGS='-march=x86-64-v3 -mtune=generic'
-          uv run --python ${{matrix.python}} python -m build --wheel --outdir ./dist
+          ${{matrix.python}} -m build --wheel --outdir ./dist
           echo "::endgroup::"
           #. /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
           # export FC=ifx
@@ -97,11 +96,10 @@ jobs:
         run: |
           set -x 
           source /opt/intel/oneapi/setvars.sh --force  --config="/tmp/tmp/config.txt"
-          uv pip install --python ${{matrix.python}} auditwheel 
           du -ah ./dist
           cd dist
-          for f in *.whl; do uv run --python ${{matrix.python}} python -m auditwheel show $f; done 
-          for f in *.whl; do uv run --python ${{matrix.python}} python -m auditwheel repair -w ../wheelhouse $f; done    
+          for f in *.whl; do ${{matrix.python}} -m auditwheel show $f; done 
+          for f in *.whl; do ${{matrix.python}} -m auditwheel repair -w ../wheelhouse $f; done    
           cd ../wheelhouse
           du -ah ./
       - uses: actions/upload-artifact@v4
