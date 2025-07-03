@@ -171,7 +171,7 @@ function (lcov_capture_initial_tgt TNAME)
 		add_custom_command(OUTPUT ${OUTFILE} COMMAND ${GCOV_ENV} ${GENINFO_BIN}
 				--quiet --base-directory ${PROJECT_SOURCE_DIR} --initial
 				--gcov-tool ${GCOV_BIN} --output-filename ${OUTFILE}
-				${GENINFO_EXTERN_FLAG} ${TDIR}/${FILE}.gcno
+				--ignore-errors mismatch ${GENINFO_EXTERN_FLAG} ${TDIR}/${FILE}.gcno
 			DEPENDS ${TNAME}
 			COMMENT "Capturing initial coverage data for ${FILE}"
 		)
@@ -271,7 +271,7 @@ function (lcov_capture_tgt TNAME)
 			COMMAND test -s "${TDIR}/${FILE}.gcda"
 				&& ${GCOV_ENV} ${GENINFO_BIN} --quiet --base-directory
 					${PROJECT_SOURCE_DIR} --gcov-tool ${GCOV_BIN}
-					--output-filename ${OUTFILE} ${GENINFO_EXTERN_FLAG}
+					--output-filename ${OUTFILE} --ignore-errors mismatch ${GENINFO_EXTERN_FLAG}
 					${TDIR}/${FILE}.gcda
 				|| cp ${OUTFILE}.init ${OUTFILE}
 			DEPENDS ${TNAME} ${TNAME}-capture-init "${TDIR}/${FILE}.gcda"
