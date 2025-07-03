@@ -67,7 +67,6 @@ jobs:
           curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH="$HOME/.cargo/bin:$PATH"
           uv sync --locked --group build --python ${{matrix.python}}
-          uv pip install --python ${{matrix.python}} auditwheel 
       - name: Build 
         run: |
           set -x
@@ -98,9 +97,7 @@ jobs:
         run: |
           set -x 
           source /opt/intel/oneapi/setvars.sh --force  --config="/tmp/tmp/config.txt"
-          uv run --python ${{matrix.python}} python -m auditwheel -h
-          uv run --python ${{matrix.python}} python -m auditwheel show -h
-          uv run --python ${{matrix.python}} python -m auditwheel repair -h
+          uv pip install --python ${{matrix.python}} auditwheel 
           du -ah ./dist
           cd dist
           for f in *.whl; do uv run --python ${{matrix.python}} python -m auditwheel show $f; done 
