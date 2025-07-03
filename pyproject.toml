@@ -159,29 +159,23 @@ exclude = [
 
 [tool.ruff.lint]
 select = [
-    "E4", "E7", "E9",  # pycodestyle errors
+    # Phase 1: 基本設定（ruffベストプラクティス準拠）
+    "E",               # pycodestyle errors
     "F",               # Pyflakes
     "I",               # isort
-    "B",               # flake8-bugbear
-    "C4",              # flake8-comprehensions
     "UP",              # pyupgrade
-    "ANN",             # flake8-annotations（mypy代替：型アノテーション）
-    "TCH",             # flake8-type-checking（pyright代替：型チェック最適化）
-    "C90",             # mccabe（lizard代替：循環的複雑度）
-    "S",               # bandit（セキュリティ検証）
-    "BLE",             # flake8-blind-except
-    "A",               # flake8-builtins
-    "DTZ",             # flake8-datetimez
-    "EM",              # flake8-errmsg
-    "G",               # flake8-logging-format
-    "N",               # pep8-naming
-    "PIE",             # flake8-pie
-    "T20",             # flake8-print
-    "PT",              # flake8-pytest-style
-    "Q",               # flake8-quotes
-    "RET",             # flake8-return
-    "SIM",             # flake8-simplify
-    "ARG",             # flake8-unused-arguments
+    
+    # Phase 2: 品質向上（将来実装予定）
+    # "B",               # flake8-bugbear
+    # "SIM",             # simplify
+    
+    # Phase 3: 包括的品質（将来実装予定）
+    # "N",               # pep8-naming
+    # "RUF",             # ruff固有ルール
+    
+    # Advanced（長期的検討）
+    # "ANN",             # 型アノテーション
+    # "C90",             # 複雑度チェック
 ]
 ignore = [
     "E501",    # 行長制限無視（既存設定：max-line-length = 999）
