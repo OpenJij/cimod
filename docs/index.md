@@ -6,6 +6,18 @@
 [![PyPI format](https://img.shields.io/pypi/format/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 [![PyPI license](https://img.shields.io/pypi/l/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 [![PyPI download month](https://img.shields.io/pypi/dm/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
+[![Downloads](https://pepy.tech/badge/jij-cimod)](https://pepy.tech/project/jij-cimod)
+
+[![Test](https://github.com/OpenJij/cimod/actions/workflows/ci-test.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/ci-test.yml)
+[![Build&Upload](https://github.com/OpenJij/cimod/actions/workflows/build_and_upload.yaml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/build_and_upload.yaml)
+[![CodeQL](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml)
+[![Build Documentation](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml)
+[![pages-build-deployment](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment)
+[![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
+
+
+- [Documents](https://openjij.github.io/Cimod-Documentation/)
+- [Python Documents](https://openjij.github.io/cimod/)
 
 # How to use
 
@@ -86,38 +98,46 @@ $ pip install git+https://github.com/OpenJij/cimod.git
 
 ### For Developers
 
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
+
 ```sh
 # Clone repository
 $ git clone https://github.com/OpenJij/cimod.git
 $ cd cimod
 
-# Create virtual environment
-$ python -m venv .venv
-$ source .venv/bin/activate  # Windows: .venv\Scripts\activate
+# Install uv (choose one method)
+$ curl -LsSf https://astral.sh/uv/install.sh | sh  # macOS/Linux
+# or: brew install uv                              # Homebrew
+# or: pip install uv                               # fallback option
 
-# Install with development dependencies
-$ pip install -e ".[dev]"
+# Install with development dependencies (exact versions)
+$ uv sync --locked --group dev
 
 # Verify installation
-$ python -c "import cimod; print('cimod installed successfully')"
-$ pytest tests/ -v --tb=short
+$ uv run python -c "import cimod; print('cimod installed successfully')"
+$ uv run pytest tests/ -v --tb=short
 ```
 
 ## Development
 
 ### Dependency Groups
 
-The project uses [PEP 621](https://peps.python.org/pep-0621/) optional dependencies in `pyproject.toml`:
+The project uses [PEP 735](https://peps.python.org/pep-0735/) dependency groups in `pyproject.toml`:
 
-| Group | Purpose | Install Command |
-|-------|---------|-----------------|
-| **dev** | Complete development environment | `pip install -e ".[dev]"` |
-| **test** | Testing tools (pytest, coverage) | `pip install -e ".[test]"` |
-| **docs** | Documentation generation | `pip install -e ".[docs]"` |
-| **format** | Code formatting (ruff only) | `pip install -e ".[format]"` |
+| Group | Purpose | Command |
+|-------|---------|---------|
+| **dev** | Development environment (build + test + format) | `uv sync --group dev` |
+| **test** | Testing tools (pytest, coverage) | `uv sync --group test` |
+| **docs** | Documentation generation | `uv sync --group docs` |
+| **format** | Code formatting (ruff only) | `uv sync --group format` |
+| **all** | Complete environment (dev + docs) | `uv sync --group all` |
 
-**Note**: The `dev` group excludes `docs` dependencies for faster installation and C++ build avoidance.  
-For full functionality: `pip install -e ".[dev,docs]"`
+**Lock file usage**:
+- **For exact reproduction** (CI/CD, verification): `uv sync --locked --group dev`
+- **For development** (may update dependencies): `uv sync --group dev`
+- **To update lock file**: `uv lock` or `uv lock --upgrade`
+
+Dependencies are locked in `uv.lock` for reproducible builds across environments.
 
 ### System Requirements
 - **Python**: 3.9-3.13
@@ -126,22 +146,29 @@ For full functionality: `pip install -e ".[dev,docs]"`
 
 ## Testing
 
-### Python
+### Python Tests
 
 ```sh
-$ python -m venv .venv
-$ source .venv/bin/activate
-$ pip install -e ".[test]"
-$ pytest tests/ -v --cov=cimod --cov-report=html 
-$ python -m coverage html
+# Install test dependencies (exact versions)
+$ uv sync --locked --group test
+
+# Basic test run
+$ uv run pytest tests/ -v
+
+# With coverage report
+$ uv run pytest tests/ -v --cov=cimod --cov-report=html
+$ uv run python -m coverage html
 ```
 
-### C++
+### C++ Tests
 
 ```sh
+# Build C++ tests (independent of Python environment)
 $ mkdir build 
 $ cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
 $ cmake --build build --parallel
+
+# Run C++ tests
 $ cd build
 $ ./tests/cimod_test
 # Alternatively Use CTest 
@@ -155,16 +182,16 @@ $ ctest --extra-verbose --parallel --schedule-random
 ### Unified Tooling with Ruff
 
 ```sh
-# Install development dependencies (includes ruff)
-$ pip install -e ".[dev]"
+# Install format dependencies (exact versions)
+$ uv sync --locked --group format
 
 # Check and fix all issues
-$ ruff check .              # Lint check
-$ ruff format .             # Format code  
-$ ruff check . --fix        # Auto-fix issues
+$ uv run ruff check .              # Lint check
+$ uv run ruff format .             # Format code  
+$ uv run ruff check . --fix        # Auto-fix issues
 
 # All-in-one check (recommended)
-$ ruff check . && ruff format --check .
+$ uv run ruff check . && uv run ruff format --check .
 ```
 
 ## Benchmark
@@ -222,3 +249,35 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
     print("{} {} {}".format(N, d, c))
     fil.write("{} {} {}\n".format(N, d, c))
 ```
+
+### Software versions
+
+| Package                                        | Version |
+| ---------------------------------------------- | ------- |
+| [cimod](https://github.com/OpenJij/cimod)      | 1.0.3   |
+| [dimod](https://github.com/dwavesystems/dimod) | 0.9.2   |
+
+### Result
+
+![benchmark](https://github.com/OpenJij/cimod/blob/image_store/figure.png)
+
+## Notes
+* As explained in https://github.com/OpenJij/cimod/issues/48, specifying self-loop index (e.g. `{(2, 2): 5}`) in the `quadratic` argument in `BinaryQuadraticModel` is not allowed.
+
+### Licences
+
+Copyright 2025 Jij Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+```
+ http://www.apache.org/licenses/LICENSE-2.0  
+```
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

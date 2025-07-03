@@ -35,22 +35,22 @@ jobs:
     if: ${{ github.actor != 'dependabot[bot]' || !contains(github.head_ref, 'dependabot')}}
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python 
-      uses: actions/setup-python@v5
+    - name: Install uv and set Python version
+      uses: astral-sh/setup-uv@v6
       with:
-        python-version : '3.12'
+        python-version: '3.12'
     - name: Install Dep on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
       shell: bash
       run: |
-        pip install ninja
+        uv tool install ninja
         sudo apt-get install -y libeigen3-dev 
         sudo apt-get install -y libopenblas-dev lcov
     - name: Install Dep on macos
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
       run: |
-        pip install ninja
+        uv tool install ninja
         brew install eigen nlohmann-json lcov libomp
     - name: Add msbuild to PATH
       if: ${{ matrix.os == 'windows-latest'}}
@@ -80,7 +80,7 @@ jobs:
          vcpkg integrate install
     - name: Install CMake 
       run: |
-        pip install cmake
+        uv tool install cmake
         cmake --version
     - name: Prepare 
       shell: bash
@@ -159,10 +159,10 @@ jobs:
     if: ${{ !contains(github.head_ref, 'dependabot/github_actions')}}
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+    - name: Install uv and set Python version
+      uses: astral-sh/setup-uv@v6
       with:
-        python-version : ${{ matrix.python-version }}
+        python-version: ${{ matrix.python-version }}
     - name: Get Python Version
       shell: bash
       run: |
@@ -173,8 +173,7 @@ jobs:
       shell: bash
       run: |
           set -eux
-          python -m pip install --upgrade pip
-          pip install -e ".[test]"  
+          uv sync --locked --group test  
     - name: Install Eigen3 on linux
       if: ${{ matrix.os == 'ubuntu-latest'}}
       run: |
@@ -210,14 +209,14 @@ jobs:
       run: |
         set -eux
         export CMAKE_BUILD_TYPE=Debug
-        pip install -vvv .
+        uv pip install -vvv .
     - name: Build & Install    
       if: ${{ matrix.os == 'macos-latest'}}
       shell: bash
       run: |
         set -eux
         export CMAKE_BUILD_TYPE=Debug
-        pip install -vvv .
+        uv pip install -vvv .
     - name: Build & Install    
       if: ${{ matrix.os == 'windows-latest'}}
       shell: bash 
@@ -225,19 +224,19 @@ jobs:
         set -eux
         export CMAKE_BUILD_TYPE=Debug
         export CMAKE_TOOLCHAIN_FILE="C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
-        pip install -vvv .
+        uv pip install -vvv .
     - name: Test 
       shell: bash
       run: |
         set -eux
-        python -m pytest tests/ -v --cov=cimod 
+        uv run pytest tests/ -v --cov=cimod 
     - name: Generate
       shell: bash
       run: |
           set -eux
-          python -m coverage xml
-          python -m coverage json
-          python -m coverage lcov
+          uv run python -m coverage xml
+          uv run python -m coverage json
+          uv run python -m coverage lcov
     - uses: codecov/codecov-action@v5
       continue-on-error: true
       with:

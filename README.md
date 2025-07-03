@@ -98,38 +98,46 @@ $ pip install git+https://github.com/OpenJij/cimod.git
 
 ### For Developers
 
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
+
 ```sh
 # Clone repository
 $ git clone https://github.com/OpenJij/cimod.git
 $ cd cimod
 
-# Create virtual environment
-$ python -m venv .venv
-$ source .venv/bin/activate  # Windows: .venv\Scripts\activate
+# Install uv (choose one method)
+$ curl -LsSf https://astral.sh/uv/install.sh | sh  # macOS/Linux
+# or: brew install uv                              # Homebrew
+# or: pip install uv                               # fallback option
 
-# Install with development dependencies
-$ pip install -e ".[dev]"
+# Install with development dependencies (exact versions)
+$ uv sync --locked --group dev
 
 # Verify installation
-$ python -c "import cimod; print('cimod installed successfully')"
-$ pytest tests/ -v --tb=short
+$ uv run python -c "import cimod; print('cimod installed successfully')"
+$ uv run pytest tests/ -v --tb=short
 ```
 
 ## Development
 
 ### Dependency Groups
 
-The project uses [PEP 621](https://peps.python.org/pep-0621/) optional dependencies in `pyproject.toml`:
+The project uses [PEP 735](https://peps.python.org/pep-0735/) dependency groups in `pyproject.toml`:
 
-| Group | Purpose | Install Command |
-|-------|---------|-----------------|
-| **dev** | Complete development environment | `pip install -e ".[dev]"` |
-| **test** | Testing tools (pytest, coverage) | `pip install -e ".[test]"` |
-| **docs** | Documentation generation | `pip install -e ".[docs]"` |
-| **format** | Code formatting (ruff only) | `pip install -e ".[format]"` |
+| Group | Purpose | Command |
+|-------|---------|---------|
+| **dev** | Development environment (build + test + format) | `uv sync --group dev` |
+| **test** | Testing tools (pytest, coverage) | `uv sync --group test` |
+| **docs** | Documentation generation | `uv sync --group docs` |
+| **format** | Code formatting (ruff only) | `uv sync --group format` |
+| **all** | Complete environment (dev + docs) | `uv sync --group all` |
 
-**Note**: The `dev` group excludes `docs` dependencies for faster installation and C++ build avoidance.  
-For full functionality: `pip install -e ".[dev,docs]"`
+**Lock file usage**:
+- **For exact reproduction** (CI/CD, verification): `uv sync --locked --group dev`
+- **For development** (may update dependencies): `uv sync --group dev`
+- **To update lock file**: `uv lock` or `uv lock --upgrade`
+
+Dependencies are locked in `uv.lock` for reproducible builds across environments.
 
 ### System Requirements
 - **Python**: 3.9-3.13
@@ -141,20 +149,26 @@ For full functionality: `pip install -e ".[dev,docs]"`
 ### Python Tests
 
 ```sh
+# Install test dependencies (exact versions)
+$ uv sync --locked --group test
+
 # Basic test run
-$ pytest tests/ -v
+$ uv run pytest tests/ -v
 
 # With coverage report
-$ pytest tests/ -v --cov=cimod --cov-report=html
-$ python -m coverage html
+$ uv run pytest tests/ -v --cov=cimod --cov-report=html
+$ uv run python -m coverage html
 ```
 
 ### C++ Tests
 
 ```sh
+# Build C++ tests (independent of Python environment)
 $ mkdir build 
 $ cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
 $ cmake --build build --parallel
+
+# Run C++ tests
 $ cd build
 $ ./tests/cimod_test
 # Alternatively Use CTest 
@@ -168,16 +182,16 @@ $ ctest --extra-verbose --parallel --schedule-random
 ### Unified Tooling with Ruff
 
 ```sh
-# Install development dependencies (includes ruff)
-$ pip install -e ".[dev]"
+# Install format dependencies (exact versions)
+$ uv sync --locked --group format
 
 # Check and fix all issues
-$ ruff check .              # Lint check
-$ ruff format .             # Format code  
-$ ruff check . --fix        # Auto-fix issues
+$ uv run ruff check .              # Lint check
+$ uv run ruff format .             # Format code  
+$ uv run ruff check . --fix        # Auto-fix issues
 
 # All-in-one check (recommended)
-$ ruff check . && ruff format --check .
+$ uv run ruff check . && uv run ruff format --check .
 ```
 
 ## Benchmark

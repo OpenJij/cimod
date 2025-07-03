@@ -73,7 +73,14 @@ dependencies = [
     "dimod>=0.9.11,<0.13",
 ]
 
-[project.optional-dependencies]
+
+[project.urls]
+Homepage = "https://www.openjij.org"
+Source = "https://github.com/OpenJij/cimod"
+Documentation = "http://openjij.github.io/Cimod-Documentation/"
+"Python Documentation" = "https://openjij.github.io/cimod/"
+
+[dependency-groups]
 build = [
     "build>=1.2",
 ]
@@ -85,6 +92,10 @@ test = [
     "pytest-randomly",
     "pytest-spec",
     "coverage",
+]
+
+format = [
+    "ruff>=0.5",
 ]
 
 docs = [
@@ -107,26 +118,16 @@ docs = [
     "sphinx-examples",
 ]
 
-format = [
-    "ruff>=0.5",
-]
-
 dev = [
-    "build>=1.2",
-    "pytest>=8.0",
-    "pytest-cov",
-    "pytest-mock",
-    "pytest-randomly",
-    "pytest-spec",
-    "coverage",
-    "ruff>=0.5",
+    {include-group = "build"},
+    {include-group = "test"},
+    {include-group = "format"},
 ]
 
-[project.urls]
-Homepage = "https://www.openjij.org"
-Source = "https://github.com/OpenJij/cimod"
-Documentation = "http://openjij.github.io/Cimod-Documentation/"
-"Python Documentation" = "https://openjij.github.io/cimod/"
+all = [
+    {include-group = "dev"},
+    {include-group = "docs"},
+]
 
 [tool.pytest.ini_options]
 addopts = "--doctest-modules --color=yes --code-highlight=yes --cov-context=test --cov --cov-append --cov-report term --randomly-seed=last -v --capture=no"

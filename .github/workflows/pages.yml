@@ -47,28 +47,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        name: Install Python
+      - name: Install uv and set Python version
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{env.Python_Version}}
       - name: Python Cache Key
         shell: bash
         run: |
           echo $(which python) > /tmp/python_version.txt
-      - name: Get pip cache dir
-        shell: bash
-        id: pip-cache
-        run: |
-          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
       - name: Install Dependencies
         shell: bash
         run: |
           set -eux
-          python -m pip install --upgrade pip
-          pip install -e ".[docs]"
-      - name: Install Dep
+          uv sync --locked --group docs
+      - name: Install System Dependencies
         run: | 
-         pip install typing-extensions
+         uv pip install typing-extensions
          sudo apt-get install -y libeigen3-dev lcov graphviz mscgen dia pdf2svg astyle
          sudo apt-get install -y doxygen doxygen-doxyparse fonts-liberation python3-breathe
       - name: Prepare 
@@ -90,12 +84,12 @@ jobs:
           --parallel
           --verbose
           --target cxxcimod_header_only_docs
-      - name: pip install
+      - name: Build and Install Package
         shell: bash
-        run: python -m pip install -vvv .
+        run: uv pip install -vvv .
       - name: Jupyter Book
         shell: bash
-        run: jupyter-book build docs --all
+        run: uv run jupyter-book build docs --all
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

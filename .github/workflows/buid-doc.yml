@@ -18,28 +18,22 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        name: Install Python
+      - name: Install uv and set Python version
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{env.Python_Version}}
       - name: Python Cache Key
         shell: bash
         run: |
           echo $(which python) > /tmp/python_version.txt
-      - name: Get pip cache dir
-        shell: bash
-        id: pip-cache
-        run: |
-          echo "dir=$(pip cache dir)" >> $GITHUB_OUTPUT
       - name: Install Dependencies
         shell: bash
         run: |
           set -eux
-          python -m pip install --upgrade pip
-          pip install -e ".[docs]"
+          uv sync --locked --group docs
       - name: Install Dep
         run: | 
-         pip install typing-extensions
+         uv pip install typing-extensions
          sudo apt-get install -y libeigen3-dev lcov graphviz mscgen dia pdf2svg astyle
          sudo apt-get install -y doxygen doxygen-doxyparse fonts-liberation python3-breathe
       - name: Prepare 

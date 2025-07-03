@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        name: Install Python
+      - name: Install uv and set Python version
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: '3.11'
       - name: Install dependencies 
         run: |
-           pip install --upgrade pip wheel setuptools build 
+           uv sync --locked --group build
       - name: Build sdist
         run: |
-          python -m build --sdist --outdir ./dist
+          uv run python -m build --sdist --outdir ./dist
       - uses: actions/upload-artifact@v4
         with:
           name: wheel-sdist
@@ -60,12 +60,14 @@ jobs:
           ls /opt/python
           ${{matrix.python}} --version > python_version.txt
           cat python_version.txt
-      - name: Install Dependencies
+      - name: Install uv and Dependencies
         shell: bash
         run: |
           set -eux
-          ${{matrix.python}} -m pip install --upgrade pip
-          ${{matrix.python}} -m pip install -e ".[build]" 
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          export PATH="$HOME/.cargo/bin:$PATH"
+          uv sync --locked --group build --python ${{matrix.python}}
+          uv pip install --python ${{matrix.python}} auditwheel 
       - name: Build 
         run: |
           set -x
@@ -86,7 +88,7 @@ jobs:
           export CFLAGS='-march=x86-64-v3 -mtune=generic' 
           export CXXFLAGS='-march=x86-64-v3 -mtune=generic' 
           export FFLAGS='-march=x86-64-v3 -mtune=generic'
-          ${{matrix.python}} -m build --wheel --outdir ./dist
+          uv run --python ${{matrix.python}} python -m build --wheel --outdir ./dist
           echo "::endgroup::"
           #. /opt/intel/oneapi/setvars.sh --force  --config="config.txt"
           # export FC=ifx
@@ -96,13 +98,13 @@ jobs:
         run: |
           set -x 
           source /opt/intel/oneapi/setvars.sh --force  --config="/tmp/tmp/config.txt"
-          ${{matrix.python}} -m auditwheel -h
-          ${{matrix.python}} -m auditwheel show -h
-          ${{matrix.python}} -m auditwheel repair -h
+          uv run --python ${{matrix.python}} python -m auditwheel -h
+          uv run --python ${{matrix.python}} python -m auditwheel show -h
+          uv run --python ${{matrix.python}} python -m auditwheel repair -h
           du -ah ./dist
           cd dist
-          for f in *.whl; do ${{matrix.python}} -m auditwheel show $f; done 
-          for f in *.whl; do ${{matrix.python}} -m auditwheel repair -w ../wheelhouse $f; done    
+          for f in *.whl; do uv run --python ${{matrix.python}} python -m auditwheel show $f; done 
+          for f in *.whl; do uv run --python ${{matrix.python}} python -m auditwheel repair -w ../wheelhouse $f; done    
           cd ../wheelhouse
           du -ah ./
       - uses: actions/upload-artifact@v4
@@ -287,7 +289,7 @@ jobs:
           merge-multiple: true
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages_dir: ./dist
-          verify_metadata: true
-          skip_existing: false
+          packages-dir: ./dist
+          verify-metadata: true
+          skip-existing: false
           verbose: true
