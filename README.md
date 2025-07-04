@@ -171,8 +171,6 @@ $ cmake --build build --parallel
 # Run C++ tests
 $ cd build
 $ ./tests/cimod_test
-# Alternatively Use CTest 
-$ ctest --extra-verbose --parallel --schedule-random
 ```
 
 **Requirements**: CMake > 3.22, C++17
