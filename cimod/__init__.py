@@ -1,4 +1,4 @@
-# Copyright 2022 Jij Inc.
+# Copyright 2020-2025 Jij Inc.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,14 +31,14 @@ from cimod.model.binary_quadratic_model import (
 from cimod.vartype import BINARY, SPIN, Vartype
 
 __all__ = [
-        "cxxcimod",
-        "SPIN",
-        "BINARY",
-        "Vartype",
-        "make_BinaryQuadraticModel",
-        "make_BinaryQuadraticModel_from_JSON",
-        "BinaryQuadraticModel",
-        "make_BinaryPolynomialModel",
-        "make_BinaryPolynomialModel_from_JSON",
-        "BinaryPolynomialModel",
+    "cxxcimod",
+    "SPIN",
+    "BINARY",
+    "Vartype",
+    "make_BinaryQuadraticModel",
+    "make_BinaryQuadraticModel_from_JSON",
+    "BinaryQuadraticModel",
+    "make_BinaryPolynomialModel",
+    "make_BinaryPolynomialModel_from_JSON",
+    "BinaryPolynomialModel",
 ]

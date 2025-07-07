@@ -1,4 +1,4 @@
-# Copyright 2022 Jij Inc.
+# Copyright 2020-2025 Jij Inc.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from __future__ import annotations
+
 
 def disabled(func):
     def wrapper(*args, **kwargs):

@@ -13,15 +13,8 @@
 [![CodeQL](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml)
 [![Build Documentation](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml)
 [![pages-build-deployment](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/55990ff022864098a2413c0cc4ab8299)](https://www.codacy.com/gh/OpenJij/cimod/dashboard?utm_source=github.com&utm_medium=referral&utm_content=OpenJij/cimod&utm_campaign=Badge_Grade)
-[![Maintainability](https://api.codeclimate.com/v1/badges/59876c82cc2200ef1dfa/maintainability)](https://codeclimate.com/github/OpenJij/cimod/maintainability)
 [![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
 
-## Coverage Graph
-
-| **Sunburst**                                                                                                                                                     | **Grid**                                                                                                                                                     | **Icicle**                                                                                                                                                     |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/sunburst.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/tree.svg?token=BE45W9FJHA" width="100%"/></a> | <a href="https://codecov.io/gh/OpenJij/cimod"><img src="https://codecov.io/gh/OpenJij/cimod/branch/main/graphs/icicle.svg?token=BE45W9FJHA" width="100%"/></a> |
 
 - [Documents](https://openjij.github.io/Cimod-Documentation/)
 - [Python Documents](https://openjij.github.io/cimod/)
@@ -88,101 +81,115 @@ print(bqm.quadratic)
 
 ```
 
-## For Contributor
-
-Use `pre-commit` for auto chech before git commit.
-`.pre-commit-config.yaml`
-
-```
-# pipx install pre-commit 
-# or 
-# pip install pre-commit
-pre-commit install
-```
-
 ## Install
 
-### via this directory
+### For Users
 
 ```sh
-$ python -m pip install -vvv .
-```
-
-### via pip
-
-```sh
-# Binary
+# Binary package (recommended)
 $ pip install jij-cimod
-# From Source 
+
+# From source  
 $ pip install --no-binary=jij-cimod jij-cimod 
+
+# Latest development version
+$ pip install git+https://github.com/OpenJij/cimod.git
 ```
 
-## Test
+### For Developers
 
-### Python
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
 
 ```sh
-$ python -m venv .venv
-$ pip install pip-tools 
-$ pip-compile setup.cfg
-$ pip-compile dev-requirements.in
-$ pip-sync requirements.txt dev-requirements.txt
-$ source .venv/bin/activate
-$ export CMAKE_BUILD_TYPE=Debug
-$ python setup.py --force-cmake install --build-type Debug -G Ninja
-$ python setup.py --build-type Debug test 
-$ python -m coverage html
+# Clone repository
+$ git clone https://github.com/OpenJij/cimod.git
+$ cd cimod
+
+# Install uv (choose one method)
+$ curl -LsSf https://astral.sh/uv/install.sh | sh  # macOS/Linux
+# or: brew install uv                              # Homebrew
+# or: pip install uv                               # fallback option
+
+# Install with development dependencies (exact versions)
+$ uv sync --locked --group dev
+
+# Verify installation
+$ uv run python -c "import cimod; print('cimod installed successfully')"
+$ uv run pytest tests/ -v --tb=short
 ```
 
-### C++
+## Development
+
+### Dependency Groups
+
+The project uses [PEP 735](https://peps.python.org/pep-0735/) dependency groups in `pyproject.toml`:
+
+| Group | Purpose | Command |
+|-------|---------|---------|
+| **dev** | Development environment (build + test + format) | `uv sync --group dev` |
+| **test** | Testing tools (pytest, coverage) | `uv sync --group test` |
+| **docs** | Documentation generation | `uv sync --group docs` |
+| **format** | Code formatting (ruff only) | `uv sync --group format` |
+| **all** | Complete environment (dev + docs) | `uv sync --group all` |
+
+**Lock file usage**:
+- **For exact reproduction** (CI/CD, verification): `uv sync --locked --group dev`
+- **For development** (may update dependencies): `uv sync --group dev`
+- **To update lock file**: `uv lock` or `uv lock --upgrade`
+
+Dependencies are locked in `uv.lock` for reproducible builds across environments.
+
+### System Requirements
+- **Python**: 3.9-3.13
+- **C++**: C++17 compatible compiler  
+- **CMake**: 3.20+ (for C++ development)
+
+## Testing
+
+### Python Tests
 
 ```sh
+# Install test dependencies (exact versions)
+$ uv sync --locked --group test
+
+# Basic test run
+$ uv run pytest tests/ -v
+
+# With coverage report
+$ uv run pytest tests/ -v --cov=cimod --cov-report=html
+$ uv run python -m coverage html
+```
+
+### C++ Tests
+
+```sh
+# Build C++ tests (independent of Python environment)
 $ mkdir build 
 $ cmake -DCMAKE_BUILD_TYPE=Debug -S . -B build
 $ cmake --build build --parallel
+
+# Run C++ tests
 $ cd build
 $ ./tests/cimod_test
-# Alternatively Use CTest 
-$ ctest --extra-verbose --parallel --schedule-random
 ```
 
-Needs: CMake > 3.22, C++17
+**Requirements**: CMake > 3.22, C++17
 
-- Format
+## Code Quality
 
-```sh
-$ pip-compile format-requirements.in
-$ pip-sync format-requirements.txt
-```
+### Unified Tooling with Ruff
 
 ```sh
-$ python -m isort 
-$ python -m black 
-```
+# Install format dependencies (exact versions)
+$ uv sync --locked --group format
 
-- Aggressive Format
+# Check and fix all issues
+$ uv run ruff check .              # Lint check
+$ uv run ruff format .             # Format code  
+$ uv run ruff check . --fix        # Auto-fix issues
 
-```sh
-$ python -m isort --force-single-line-imports --verbose ./cimod
-$ python -m autoflake --in-place --recursive --remove-all-unused-imports --ignore-init-module-imports --remove-unused-variables ./cimod
-$ python -m autopep8 --in-place --aggressive --aggressive  --recursive ./cimod
-$ python -m isort ./cimod
-$ python -m black ./cimod
-```
-
-- Lint
-
-```sh
-$ pip-compile setup.cfg
-$ pip-compile dev-requirements.in
-$ pip-compile lint-requirements.in
-$ pip-sync requirements.txt dev-requirements.txt lint-requirements.txt
-```
-
-```sh
-$ python -m flake8
-$ python -m mypy
-$ python -m pyright
+# All-in-one check (recommended)
+$ uv run ruff check . && uv run ruff format --check .
 ```
 
 ## Benchmark
@@ -257,7 +264,7 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
 
 ### Licences
 
-Copyright 2022 Jij Inc.
+Copyright 2020-2025 Jij Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");\
 you may not use this file except in compliance with the License.\

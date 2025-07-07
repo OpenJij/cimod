@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        name: Install Python
+      - name: Install uv and set Python version
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: '3.11'
       - name: Install dependencies 
         run: |
-           pip install --upgrade pip wheel setuptools build 
+           uv sync --locked --group build
       - name: Build sdist
         run: |
-          python -m build --sdist --outdir ./dist
+          uv run python -m build --sdist --outdir ./dist
       - uses: actions/upload-artifact@v4
         with:
           name: wheel-sdist
@@ -35,9 +35,6 @@ jobs:
       fail-fast: false 
       matrix:  
         include:
-         - artifact: wheel-linux_x86_64_python38
-           python: /opt/python/cp38-cp38/bin/python
-           container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
          - artifact: wheel-linux_x86_64_python39
            python: /opt/python/cp39-cp39/bin/python
            container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
@@ -50,6 +47,9 @@ jobs:
          - artifact: wheel-linux_x86_64_python312
            python: /opt/python/cp312-cp312/bin/python
            container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
+         - artifact: wheel-linux_x86_64_python313
+           python: /opt/python/cp313-cp313/bin/python
+           container: ghcr.io/openjij/openjij-builder-minimum-manylinux_2_28_x86_64:latest
                
     steps:
       - uses: actions/checkout@v4       
@@ -60,29 +60,12 @@ jobs:
           ls /opt/python
           ${{matrix.python}} --version > python_version.txt
           cat python_version.txt
-      - name: Pip-Tools 
-        shell: bash
-        run: |
-          set -eux
-          ${{matrix.python}} -m pip install pip-tools 
-          ${{matrix.python}} -m piptools compile setup.cfg
-          ${{matrix.python}} -m piptools compile build-requirements.in
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/pip
-            /var/cache/dnf/
-          key: ${{ runner.os }}-intel-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-intel-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}-${{ hashFiles('build-requirements.txt') }}
-            ${{ runner.os }}-intel-${{ hashFiles('python_version.txt') }}-${{ hashFiles('requirements.txt') }}
-            ${{ runner.os }}-intel-${{ hashFiles('python_version.txt') }}
-            ${{ runner.os }}-intel-
       - name: Install Dependencies
         shell: bash
         run: |
           set -eux
-          ${{matrix.python}} -m piptools sync requirements.txt build-requirements.txt 
+          ${{matrix.python}} -m pip install --upgrade pip
+          ${{matrix.python}} -m pip install --upgrade build auditwheel
       - name: Build 
         run: |
           set -x
@@ -113,9 +96,6 @@ jobs:
         run: |
           set -x 
           source /opt/intel/oneapi/setvars.sh --force  --config="/tmp/tmp/config.txt"
-          ${{matrix.python}} -m auditwheel -h
-          ${{matrix.python}} -m auditwheel show -h
-          ${{matrix.python}} -m auditwheel repair -h
           du -ah ./dist
           cd dist
           for f in *.whl; do ${{matrix.python}} -m auditwheel show $f; done 
@@ -136,10 +116,6 @@ jobs:
       fail-fast: false 
       matrix:  
         include:
-          - artifact: wheel-linux_aarch64_python38
-            os: ubuntu-latest
-            arch: aarch64
-            CIBW_BUILD: cp38-manylinux_aarch64
           - artifact: wheel-linux_aarch64_python39
             os: ubuntu-latest
             arch: aarch64
@@ -156,6 +132,10 @@ jobs:
             os: ubuntu-latest
             arch: aarch64
             CIBW_BUILD: cp312-manylinux_aarch64
+          - artifact: wheel-linux_aarch64_python313
+            os: ubuntu-latest
+            arch: aarch64
+            CIBW_BUILD: cp313-manylinux_aarch64
     steps:
       - uses: actions/checkout@v4       
       - name: Set up QEME
@@ -168,7 +148,7 @@ jobs:
         with:
             install: true
       - name: Build wheels on ${{matrix.arch}}
-        uses: pypa/cibuildwheel@v2.22.0
+        uses: pypa/cibuildwheel@v3.0.0
         env:
           CIBW_BUILD: ${{matrix.CIBW_BUILD}}
           CIBW_ENVIRONMENT: ""
@@ -184,7 +164,7 @@ jobs:
           CIBW_BEFORE_BUILD_LINUX: >
                source scl_source enable gcc-toolset-11 &&
                pip install pybind11 cmake ninja
-          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.8"
+          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.9"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{matrix.artifact}}
@@ -217,12 +197,12 @@ jobs:
           set -eux 
           brew install eigen nlohmann-json
       - name: Build wheels on ${{ matrix.CIBW_PLATFORM }} ${{matrix.arch}}
-        uses: pypa/cibuildwheel@v2.22.0
+        uses: pypa/cibuildwheel@v3.0.0
         env:
           CIBW_ENVIRONMENT: ${{ matrix.CIBW_ENVIRONMENT }}
           CIBW_PLATFORM:  ${{ matrix.CIBW_PLATFORM }}
           CIBW_ARCHS: ${{matrix.arch}}
-          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.8"
+          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.9"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{matrix.artifact}}
@@ -275,12 +255,12 @@ jobs:
           vcpkg --triplet x64-windows install nlohmann-json
           vcpkg integrate install
       - name: Build wheels on ${{ matrix.CIBW_PLATFORM }} ${{matrix.arch}}
-        uses: pypa/cibuildwheel@v2.22.0
+        uses: pypa/cibuildwheel@v3.0.0
         env:
           CIBW_ENVIRONMENT: ${{ matrix.CIBW_ENVIRONMENT }}
           CIBW_PLATFORM:  ${{ matrix.CIBW_PLATFORM }}
           CIBW_ARCHS: ${{matrix.arch}}
-          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.8"
+          CIBW_PROJECT_REQUIRES_PYTHON: ">=3.9"
           
       - uses: actions/upload-artifact@v4
         with:
@@ -304,7 +284,7 @@ jobs:
           merge-multiple: true
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages_dir: ./dist
-          verify_metadata: true
-          skip_existing: false
+          packages-dir: ./dist
+          verify-metadata: true
+          skip-existing: false
           verbose: true

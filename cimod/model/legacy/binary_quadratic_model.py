@@ -1,4 +1,4 @@
-# Copyright 2022 Jij Inc.
+# Copyright 2020-2025 Jij Inc.
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,7 +44,6 @@ def make_BinaryQuadraticModel(linear, quadratic):
     if len(set(type(i) for i in index)) != 1:
         raise TypeError("invalid types of linear and quadratic")
     else:
-
         ind = next(iter(index))
 
         if isinstance(ind, int):
@@ -152,7 +151,6 @@ def make_BinaryQuadraticModel(linear, quadratic):
             """
 
             if self._re_calculate is True:
-
                 # calculate interaction matrix
                 indices, ind_to_num = self.update_indices()
                 self._interaction_matrix = super().interaction_matrix(indices)
@@ -332,7 +330,6 @@ def make_BinaryQuadraticModel(linear, quadratic):
 
         @classmethod
         def from_serializable(cls, obj):
-
             variable_labels = [
                 tuple(elem) if isinstance(elem, list) else elem
                 for elem in obj["variable_labels"]
