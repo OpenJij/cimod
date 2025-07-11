@@ -76,9 +76,9 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://www.openjij.org"
-Source = "https://github.com/OpenJij/cimod"
-Documentation = "http://openjij.github.io/Cimod-Documentation/"
-"Python Documentation" = "https://openjij.github.io/cimod/"
+Source = "https://github.com/Jij-Inc/cimod"
+Documentation = "https://jij-inc.github.io/Cimod-Documentation/"
+"Python Documentation" = "https://jij-inc.github.io/cimod/"
 
 [dependency-groups]
 build = [

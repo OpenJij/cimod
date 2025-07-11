@@ -8,16 +8,16 @@
 [![PyPI download month](https://img.shields.io/pypi/dm/jij-cimod.svg)](https://pypi.python.org/pypi/jij-cimod/)
 [![Downloads](https://pepy.tech/badge/jij-cimod)](https://pepy.tech/project/jij-cimod)
 
-[![Test](https://github.com/OpenJij/cimod/actions/workflows/ci-test.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/ci-test.yml)
-[![Build&Upload](https://github.com/OpenJij/cimod/actions/workflows/build_and_upload.yaml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/build_and_upload.yaml)
-[![CodeQL](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/codeql.yml)
-[![Build Documentation](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/buid-doc.yml)
-[![pages-build-deployment](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/OpenJij/cimod/actions/workflows/pages/pages-build-deployment)
-[![codecov](https://codecov.io/gh/OpenJij/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/OpenJij/cimod)
+[![Test](https://github.com/Jij-Inc/cimod/actions/workflows/ci-test.yml/badge.svg)](https://github.com/Jij-Inc/cimod/actions/workflows/ci-test.yml)
+[![Build&Upload](https://github.com/Jij-Inc/cimod/actions/workflows/build_and_upload.yaml/badge.svg)](https://github.com/Jij-Inc/cimod/actions/workflows/build_and_upload.yaml)
+[![CodeQL](https://github.com/Jij-Inc/cimod/actions/workflows/codeql.yml/badge.svg)](https://github.com/Jij-Inc/cimod/actions/workflows/codeql.yml)
+[![Build Documentation](https://github.com/Jij-Inc/cimod/actions/workflows/buid-doc.yml/badge.svg)](https://github.com/Jij-Inc/cimod/actions/workflows/buid-doc.yml)
+[![pages-build-deployment](https://github.com/Jij-Inc/cimod/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Jij-Inc/cimod/actions/workflows/pages/pages-build-deployment)
+[![codecov](https://codecov.io/gh/Jij-Inc/cimod/branch/master/graph/badge.svg?token=BE45W9FJHA)](https://codecov.io/gh/Jij-Inc/cimod)
 
 
-- [Documents](https://openjij.github.io/Cimod-Documentation/)
-- [Python Documents](https://openjij.github.io/cimod/)
+- [Documents](https://jij-inc.github.io/Cimod-Documentation/)
+- [Python Documents](https://jij-inc.github.io/cimod/)
 
 # How to use
 
@@ -93,7 +93,7 @@ $ pip install jij-cimod
 $ pip install --no-binary=jij-cimod jij-cimod 
 
 # Latest development version
-$ pip install git+https://github.com/OpenJij/cimod.git
+$ pip install git+https://github.com/Jij-Inc/cimod.git
 ```
 
 ### For Developers
@@ -102,7 +102,7 @@ This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
 
 ```sh
 # Clone repository
-$ git clone https://github.com/OpenJij/cimod.git
+$ git clone https://github.com/Jij-Inc/cimod.git
 $ cd cimod
 
 # Install uv (choose one method)
@@ -252,15 +252,15 @@ for N in [25, 50, 100, 200, 300, 400, 600, 800,1000, 1600, 2000, 3200, 5000]:
 
 | Package                                        | Version |
 | ---------------------------------------------- | ------- |
-| [cimod](https://github.com/OpenJij/cimod)      | 1.0.3   |
+| [cimod](https://github.com/Jij-Inc/cimod)      | 1.0.3   |
 | [dimod](https://github.com/dwavesystems/dimod) | 0.9.2   |
 
 ### Result
 
-![benchmark](https://github.com/OpenJij/cimod/blob/image_store/figure.png)
+![benchmark](https://github.com/Jij-Inc/cimod/blob/image_store/figure.png)
 
 ## Notes
-* As explained in https://github.com/OpenJij/cimod/issues/48, specifying self-loop index (e.g. `{(2, 2): 5}`) in the `quadratic` argument in `BinaryQuadraticModel` is not allowed.
+* As explained in https://github.com/Jij-Inc/cimod/issues/48, specifying self-loop index (e.g. `{(2, 2): 5}`) in the `quadratic` argument in `BinaryQuadraticModel` is not allowed.
 
 ### Licences
 
